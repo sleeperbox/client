@@ -6,8 +6,9 @@ import {
   Grid,
   Divider,
   Header,
-  Label,
-  Flag,
+  Modal,
+  Input,
+  Icon,
   Segment,
   Message
 } from "semantic-ui-react";
@@ -22,11 +23,18 @@ export default class Register extends Component {
       password: "",
       isLogin: false,
       token: "",
-      warning: null
+      warning: null,
+      ResetPassword: false,
+      notifEmail: false 
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  
+  handleOpenResetPassword = () => this.setState({ ResetPassword: true }, () => console.log("open: ", this.state.ResetPassword));
+
+  handleCloseResetPassword = () => this.setState({ ResetPassword: false, notifEmail: false }, () => console.log("close: ", this.state.ResetPassword,  this.state.notifEmail));
 
   // eslint-disable-next-line react/no-deprecated
   componentWillMount() {
@@ -116,6 +124,20 @@ export default class Register extends Component {
     );
   }
 
+  sendEmail(event) {
+    let target = event.target;
+    let value = target.value;
+    let name = target.name;
+    this.setState({
+      [name]: value
+    })
+  }
+
+  resetPassword() {
+    event.preventDefault()
+    this.setState({notifEmail: true} , () => console.log("notif: ", this.state.notifEmail))
+  }
+
   googleSignin() {
     window.location = "/api/auth/google"
   }
@@ -165,7 +187,7 @@ export default class Register extends Component {
                     onChange={this.handleChange}
                   />
                   <Button color="blue" fluid size="large">
-                    Log In
+                    Login
                   </Button>
                 </Segment>
               </Form>
@@ -173,6 +195,36 @@ export default class Register extends Component {
             <Grid.Column>
               <Message>                
                 New to Way ? <a href="#/register"><i>Sign Up Here !</i></a>
+                <br/>
+                <br/>
+                <Modal
+              trigger={<a onClick={this.handleOpenResetPassword}><i>Forget Password</i></a>}
+              defaultOpen={false}
+              onClose={this.handleCloseResetPassword}
+              basic
+              size="small"
+              >
+                <Modal.Content>
+                  <label>Retype your email</label>
+                  <br/>
+                  <br/>
+                  <Input
+                    type="email"
+                    name="reset_password"
+                    onChange={this.sendEmail.bind(this)}
+                    placeholder="your email..."
+                    fluid
+                  />
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button
+                    primary
+                    onClick={this.resetPassword.bind(this)}
+                  >
+                    <Icon name="envelope outline" /> Send Request
+                  </Button>
+                </Modal.Actions>
+            </Modal>
                 <Divider horizontal>Or</Divider>
                 <Button
                   onClick={this.googleSignin.bind(this)}
@@ -185,7 +237,8 @@ export default class Register extends Component {
               </Message>
             </Grid.Column>
           </Grid>
-          <Segment textAlign="center">
+          <Divider hidden/>
+          <Segment textAlign="center" basic>
             <i>app version 1.5</i>
           </Segment>
         </Container>
