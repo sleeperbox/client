@@ -25,7 +25,8 @@ export default class Register extends Component {
       token: "",
       warning: null,
       ResetPassword: false,
-      notifEmail: false 
+      notifEmail: false,
+      mailing: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -77,7 +78,7 @@ export default class Register extends Component {
   }
 
   shouldComponentUpdate(newProps, newState) {
-    if (newState.isLogin || newState.warning) {
+    if (newState.isLogin || newState.warning || newState.mailing) {
       return true;
     } else {
       return false;
@@ -85,11 +86,14 @@ export default class Register extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { isLogin } = this.state;
+    const { isLogin, mailing } = this.state;
     if (isLogin == true) {
       localStorage.setItem("email", JSON.stringify(this.state.email));
       localStorage.setItem("auth", JSON.stringify(this.state.isLogin));
       window.location = "#/profile";
+    }
+    if (mailing) {
+      window.location = "#/forgotpass"
     }
   }
 
@@ -132,9 +136,9 @@ export default class Register extends Component {
       [name]: value
     })
   }
-
   resetPassword() {
     event.preventDefault()
+    axios.get('/api/submit/' + this.state.reset_password).then((result) => this.setState({mailing: result}))
     this.setState({notifEmail: true} , () => console.log("notif: ", this.state.notifEmail))
   }
 

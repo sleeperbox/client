@@ -7,6 +7,7 @@ import App from "./App";
 import Login from "./component/pages/form-user/login";
 import Register from "./component/pages/form-user/register";
 import Profile from "./component/pages/profile/";
+import ForgotPass from "./component/pages/form-user/forgotpass"
 
 //categories
 import Setting from "./component/pages/category/setting/";
@@ -28,6 +29,7 @@ ReactDOM.render(
       <Route path="/" component={App} exact />
       <Route path="/home" component={Home} />
       <Route path="/user/profile" component={UserProfile} />
+      <Route path="/forgotpass" component={ForgotPass} />
       <Route path="/user/influence/list" component={Influence} />
       <Route path="/profile" component={Profile} />
       <Route path="/login" component={Login} />

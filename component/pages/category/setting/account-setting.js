@@ -146,7 +146,7 @@ export default class AccountSetting extends Component {
           <br />
           <Modal
             trigger={<a onClick={this.handleOpen} style={{color: "white"}}><i>Self Destroy</i></a>}
-            open={this.state.modalOpen}
+            open
             onClose={this.handleClose}
             basic
             size="small"
