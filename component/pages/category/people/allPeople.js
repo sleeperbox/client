@@ -173,7 +173,7 @@ export default class allPeople extends Component {
               />
               <Header.Content>
                 <Statistic>
-                  <Statistic.Value text>Hell Yeah,</Statistic.Value>
+                  <Statistic.Value text>You Haven't friend,</Statistic.Value>
                   <Statistic.Label>
                   </Statistic.Label>
                   <Statistic.Label>No Result</Statistic.Label>
@@ -224,28 +224,39 @@ export default class allPeople extends Component {
                 ); })}
                 <Modal dimmer={dimmer} open={open} onClose={this.close} closeIcon>
             <Modal.Header>{friendship.first_name} {friendship.last_name}</Modal.Header>
-            <Modal.Content image>
-                <Image wrapped size='medium' src={"http://localhost:3000/src/web-api/public/avatar/" + fotos} />
+            <Modal.Content>
+                <Image
+                    bordered 
+                    wrapped size='medium' 
+                    src={"http://localhost:3000/src/web-api/public/avatar/" + fotos} 
+                    circular
+                    style={{height: "220px", width: "220px"}}
+                    />
                 <Modal.Description>
-                <Header>{friendship.username}</Header>
-                <span>
+                <center><Header>{friendship.username}</Header></center>
+                <br />
+                <p><i>Followed Tags: <a>{friendship.tags}</a></i></p>
+                {/* <span>
                     <span style={{float: "left"}}>thanks: {friendship.total_thanks}</span>
                     <span style={{float: "right"}}>posts: {friendship.total_posts}</span>
                     <br/>
                     <hr/>
-                    <p>Followed Tags: <a>{friendship.tags}</a></p> 
-                </span>
+                </span> */}
                 </Modal.Description>
             </Modal.Content>
-            <Modal.Actions>
+            <Modal.Actions style={{marginTop: "-20px"}}>
+                <center>
+                <Button size="big" circular icon='handshake outline' content={friendship.total_thanks}></Button>
+                <Button size="big" circular icon='comment outline' content={friendship.total_posts}></Button>
                 <Button
-                primary
-                content="View Profile"
-                fluid
-                onClick={() => this.gotoprofile(friendship.username)}
-                style={{marginLeft: -0}}
+                    size="big"
+                    circular
+                    icon="user circle"
+                    onClick={() => this.gotoprofile(friendship.username)}
                 />
+                </center>
             </Modal.Actions>
+            <Divider hidden/>
         </Modal>
             </Container>
               )}

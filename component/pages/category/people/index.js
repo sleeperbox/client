@@ -90,7 +90,6 @@ export default class Index extends Component {
             </Container>
             }
           
-            <Divider hidden/>
             <AllPeople/>
             <BottomMenu />
         </div>
