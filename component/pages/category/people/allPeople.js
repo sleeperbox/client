@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Container, Grid, Divider, Image, List, Header, Button, Modal, Input, Statistic } from 'semantic-ui-react';
+import { Container, Grid, Divider, Image, List, Header, Button, Modal, Input, Statistic, Icon } from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
 import axios from 'axios';
 
@@ -173,7 +173,7 @@ export default class allPeople extends Component {
               />
               <Header.Content>
                 <Statistic>
-                  <Statistic.Value text>Hell Yeah,</Statistic.Value>
+                  <Statistic.Value text>You Haven't friend,</Statistic.Value>
                   <Statistic.Label>
                   </Statistic.Label>
                   <Statistic.Label>No Result</Statistic.Label>
@@ -222,31 +222,36 @@ export default class allPeople extends Component {
                     }
                 </Grid>
                 ); })}
-                <Modal dimmer={dimmer} open={open} onClose={this.close} closeIcon>
-            <Modal.Header>{friendship.first_name} {friendship.last_name}</Modal.Header>
-            <Modal.Content image>
-                <Image wrapped size='medium' src={"http://localhost:3000/src/web-api/public/avatar/" + fotos} />
-                <Modal.Description>
-                <Header>{friendship.username}</Header>
-                <span>
-                    <span style={{float: "left"}}>thanks: {friendship.total_thanks}</span>
-                    <span style={{float: "right"}}>posts: {friendship.total_posts}</span>
-                    <br/>
-                    <hr/>
-                    <p>Followed Tags: <a>{friendship.tags}</a></p> 
-                </span>
-                </Modal.Description>
-            </Modal.Content>
-            <Modal.Actions>
-                <Button
-                primary
-                content="View Profile"
-                fluid
-                onClick={() => this.gotoprofile(friendship.username)}
-                style={{marginLeft: -0}}
-                />
-            </Modal.Actions>
-        </Modal>
+                <Modal dimmer={dimmer} open={open} onClose={this.close} closeIcon 
+                    basic size='small'
+                >
+                    <Header icon='user' content={friendship.first_name +" "+ friendship.last_name}/>
+                    <Modal.Content>
+                    <Image
+                            bordered 
+                            wrapped size='medium' 
+                            src={"http://localhost:3000/src/web-api/public/avatar/" + fotos} 
+                            circular
+                            style={{height: "220px", width: "220px"}}
+                            />
+                    <Divider hidden/>
+                    <center><Header style={{color: "white"}}>{"@"+friendship.username}</Header></center>
+                        <p><i>Followed Tags:<br/><a style={{color: "white", marginLeft:"20px"}}>{friendship.tags}</a></i></p>
+                    </Modal.Content>
+                    <Modal.Actions>
+                    <center>
+                        <Button circular color='blue' inverted>
+                            <Icon name='handshake outline' />{friendship.total_thanks}
+                        </Button>
+                        <Button circular color='green' inverted>
+                            <Icon name='edit' />{friendship.total_posts}
+                        </Button>
+                        <Button circular color='yellow' onClick={() => this.gotoprofile(friendship.username)} inverted>
+                            <Icon name='user circle' />View
+                        </Button>
+                    </center>
+                    </Modal.Actions>
+                </Modal>
             </Container>
               )}
             </div>
