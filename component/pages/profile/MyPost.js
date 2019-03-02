@@ -307,7 +307,13 @@ export default class MyPost extends Component {
                               </List.Header>
                               <br />
                               <List.Description>
-                              
+                              { data.fotocontent === null ? null : 
+                                <Image
+                                  src={"http://localhost:3000/src/web-api/public/posting/foto/" + data.fotocontent}
+                                  size="large"
+                                  bordered
+                                />
+                              }
                                 <b>{data.content}</b>
                                 <br />
                                 <br />

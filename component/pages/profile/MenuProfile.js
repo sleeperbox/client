@@ -15,13 +15,15 @@ export default class MenuProfile extends Component {
       email: localStorage.getItem("email").slice(1, -1),
       content: "",
       tags: "",
+      file: "null",
       foto: "",
       options: [],
       value: "null",
       seen: null,
       notif: "",
       tag: 0,
-      post: 0
+      post: 0,
+      preview: null
     };
     this.handleMenu = this.handleMenu.bind(this);
     this.generateSkeleton = this.generateSkeleton.bind(this);
@@ -168,6 +170,13 @@ export default class MenuProfile extends Component {
     this.setState({ value: event.target.value });
   };
 
+  fileHandler = event => {
+    this.setState({
+      file: event.target.files[0],
+      preview: URL.createObjectURL(event.target.files[0])
+    });
+  };
+
   handleChange = (e, { value }) => this.setState({ value });
 
   publish() {
@@ -181,16 +190,29 @@ export default class MenuProfile extends Component {
       this.setState({tag : 1, post : 0})
     }else if(data.content == ""){
       this.setState({tag : 0, post : 1})
-    }else{
-    fetch("/api/posting", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify(data)
-    }).then(res => res.json()).then(() => window.location.reload());
-    }
+    }else if (this.state.file == "null") {
+      axios({
+        method: "post",
+        url: "/api/posting",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        data: {
+          email: this.state.email,
+          content: this.state.content,
+          tags: this.state.value
+        }
+      })
+      }else{
+        const data = new FormData();
+        data.append("fotocontent", this.state.file, this.state.file.name);
+        data.append("email", this.state.email);
+        data.append("content", this.state.content);
+        data.append("tags", this.state.value);
+  
+        axios.post("/api/posting", data).then(() => console.log(this.state.file)).then(() => window.location.reload());
+      }
   }
 
   show = dimmer => () => this.setState({ dimmer, open: true });
@@ -300,6 +322,17 @@ export default class MenuProfile extends Component {
               <Header as="h5">This will be great for your Followers</Header>
               <Form>
                 <TextArea maxLength={250} name="content" onChange={this.handlePost} autoHeight placeholder="What happen..." />
+                <br />
+                <div className="input-file-container">
+                  <input className="input-file" id="my-file" type="file" onChange={this.fileHandler}/>
+                  <Icon bordered name='attach' size='large' htmlFor="my-file" />
+                  <br /> { this.state.foto_posting === null ? null : this.state.foto_posting !== null ? this.state.posting : null }
+                  { this.state.foto_posting === null ? null : this.state.foto_posting !== null ? <Image
+                        src={this.state.preview}
+                        size="tiny"
+                        bordered
+                      /> : null }
+                </div>
               </Form>
             </Modal.Description>
           </Modal.Content>
