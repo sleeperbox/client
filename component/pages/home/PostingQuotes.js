@@ -22,7 +22,10 @@ export default class PostingOther extends Component {
       email: localStorage.getItem("email").slice(1, -1),
       posting: [],
       tgl: new Date().toDateString(),
-      day: new Date().getDay(),
+      month: new Date().getMonth(),
+      year : new Date().getFullYear(),
+      date: new Date().getDay(),
+      datemonth: new Date().toDateString().slice(4, -5),
       jam: new Date().getHours(),
       menit: new Date().getMinutes(),
       menitPosting: [],
@@ -250,7 +253,10 @@ export default class PostingOther extends Component {
                               </small>
                               <small style={{ float: "right" }}>
                                 <i>
-                                  {data.jam} {data.menit} {data.date}
+                                {
+                                  data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? this.state.menit - data.menit + "M" 
+                                  : this.state.menit - data.menit + " m ago"  : this.state.jam - data.jam + " h ago" : data.date.slice(4, -5) : data.date.slice(4)
+                                }
                                 </i>
                                 </small>
                               </List.Description>
