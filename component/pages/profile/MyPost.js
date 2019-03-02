@@ -28,11 +28,12 @@ export default class MyPost extends Component {
       email: localStorage.getItem("email").slice(1, -1),
       posting: [],
       tgl: new Date().toDateString(),
-      day: new Date().getDay(),
+      month: new Date().getMonth(),
+      year : new Date().getFullYear(),
+      date: new Date().getDay(),
+      datemonth: new Date().toDateString().slice(4, -5),
       jam: new Date().getHours(),
       menit: new Date().getMinutes(),
-      menitPosting: [],
-      waktu: [],
       thanks: 0,
       kode: 0,
       modal: false,
@@ -60,16 +61,16 @@ export default class MyPost extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ posting: result.data, isLoading: false }));
+    }).then(result => this.setState({ posting: result.data, jamm: result.data, isLoading: false }))
   }
 
-  shouldComponentUpdate(newProps, newState) {
-    if (newState) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // shouldComponentUpdate(newProps, newState) {
+  //   if (newState) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.thanks == 1) {
@@ -183,7 +184,7 @@ export default class MyPost extends Component {
   }
 
   render() {
-    
+    console.log('asdasdsa: ', this.state.jamm)
     const { posting, isLoading } = this.state;
     const nopost = posting.length;
     const gridMargin = {
@@ -324,9 +325,12 @@ export default class MyPost extends Component {
                                 <br/>
                                 <a onClick= {() => this.discuss(data.id_posts)}>comment</a>
                                 <small style={{ float: "right" }}>
-                                  <i>
-                                    {data.jam} {data.menit} {data.date}
-                                  </i>
+                                <i>
+                                {
+                                  data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? this.state.menit - data.menit + "M" 
+                                  : this.state.menit - data.menit + " m ago"  : this.state.jam - data.jam + " h ago" : data.date.slice(4, -5) : data.date.slice(4)
+                                }
+                                </i>
                                 </small>
                               </List.Description>
                             </List.Content>
