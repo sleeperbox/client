@@ -254,7 +254,7 @@ export default class PostingOther extends Component {
                               <small style={{ float: "right" }}>
                                 <i>
                                 {
-                                  data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? this.state.menit - data.menit + "M" 
+                                  data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? "Now" 
                                   : this.state.menit - data.menit + " m ago"  : this.state.jam - data.jam + " h ago" : data.date.slice(4, -5) : data.date.slice(4)
                                 }
                                 </i>
