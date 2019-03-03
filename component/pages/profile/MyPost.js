@@ -307,7 +307,7 @@ export default class MyPost extends Component {
                               <br />
                               <List.Description>
                               { data.fotocontent !== null ? 
-                                <Modal trigger={<Image
+                                (<Modal trigger={<Image
                                   src={"http://localhost:3000/src/web-api/public/posting/foto/" + data.fotocontent}
                                   size="large" />} 
                                 >
@@ -316,8 +316,9 @@ export default class MyPost extends Component {
                                     <Image
                                       src={"http://localhost:3000/src/web-api/public/posting/foto/" + data.fotocontent}
                                       size="big" />
-                                    </Modal.Content>
-                                </Modal> : null
+                                      <a onClick= {() => this.discuss(data.id_posts)}>comment</a>
+                                  </Modal.Content>
+                                </Modal>) : null
                               }
                                 <br />
                                 <br />

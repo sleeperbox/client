@@ -15,7 +15,7 @@ export default class MenuProfile extends Component {
       email: localStorage.getItem("email").slice(1, -1),
       content: "",
       tags: "",
-      file: "null",
+      file: null,
       foto: "",
       options: [],
       value: "null",
@@ -23,7 +23,8 @@ export default class MenuProfile extends Component {
       notif: "",
       tag: 0,
       post: 0,
-      preview: null
+      preview: null,
+      kode_post: 1
     };
     this.handleMenu = this.handleMenu.bind(this);
     this.generateSkeleton = this.generateSkeleton.bind(this);
@@ -190,7 +191,7 @@ export default class MenuProfile extends Component {
       this.setState({tag : 1, post : 0})
     }else if(data.content == ""){
       this.setState({tag : 0, post : 1})
-    }else if (this.state.file == "null") {
+    }else if (this.state.file == null) {
       axios({
         method: "post",
         url: "/api/posting",
@@ -211,7 +212,7 @@ export default class MenuProfile extends Component {
         data.append("email", this.state.email);
         data.append("content", this.state.content);
         data.append("tags", this.state.value);
-        data.append("kode_post", 1);
+        data.append("kode_post", this.state.kode_post);
   
         axios.post("/api/posting", data).then(() => console.log(this.state.file)).then(() => window.location.reload());
       }

@@ -86,6 +86,12 @@ export default class Posts extends Component {
               <Item.Content>
                 <ItemMeta as='a' style={{color: "black"}}><Image avatar src={"http://localhost:3000/src/web-api/public/avatar/" + posts.foto}/> <b>{posts.username}</b></ItemMeta>
                 <Item.Description style={{padding: 15, margin: 5}}>
+                { posts.fotocontent !== null ? 
+                  <Image
+                    src={"http://localhost:3000/src/web-api/public/posting/foto/" + posts.fotocontent}
+                    size="large" /> : null }
+                <br />
+                <br />
                   {posts.content}
                 </Item.Description>
                 <Divider hidden/>
