@@ -201,15 +201,17 @@ export default class MenuProfile extends Component {
         data: {
           email: this.state.email,
           content: this.state.content,
-          tags: this.state.value
+          tags: this.state.value,
+          kode_post: 0
         }
-      })
+      }).then((result) => console.log(result)).then(() => window.location.reload());
       }else{
         const data = new FormData();
         data.append("fotocontent", this.state.file, this.state.file.name);
         data.append("email", this.state.email);
         data.append("content", this.state.content);
         data.append("tags", this.state.value);
+        data.append("kode_post", 1);
   
         axios.post("/api/posting", data).then(() => console.log(this.state.file)).then(() => window.location.reload());
       }
@@ -330,7 +332,6 @@ export default class MenuProfile extends Component {
                   { this.state.foto_posting === null ? null : this.state.foto_posting !== null ? <Image
                         src={this.state.preview}
                         size="tiny"
-                        bordered
                       /> : null }
                 </div>
               </Form>

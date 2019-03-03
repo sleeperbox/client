@@ -184,7 +184,6 @@ export default class MyPost extends Component {
   }
 
   render() {
-    console.log('asdasdsa: ', this.state.jamm)
     const { posting, isLoading } = this.state;
     const nopost = posting.length;
     const gridMargin = {
@@ -307,13 +306,21 @@ export default class MyPost extends Component {
                               </List.Header>
                               <br />
                               <List.Description>
-                              { data.fotocontent === null ? null : 
-                                <Image
+                              { data.fotocontent !== null ? 
+                                <Modal trigger={<Image
                                   src={"http://localhost:3000/src/web-api/public/posting/foto/" + data.fotocontent}
-                                  size="large"
-                                  bordered
-                                />
+                                  size="large" />} 
+                                >
+                                <Header/>
+                                  <Modal.Content>
+                                    <Image
+                                      src={"http://localhost:3000/src/web-api/public/posting/foto/" + data.fotocontent}
+                                      size="big" />
+                                    </Modal.Content>
+                                </Modal> : null
                               }
+                                <br />
+                                <br />
                                 <b>{data.content}</b>
                                 <br />
                                 <br />
