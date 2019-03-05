@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Container, Grid, Divider, Image, List, Header, Button, Modal, Input, Statistic, Icon } from 'semantic-ui-react';
+import { Container, Grid, Divider, Image, List, Header, Button, Modal, Input, Statistic, Icon, Label } from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
 import axios from 'axios';
 
@@ -158,6 +158,11 @@ export default class allPeople extends Component {
         window.location='#/user/profile';
     }
 
+    newmessage(username){
+        event.preventDefault();
+        window.location = "#/dm?username=" + username
+    }
+
     generateZeroData() {
         const divConten = {
           marginTop: "40%",
@@ -239,17 +244,35 @@ export default class allPeople extends Component {
                         <p><i>Followed Tags:<br/><a style={{color: "white", marginLeft:"20px"}}>{friendship.tags}</a></i></p>
                     </Modal.Content>
                     <Modal.Actions>
-                    <center>
-                        <Button circular color='blue' inverted>
-                            <Icon name='handshake outline' />{friendship.total_thanks}
-                        </Button>
-                        <Button circular color='green' inverted>
-                            <Icon name='edit' />{friendship.total_posts}
-                        </Button>
-                        <Button circular color='yellow' onClick={() => this.gotoprofile(friendship.username)} inverted>
-                            <Icon name='user circle' />View
-                        </Button>
-                    </center>
+                        <Grid>
+                            <Grid.Row columns={4}>
+                                <Grid.Column>
+                                    <Button circular size='big' icon='user circle' color='vk' onClick={() => this.gotoprofile(friendship.username)} />
+                                    <div style={{marginRight:"15px", marginTop:"3px"}}>
+                                        View    
+                                    </div>            
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <Button circular size='big' icon='handshake outline' color='vk' />
+                                    <div style={{marginRight:"5px", marginTop:"3px"}}>
+                                        Tnks: {friendship.total_thanks}
+                                    </div>
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <Button circular size='big' icon='edit' color='vk' />
+                                    <div style={{marginRight:"5px", marginTop:"3px"}}>
+                                        Post: {friendship.total_posts}
+                                    </div>               
+                                </Grid.Column>
+                                <Grid.Column>           
+                                    <Button circular size='big' icon='facebook messenger' color='vk' onClick={() => this.newmessage(friendship.username)} />               
+                                    <div style={{marginRight:"15px", marginTop:"3px"}}>
+                                        Mail
+                                    </div>
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
+                                                
                     </Modal.Actions>
                 </Modal>
             </Container>
