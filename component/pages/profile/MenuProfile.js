@@ -19,7 +19,8 @@ export default class MenuProfile extends Component {
       foto: "",
       options: [],
       value: "null",
-      seen: null,
+      seen: 0,
+      seen_comment: 0,
       notif: "",
       tag: 0,
       post: 0,
@@ -56,6 +57,18 @@ export default class MenuProfile extends Component {
         email: this.state.email // This is the body part
       }
     }).then(result => this.setState({ seen: result.data }));
+
+    axios({
+      method: "post",
+      url: "/api/notif/comment",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result => this.setState({ seen_comment: result.data }));
 
     axios({
       method: "post",
@@ -108,6 +121,17 @@ export default class MenuProfile extends Component {
           axios({
             method: "put",
             url: "/api/follow/notif/seen",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            },
+            data: {
+              email: this.state.email
+            }
+          })
+          axios({
+            method: "put",
+            url: "/api/notif/comment/seen",
             headers: {
               "Content-Type": "application/json",
               Accept: "application/json"
@@ -246,6 +270,7 @@ export default class MenuProfile extends Component {
       marginTop: "-20%",
       marginLeft: "25%"
     }
+    let notification = this.state.seen + this.state.seen_comment
     return (
       <div>
         {isLoading ? (
@@ -286,14 +311,16 @@ export default class MenuProfile extends Component {
               >
                 {datas.length === 0 ? (
                   ""
-                ) : this.state.seen === 0 ? (
+                ) : notification === 0 ? (
                   ""
                 ) : (
+
                   <Icon name="bell outline" style={{ color: "#5b90f6" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
-                    {this.state.seen}
+                    {notification}
                   </Label></Icon>
                 )}
-                {menu === "notification" ? (<Icon name="bell outline" style={{ color: "#5b90f6" }} size="large" />) : this.state.seen === 0 ? (<Icon name="bell outline" style={{ color: "#555" }} size="large" />) : ""}
+                {menu === "notification" ? (<Icon name="bell outline" style={{ color: "#5b90f6" }} size="large" />) : notification === 0 ? (<Icon name="bell outline" style={{ color: "#555" }} size="large" />) : ""}
+
               </Menu.Item>
 
               <Menu.Item name="profile" onClick={() => this.handleMenu("profile")}>
