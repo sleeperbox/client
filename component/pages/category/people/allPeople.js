@@ -233,13 +233,16 @@ export default class allPeople extends Component {
                     <Header icon='user' content={friendship.first_name +" "+ friendship.last_name}/>
                     <Modal.Content>
                     <Image
-                            bordered 
-                            wrapped size='medium' 
+                            style={{
+                                alignSelf: 'center',
+                                height: 225, 
+                                width: 225, 
+                                bordeerWidth: 1, 
+                                borderRadius: 110
+                            }}
+                            resizeMode="cover" 
                             src={"http://localhost:3000/src/web-api/public/avatar/" + fotos} 
-                            circular
-                            style={{height: "220px", width: "220px"}}
                             />
-                    <Divider hidden/>
                     <center><Header style={{color: "white"}}>{"@"+friendship.username}</Header></center>
                         <p><i>Followed Tags:<br/><a style={{color: "white", marginLeft:"20px"}}>{friendship.tags}</a></i></p>
                     </Modal.Content>
@@ -247,7 +250,7 @@ export default class allPeople extends Component {
                         <Grid>
                             <Grid.Row columns={4}>
                                 <Grid.Column>
-                                    <Button circular size='big' icon='user circle' color='vk' onClick={() => this.gotoprofile(friendship.username)} />
+                                    <Button circular size='big' icon='user circle' color='twitter' onClick={() => this.gotoprofile(friendship.username)} />
                                     <div style={{marginRight:"15px", marginTop:"3px"}}>
                                         View    
                                     </div>            
