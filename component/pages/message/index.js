@@ -211,7 +211,22 @@ export default class Index extends Component {
             })}
           </Container>
         )}
-        <Button style={{float: "right",zIndex: 2,position: "fixed",bottom: 50,right: -0 }} onClick={() => {this.newmessage()}}>+</Button>
+        <Button 
+          circular 
+          size='big' 
+          icon='plus'  
+          style={{
+            float: "right",
+            zIndex: 1,
+            position: "fixed",
+            bottom: 65,
+            right: 1,
+            background: "#5b90f6",
+            color: "white" 
+          }} 
+          onClick={() => {this.newmessage()}} />
+          
+                                    
         <MenuProfile />
       </div>
     );
