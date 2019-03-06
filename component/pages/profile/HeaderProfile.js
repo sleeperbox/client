@@ -203,7 +203,7 @@ export default class HeaderProfile extends Component {
                             bordeerWidth: 1, 
                             borderRadius:70 
                         }}
-                        resizeMode="cover"
+                        
                         src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.foto}
                       />
                       </center> 

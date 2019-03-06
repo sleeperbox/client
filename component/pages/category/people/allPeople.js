@@ -240,7 +240,7 @@ export default class allPeople extends Component {
                                 bordeerWidth: 1, 
                                 borderRadius: 110
                             }}
-                            resizeMode="cover" 
+                             
                             src={"http://localhost:3000/src/web-api/public/avatar/" + fotos} 
                             />
                     <center><Header style={{color: "white"}}>{"@"+friendship.username}</Header></center>
