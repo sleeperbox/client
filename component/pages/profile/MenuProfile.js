@@ -261,11 +261,11 @@ export default class MenuProfile extends Component {
               }}
             >
               <Menu.Item name="home" onClick={() => this.handleMenu("home")}>
-                {menu === "home" ? <Icon name="clock" style={{ color: "#ED6A5E" }} size="large" /> : <Icon name="clock outline" style={{ color: "#555" }} size="large" />}
+                {menu === "home" ? <Icon name="clock" style={{ color: "#5b90f6" }} size="large" /> : <Icon name="clock outline" style={{ color: "#555" }} size="large" />}
               </Menu.Item>
 
               <Menu.Item name="message" onClick={() => this.handleMenu("message")}>
-                {this.state.message === 0 && menu === "message" ? (<Icon name="comment alternate" style={{ color: "#555" }} size="large" />) : this.state.message !== 0 && menu === "message" ? <Icon name="comment alternate" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
+                {this.state.message === 0 && menu === "message" ? (<Icon name="comment alternate" style={{ color: "#5b90f6" }} size="large" />) : this.state.message !== 0 && menu === "message" ? <Icon name="comment alternate" style={{ color: "#5b90f6" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
                     {this.state.message}
                   </Label></Icon> : this.state.message === 0 && menu !== "message" ? (<Icon name="comment alternate outline" style={{ color: "#555" }} size="large" />) : this.state.message !== 0 && menu !== "message" ? <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
                     {this.state.message}
@@ -274,7 +274,7 @@ export default class MenuProfile extends Component {
 
               <Menu.Item name="post" onClick={this.show("blurring")}>
                 {menu === "post" ? (
-                  <Icon name="plus square" style={{ color: "#ED6A5E" }} size="large" />
+                  <Icon name="plus square" style={{ color: "#5b90f6" }} size="large" />
                 ) : (
                     <Icon name="plus square outline" style={{ color: "#555" }} size="large" />
                   )}
@@ -289,11 +289,11 @@ export default class MenuProfile extends Component {
                 ) : this.state.seen === 0 ? (
                   ""
                 ) : (
-                  <Icon name="bell outline" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
+                  <Icon name="bell outline" style={{ color: "#5b90f6" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
                     {this.state.seen}
                   </Label></Icon>
                 )}
-                {menu === "notification" ? (<Icon name="bell outline" style={{ color: "#ED6A5E" }} size="large" />) : this.state.seen === 0 ? (<Icon name="bell outline" style={{ color: "#555" }} size="large" />) : ""}
+                {menu === "notification" ? (<Icon name="bell outline" style={{ color: "#5b90f6" }} size="large" />) : this.state.seen === 0 ? (<Icon name="bell outline" style={{ color: "#555" }} size="large" />) : ""}
               </Menu.Item>
 
               <Menu.Item name="profile" onClick={() => this.handleMenu("profile")}>
@@ -355,6 +355,7 @@ export default class MenuProfile extends Component {
               icon="checkmark"
               labelPosition="right"
               content="Post"
+              style={{background:"#5b90f6"}}
               onClick={this.publish.bind(this)}
             />
           </Modal.Actions>

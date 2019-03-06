@@ -246,6 +246,7 @@ export default class ProfileSetting extends Component {
                     <Icon
                       bordered
                       circular
+                      // style={{color: "#5b90f6"}}
                       name='camera'
                       size='big'
                       htmlFor="my-file"
@@ -317,7 +318,7 @@ export default class ProfileSetting extends Component {
               trigger={
                 <Button
                   fluid
-                  style={{background: "#575757", color: "white", marginTop: "10px"}}
+                  style={{background: "#5b90f6", color: "white", marginTop: "10px"}}
                   size="tiny"
                   onClick={this.update.bind(this)}>Update Profile</Button>
               }
