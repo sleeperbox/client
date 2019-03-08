@@ -36,6 +36,7 @@ export default class MyPost extends Component {
       menit: new Date().getMinutes(),
       thanks: 0,
       kode: 0,
+      a: 0,
       modal: false,
       modalDiscuss: false
     };
@@ -316,7 +317,7 @@ export default class MyPost extends Component {
                                     <Image
                                       src={"http://localhost:3000/src/web-api/public/posting/foto/" + data.fotocontent}
                                       size="big" />
-                                      <a onClick= {() => this.discuss(data.id_posts)}>comment</a>
+                                      <a onClick= {() => this.discuss(data.id_posts)}>{this.state.comment}comment</a>
                                   </Modal.Content>
                                 </Modal>) : null
                               }

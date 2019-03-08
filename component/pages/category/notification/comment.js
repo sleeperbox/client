@@ -120,6 +120,10 @@ export default class Comment extends Component {
     );
   }
 
+  discuss(value) {
+    window.location = '#/posts?id='+ value + '' 
+  }
+
   loading() {
     return (
         <div>
@@ -146,7 +150,7 @@ export default class Comment extends Component {
                 <Grid columns={1} key={data._id}>
                   <Grid.Column>
                     <List verticalAlign="middle">
-                      <List.Item>
+                      <List.Item onClick={() => this.discuss(data.id_posts)}>
                         <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
                         <List.Content>
                           <List.Header><strong>{data.username}</strong></List.Header>
