@@ -13,8 +13,7 @@ import {
   Modal,
   Button,
   Header,
-  Label,
-  Comment,
+  TextArea, Dropdown, Message,
   Form
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
@@ -35,19 +34,33 @@ export default class MyPost extends Component {
       jam: new Date().getHours(),
       menit: new Date().getMinutes(),
       thanks: 0,
+      kode_post: 0,
+      options: [],
+      contents: [],
+      tags: "",
+      file: null,
+      value: "null",
       kode: 0,
-      a: 0,
+      tag: 0,
+      post: 0,
+      s: 0,
+      fotocontent: null,
+      id: null,
       modal: false,
-      modalDiscuss: false
+      modalupdate: false,
+      modalDiscuss: false,
+      content: "",
+      preview: null
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.givethanks = this.givethanks.bind(this);
     this.delete = this.delete.bind(this);
+    this.handlePost = this.handlePost.bind(this);
   }
 
-  handleOpen = () => this.setState({ modal: true });
-
   handleClose = () => this.setState({ modal: false });
+
+  handleCloseUpdate = () => this.setState({ modalupdate: false, preview: null });
 
   componentWillMount() {}
 
@@ -63,15 +76,25 @@ export default class MyPost extends Component {
         email: this.state.email // This is the body part
       }
     }).then(result => this.setState({ posting: result.data, jamm: result.data, isLoading: false }))
+
+    axios({
+      method: "get",
+      url: "/api/tags",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    }).then(result => this.setState({ options: result.data }));
+  
   }
 
-  // shouldComponentUpdate(newProps, newState) {
-  //   if (newState) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  shouldComponentUpdate(newProps, newState) {
+    if (newState) {
+       return true;
+     } else {
+       return false;
+     }
+   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.thanks == 1) {
@@ -89,6 +112,14 @@ export default class MyPost extends Component {
       
     }
   }
+  handlePost(event) {
+    let target = event.target;
+    let value = target.value;
+    let name = target.name;
+    this.setState({
+      [name]: value
+    });
+  }
 
   givethanks(value) {
     axios({
@@ -105,7 +136,7 @@ export default class MyPost extends Component {
     }).then((result) => this.setState({ thanks: 1, kode: result.data.kode.kode}));
   }
 
-  delete(value) {
+  delete() {
     axios({
       method: "delete",
       url: "/api/posting/delete",
@@ -115,10 +146,46 @@ export default class MyPost extends Component {
       },
       data: {
         email: this.state.email,
-        _id: value,
+        _id: this.state.id,
       }
     }).then(this.setState({modal: false, thanks: 1,}));
   }
+
+  handleOpen(value) {
+    this.setState({modal: true, id: value});
+  }
+
+  handleOpenUpdate(value) {
+    this.setState({id: value});
+    axios({
+      method: "post",
+      url: "/api/posting/detail",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        _id: value,
+      }
+    }).then(result => this.setState({modalupdate: true, contents: result.data, content: result.data.content, tags: result.data.tags}));
+  }
+
+  update() {
+    axios({
+        method: "post",
+        url: "/api/posting/update",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        data: {
+          id: this.state.id,
+          content: this.state.content,
+          tags: this.state.tags,
+          kode_post: 1
+        }
+      }).then(this.setState({modalupdate: false, thanks: 1,}));
+    }
 
   generateSkeleton() {
     return (
@@ -184,14 +251,30 @@ export default class MyPost extends Component {
     window.location = '#/posts?id='+ value + '' 
   }
 
+  setValue(e, data) {
+    this.setState({ tags: data.value });
+  }
+
+  fileHandler = event => {
+    this.setState({
+      file: event.target.files[0],
+      fotocontent: 1,
+      preview: URL.createObjectURL(event.target.files[0])
+    });
+  };
+
   render() {
-    const { posting, isLoading } = this.state;
+    const { posting, isLoading, dimmer } = this.state;
     const nopost = posting.length;
     const gridMargin = {
       marginBottom: "40px"
     };
     const textMargin = {
       marginLeft: "2%"
+    };
+    const postSize = {
+      width: "1%",
+      float: "left"
     };
     return (
       <div>
@@ -285,8 +368,10 @@ export default class MyPost extends Component {
                                 <small>
                                   <i style={textMargin}>{data.tags}</i>
                                 </small>
+                                <Button onClick={() => this.handleOpen(data._id)} style={{color: "black", border: "1", background: "white", float: "right", marginRight: "-1%"}}><Icon name="trash alternate outline"/></Button>
+                                <Button onClick={() => this.handleOpenUpdate(data._id)} style={{color: "black", border: "1", background: "white", float: "right", marginRight: "-1%"}}><Icon name="edit outline"/></Button>
                                 <Modal
-                                  trigger={<Label onClick={this.handleOpen} style={{color: "black", border: "1", background: "white", float: "right", marginRight: "-4%"}}><Icon name="trash alternate outline"/></Label>}
+                                  id={data._id}
                                   open={this.state.modal}
                                   onClose={this.handleClose}
                                   basic
@@ -299,11 +384,63 @@ export default class MyPost extends Component {
                                   <Button onClick={this.handleClose} inverted>
                                     <Icon name="remove" /> No
                                   </Button>
-                                  <Button inverted onClick={() => this.delete(data._id)}>
+                                  <Button inverted onClick={() => this.delete()}>
                                     <Icon name="checkmark" /> Yes
                                   </Button>
                                   </Modal.Actions>
                                 </Modal>
+                                <Modal
+                                  dimmer={dimmer} size="large"
+                                  id={data._id}
+                                  open={this.state.modalupdate}
+                                  onClose={this.handleCloseUpdate}
+                                  basic
+                                >
+<Modal.Content>
+  <Modal.Description>
+    {this.state.tag == 1 ? 
+    <i><Message error icon="warning circle" header='Anda Belum Memilih Tag' size="mini"/></i>
+    : this.state.post == 1 ?
+    <i><Message icon="warning circle" error header='Konten Tidak Boleh Kosong' size="mini"/></i> : null}
+    <Header as="h5"><p style={{ color: "white"}}>Edit Posting</p></Header>
+    <Form><TextArea maxLength={250} name="content" onChange={this.handlePost} autoHeight placeholder="What happen..." value={this.state.content}  />
+    <br />
+    <div className="input-file-container">
+      
+        <br /> { this.state.preview !== null ? null : this.state.contents.fotocontent === null ? null : this.state.contents.fotocontent !== null ? <Image
+          src={"http://localhost:3000/src/web-api/public/posting/foto/" + this.state.contents.fotocontent}
+          size="tiny"
+          /> : null }
+          { this.state.preview === null ? null : this.state.preview !== null ? <Image
+          src={ this.state.preview }
+          size="tiny"
+          /> : null }
+    </div>
+    </Form>
+  </Modal.Description>
+</Modal.Content>
+<Modal.Actions>
+<span style={postSize}>
+              {
+                <Dropdown
+                  search
+                  onChange={this.setValue.bind(this)}
+                  options={this.state.options}
+                  selection
+                  value={this.state.tags}
+                />
+              }
+            </span>
+            <Button
+              secondary
+              icon="checkmark"
+              labelPosition="right"
+              content="Edit"
+              style={{background:"#5b90f6"}}
+              onClick={() => this.update()}
+            />
+</Modal.Actions>
+</Modal>
                               </List.Header>
                               <br />
                               <List.Description>
