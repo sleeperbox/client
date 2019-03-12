@@ -338,7 +338,7 @@ export default class MyPost extends Component {
                                 </small>
                                 <br/>
                                 <br/>
-                                <a onClick= {() => this.discuss(data.id_posts)}>comment</a>
+                                <a onClick= {() => this.discuss(data.id_posts)}>{data.comment} comment</a>
                                 <small style={{ float: "right" }}>
                                 <i>
                                 {
