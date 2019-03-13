@@ -36,14 +36,15 @@ export default class Posts extends Component {
       datemonth: new Date().toDateString().slice(4, -5),
       jam: new Date().getHours(),
       menit: new Date().getMinutes(),
+      id: null,
       url: window.location.href.split("=")[1]
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleOpen = () => this.setState({ modalOpen: true });
   handleClose = () => this.setState({ modalOpen: false });
+
 
   componentWillMount() {
     axios.get("/api/posts/" + this.state.url).then(response => {
@@ -114,7 +115,8 @@ export default class Posts extends Component {
     }).then(window.location.reload());
   }
 
-  delete(value) {
+
+  delete() {
     axios({
       method: "delete",
       url: "/api/comment/delete",
@@ -124,10 +126,14 @@ export default class Posts extends Component {
       },
       data: {
         email: this.state.email,
-        _id: value,
+        _id: this.state.id,
         id_posts: this.state.url
       }
     }).then(this.setState({ modalOpen: false, comments: 1 }));
+  }
+
+  openModal(value) {
+    this.setState({ modalOpen: true, id: value });
   }
 
   render() {
@@ -189,15 +195,15 @@ export default class Posts extends Component {
                   <Comment.Content>
                     <Comment.Author>
                       {data.username}
+                      <Icon
+                        onClick={() => this.openModal(data._id)}
+                        name="trash alternate outline"
+                        style={{ float: "right", color: "#595959" }}
+                        size={"small"}
+                      >
+                      </Icon>
                       <Modal
-                        trigger={
-                          <Icon
-                            onClick={this.handleOpen}
-                            name="trash alternate outline"
-                            style={{ float: "right", color: "#595959" }}
-                            size={"small"}
-                          />
-                        }
+                        id={data._id}
                         open={this.state.modalOpen}
                         onClose={this.handleClose}
                         basic
@@ -213,7 +219,7 @@ export default class Posts extends Component {
                           <Button onClick={this.handleClose} inverted>
                             <Icon name="remove" /> No
                           </Button>
-                          <Button onClick={() => this.delete(data._id)}>
+                          <Button onClick={() => this.delete()}>
                             <Icon name="checkmark" /> Yes
                           </Button>
                         </Modal.Actions>
