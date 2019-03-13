@@ -13,7 +13,9 @@ import {
   Modal,
   Button,
   Header,
-  TextArea, Dropdown, Message,
+  TextArea,
+  Dropdown,
+  Message,
   Form
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
@@ -28,7 +30,7 @@ export default class MyPost extends Component {
       posting: [],
       tgl: new Date().toDateString(),
       month: new Date().getMonth(),
-      year : new Date().getFullYear(),
+      year: new Date().getFullYear(),
       date: new Date().getDay(),
       datemonth: new Date().toDateString().slice(4, -5),
       jam: new Date().getHours(),
@@ -60,7 +62,8 @@ export default class MyPost extends Component {
 
   handleClose = () => this.setState({ modal: false });
 
-  handleCloseUpdate = () => this.setState({ modalupdate: false, preview: null });
+  handleCloseUpdate = () =>
+    this.setState({ modalupdate: false, preview: null });
 
   componentWillMount() {}
 
@@ -75,7 +78,13 @@ export default class MyPost extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ posting: result.data, jamm: result.data, isLoading: false }))
+    }).then(result =>
+      this.setState({
+        posting: result.data,
+        jamm: result.data,
+        isLoading: false
+      })
+    );
 
     axios({
       method: "get",
@@ -85,16 +94,15 @@ export default class MyPost extends Component {
         Accept: "application/json"
       }
     }).then(result => this.setState({ options: result.data }));
-  
   }
 
   shouldComponentUpdate(newProps, newState) {
     if (newState) {
-       return true;
-     } else {
-       return false;
-     }
-   }
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.thanks == 1) {
@@ -111,8 +119,6 @@ export default class MyPost extends Component {
       }).then(result => this.setState({ posting: result.data, thanks: 0 }));
     }
   }
-
-
   handlePost(event) {
     let target = event.target;
     let value = target.value;
@@ -134,7 +140,9 @@ export default class MyPost extends Component {
         email: this.state.email,
         _id: value // This is the body part
       }
-    }).then((result) => this.setState({ thanks: 1, kode: result.data.kode.kode}));
+    }).then(result =>
+      this.setState({ thanks: 1, kode: result.data.kode.kode })
+    );
   }
 
   delete() {
@@ -147,17 +155,17 @@ export default class MyPost extends Component {
       },
       data: {
         email: this.state.email,
-        _id: this.state.id,
+        _id: this.state.id
       }
-    }).then(this.setState({modal: false, thanks: 1,}));
+    }).then(this.setState({ modal: false, thanks: 1 }));
   }
 
   handleOpen(value) {
-    this.setState({modal: true, id: value});
+    this.setState({ modal: true, id: value });
   }
 
   handleOpenUpdate(value) {
-    this.setState({id: value});
+    this.setState({ id: value });
     axios({
       method: "post",
       url: "/api/posting/detail",
@@ -166,27 +174,34 @@ export default class MyPost extends Component {
         Accept: "application/json"
       },
       data: {
-        _id: value,
+        _id: value
       }
-    }).then(result => this.setState({modalupdate: true, contents: result.data, content: result.data.content, tags: result.data.tags}));
+    }).then(result =>
+      this.setState({
+        modalupdate: true,
+        contents: result.data,
+        content: result.data.content,
+        tags: result.data.tags
+      })
+    );
   }
 
   update() {
     axios({
-        method: "post",
-        url: "/api/posting/update",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        data: {
-          id: this.state.id,
-          content: this.state.content,
-          tags: this.state.tags,
-          kode_post: 1
-        }
-      }).then(this.setState({modalupdate: false, thanks: 1,}));
-    }
+      method: "post",
+      url: "/api/posting/update",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        id: this.state.id,
+        content: this.state.content,
+        tags: this.state.tags,
+        kode_post: 1
+      }
+    }).then(this.setState({ modalupdate: false, thanks: 1 }));
+  }
 
   generateSkeleton() {
     return (
@@ -249,7 +264,7 @@ export default class MyPost extends Component {
   }
 
   discuss(value) {
-    window.location = '#/posts?id='+ value + '' 
+    window.location = "#/posts?id=" + value + "";
   }
 
   setValue(e, data) {
@@ -369,121 +384,224 @@ export default class MyPost extends Component {
                                 <small>
                                   <i style={textMargin}>{data.tags}</i>
                                 </small>
-                                <Button onClick={() => this.handleOpen(data._id)} style={{color: "black", border: "1", background: "white", float: "right", marginRight: "-1%"}}><Icon name="trash alternate outline"/></Button>
-                                <Button onClick={() => this.handleOpenUpdate(data._id)} style={{color: "black", border: "1", background: "white", float: "right", marginRight: "-1%"}}><Icon name="edit outline"/></Button>
+                                <Button
+                                  onClick={() => this.handleOpen(data._id)}
+                                  style={{
+                                    color: "black",
+                                    border: "1",
+                                    background: "white",
+                                    float: "right",
+                                    marginRight: "-1%"
+                                  }}
+                                >
+                                  <Icon name="trash alternate outline" />
+                                </Button>
+                                <Button
+                                  onClick={() =>
+                                    this.handleOpenUpdate(data._id)
+                                  }
+                                  style={{
+                                    color: "black",
+                                    border: "1",
+                                    background: "white",
+                                    float: "right",
+                                    marginRight: "-1%"
+                                  }}
+                                >
+                                  <Icon name="edit outline" />
+                                </Button>
                                 <Modal
                                   id={data._id}
                                   open={this.state.modal}
                                   onClose={this.handleClose}
                                   basic
                                 >
-                                  <Header icon="trash alternate outline" content="Delete Posting!" />
+                                  <Header
+                                    icon="trash alternate outline"
+                                    content="Delete Posting!"
+                                  />
                                   <Modal.Content>
                                     <p>Are You Sure?</p>
                                   </Modal.Content>
                                   <Modal.Actions>
-                                  <Button onClick={this.handleClose} inverted>
-                                    <Icon name="remove" /> No
-                                  </Button>
-                                  <Button inverted onClick={() => this.delete()}>
-                                    <Icon name="checkmark" /> Yes
-                                  </Button>
+                                    <Button onClick={this.handleClose} inverted>
+                                      <Icon name="remove" /> No
+                                    </Button>
+                                    <Button
+                                      inverted
+                                      onClick={() => this.delete()}
+                                    >
+                                      <Icon name="checkmark" /> Yes
+                                    </Button>
                                   </Modal.Actions>
                                 </Modal>
                                 <Modal
-                                  dimmer={dimmer} size="large"
+                                  dimmer={dimmer}
+                                  size="large"
                                   id={data._id}
                                   open={this.state.modalupdate}
                                   onClose={this.handleCloseUpdate}
                                   basic
                                 >
-<Modal.Content>
-  <Modal.Description>
-    {this.state.tag == 1 ? 
-    <i><Message error icon="warning circle" header='Anda Belum Memilih Tag' size="mini"/></i>
-    : this.state.post == 1 ?
-    <i><Message icon="warning circle" error header='Konten Tidak Boleh Kosong' size="mini"/></i> : null}
-    <Header as="h5"><p style={{ color: "white"}}>Edit Posting</p></Header>
-    <Form><TextArea maxLength={250} name="content" onChange={this.handlePost} autoHeight placeholder="What happen..." value={this.state.content}  />
-    <br />
-    <div className="input-file-container">
-      
-        <br /> { this.state.preview !== null ? null : this.state.contents.fotocontent === null ? null : this.state.contents.fotocontent !== null ? <Image
-          src={"http://localhost:3000/src/web-api/public/posting/foto/" + this.state.contents.fotocontent}
-          size="tiny"
-          /> : null }
-          { this.state.preview === null ? null : this.state.preview !== null ? <Image
-          src={ this.state.preview }
-          size="tiny"
-          /> : null }
-    </div>
-    </Form>
-  </Modal.Description>
-</Modal.Content>
-<Modal.Actions>
-<span style={postSize}>
-              {
-                <Dropdown
-                  search
-                  onChange={this.setValue.bind(this)}
-                  options={this.state.options}
-                  selection
-                  value={this.state.tags}
-                />
-              }
-            </span>
-            <Button
-              secondary
-              icon="checkmark"
-              labelPosition="right"
-              content="Edit"
-              style={{background:"#5b90f6"}}
-              onClick={() => this.update()}
-            />
-</Modal.Actions>
-</Modal>
+                                  <Modal.Content>
+                                    <Modal.Description>
+                                      {this.state.tag == 1 ? (
+                                        <i>
+                                          <Message
+                                            error
+                                            icon="warning circle"
+                                            header="Anda Belum Memilih Tag"
+                                            size="mini"
+                                          />
+                                        </i>
+                                      ) : this.state.post == 1 ? (
+                                        <i>
+                                          <Message
+                                            icon="warning circle"
+                                            error
+                                            header="Konten Tidak Boleh Kosong"
+                                            size="mini"
+                                          />
+                                        </i>
+                                      ) : null}
+                                      <Header as="h5">
+                                        <p style={{ color: "white" }}>
+                                          Edit Posting
+                                        </p>
+                                      </Header>
+                                      <Form>
+                                        <TextArea
+                                          maxLength={250}
+                                          name="content"
+                                          onChange={this.handlePost}
+                                          autoHeight
+                                          placeholder="What happen..."
+                                          value={this.state.content}
+                                        />
+                                        <br />
+                                        <div className="input-file-container">
+                                          <br />{" "}
+                                          {this.state.preview !==
+                                          null ? null : this.state.contents
+                                              .fotocontent ===
+                                            null ? null : this.state.contents
+                                              .fotocontent !== null ? (
+                                            <Image
+                                              src={
+                                                "http://localhost:3000/src/web-api/public/posting/foto/" +
+                                                this.state.contents.fotocontent
+                                              }
+                                              size="tiny"
+                                            />
+                                          ) : null}
+                                          {this.state.preview ===
+                                          null ? null : this.state.preview !==
+                                            null ? (
+                                            <Image
+                                              src={this.state.preview}
+                                              size="tiny"
+                                            />
+                                          ) : null}
+                                        </div>
+                                      </Form>
+                                    </Modal.Description>
+                                  </Modal.Content>
+                                  <Modal.Actions>
+                                    <span style={postSize}>
+                                      {
+                                        <Dropdown
+                                          search
+                                          onChange={this.setValue.bind(this)}
+                                          options={this.state.options}
+                                          selection
+                                          value={this.state.tags}
+                                        />
+                                      }
+                                    </span>
+                                    <Button
+                                      secondary
+                                      icon="checkmark"
+                                      labelPosition="right"
+                                      content="Edit"
+                                      style={{ background: "#5b90f6" }}
+                                      onClick={() => this.update()}
+                                    />
+                                  </Modal.Actions>
+                                </Modal>
                               </List.Header>
                               <br />
                               <List.Description>
-                              { data.fotocontent !== null ? 
-                                (<Modal trigger={<Image
-                                  src={"http://localhost:3000/src/web-api/public/posting/foto/" + data.fotocontent}
-                                  size="large" />} 
-                                >
-                                <Header/>
-                                  <Modal.Content>
-                                    <Image
-                                      src={"http://localhost:3000/src/web-api/public/posting/foto/" + data.fotocontent}
-                                      size="big" />
-                                      <a onClick= {() => this.discuss(data.id_posts)}>{this.state.comment}comment</a>
-                                  </Modal.Content>
-                                </Modal>) : null
-                              }
+                                {data.fotocontent !== null ? (
+                                  <Modal
+                                    trigger={
+                                      <Image
+                                        src={
+                                          "http://localhost:3000/src/web-api/public/posting/foto/" +
+                                          data.fotocontent
+                                        }
+                                        size="large"
+                                      />
+                                    }
+                                  >
+                                    <Header />
+                                    <Modal.Content>
+                                      <Image
+                                        src={
+                                          "http://localhost:3000/src/web-api/public/posting/foto/" +
+                                          data.fotocontent
+                                        }
+                                        size="big"
+                                      />
+                                      <a
+                                        onClick={() =>
+                                          this.discuss(data.id_posts)
+                                        }
+                                      >
+                                        {this.state.comment}comment
+                                      </a>
+                                    </Modal.Content>
+                                  </Modal>
+                                ) : null}
                                 <br />
                                 <br />
                                 <b>{data.content}</b>
                                 <br />
                                 <br />
-                                  <Popup trigger={
-                                  <Icon
-                                    name="handshake outline"
-                                    onClick={() => this.givethanks(data._id)}
-                                  />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
-                                      : "Anda Telah UnThanks"}
-                                  </Popup>
+                                <Popup
+                                  trigger={
+                                    <Icon
+                                      name="handshake outline"
+                                      onClick={() => this.givethanks(data._id)}
+                                    />
+                                  }
+                                >
+                                  {this.state.kode == 1
+                                    ? "Anda Telah Thanks"
+                                    : "Anda Telah UnThanks"}
+                                </Popup>
                                 <small>
                                   <i>{data.thanks} Thanks </i>
                                 </small>
-                                <br/>
-                                <br/>
-                                <a onClick= {() => this.discuss(data.id_posts)}>{data.comment} comment</a>
+                                <br />
+                                <br />
+                                <a onClick={() => this.discuss(data.id_posts)}>
+                                  {data.comment} comment
+                                </a>
                                 <small style={{ float: "right" }}>
-                                <i>
-                                {
-                                  data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? "Now" 
-                                  : this.state.menit - data.menit + " m ago"  : this.state.jam - data.jam + " h ago" : data.date.slice(4, -5) : data.date.slice(4)
-                                }
-                                </i>
+                                  <i>
+                                    {data.date.slice(11) == this.state.year
+                                      ? data.date.slice(4, -5) ==
+                                        this.state.datemonth
+                                        ? data.jam == this.state.jam
+                                          ? data.menit == this.state.menit
+                                            ? "Now"
+                                            : this.state.menit -
+                                              data.menit +
+                                              " m ago"
+                                          : this.state.jam - data.jam + " h ago"
+                                        : data.date.slice(4, -5)
+                                      : data.date.slice(4)}
+                                  </i>
                                 </small>
                               </List.Description>
                             </List.Content>
@@ -495,7 +613,7 @@ export default class MyPost extends Component {
                   </Grid>
                 );
               })}
-              <Divider hidden/>
+              <Divider hidden />
             </Segment>
           </Container>
         )}
