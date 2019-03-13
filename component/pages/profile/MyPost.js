@@ -109,9 +109,10 @@ export default class MyPost extends Component {
           email: this.state.email // This is the body part
         }
       }).then(result => this.setState({ posting: result.data, thanks: 0 }));
-      
     }
   }
+
+
   handlePost(event) {
     let target = event.target;
     let value = target.value;
