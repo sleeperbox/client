@@ -48,6 +48,7 @@ export default class MyPost extends Component {
       s: 0,
       fotocontent: null,
       id: null,
+      post: null,
       modal: false,
       modalupdate: false,
       modalDiscuss: false,
@@ -155,13 +156,15 @@ export default class MyPost extends Component {
       },
       data: {
         email: this.state.email,
-        _id: this.state.id
+        _id: this.state.id,
+        id_posts: this.state.post,
       }
     }).then(this.setState({ modal: false, thanks: 1 }));
   }
 
-  handleOpen(value) {
-    this.setState({ modal: true, id: value });
+  handleOpen(value, postid) {
+    this.setState({ modal: true, id: value, post: postid});
+    console.log(postid)
   }
 
   handleOpenUpdate(value) {
@@ -280,7 +283,7 @@ export default class MyPost extends Component {
   };
 
   render() {
-    const { posting, isLoading, dimmer } = this.state;
+    const { posting, isLoading, dimmer} = this.state;
     const nopost = posting.length;
     const gridMargin = {
       marginBottom: "40px"
@@ -385,7 +388,7 @@ export default class MyPost extends Component {
                                   <i style={textMargin}>{data.tags}</i>
                                 </small>
                                 <Button
-                                  onClick={() => this.handleOpen(data._id)}
+                                  onClick={() => this.handleOpen(data._id, data.id_posts)}
                                   style={{
                                     color: "black",
                                     border: "1",
