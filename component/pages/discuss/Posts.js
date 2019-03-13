@@ -25,24 +25,30 @@ export default class Posts extends Component {
       username: localStorage.getItem("username"),
       posts: [],
       commentByPostId: [],
-      comment: '',
-      message: '',
+      comment: "",
+      message: "",
       modalOpen: false,
       comments: 0,
-      url: window.location.href.split('=')[1]
+      tgl: new Date().toDateString(),
+      month: new Date().getMonth(),
+      year: new Date().getFullYear(),
+      date: new Date().getDay(),
+      datemonth: new Date().toDateString().slice(4, -5),
+      jam: new Date().getHours(),
+      menit: new Date().getMinutes(),
+      url: window.location.href.split("=")[1]
     };
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleOpen = () => this.setState({ modalOpen: true })
-  handleClose = () => this.setState({ modalOpen: false })
+  handleOpen = () => this.setState({ modalOpen: true });
+  handleClose = () => this.setState({ modalOpen: false });
 
   componentWillMount() {
-    axios.get('/api/posts/' + this.state.url)
-    .then(response => {
-      this.setState({posts: response.data})
-    })
+    axios.get("/api/posts/" + this.state.url).then(response => {
+      this.setState({ posts: response.data });
+    });
     axios({
       method: "POST",
       url: "/api/comments",
@@ -53,16 +59,16 @@ export default class Posts extends Component {
       data: {
         id_posts: this.state.url
       }
-    }).then(result => this.setState({commentByPostId: result.data}));
+    }).then(result => this.setState({ commentByPostId: result.data }));
   }
 
   shouldComponentUpdate(newProps, newState) {
     if (newState) {
-       return true;
-     } else {
-       return false;
-     }
-   }
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.comments == 1) {
@@ -76,10 +82,9 @@ export default class Posts extends Component {
         data: {
           id_posts: this.state.url
         }
-      }).then(result => this.setState({commentByPostId: result.data}));
+      }).then(result => this.setState({ commentByPostId: result.data }));
     }
   }
-
 
   handleChange(event) {
     let target = event.target;
@@ -122,76 +127,139 @@ export default class Posts extends Component {
         _id: value,
         id_posts: this.state.url
       }
-    }).then(this.setState({modalOpen: false, comments: 1}));
+    }).then(this.setState({ modalOpen: false, comments: 1 }));
   }
-  
+
   render() {
-    const {posts, url, commentByPostId} = this.state;
+    const { posts, url, commentByPostId } = this.state;
     return (
       <div>
-        <Container >
+        <Container>
           <Item.Group>
             <Item>
               <Item.Content>
-                <ItemMeta as='a' style={{color: "black"}}><Image avatar src={"http://localhost:3000/src/web-api/public/avatar/" + posts.foto}/> <b>{posts.username}</b></ItemMeta>
-                <Item.Description style={{padding: 15, margin: 5}}>
-                { posts.fotocontent !== null ? 
+                <ItemMeta as="a" style={{ color: "black" }}>
                   <Image
-                    src={"http://localhost:3000/src/web-api/public/posting/foto/" + posts.fotocontent}
-                    size="large" /> : null }
-                <br />
-                <br />
+                    avatar
+                    src={
+                      "http://localhost:3000/src/web-api/public/avatar/" +
+                      posts.foto
+                    }
+                  />{" "}
+                  <b>{posts.username}</b>
+                </ItemMeta>
+                <Item.Description style={{ padding: 15, margin: 5 }}>
+                  {posts.fotocontent !== null ? (
+                    <Image
+                      src={
+                        "http://localhost:3000/src/web-api/public/posting/foto/" +
+                        posts.fotocontent
+                      }
+                      size="large"
+                    />
+                  ) : null}
+                  <br />
+                  <br />
                   {posts.content}
                 </Item.Description>
-                <Divider hidden/>
-                <Divider hidden/>
+                <Divider hidden />
+                <Divider hidden />
                 <ItemMeta>
-                <small><i>post on {posts.tags}</i></small>
-                <small style={{float: "right"}}>{posts.jam}:{posts.menit} </small></ItemMeta>
+                  <small>
+                    <i>post on {posts.tags}</i>
+                  </small>
+                  <small style={{ float: "right" }}>
+                    {posts.jam}:{posts.menit}{" "}
+                  </small>
+                </ItemMeta>
               </Item.Content>
             </Item>
           </Item.Group>
           <Divider />
           <Comment.Group>
             {commentByPostId.map(data => {
-            return <Comment key={data._id}>
-              <Comment.Avatar src={"http://localhost:3000/src/web-api/public/avatar/" + data.foto} />
-              <Comment.Content>
-                <Comment.Author>{data.username}
-                <Modal
-                   trigger={<Icon onClick={this.handleOpen} name="trash alternate outline" style={{float: "right", color: "#595959"}} size={"small"}/>}
-                   open={this.state.modalOpen}
-                   onClose={this.handleClose}
-                   basic
-                  >
-                  <Header icon="trash alternate outline" content="Delete Comment!" />
-                  <Modal.Content>
-                      <p>Are You Sure?</p>
-                  </Modal.Content>
-                  <Modal.Actions>
-                  <Button onClick={this.handleClose} inverted>
-                    <Icon name="remove" /> No
-                  </Button>
-                  <Button onClick={() => this.delete(data._id)}>
-                    <Icon name="checkmark" /> Yes
-                  </Button>
-                  </Modal.Actions>
-                  </Modal>
-                  </Comment.Author>
-                <Comment.Text>
-                  {data.comment}
-                </Comment.Text>
-              </Comment.Content>
-              <br/>
-            </Comment>
+              return (
+                <Comment key={data._id}>
+                  <Comment.Avatar
+                    src={
+                      "http://localhost:3000/src/web-api/public/avatar/" +
+                      data.foto
+                    }
+                  />
+                  <Comment.Content>
+                    <Comment.Author>
+                      {data.username}
+                      <Modal
+                        trigger={
+                          <Icon
+                            onClick={this.handleOpen}
+                            name="trash alternate outline"
+                            style={{ float: "right", color: "#595959" }}
+                            size={"small"}
+                          />
+                        }
+                        open={this.state.modalOpen}
+                        onClose={this.handleClose}
+                        basic
+                      >
+                        <Header
+                          icon="trash alternate outline"
+                          content="Delete Comment!"
+                        />
+                        <Modal.Content>
+                          <p>Are You Sure?</p>
+                        </Modal.Content>
+                        <Modal.Actions>
+                          <Button onClick={this.handleClose} inverted>
+                            <Icon name="remove" /> No
+                          </Button>
+                          <Button onClick={() => this.delete(data._id)}>
+                            <Icon name="checkmark" /> Yes
+                          </Button>
+                        </Modal.Actions>
+                      </Modal>
+                    </Comment.Author>
+                    <Comment.Text>{data.comment}</Comment.Text>
+                    <Comment.Actions>
+                      <Comment.Action>
+                        {data.date.slice(11) == this.state.year
+                          ? data.date.slice(4, -5) == this.state.datemonth
+                            ? data.jam == this.state.jam
+                              ? data.menit == this.state.menit
+                                ? "Now"
+                                : this.state.menit - data.menit + " m ago"
+                              : this.state.jam - data.jam + " h ago"
+                            : data.date.slice(4, -5)
+                          : data.date.slice(4)}
+                      </Comment.Action>
+                    </Comment.Actions>
+                  </Comment.Content>
+                  <br />
+                </Comment>
+              );
             })}
             <Comment.Action>
-            <Divider hidden/>
-            <Form onSubmit={this.handleSubmit}>
-            <Input name="comment" style={{bottom: 10, position: "fixed", zIndex: 99, padding: 10, margin: 5, width: "85%" }} size="large" transparent placeholder='komentari ...' icon='paper plane outline' onChange={this.handleChange}/>
-            </Form>
+              <Divider hidden />
+              <Form onSubmit={this.handleSubmit}>
+                <Input
+                  name="comment"
+                  style={{
+                    bottom: 10,
+                    position: "fixed",
+                    zIndex: 99,
+                    padding: 10,
+                    margin: 5,
+                    width: "85%"
+                  }}
+                  size="large"
+                  transparent
+                  placeholder="komentari ..."
+                  icon="paper plane outline"
+                  onChange={this.handleChange}
+                />
+              </Form>
             </Comment.Action>
-          </Comment.Group>    
+          </Comment.Group>
         </Container>
       </div>
     );
