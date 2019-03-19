@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import store from '../../../store';
 import {
   Button,
   Form,
@@ -13,6 +14,7 @@ import {
   Message
 } from "semantic-ui-react";
 import axios from "axios";
+import { emailAction, } from '../actions';
 
 export default class Register extends Component {
   constructor(props) {
@@ -24,15 +26,16 @@ export default class Register extends Component {
       last_name: "",
       password: "",
       isLogin: "",
-      token: "",
       warning: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  
   // eslint-disable-next-line react/no-deprecated
   componentWillMount() {
+    store.dispatch(emailAction('email@hore'))
+    console.log(store.getState())
     this.setState({
       isLogin: localStorage.getItem("auth")
     });
