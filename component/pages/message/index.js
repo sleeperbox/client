@@ -185,7 +185,7 @@ export default class Index extends Component {
           <Container>
             {datas.map(data => {
               return (
-                <Grid columns={2} key={data._id}>  
+                <Grid columns={1} key={data._id}>  
                   <Grid.Column>
                     { data.username_user1 === this.state.username_user1 ? <List verticalAlign="middle" onClick={() => {this.message(data.username_user2)}}>
                       <List.Item>
@@ -211,7 +211,22 @@ export default class Index extends Component {
             })}
           </Container>
         )}
-        <Button style={{float: "right",zIndex: 2,position: "fixed",bottom: 50,right: -0 }} onClick={() => {this.newmessage()}}>+</Button>
+        <Button 
+          circular 
+          size='big' 
+          icon='plus'  
+          style={{
+            float: "right",
+            zIndex: 1,
+            position: "fixed",
+            bottom: 65,
+            right: 1,
+            background: "#5b90f6",
+            color: "white" 
+          }} 
+          onClick={() => {this.newmessage()}} />
+          
+                                    
         <MenuProfile />
       </div>
     );

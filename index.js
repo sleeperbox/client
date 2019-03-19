@@ -1,5 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import rootReducer from './reducers'
 import { HashRouter, Route } from "react-router-dom";
 import App from "./App";
 import "./index.css";
@@ -26,7 +29,10 @@ import Posts from "./component/pages/discuss/"
 //home
 import Home from "./component/pages/home/"
 
+const store = createStore(rootReducer)
+
 ReactDOM.render(
+  <Provider store={store}>
   <HashRouter>
     <div>
       <Route path="/" component={App} exact />
@@ -46,6 +52,8 @@ ReactDOM.render(
       <Route path="/dm" component={MessagePrivate} />
       <Route path="/newdm" component={NewMessage} />
     </div>
-  </HashRouter>,
+  </HashRouter>
+  </Provider>,
   document.getElementById("root")
+  
 );

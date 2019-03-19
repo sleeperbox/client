@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { Dimmer, Loader, Icon, Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
-import HeaderNotification from "./HeaderNotification";
-import Action from "./action";
 import axios from "axios";
 
-export default class Index extends Component {
+export default class Infuenced extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -132,21 +130,37 @@ export default class Index extends Component {
     );
 }
 
-render() {
-  sessionStorage.setItem("email_friend", this.state.email_friend);
-  const {loading} = this.state
-  return (
-    <div style={{ marginBottom: 45 }}>
-      {loading ? (this.loading()) : ( <div>
-      <HeaderNotification />
-      <Divider hidden />
-      <Divider hidden />
-      <Divider hidden />
-      <Action />
+  render() {
+    const { datas, isLoading, loading } = this.state;
+    return (
+      <div style={{ marginBottom: 45 }}>
+        { loading ? (this.loading()
+        ) : datas.length === 0 ? (
+          this.generateZeroData()
+        ) : isLoading ? (
+          this.generateSkeleton()
+        ) : (
+          <Container>
+            {datas.map(data => {
+              return (
+                <Grid columns={1} key={data._id}>
+                  <Grid.Column>
+                    <List verticalAlign="middle">
+                      <List.Item>
+                        <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
+                        <List.Content>
+                          <List.Header>{data.name}</List.Header>
+                          <i>{"Influenced by you"}</i>
+                        </List.Content>
+                      </List.Item>
+                    </List>
+                  </Grid.Column>
+                </Grid>
+              );
+            })}
+          </Container>
+        )}
       </div>
-      )}
-      
-    </div>
-  );
-}
+    );
+  }
 }

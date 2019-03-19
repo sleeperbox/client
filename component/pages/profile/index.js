@@ -4,14 +4,16 @@ import MenuProfile from './MenuProfile';
 import HeaderProfile from './HeaderProfile';
 import MyPost from './MyPost';
 import MoreCategory from './MoreCategory';
+import { isloginAction, emailAction, passwordAction, tipeAction } from '../actions';
+import store from '../../../store';
 
 export default class Index extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: '',
-            email: '',
+            isLogin: store.getState().form.isLogin,
+            email: store.getState().form.email,
             loading: true,
         };
     }

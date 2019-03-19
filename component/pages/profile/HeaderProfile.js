@@ -187,19 +187,26 @@ export default class HeaderProfile extends Component {
           this.generateSkeleton()
         ) : (
           <Container>
-            <Grid columns={1} style={{ background: "#393939" }}>
+            <Grid columns={1} style={{ background: "#5190ed" }}>
               <Divider hidden />
               <Grid.Row>
                 <Grid.Column>
                   <Segment basic textAlign="center">
                   <Popup 
                     trigger={
-                      <Image
+                      <center>
+                        <Image
+                        style={{
+                            alignSelf: 'center',
+                            height: 150, 
+                            width: 150, 
+                            bordeerWidth: 1, 
+                            borderRadius:70 
+                        }}
+                        
                         src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.foto}
-                        size="medium"
-                        circular
-                        bordered
                       />
+                      </center> 
                     }
 
                     position='top center'
