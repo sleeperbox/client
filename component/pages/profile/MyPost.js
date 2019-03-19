@@ -10,9 +10,17 @@ import {
   Header,
   Image,
   Modal,
+
   Label,
   Button,
-  Popup
+  Popup,
+  Button,
+  Header,
+  TextArea,
+  Dropdown,
+  Message,
+  Form
+
 } from "semantic-ui-react";
 
 import Skeleton from "react-skeleton-loader";
@@ -28,25 +36,41 @@ export default class MyPost extends Component {
       posting: [],
       tgl: new Date().toDateString(),
       month: new Date().getMonth(),
-      year : new Date().getFullYear(),
+      year: new Date().getFullYear(),
       date: new Date().getDay(),
       datemonth: new Date().toDateString().slice(4, -5),
       jam: new Date().getHours(),
       menit: new Date().getMinutes(),
       thanks: 0,
+      kode_post: 0,
+      options: [],
+      contents: [],
+      tags: "",
+      file: null,
+      value: "null",
       kode: 0,
-      a: 0,
+      tag: 0,
+      post: 0,
+      s: 0,
+      fotocontent: null,
+      id: null,
+      post: null,
       modal: false,
-      modalDiscuss: false
+      modalupdate: false,
+      modalDiscuss: false,
+      content: "",
+      preview: null
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.givethanks = this.givethanks.bind(this);
     this.delete = this.delete.bind(this);
+    this.handlePost = this.handlePost.bind(this);
   }
 
-  handleOpen = () => this.setState({ modal: true });
-
   handleClose = () => this.setState({ modal: false });
+
+  handleCloseUpdate = () =>
+    this.setState({ modalupdate: false, preview: null });
 
   componentWillMount() {}
 
@@ -61,16 +85,31 @@ export default class MyPost extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ posting: result.data, jamm: result.data, isLoading: false }))
+    }).then(result =>
+      this.setState({
+        posting: result.data,
+        jamm: result.data,
+        isLoading: false
+      })
+    );
+
+    axios({
+      method: "get",
+      url: "/api/tags",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    }).then(result => this.setState({ options: result.data }));
   }
 
-  // shouldComponentUpdate(newProps, newState) {
-  //   if (newState) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  shouldComponentUpdate(newProps, newState) {
+    if (newState) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.thanks == 1) {
@@ -85,8 +124,15 @@ export default class MyPost extends Component {
           email: this.state.email // This is the body part
         }
       }).then(result => this.setState({ posting: result.data, thanks: 0 }));
-      
     }
+  }
+  handlePost(event) {
+    let target = event.target;
+    let value = target.value;
+    let name = target.name;
+    this.setState({
+      [name]: value
+    });
   }
 
   givethanks(value) {
@@ -101,10 +147,12 @@ export default class MyPost extends Component {
         email: this.state.email,
         _id: value // This is the body part
       }
-    }).then((result) => this.setState({ thanks: 1, kode: result.data.kode.kode}));
+    }).then(result =>
+      this.setState({ thanks: 1, kode: result.data.kode.kode })
+    );
   }
 
-  delete(value) {
+  delete() {
     axios({
       method: "delete",
       url: "/api/posting/delete",
@@ -114,9 +162,54 @@ export default class MyPost extends Component {
       },
       data: {
         email: this.state.email,
-        _id: value,
+        _id: this.state.id,
+        id_posts: this.state.post,
       }
-    }).then(this.setState({modal: false, thanks: 1,}));
+    }).then(this.setState({ modal: false, thanks: 1 }));
+  }
+
+  handleOpen(value, postid) {
+    this.setState({ modal: true, id: value, post: postid});
+    console.log(postid)
+  }
+
+  handleOpenUpdate(value) {
+    this.setState({ id: value });
+    axios({
+      method: "post",
+      url: "/api/posting/detail",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        _id: value
+      }
+    }).then(result =>
+      this.setState({
+        modalupdate: true,
+        contents: result.data,
+        content: result.data.content,
+        tags: result.data.tags
+      })
+    );
+  }
+
+  update() {
+    axios({
+      method: "post",
+      url: "/api/posting/update",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        id: this.state.id,
+        content: this.state.content,
+        tags: this.state.tags,
+        kode_post: 1
+      }
+    }).then(this.setState({ modalupdate: false, thanks: 1 }));
   }
 
   generateSkeleton() {
@@ -180,11 +273,23 @@ export default class MyPost extends Component {
   }
 
   discuss(value) {
-    window.location = '#/posts?id='+ value + '' 
+    window.location = "#/posts?id=" + value + "";
   }
 
+  setValue(e, data) {
+    this.setState({ tags: data.value });
+  }
+
+  fileHandler = event => {
+    this.setState({
+      file: event.target.files[0],
+      fotocontent: 1,
+      preview: URL.createObjectURL(event.target.files[0])
+    });
+  };
+
   render() {
-    const { posting, isLoading } = this.state;
+    const { posting, isLoading, dimmer} = this.state;
     const nopost = posting.length;
     // const hexagons = GridGenerator.parallelogram(-1, 2, -1, 0);
     const gridMargin = {
@@ -192,6 +297,10 @@ export default class MyPost extends Component {
     };
     const textMargin = {
       marginLeft: "2%"
+    };
+    const postSize = {
+      width: "1%",
+      float: "left"
     };
     return (
       <div>
@@ -220,7 +329,6 @@ export default class MyPost extends Component {
             <ul id="grid" className="clear" style={{marginTop: -45}}>
               {posting.map((data, index) => {
                 return (
-            
                     <li key={data._id}>
                       <div className="hexagon">       
                         { data.fotocontent !== null ? 
@@ -235,62 +343,63 @@ export default class MyPost extends Component {
                             />} 
                             >
                             <Header ><small>
-                                  {data.tags === "null" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/pilihkategori.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "computer-gadget" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/komputergadget.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "family-love" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/keluargaasmara.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "fact-rumour" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/faktarumor.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "business-work" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/bisnispekerjaan.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "fashion-lifestyle" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/fashion.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "quotes" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/quotes.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "other" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/lainnya.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "riddles" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/riddle.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : null}
+                                {data.tags === "null" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/kategori.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "computer-gadget" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/komp.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "family-love" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/family.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "fact-rumour" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/fr.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "business-work" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/bisnis.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "fashion-lifestyle" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/fashion.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "quotes" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/quotes.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "other" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/other.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "riddles" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/riddle.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : null}
                                 </small>
+
                                 <small>
                                   <i style={textMargin}>{data.tags}</i>
                                 </small></Header>
