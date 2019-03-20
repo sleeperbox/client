@@ -182,55 +182,55 @@ export default class PostingOther extends Component {
                                 <small>
                                 {data.tags === "null" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/pilihkategori.png"
+                                    src="http://localhost:3000/src/web-api/public/icon/kategori.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "computer-gadget" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/komputergadget.png"
+                                    src="http://localhost:3000/src/web-api/public/icon/komp.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "family-love" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/keluargaasmara.png"
+                                    src="http://localhost:3000/src/web-api/public/icon/family.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "fact-rumour" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/faktarumor.png"
+                                    src="http://localhost:3000/src/web-api/public/icon/fr.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "business-work" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/bisnispekerjaan.png"
+                                    src="http://localhost:3000/src/web-api/public/icon/bisnis.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "fashion-lifestyle" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/fashion.png"
+                                    src="http://localhost:3000/src/web-api/public/icon/fashion.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "quotes" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/quotes.png"
+                                    src="http://localhost:3000/src/web-api/public/icon/quotes.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "other" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/lainnya.png"
+                                    src="http://localhost:3000/src/web-api/public/icon/other.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "riddles" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/riddle.png"
+                                    src="http://localhost:3000/src/web-api/public/icon/riddle.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
