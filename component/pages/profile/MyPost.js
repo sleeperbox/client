@@ -10,16 +10,8 @@ import {
   Header,
   Image,
   Modal,
-
-  Label,
   Button,
-  Popup,
-  Button,
-  Header,
-  TextArea,
-  Dropdown,
-  Message,
-  Form
+  Popup
 
 } from "semantic-ui-react";
 
