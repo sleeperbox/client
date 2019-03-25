@@ -9,6 +9,7 @@ import "./index.css";
 
 
 //user personality
+import Intro from "./component/pages/form-user/intro";
 import Login from "./component/pages/form-user/login";
 import Register from "./component/pages/form-user/register";
 import Profile from "./component/pages/profile/";
@@ -40,6 +41,7 @@ ReactDOM.render(
       <Route path="/posts/" component={Posts} />
       <Route path="/user/profile" component={UserProfile} />
       <Route path="/user/influence/list" component={Influence} />
+      <Route path="/intro" component={Intro} />
       <Route path="/profile" component={Profile} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
