@@ -4,41 +4,46 @@ export default class intro extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          time: new Date(),
-          hour: new Date().getHours(),
-          minute: new Date().getMinutes(),
+            background: "",
+            time: new Date(),
+            // hour: "20",
+            hour: new Date().getHours(),
+            minute: new Date().getMinutes(),
         };
       }
 
     componentWillMount(){
-        
         const { hour } = this.state;
         console.log(hour);
-        if (hour > 5 || hour < 12) {
-            <img src="./assets/images/background/goodmorning2.png"/>
-            console.log("./assets/images/background/goodmorning2.png")
-          } else if (hour > 14 && hour < 18) {
+        if (hour < 12) {
             this.setState({
-              background:
-                "orage",
-              coloring: "#f0f0f0"
+                background: "./assets/images/background/goodmorning2.png",
+              });
+              console.log("./assets/images/background/goodemorning.png")
+          } else if (hour < 18) {
+            this.setState({
+              background: "./assets/images/background/goodafternoon.png",
             });
+            console.log("./assets/images/background/goodafternoon.png")
           } else {
             this.setState({
-              background: "grey",
-              coloring: "white"
+              background: "./assets/images/background/goodevening.png",
             });
+            console.log("./assets/images/background/goodevening.png")
           }
     }
 
     render(){
+        const{
+            background
+        }=this.state;
         return(
             <div>
-                <img src="./assets/images/background/goodmorning2.png"/>
-                lol
+                <img src={background} />                
+                <p onClick={() => window.location="#/login"}>login</p>
+                <p onClick={() => window.location="#/register"}>Register</p>
             </div>
-            // <p onClick={() => window.location="#/login"}>login</p>
-            // <p onClick={() => window.location="#/register"}>Register</p>
+            
             
         );
     }
