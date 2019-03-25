@@ -11,7 +11,8 @@ import {
   Image,
   Modal,
   Button,
-  Popup
+  Popup,
+  Label
 
 } from "semantic-ui-react";
 
@@ -58,6 +59,8 @@ export default class MyPost extends Component {
     this.delete = this.delete.bind(this);
     this.handlePost = this.handlePost.bind(this);
   }
+
+  handleOpen = () => this.setState({ modal: true });
 
   handleClose = () => this.setState({ modal: false });
 
@@ -143,8 +146,7 @@ export default class MyPost extends Component {
       this.setState({ thanks: 1, kode: result.data.kode.kode })
     );
   }
-
-  delete() {
+  delete(value) {
     axios({
       method: "delete",
       url: "/api/posting/delete",
@@ -154,11 +156,11 @@ export default class MyPost extends Component {
       },
       data: {
         email: this.state.email,
-        _id: this.state.id,
-        id_posts: this.state.post,
+        _id: value,
       }
-    }).then(this.setState({ modal: false, thanks: 1 }));
+    }).then(this.setState({modal: false, thanks: 1,}));
   }
+
 
   handleOpen(value, postid) {
     this.setState({ modal: true, id: value, post: postid});
@@ -203,6 +205,8 @@ export default class MyPost extends Component {
       }
     }).then(this.setState({ modalupdate: false, thanks: 1 }));
   }
+
+  
 
   generateSkeleton() {
     return (
@@ -430,10 +434,7 @@ export default class MyPost extends Component {
                                     <Grid.Column style={{marginLeft: 50}}>
                                       {/* delete */}
                                       <Modal
-                                        trigger={
-                                          
-                                          <Icon onClick={this.handleOpen} name="trash alternate outline" size='large'style={{marginLeft: 30}}/>
-                                        }
+                                        trigger={<Label onClick={this.handleOpen} style={{color: "black", border: "1", background: "white", float: "right", marginRight: "-4%"}}><Icon name="trash alternate outline"/></Label>}
                                         open={this.state.modal}
                                         onClose={this.handleClose}
                                         basic
@@ -449,7 +450,6 @@ export default class MyPost extends Component {
                                         <Button inverted onClick={() => this.delete(data._id)}>
                                           <Icon name="checkmark" /> Yes
                                         </Button>
-
                                         </Modal.Actions>
                                       </Modal>
                                     </Grid.Column>
