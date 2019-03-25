@@ -193,6 +193,14 @@ export default class allPeople extends Component {
     
     render() {
         const { datas, isLoading, friendship, open, dimmer, fotos, allfoto } = this.state
+        const marginLayer = {
+            marginLeft : "2px",
+            marginRight : "2px"
+        }
+        const marginSearch = {
+            marginLeft : "1em",
+            marginRight : "1em"
+        }
         return (
             <div style={{marginBottom: 45}}>
             <Input
@@ -202,6 +210,7 @@ export default class allPeople extends Component {
                 name="cari"
                 value={this.state.cari}
                 placeholder="Seacrh"
+                style={marginSearch}
             />
             <br />
             {datas.length === 0 ? (
@@ -211,7 +220,7 @@ export default class allPeople extends Component {
             <Container>
                 {datas.map(data => {  
                     return (
-                <Grid columns={1} key={data._id}>
+                <Grid columns={1} key={data._id} style={marginLayer}>
                     { data.email === this.state.email ? null :
                     <Grid.Column>
                         <List verticalAlign="middle" onClick={() => {this.handleClick(data.email)}}>
