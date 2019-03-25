@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { Dimmer, Loader, Container, Grid, Divider, Image, List, Header, Button, Icon } from 'semantic-ui-react';
 import HeaderStore from './HeaderStore';
 import MenuProfile from '../../profile/MenuProfile';
+import Store from './Store';
 
 export default class Index extends Component {
     constructor(props) {
@@ -33,12 +34,6 @@ export default class Index extends Component {
         }
         const {isLogin} = this.state
         isLogin === "false" ? window.location = '#/login' : ''
-        // console.log('first ', this.state.loading)
-        // setTimeout(() => {
-        //     if(this.state.loading == true){
-        //         this.setState({loading: false}, () => console.log('end: ', this.state.loading))
-        //     }
-        // }, 500)
     }
 
     shouldComponentUpdate(newProps, newState){
@@ -79,14 +74,7 @@ export default class Index extends Component {
                         <div>
                             <HeaderStore/>
                             <Container>
-                                <Grid columns={2}>
-                                    <Grid.Column>
-                                        
-                                    </Grid.Column>
-                                    <Grid.Column verticalAlign="middle">
-                                
-                                    </Grid.Column>
-                                </Grid>
+                                <Store/>
                             </Container>
                             <MenuProfile/>
                         </div>
