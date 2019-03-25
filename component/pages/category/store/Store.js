@@ -11,7 +11,7 @@ export default class Store extends Component {
         <Grid textAlign="center" columns={1}>
           <Grid.Row>
             <Grid.Column>
-              <h1 style={marginText}>We Will Comming Soon !</h1>
+              <h1 style={marginText}>We Will Coming Soon !</h1>
             </Grid.Column>
           </Grid.Row>
         </Grid>
