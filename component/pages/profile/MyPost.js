@@ -6,20 +6,18 @@ import {
   Divider,
   Icon,
   GridColumn,
-  GridRow,
   List,
+  Header,
   Image,
-  Popup,
   Modal,
   Button,
-  Header,
-  TextArea,
-  Dropdown,
-  Message,
-  Form
+  Popup
+
 } from "semantic-ui-react";
+
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
+import "./Hex.css"
 
 export default class MyPost extends Component {
   constructor(props) {
@@ -48,6 +46,7 @@ export default class MyPost extends Component {
       s: 0,
       fotocontent: null,
       id: null,
+      post: null,
       modal: false,
       modalupdate: false,
       modalDiscuss: false,
@@ -155,13 +154,15 @@ export default class MyPost extends Component {
       },
       data: {
         email: this.state.email,
-        _id: this.state.id
+        _id: this.state.id,
+        id_posts: this.state.post,
       }
     }).then(this.setState({ modal: false, thanks: 1 }));
   }
 
-  handleOpen(value) {
-    this.setState({ modal: true, id: value });
+  handleOpen(value, postid) {
+    this.setState({ modal: true, id: value, post: postid});
+    console.log(postid)
   }
 
   handleOpenUpdate(value) {
@@ -280,8 +281,9 @@ export default class MyPost extends Component {
   };
 
   render() {
-    const { posting, isLoading, dimmer } = this.state;
+    const { posting, isLoading, dimmer} = this.state;
     const nopost = posting.length;
+    // const hexagons = GridGenerator.parallelogram(-1, 2, -1, 0);
     const gridMargin = {
       marginBottom: "40px"
     };
@@ -315,305 +317,175 @@ export default class MyPost extends Component {
         ) : (
           <Container>
             <Segment basic>
+            
+            <ul id="grid" className="clear" style={{marginTop: -45}}>
               {posting.map((data, index) => {
                 return (
-                  <Grid columns={1} key={data._id}>
-                    <GridColumn>
-                      <GridRow>
-                        <List style={gridMargin}>
-                          <List.Item>
-                            <List.Content>
-                              <List.Header as="a">
-                                <small>
-                                  {data.tags === "null" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/pilihkategori.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "computer-gadget" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/komputergadget.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "family-love" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/keluargaasmara.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "fact-rumour" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/faktarumor.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "business-work" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/bisnispekerjaan.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "fashion-lifestyle" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/fashion.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "quotes" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/quotes.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "other" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/lainnya.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : data.tags === "riddles" ? (
-                                    <Image
-                                      src="http://192.168.1.14/assets/icons/tags/riddle.png"
-                                      width="7%"
-                                      style={{ float: "left" }}
-                                    />
-                                  ) : null}
+                    <li key={data._id}>
+                      <div className="hexagon">       
+                        { data.fotocontent !== null ? 
+                          (<Modal 
+                            onClose={this.close} closeIcon
+                            trigger={<Image
+                              src={"http://localhost:3000/src/web-api/public/posting/foto/" + data.fotocontent}
+                              style={{
+                                height: "100%",
+                                width: "100%"
+                            }}
+                            />} 
+                            >
+                            <Header ><small>
+                                {data.tags === "null" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/kategori.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "computer-gadget" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/komp.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "family-love" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/family.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "fact-rumour" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/fr.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "business-work" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/bisnis.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "fashion-lifestyle" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/fashion.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "quotes" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/quotes.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "other" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/other.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "riddles" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/riddle.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : null}
                                 </small>
+
                                 <small>
                                   <i style={textMargin}>{data.tags}</i>
-                                </small>
-                                <Button
-                                  onClick={() => this.handleOpen(data._id)}
-                                  style={{
-                                    color: "black",
-                                    border: "1",
-                                    background: "white",
-                                    float: "right",
-                                    marginRight: "-1%"
-                                  }}
-                                >
-                                  <Icon name="trash alternate outline" />
-                                </Button>
-                                <Button
-                                  onClick={() =>
-                                    this.handleOpenUpdate(data._id)
-                                  }
-                                  style={{
-                                    color: "black",
-                                    border: "1",
-                                    background: "white",
-                                    float: "right",
-                                    marginRight: "-1%"
-                                  }}
-                                >
-                                  <Icon name="edit outline" />
-                                </Button>
-                                <Modal
-                                  id={data._id}
-                                  open={this.state.modal}
-                                  onClose={this.handleClose}
-                                  basic
-                                >
-                                  <Header
-                                    icon="trash alternate outline"
-                                    content="Delete Posting!"
+                                </small></Header>
+
+                              <Modal.Content>
+                                <Image
+                                  src={"http://localhost:3000/src/web-api/public/posting/foto/" + data.fotocontent}
                                   />
-                                  <Modal.Content>
-                                    <p>Are You Sure?</p>
-                                  </Modal.Content>
-                                  <Modal.Actions>
-                                    <Button onClick={this.handleClose} inverted>
-                                      <Icon name="remove" /> No
-                                    </Button>
-                                    <Button
-                                      inverted
-                                      onClick={() => this.delete()}
-                                    >
-                                      <Icon name="checkmark" /> Yes
-                                    </Button>
-                                  </Modal.Actions>
-                                </Modal>
-                                <Modal
-                                  dimmer={dimmer}
-                                  size="large"
-                                  id={data._id}
-                                  open={this.state.modalupdate}
-                                  onClose={this.handleCloseUpdate}
-                                  basic
-                                >
-                                  <Modal.Content>
-                                    <Modal.Description>
-                                      {this.state.tag == 1 ? (
-                                        <i>
-                                          <Message
-                                            error
-                                            icon="warning circle"
-                                            header="Anda Belum Memilih Tag"
-                                            size="mini"
-                                          />
-                                        </i>
-                                      ) : this.state.post == 1 ? (
-                                        <i>
-                                          <Message
-                                            icon="warning circle"
-                                            error
-                                            header="Konten Tidak Boleh Kosong"
-                                            size="mini"
-                                          />
-                                        </i>
-                                      ) : null}
-                                      <Header as="h5">
-                                        <p style={{ color: "white" }}>
-                                          Edit Posting
-                                        </p>
-                                      </Header>
-                                      <Form>
-                                        <TextArea
-                                          maxLength={250}
-                                          name="content"
-                                          onChange={this.handlePost}
-                                          autoHeight
-                                          placeholder="What happen..."
-                                          value={this.state.content}
-                                        />
-                                        <br />
-                                        <div className="input-file-container">
-                                          <br />{" "}
-                                          {this.state.preview !==
-                                          null ? null : this.state.contents
-                                              .fotocontent ===
-                                            null ? null : this.state.contents
-                                              .fotocontent !== null ? (
-                                            <Image
-                                              src={
-                                                "http://localhost:3000/src/web-api/public/posting/foto/" +
-                                                this.state.contents.fotocontent
-                                              }
-                                              size="tiny"
-                                            />
-                                          ) : null}
-                                          {this.state.preview ===
-                                          null ? null : this.state.preview !==
-                                            null ? (
-                                            <Image
-                                              src={this.state.preview}
-                                              size="tiny"
-                                            />
-                                          ) : null}
-                                        </div>
-                                      </Form>
-                                    </Modal.Description>
-                                  </Modal.Content>
-                                  <Modal.Actions>
-                                    <span style={postSize}>
-                                      {
-                                        <Dropdown
-                                          search
-                                          onChange={this.setValue.bind(this)}
-                                          options={this.state.options}
-                                          selection
-                                          value={this.state.tags}
-                                        />
-                                      }
-                                    </span>
-                                    <Button
-                                      secondary
-                                      icon="checkmark"
-                                      labelPosition="right"
-                                      content="Edit"
-                                      style={{ background: "#5b90f6" }}
-                                      onClick={() => this.update()}
-                                    />
-                                  </Modal.Actions>
-                                </Modal>
-                              </List.Header>
-                              <br />
-                              <List.Description>
-                                {data.fotocontent !== null ? (
-                                  <Modal
-                                    trigger={
-                                      <Image
-                                        src={
-                                          "http://localhost:3000/src/web-api/public/posting/foto/" +
-                                          data.fotocontent
+                                <Grid>
+                                  <Grid.Row columns={4}>
+                                    <Grid.Column>
+                                      {/* thanks */}
+                                      <Popup trigger={
+                                      <Icon
+                                        name="handshake outline"
+                                        size='large'
+                                        onClick={() => this.givethanks(data._id)}
+                                      />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
+                                          : "Anda Telah UnThanks"}
+                                      </Popup>
+                                      <br />
+                                      <small>
+                                        <i> {data.thanks} Thanks </i>
+                                      </small>
+                                    </Grid.Column>
+                                    <Grid.Column style={{marginLeft: -50}}>
+                                      {/* Coment */}                                
+                                      <Icon 
+                                        name="facebook messenger"
+                                        size='large'
+                                        onClick= {() => this.discuss(data.id_posts)}
+                                      />{this.state.comment}
+                                    </Grid.Column>
+                                    <Grid.Column></Grid.Column>
+                                    
+                                    <Grid.Column style={{marginLeft: 50}}>
+                                      {/* delete */}
+                                      <Modal
+                                        trigger={
+                                          
+                                          <Icon onClick={this.handleOpen} name="trash alternate outline" size='large'style={{marginLeft: 30}}/>
                                         }
-                                        size="large"
-                                      />
-                                    }
-                                  >
-                                    <Header />
-                                    <Modal.Content>
-                                      <Image
-                                        src={
-                                          "http://localhost:3000/src/web-api/public/posting/foto/" +
-                                          data.fotocontent
-                                        }
-                                        size="big"
-                                      />
-                                      <a
-                                        onClick={() =>
-                                          this.discuss(data.id_posts)
-                                        }
+                                        open={this.state.modal}
+                                        onClose={this.handleClose}
+                                        basic
                                       >
-                                        {this.state.comment}comment
-                                      </a>
-                                    </Modal.Content>
-                                  </Modal>
-                                ) : null}
-                                <br />
-                                <br />
-                                <b>{data.content}</b>
-                                <br />
-                                <br />
-                                <Popup
-                                  trigger={
-                                    <Icon
-                                      name="handshake outline"
-                                      onClick={() => this.givethanks(data._id)}
-                                    />
-                                  }
-                                >
-                                  {this.state.kode == 1
-                                    ? "Anda Telah Thanks"
-                                    : "Anda Telah UnThanks"}
-                                </Popup>
-                                <small>
-                                  <i>{data.thanks} Thanks </i>
-                                </small>
-                                <br />
-                                <br />
-                                <a onClick={() => this.discuss(data.id_posts)}>
-                                  {data.comment} comment
-                                </a>
-                                <small style={{ float: "right" }}>
-                                  <i>
-                                    {data.date.slice(11) == this.state.year
-                                      ? data.date.slice(4, -5) ==
-                                        this.state.datemonth
-                                        ? data.jam == this.state.jam
-                                          ? data.menit == this.state.menit
-                                            ? "Now"
-                                            : this.state.menit -
-                                              data.menit +
-                                              " m ago"
-                                          : this.state.jam - data.jam + " h ago"
-                                        : data.date.slice(4, -5)
-                                      : data.date.slice(4)}
-                                  </i>
-                                </small>
-                              </List.Description>
-                            </List.Content>
-                          </List.Item>
-                        </List>
-                        <Divider fitted />
-                      </GridRow>
-                    </GridColumn>
-                  </Grid>
+                                        <Header icon="trash alternate outline" content="Delete Posting!" />
+                                        <Modal.Content>
+                                          <p>Are You Sure?</p>
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                        <Button onClick={this.handleClose} inverted>
+                                          <Icon name="remove" /> No
+                                        </Button>
+                                        <Button inverted onClick={() => this.delete(data._id)}>
+                                          <Icon name="checkmark" /> Yes
+                                        </Button>
+
+                                        </Modal.Actions>
+                                      </Modal>
+                                    </Grid.Column>
+                                  </Grid.Row>
+                                  <Grid.Row columns={1}>
+                                    <GridColumn>
+                                      <b style={{fontSize: 15}}>{data.content}.</b>
+                                        <small>
+                                          <i>
+                                          {
+                                            data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? "Now" 
+                                            : this.state.menit - data.menit + " m ago"  : this.state.jam - data.jam + " h ago" : data.date.slice(4, -5) : data.date.slice(4)
+                                          }
+                                          </i>
+                                        </small>
+                                        <br />
+                                        <br />
+                                 
+                                    </GridColumn>
+                                  </Grid.Row>
+                                  
+                                </Grid>                      
+                              </Modal.Content>
+                          </Modal>) : null
+                          }
+                                
+                      </div>
+                    </li>
                 );
               })}
-              <Divider hidden />
+              </ul>
+              <Divider hidden/>
+              <Divider hidden/>
+              <Divider hidden/>
+              <Divider hidden/>
+              <Divider hidden/>
             </Segment>
           </Container>
         )}
