@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-
+import { Image, Button, Grid, Icon } from 'semantic-ui-react';
+  
 export default class intro extends Component {
     constructor(props) {
         super(props);
@@ -38,13 +39,31 @@ export default class intro extends Component {
             background
         }=this.state;
         return(
-            <div>
-                <img src={background} />                
-                <p onClick={() => window.location="#/login"}>login</p>
-                <p onClick={() => window.location="#/register"}>Register</p>
+            <div style={{backgroundImage: `url(${background})`, width: "100%", height: "100%", position: 'absolute', top: 0, left: 0, backgroundSize: 'cover'}}>
+              
+                <div columns='three' style={{
+                  
+                  background: "#5190ed",
+                
+                }}>
+                  
+                    
+                  <Icon name='sign-in alternate' size='large' onClick={() => window.location="#/login"} style={{float: "right", zIndex: 1,
+                  position: "fixed",
+                  bottom: 65,
+                  color: "white",
+                  marginLeft: "110px"}}>Login</Icon>  
+                  <Icon name='share square outline' size='large' onClick={() => window.location="#/register"} style={{float: "left", zIndex: 1,
+                  position: "fixed",
+                  bottom: 65,
+                  right: 1,
+                  color: "white",
+                  marginRight: "110px"}}>Register</Icon>
+                    
+                  
+              </div>
+                                
             </div>
-            
-            
         );
     }
 
