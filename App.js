@@ -22,7 +22,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-      <BackgroundSlideshow disableInterval={true} images={[ image1, image2]} onChange={(data)=> data.index === 0 ? window.location="#/login" : ''}/>
+      <BackgroundSlideshow disableInterval={true} images={[ image1, image2]} onChange={(data)=> data.index === 0 ? window.location="#/intro" : ''}/>
     </div>
     );
   }
