@@ -403,6 +403,10 @@ export default class MyPost extends Component {
                               <Modal.Content>
                                 <Image
                                   src={"http://localhost:3000/src/web-api/public/posting/foto/" + data.fotocontent}
+                                  style={{
+                                    height: "260px",
+                                    width: "260px"
+                                }}
                                   />
                                 <Grid>
                                   <Grid.Row columns={4}>

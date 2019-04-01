@@ -1,8 +1,18 @@
 @fontface {
-    font-family: 'Poppins', sans-serif;
-    src: url('https://fonts.googleapis.com/css?family=Poppins')
+    font-family: 'Encode Sans Condensed', sans-serif;
+    font-family: 'Comfortaa', cursive;
+    font-family: 'Pompiere', cursive;
+    src: url('https://fonts.googleapis.com/css?family=Comfortaa|Encode+Sans+Condensed|Pompiere')
   }
 
-  body, div {
-    font-family: 'Poppins', sans-serif;
+  body, div, p {
+    font-family: 'Encode Sans Condensed', sans-serif;
+  }
+
+  h1, h2, h3{
+    font-family: 'Comfortaa', cursive;
+  }
+
+  i, u, a, li, b{
+    font-family: 'Pompiere', cursive;
   }

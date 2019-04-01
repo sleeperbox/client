@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Image, Button, Grid, Icon } from 'semantic-ui-react';
-  
+import { Image, Button, Grid, Icon } from 'semantic-ui-react';  
 export default class intro extends Component {
     constructor(props) {
         super(props);
