@@ -1,17 +1,20 @@
 import React, { Component } from "react";
-import { Grid, Menu } from "semantic-ui-react";
+import { Grid, Image } from "semantic-ui-react";
+import Under from "../../../../assets/images/logo/comingsoon.png";
 
 export default class Store extends Component {
   render() {
-      const marginText = {
-          marginTop : "200px"
-      }
+    const marginText = {
+      marginTop: "100px"
+    };
     return (
       <div>
         <Grid textAlign="center" columns={1}>
           <Grid.Row>
-            <Grid.Column>
-              <h1 style={marginText}>We Will Coming Soon !</h1>
+            <Grid.Column style={marginText}>
+              <Image>
+                <Image src={Under} />
+              </Image>
             </Grid.Column>
           </Grid.Row>
         </Grid>
