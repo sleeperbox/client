@@ -477,7 +477,217 @@ export default class MyPost extends Component {
                                   
                                 </Grid>                      
                               </Modal.Content>
-                          </Modal>) : null
+                          </Modal>) : 
+                          (<Modal 
+                            onClose={this.close} closeIcon
+                            trigger={
+                              data.tags === "null" ? (
+                                <Image
+                                  src="http://localhost:3000/src/web-api/public/icon/kategori.png"
+                                  width="80%"
+                                />
+                              ) : data.tags === "computer-gadget" ? (
+                                <Image
+                                  src="http://localhost:3000/src/web-api/public/icon/komp.png"
+                                  style={{
+                                    height: "100%",
+                                    width: "100%",
+                                    background: "black"
+                                }}
+                                />
+                              ) : data.tags === "family-love" ? (
+                                <Image
+                                  src="http://localhost:3000/src/web-api/public/icon/family.png"
+                                  style={{
+                                    height: "100%",
+                                    width: "100%",
+                                    background: "black"
+                                }}
+                                />
+                              ) : data.tags === "fact-rumour" ? (
+                                <Image
+                                  src="http://localhost:3000/src/web-api/public/icon/fr.png"
+                                  style={{
+                                    height: "100%",
+                                    width: "100%",
+                                    background: "black"
+                                }}
+                                />
+                              ) : data.tags === "business-work" ? (
+                                <Image
+                                  src="http://localhost:3000/src/web-api/public/icon/bisnis.png"
+                                  style={{
+                                    height: "100%",
+                                    width: "100%",
+                                    background: "black"
+                                }}
+                                />
+                              ) : data.tags === "fashion-lifestyle" ? (
+                                <Image
+                                  src="http://localhost:3000/src/web-api/public/icon/fashion.png"
+                                  width="80%"
+                                />
+                              ) : data.tags === "quotes" ? (
+                                <Image
+                                  src="http://localhost:3000/src/web-api/public/icon/quotes.png"
+                                  style={{
+                                    height: "100%",
+                                    width: "100%",
+                                    background: "black"
+                                }}
+                                />
+                              ) : data.tags === "other" ? (
+                                <Image
+                                  src="http://localhost:3000/src/web-api/public/icon/other.png"
+                                  style={{
+                                    height: "100%",
+                                    width: "100%",
+                                    background: "black"
+                                }}
+                                />
+                              ) : data.tags === "riddles" ? (
+                                <Image
+                                  src="http://localhost:3000/src/web-api/public/icon/riddle.png"
+                                  style={{
+                                    height: "100%",
+                                    width: "100%",
+                                    background: "black"
+                                }}
+                                />
+                              ) : null}
+                            >
+                            <Header ><small>
+                                {data.tags === "null" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/kategori.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "computer-gadget" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/komp.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "family-love" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/family.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "fact-rumour" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/fr.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "business-work" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/bisnis.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "fashion-lifestyle" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/fashion.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "quotes" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/quotes.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "other" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/other.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "riddles" ? (
+                                  <Image
+                                    src="http://localhost:3000/src/web-api/public/icon/riddle.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : null}
+                                </small>
+
+                                <small>
+                                  <i style={textMargin}>{data.tags}</i>
+                                </small></Header>
+
+                              <Modal.Content>
+                                <Grid>
+                                <Grid.Row columns={1}>
+                                    <GridColumn>
+                                      <b style={{fontSize: 15}}>{data.content}.</b>
+                                        <small>
+                                          <i>
+                                          {
+                                            data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? "Now" 
+                                            : this.state.menit - data.menit + " m ago"  : this.state.jam - data.jam + " h ago" : data.date.slice(4, -5) : data.date.slice(4)
+                                          }
+                                          </i>
+                                        </small>
+                                        <br />
+                                        <br />
+                                 
+                                    </GridColumn>
+                                  </Grid.Row>
+                                  <Grid.Row columns={4}>
+                                    <Grid.Column>
+                                      {/* thanks */}
+                                      <Popup trigger={
+                                      <Icon
+                                        name="handshake outline"
+                                        size='large'
+                                        onClick={() => this.givethanks(data._id)}
+                                      />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
+                                          : "Anda Telah UnThanks"}
+                                      </Popup>
+                                      <br />
+                                      <small>
+                                        <i> {data.thanks} Thanks </i>
+                                      </small>
+                                    </Grid.Column>
+                                    <Grid.Column style={{marginLeft: -50}}>
+                                      {/* Coment */}                                
+                                      <Icon 
+                                        name="facebook messenger"
+                                        size='large'
+                                        onClick= {() => this.discuss(data.id_posts)}
+                                      />{this.state.comment}
+                                    </Grid.Column>
+                                    <Grid.Column></Grid.Column>
+                                    
+                                    <Grid.Column style={{marginLeft: 50}}>
+                                      {/* delete */}
+                                      <Modal
+                                        trigger={<Label onClick={this.handleOpen} style={{color: "black", border: "1", background: "white", float: "right", marginRight: "-4%"}}><Icon name="trash alternate outline"/></Label>}
+                                        open={this.state.modal}
+                                        onClose={this.handleClose}
+                                        basic
+                                      >
+                                        <Header icon="trash alternate outline" content="Delete Posting!" />
+                                        <Modal.Content>
+                                          <p>Are You Sure?</p>
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                        <Button onClick={this.handleClose} inverted>
+                                          <Icon name="remove" /> No
+                                        </Button>
+                                        <Button inverted onClick={() => this.delete(data._id)}>
+                                          <Icon name="checkmark" /> Yes
+                                        </Button>
+                                        </Modal.Actions>
+                                      </Modal>
+                                    </Grid.Column>
+                                  </Grid.Row>
+                                </Grid>                      
+                              </Modal.Content>
+                          </Modal>)
                           }
                                 
                       </div>
