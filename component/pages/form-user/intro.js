@@ -3,6 +3,8 @@ import { Image, Button, Grid, Icon } from 'semantic-ui-react';
 import gambar from "./../../../../../assets/images/background/morning.png";
 import gambar2 from "./../../../../../assets/images/background/afternoon.png";
 import gambar3 from "./../../../../../assets/images/background/evening.png";
+import icon1 from "./../../../assets/images/icon/1.png";
+import icon2 from "./../../../assets/images/icon/2.png";
 
 export default class intro extends Component {
     constructor(props) {
@@ -51,7 +53,7 @@ export default class intro extends Component {
                   padding: 4,
                   border: "3px solid white"
                 }}>
-                  <Image centered src="./src/client/assets/images/icon/1.png" onClick={() => window.location="#/login"} style={{width: "50%", height: "50%"}}/>
+                  <Image centered src={icon1} onClick={() => window.location="#/login"} style={{width: "50%", height: "50%"}}/>
                   <center><span>Login</span></center>
                 </div>
 
@@ -67,7 +69,7 @@ export default class intro extends Component {
                   padding: 4,
                   border: "3px solid white",
                 }}>
-                  <Image centered src='./src/client/assets/images/icon/2.png' onClick={() => window.location="#/register"} style={{width: "59%", height: "59%"}}/>
+                  <Image centered src={icon2} onClick={() => window.location="#/register"} style={{width: "59%", height: "59%"}}/>
                   <center><span>Register</span></center>
                 </div>
                                 

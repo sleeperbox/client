@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Image, Container, Divider, Grid, GridColumn, Segment, Dimmer, Header, Icon } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
+import setting from "./../../../../../assets/images/icon/setting.png";
+import people from "./../../../../../assets/images/icon/group.png";
+import photo from "./../../../../../assets/images/icon/reputation.png";
+import store from "./../../../../../assets/images/icon/wallet.png";
 import axios from "axios";
 
 export default class MoreCategory extends Component {
@@ -132,10 +136,10 @@ export default class MoreCategory extends Component {
     const statisticIcon= 'http://192.168.1.14/assets/icons/more-categories/statistic.png';
     */
 
-    const settingIcon = "../../../../assets/images/icon/setting.png";
-    const peopleIcon = "../../../../assets/images/icon/group.png";
-    const photoIcon = "../../../../assets/images/icon/reputation.png";
-    const storeIcon = "../../../../assets/images/icon/wallet.png";
+    const settingIcon = setting;
+    const peopleIcon = people;
+    const photoIcon = photo;
+    const storeIcon = store;
     const coloring = {
       color: "#555"
     };
