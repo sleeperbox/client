@@ -28,8 +28,9 @@ export default class Index extends Component {
   }
     axios({
       method: "post",
-      url: "/api/follow/notif",
+      url: "http://192.168.100.18:8080/api/follow/notif",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },

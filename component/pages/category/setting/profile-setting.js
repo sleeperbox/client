@@ -71,8 +71,9 @@ export default class ProfileSetting extends Component {
   componentWillMount() {
     axios({
       method: "get",
-      url: "/api/tags",
+      url: "http://192.168.100.18:8080/api/tags",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       }
@@ -80,8 +81,9 @@ export default class ProfileSetting extends Component {
 
     axios({
       method: "post",
-      url: "/api/user",
+      url: "http://192.168.100.18:8080/api/user",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -107,8 +109,9 @@ export default class ProfileSetting extends Component {
 
     axios({
       method: "post",
-      url: "/api/user/avatar",
+      url: "http://192.168.100.18:8080/api/user/avatar",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -135,8 +138,9 @@ export default class ProfileSetting extends Component {
       axios.post("/api/upload/avatar", data).then(() =>
         axios({
           method: "post",
-          url: "/api/user/avatar",
+          url: "http://192.168.100.18:8080/api/user/avatar",
           headers: {
+            "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
             Accept: "application/json"
           },
@@ -168,9 +172,10 @@ export default class ProfileSetting extends Component {
       this.setState({kode: 0})
     }
     if(this.state.first_name != this.state.first_name2 || this.state.last_name != this.state.last_name2 || this.state.phone_number != this.state.phone_number2 || this.state.gender != this.state.gender2 || this.state.log != 0){
-      fetch("/api/user/tags", {
+      fetch("http://192.168.100.18:8080/api/user/tags", {
         method: "PUT",
         headers: {
+          "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
           Accept: "application/json"
         },
@@ -287,7 +292,7 @@ export default class ProfileSetting extends Component {
                 bordered
                 size="large"
                 src={
-                  "http://localhost:3000/src/web-api/public/avatar/" +
+                  "http://192.168.100.18/src/web-api/public/avatar/" +
                   this.state.avatar
                 }
                 circular

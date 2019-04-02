@@ -52,8 +52,9 @@ export default class Posts extends Component {
     });
     axios({
       method: "POST",
-      url: "/api/comments",
+      url: "http://192.168.100.18:8080/api/comments",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -75,8 +76,9 @@ export default class Posts extends Component {
     if (this.state.comments == 1) {
       axios({
         method: "POST",
-        url: "/api/comments",
+        url: "http://192.168.100.18:8080/api/comments",
         headers: {
+          "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
           Accept: "application/json"
         },
@@ -100,8 +102,9 @@ export default class Posts extends Component {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "/api/posts/comments",
+      url: "http://192.168.100.18:8080/api/posts/comments",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -119,8 +122,9 @@ export default class Posts extends Component {
   delete() {
     axios({
       method: "delete",
-      url: "/api/comment/delete",
+      url: "http://192.168.100.18:8080/api/comment/delete",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -148,7 +152,7 @@ export default class Posts extends Component {
                   <Image
                     avatar
                     src={
-                      "http://localhost:3000/src/web-api/public/avatar/" +
+                      "http://192.168.100.18/src/web-api/public/avatar/" +
                       posts.foto
                     }
                   />{" "}
@@ -158,7 +162,7 @@ export default class Posts extends Component {
                   {posts.fotocontent !== null ? (
                     <Image
                       src={
-                        "http://localhost:3000/src/web-api/public/posting/foto/" +
+                        "http://192.168.100.18/src/web-api/public/posting/foto/" +
                         posts.fotocontent
                       }
                       size="large"
@@ -188,7 +192,7 @@ export default class Posts extends Component {
                 <Comment key={data._id}>
                   <Comment.Avatar
                     src={
-                      "http://localhost:3000/src/web-api/public/avatar/" +
+                      "http://192.168.100.18/src/web-api/public/avatar/" +
                       data.foto
                     }
                   />

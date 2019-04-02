@@ -23,8 +23,9 @@ export default class Index extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/follow/user/data",
+      url: "http://192.168.100.18:8080/api/follow/user/data",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },

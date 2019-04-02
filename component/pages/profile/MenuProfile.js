@@ -36,8 +36,9 @@ export default class MenuProfile extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/follow/notif",
+      url: "http://192.168.100.18:8080/api/follow/notif",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -48,8 +49,9 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "/api/follow/notif/count",
+      url: "http://192.168.100.18:8080/api/follow/notif/count",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -60,8 +62,9 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "/api/notif/comment",
+      url: "http://192.168.100.18:8080/api/notif/comment",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -72,8 +75,9 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "/api/notif/message",
+      url: "http://192.168.100.18:8080/api/notif/message",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -84,8 +88,9 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "get",
-      url: "/api/tags",
+      url: "http://192.168.100.18:8080/api/tags",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       }
@@ -93,8 +98,9 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "/api/user/avatar",
+      url: "http://192.168.100.18:8080/api/user/avatar",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -120,8 +126,9 @@ export default class MenuProfile extends Component {
         if (this.state.isMenu === "notification") {
           axios({
             method: "put",
-            url: "/api/follow/notif/seen",
+            url: "http://192.168.100.18:8080/api/follow/notif/seen",
             headers: {
+              "Acces-Control-Allow-Origin": true,
               "Content-Type": "application/json",
               Accept: "application/json"
             },
@@ -131,8 +138,9 @@ export default class MenuProfile extends Component {
           })
           axios({
             method: "put",
-            url: "/api/notif/comment/seen",
+            url: "http://192.168.100.18:8080/api/notif/comment/seen",
             headers: {
+              "Acces-Control-Allow-Origin": true,
               "Content-Type": "application/json",
               Accept: "application/json"
             },
@@ -218,8 +226,9 @@ export default class MenuProfile extends Component {
     }else if (this.state.file == null) {
       axios({
         method: "post",
-        url: "/api/posting",
+        url: "http://192.168.100.18:8080/api/posting",
         headers: {
+          "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
           Accept: "application/json"
         },
@@ -328,14 +337,14 @@ export default class MenuProfile extends Component {
                   <Image
                   size="small"
                   circular
-                  src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.foto}
+                  src={"http://192.168.100.18/src/web-api/public/avatar/" + this.state.foto}
                   style={{width:"50%"}}
                   />
                 ) : (
                   <Image
                   size="small"
                   circular
-                  src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.foto}
+                  src={"http://192.168.100.18/src/web-api/public/avatar/" + this.state.foto}
                   style={{width:"50%"}}
                   />
                   )}

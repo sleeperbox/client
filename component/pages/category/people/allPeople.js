@@ -26,8 +26,9 @@ export default class allPeople extends Component {
     componentWillMount() {
         axios({
             method: 'post',
-            url: '/api/friend',
+            url: 'http://192.168.100.18:8080/api/friend',
             headers: { 
+                'Acces-Control-Allow-Origin': true,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
@@ -60,8 +61,9 @@ export default class allPeople extends Component {
         if (this.state.kode == 1) {
             axios({
               method: "post",
-              url: "/api/search",
+              url: "http://192.168.100.18:8080/api/search",
               headers: {
+                "Acces-Control-Allow-Origin": true,
                 "Content-Type": "application/json",
                 Accept: "application/json"
               },
@@ -80,8 +82,9 @@ export default class allPeople extends Component {
     handleClick(value) {
         this.setState({email_friend: value, dimmer: 'blurring', open: true}, () => axios({
             method: 'post',
-            url: '/api/user/avatar',
+            url: 'http://192.168.100.18:8080/api/user/avatar',
             headers: { 
+                "Acces-Control-Allow-Origin": true,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
@@ -92,8 +95,9 @@ export default class allPeople extends Component {
 
           axios({
             method: 'post',
-            url: '/api/user',
+            url: 'http://192.168.100.18:8080/api/user',
             headers: { 
+                "Acces-Control-Allow-Origin": true,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
@@ -225,7 +229,7 @@ export default class allPeople extends Component {
                     <Grid.Column>
                         <List verticalAlign="middle" onClick={() => {this.handleClick(data.email)}}>
                             <List.Item>
-                                <Image avatar src={"http://localhost:3000/src/web-api/public/avatar/" + data.foto} />
+                                <Image avatar src={"http://192.168.100.18/src/web-api/public/avatar/" + data.foto} />
                                 <List.Content>
                                     <List.Header>{ data.first_name } {data.last_name}</List.Header>
                                     <p>@{ data.username }</p>
@@ -250,7 +254,7 @@ export default class allPeople extends Component {
                                 borderRadius: 110
                             }}
                              
-                            src={"http://localhost:3000/src/web-api/public/avatar/" + fotos} 
+                            src={"http://192.168.100.18/src/web-api/public/avatar/" + fotos} 
                             />
                     <center><Header style={{color: "white"}}>{"@"+friendship.username}</Header></center>
                         <p><i>Followed Tags:<br/><a style={{color: "white", marginLeft:"20px"}}>{friendship.tags}</a></i></p>

@@ -18,8 +18,9 @@ export default class Action extends Component {
   componentWillMount() {
     axios({
         method: 'post',
-        url: '/api/people/profile/get',
+        url: 'http://192.168.100.18:8080/api/people/profile/get',
         headers: { 
+          "Acces-Control-Allow-Origin": true,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },

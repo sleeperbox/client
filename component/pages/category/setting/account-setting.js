@@ -49,9 +49,10 @@ export default class AccountSetting extends Component {
     var data = {
       email: this.state.email
     };
-    fetch("/api/user/delete", {
+    fetch("http://192.168.100.18:8080/api/user/delete", {
       method: "DELETE",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -71,9 +72,10 @@ export default class AccountSetting extends Component {
       password_lama: this.state.password_lama,
       password_baru: this.state.password_baru
     };
-    fetch("/api/user/ubahpassword", {
+    fetch("http://192.168.100.18:8080api/user/ubahpassword", {
       method: "PUT",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },

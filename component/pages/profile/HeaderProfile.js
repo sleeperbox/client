@@ -35,8 +35,9 @@ export default class HeaderProfile extends Component {
 
     axios({
       method: "post",
-      url: "/api/profile",
+      url: "http://192.168.100.18:8080/api/profile",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -59,8 +60,9 @@ export default class HeaderProfile extends Component {
 
     axios({
       method: "post",
-      url: "/api/user/avatar",
+      url: "http://192.168.100.18:8080/api/user/avatar",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -204,7 +206,7 @@ export default class HeaderProfile extends Component {
                             borderRadius:70 
                         }}
                         
-                        src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.foto}
+                        src={"http://192.168.100.18/src/web-api/public/avatar/" + this.state.foto}
                       />
                       </center> 
                     }

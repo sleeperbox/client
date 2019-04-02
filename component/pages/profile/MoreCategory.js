@@ -22,8 +22,9 @@ export default class MoreCategory extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/profile",
+      url: "http://192.168.100.18:8080/api/profile",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },

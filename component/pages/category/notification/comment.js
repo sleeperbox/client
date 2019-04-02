@@ -26,7 +26,7 @@ export default class Comment extends Component {
   }
     axios({
       method: "post",
-      url: "/api/notif/comment/notice",
+      url: "http://192.168.100.18:8080/api/notif/comment/notice",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"

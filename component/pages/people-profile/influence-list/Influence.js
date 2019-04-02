@@ -15,8 +15,9 @@ export default class Influence extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/follower/list",
+      url: "http://192.168.100.18:8080/api/follower/list",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },

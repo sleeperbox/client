@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Image, Button, Grid, Icon } from 'semantic-ui-react';
-  
+import gambar from "./../../../../../assets/images/background/morning.png";
+import gambar2 from "./../../../../../assets/images/background/afternoon.png";
+import gambar3 from "./../../../../../assets/images/background/evening.png";
+
 export default class intro extends Component {
     constructor(props) {
         super(props);
@@ -18,19 +21,16 @@ export default class intro extends Component {
         console.log(hour);
         if (hour < 12) {
             this.setState({
-                background: "./assets/images/background/goodmorning2.png",
+                background: gambar
               });
-              console.log("./assets/images/background/goodemorning.png")
           } else if (hour < 18) {
             this.setState({
-              background: "./assets/images/background/goodafternoon.png",
+              background: gambar2
             });
-            console.log("./assets/images/background/goodafternoon.png")
           } else {
             this.setState({
-              background: "./assets/images/background/goodevening.png",
+              background: gambar3
             });
-            console.log("./assets/images/background/goodevening.png")
           }
     }
 

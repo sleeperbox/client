@@ -26,7 +26,7 @@ export default class Infuenced extends Component {
   }
     axios({
       method: "post",
-      url: "/api/follow/notif",
+      url: "http://192.168.100.18:8080/api/follow/notif",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"

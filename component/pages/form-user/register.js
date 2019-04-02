@@ -95,7 +95,7 @@ export default class Register extends Component {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "/api/register",
+      url: "http://192.168.100.18:8080/api/register",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"

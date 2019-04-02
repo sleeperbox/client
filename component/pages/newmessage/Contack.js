@@ -20,8 +20,9 @@ export default class Contack extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/search",
+      url: "http://192.168.100.18:8080/api/search",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -46,8 +47,9 @@ export default class Contack extends Component {
     if (this.state.kode == 1) {
       axios({
         method: "post",
-        url: "/api/search",
+        url: "http://192.168.100.18:8080/api/search",
         headers: {
+          "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
           Accept: "application/json"
         },

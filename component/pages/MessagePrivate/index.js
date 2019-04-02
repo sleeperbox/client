@@ -27,8 +27,9 @@ export default class Index extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/detail/message",
+      url: "http://192.168.100.18:8080/api/detail/message",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -43,8 +44,9 @@ export default class Index extends Component {
 
     axios({
       method: "post",
-      url: "/api/read/message",
+      url: "http://192.168.100.18:8080/api/read/message",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -56,8 +58,9 @@ export default class Index extends Component {
 
     axios({
       method: "post",
-      url: "/api/message/head",
+      url: "http://192.168.100.18:8080/api/message/head",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -82,8 +85,9 @@ export default class Index extends Component {
     if (this.state.kode == 1) {
       axios({
         method: "post",
-        url: "/api/detail/message",
+        url: "http://192.168.100.18:8080/api/detail/message",
         headers: {
+          "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
           Accept: "application/json"
         },
@@ -107,8 +111,9 @@ export default class Index extends Component {
   message() {
     axios({
       method: "post",
-      url: "/api/send/message",
+      url: "http://192.168.100.18:8080/api/send/message",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -195,7 +200,7 @@ export default class Index extends Component {
             <Divider hidden />
               <Header as="h4" textAlign="center"><Image size="tiny"
                   circular
-                  src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.data_name.foto}
+                  src={"http://192.168.100.18/src/web-api/public/avatar/" + this.state.data_name.foto}
                   style={{width:"15%"}}></Image><Icon></Icon>{this.state.data_name.first_name + " " + this.state.data_name.last_name}
               <br />
               <Label size="small" style={{ backgroundColor: "transparent" }}><i>{"@" + this.state.data_name.username}</i></Label></Header>
