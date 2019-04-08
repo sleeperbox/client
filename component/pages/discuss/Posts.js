@@ -47,7 +47,7 @@ export default class Posts extends Component {
 
 
   componentWillMount() {
-    axios.get("/api/posts/" + this.state.url).then(response => {
+    axios.get("http://192.168.100.18:8080/api/posts/" + this.state.url).then(response => {
       this.setState({ posts: response.data });
     });
     axios({

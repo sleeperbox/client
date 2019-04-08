@@ -135,7 +135,7 @@ export default class ProfileSetting extends Component {
       data.append("avatar", this.state.file, this.state.file.name);
       data.append("email", this.state.email);
 
-      axios.post("/api/upload/avatar", data).then(() =>
+      axios.post("http://192.168.100.18:8080/api/upload/avatar", data).then(() =>
         axios({
           method: "post",
           url: "http://192.168.100.18:8080/api/user/avatar",

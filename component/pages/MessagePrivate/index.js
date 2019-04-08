@@ -217,7 +217,7 @@ export default class Index extends Component {
                             {data.message}
                           </Label>
                           <br />
-                          <Label size="small" style={{ backgroundColor: "transparent",float: "left"}}>{data.date.slice(1, 10)}</Label>
+                          <Label size="small" style={{ backgroundColor: "transparent",float: "left"}}>{data.date.slice(0, 10)}</Label>
                         </List.Content>
                       </List.Item>
                       : 
@@ -227,7 +227,7 @@ export default class Index extends Component {
                             {data.message}
                           </Label>
                           <br />
-                          { data.status === "Send" ? <Label size="small" style={{ backgroundColor: "transparent",float: "right"}}>{data.date.slice(1, 10)}<Icon /><Icon name="envelope open outline"/><i>{data.status}</i></Label> : <Label size="small" style={{ backgroundColor: "transparent",float: "right"}}>{data.date.slice(1, 10)}<Icon /><Icon name="envelope open outline" color="blue"/><i>{data.status}</i></Label> }
+                          { data.status === "Send" ? <Label size="small" style={{ backgroundColor: "transparent",float: "right"}}>{data.date.slice(0, 10)}<Icon /><Icon name="envelope open outline"/><i>{data.status}</i></Label> : <Label size="small" style={{ backgroundColor: "transparent",float: "right"}}>{data.date.slice(1, 10)}<Icon /><Icon name="envelope open outline" color="blue"/><i>{data.status}</i></Label> }
                         </List.Content>
                       </List.Item>}
                     </List>

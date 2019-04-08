@@ -247,7 +247,7 @@ export default class MenuProfile extends Component {
         data.append("tags", this.state.value);
         data.append("kode_post", this.state.kode_post);
   
-        axios.post("/api/posting", data).then(() => console.log(this.state.file)).then(() => window.location.reload());
+        axios.post("http://192.168.100.18:8080/api/posting", data).then(() => console.log(this.state.file)).then(() => window.location.reload());
       }
   }
 
