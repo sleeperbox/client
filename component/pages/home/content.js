@@ -1,7 +1,16 @@
-import React, { Component } from "react"
-import { Container, Segment, Icon, List, Grid, GridColumn, Divider} from 'semantic-ui-react'
-import Skeleton from 'react-skeleton-loader';
-import axios from 'axios'
+import React, { Component } from "react";
+import {
+  Container,
+  Segment,
+  Icon,
+  List,
+  Grid,
+  GridColumn,
+  Divider,
+  Image
+} from "semantic-ui-react";
+import Skeleton from "react-skeleton-loader";
+import axios from "axios";
 import PostOther from "./PostingOther";
 import PostQuotes from "./PostingQuotes";
 import PostRiddles from "./PostingRiddles";
@@ -12,93 +21,116 @@ import PostBussinessWork from "./PostingBussinessWork";
 import PostFashionLifestyle from "./PostingFashionLifestyle";
 
 export default class Content extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: null,
-            isLoading: true,
-            time: new Date(),
-            hour: new Date().getHours(),
-            minute: new Date().getMinutes(),
-            tags: [''],
-            nilai: [],
-            kode: 0
-          };
-          this.view = this.view.bind(this)
-          this.generateSkeleton = this.generateSkeleton.bind(this)
-        }
-    
-      componentDidMount(){
-        const email = localStorage.getItem('email').slice(1, -1)
-        this.setState({
-          email
-        }, () => 
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: null,
+      isLoading: true,
+      time: new Date(),
+      hour: new Date().getHours(),
+      minute: new Date().getMinutes(),
+      tags: [""],
+      nilai: [],
+      kode: 0
+    };
+    this.view = this.view.bind(this);
+    this.generateSkeleton = this.generateSkeleton.bind(this);
+  }
+
+  componentDidMount() {
+    const email = localStorage.getItem("email").slice(1, -1);
+    this.setState(
+      {
+        email
+      },
+      () =>
         axios({
-          method: 'post',
-          url: 'http://192.168.100.18:8080/api/profile',
-          headers: { 
+          method: "post",
+          url: "http://192.168.100.18:8080/api/profile",
+          headers: {
             "Acces-Control-Allow-Origin": true,
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
+            "Content-Type": "application/json",
+            Accept: "application/json"
           },
           data: {
-            email: this.state.email, // This is the body part
-          } 
-        }).then(result => this.setState({tags: result.data.tags, isLoading: false})));
-      }
+            email: this.state.email // This is the body part
+          }
+        }).then(result =>
+          this.setState({ tags: result.data.tags, isLoading: false })
+        )
+    );
+  }
 
-      shouldComponentUpdate(newProps, newState) {
-        if (newState) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    
-      componentDidUpdate(prevProps, prevState) {
-        if (this.state.kode == 1) {
-          this.setState({kode:0})
-        }
-      }
+  shouldComponentUpdate(newProps, newState) {
+    if (newState) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-    handleChange() {
-        console.log('oke')
-    }   
-    view(e, data) {
-        this.setState({
-            nilai: data.isi
-        })
-      }
-    generateSkeleton() {
-        return (
-          <div>
-          <Container>
-            <Grid>
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.kode == 1) {
+      this.setState({ kode: 0 });
+    }
+  }
+
+  handleChange() {
+    console.log("oke");
+  }
+  view(e, data) {
+    this.setState({
+      nilai: data.isi
+    });
+  }
+  generateSkeleton() {
+    return (
+      <div>
+        <Container>
+          <Grid>
             <GridColumn>
               <Segment basic>
                 <List>
                   <List.Item>
                     <List.Content>
-                      <List.Header as='a'><Skeleton width="10px" height="10px" /></List.Header>
+                      <List.Header as="a">
+                        <Skeleton width="10px" height="10px" />
+                      </List.Header>
                       <List.Description>
-                      <Skeleton />
+                        <Skeleton />
                         <a>
-                          <b><Skeleton /></b>
-                        </a>{' '}
-                        <small><i><Skeleton /></i></small>.
+                          <b>
+                            <Skeleton />
+                          </b>
+                        </a>{" "}
+                        <small>
+                          <i>
+                            <Skeleton />
+                          </i>
+                        </small>
+                        .
                       </List.Description>
                     </List.Content>
                   </List.Item>
-                  <Divider clearing/>
+                  <Divider clearing />
                   <List.Item>
                     <List.Content>
-                      <List.Header as='a'><Skeleton width="10px" height="10px" /></List.Header>
+                      <List.Header as="a">
+                        <Skeleton width="10px" height="10px" />
+                      </List.Header>
                       <List.Description>
-                      <Skeleton />
+                        <Skeleton />
                         <a>
-                          <b><Skeleton /></b>
-                        </a>{' '}
-                        <small><i><Skeleton /></i></small>.
+                          <b>
+                            <Skeleton />
+                          </b>
+                        </a>{" "}
+                        <small>
+                          <i>
+                            <Skeleton />
+                          </i>
+                        </small>
+                        .
                       </List.Description>
                     </List.Content>
                   </List.Item>
@@ -106,40 +138,119 @@ export default class Content extends Component {
               </Segment>
             </GridColumn>
           </Grid>
-          </Container>
-          </div>
-            ); 
-      }
+        </Container>
+      </div>
+    );
+  }
 
-    render () {
-         const tags = this.state.tags;
-         var element = tags.join();
-         const newArray = element.split(',');
-         var judul = newArray.values();
-        var isi = [];
-        return (
-        <div>      
-            {newArray.map(data => { 
-                isi.push(data)
-        return (    
-            <Grid style={{display: 'block', margin: '0px'}} columns={1} key={data}>
-            <Segment.Group >
+  render() {
+    const tags = this.state.tags;
+    var element = tags.join();
+    const newArray = element.split(",");
+    var judul = newArray.values();
+    var isi = [];
+    return (
+      <div>
+        {newArray.map(data => {
+          isi.push(data);
+          return (
+            <Grid
+              style={{ display: "block", margin: "0px" }}
+              columns={1}
+              key={data}
+            >
+              <Segment.Group>
+                <Segment.Inline style={{marginBottom: 7}}>
+                    {data === "null" ? (
+                      <Image
+                        src="http://192.168.100.18/src/web-api/public/icon/kategori.png"
+                        width="7%"
+                        style={{ float: "left" }}
+                      />
+                    ) : data === "computer-gadget" ? (
+                      <Image
+                        src="http://192.168.100.18/src/web-api/public/icon/komp.png"
+                        width="7%"
+                        style={{ float: "left" }}
+                      />
+                    ) : data === "family-love" ? (
+                      <Image
+                        src="http://192.168.100.18/src/web-api/public/icon/family.png"
+                        width="7%"
+                        style={{ float: "left" }}
+                      />
+                    ) : data === "fact-rumour" ? (
+                      <Image
+                        src="http://192.168.100.18/src/web-api/public/icon/fr.png"
+                        width="7%"
+                        style={{ float: "left" }}
+                      />
+                    ) : data === "business-work" ? (
+                      <Image
+                        src="http://192.168.100.18/src/web-api/public/icon/bisnis.png"
+                        width="7%"
+                        style={{ float: "left" }}
+                      />
+                    ) : data === "fashion-lifestyle" ? (
+                      <Image
+                        src="http://192.168.100.18/src/web-api/public/icon/fashion.png"
+                        width="7%"
+                        style={{ float: "left" }}
+                      />
+                    ) : data === "quotes" ? (
+                      <Image
+                        src="http://192.168.100.18/src/web-api/public/icon/quotes.png"
+                        width="7%"
+                        style={{ float: "left" }}
+                      />
+                    ) : data === "other" ? (
+                      <Image
+                        src="http://192.168.100.18/src/web-api/public/icon/other.png"
+                        width="7%"
+                        style={{ float: "left" }}
+                      />
+                    ) : data === "riddles" ? (
+                      <Image
+                        src="http://192.168.100.18/src/web-api/public/icon/riddle.png"
+                        width="7%"
+                        style={{ float: "left" }}
+                      />
+                    ) : null}
+                  <h3>
+                    &nbsp;
+                    {judul.next().value}
+                    <Icon onClick={this.view.bind(this)} name="angle right" />
+                  </h3>
+                </Segment.Inline>
                 <Segment>
-                    <h3> { judul.next().value }
-                    <Icon  onClick={this.view.bind(this)} name="angle right"/>
-                    </h3>
+                  <List.Item style={{ float: "block" }}>
+                    {data === "other" ? (
+                      <PostOther />
+                    ) : data === "quotes" ? (
+                      <PostQuotes />
+                    ) : data === "riddles" ? (
+                      <PostRiddles />
+                    ) : data === "computer-gadget" ? (
+                      <PostComputerGadget />
+                    ) : data === "family-love" ? (
+                      <PostFamilyLove />
+                    ) : data === "business-work" ? (
+                      <PostBussinessWork />
+                    ) : data === "fact-rumour" ? (
+                      <PostFactRumour />
+                    ) : data === "fashion-lifestyle" ? (
+                      <PostFashionLifestyle />
+                    ) : null}
+                  </List.Item>
                 </Segment>
-                <Segment>
-                    <List.Item style={{float: 'block'}}>{ data === "other" ? <PostOther/> : data === "quotes" ? <PostQuotes/> : data === "riddles" ? <PostRiddles/> : data === "computer-gadget" ? <PostComputerGadget/> : data === "family-love" ? <PostFamilyLove/> :data === "business-work" ? <PostBussinessWork/> :data === "fact-rumour" ? <PostFactRumour/> :data === "fashion-lifestyle" ? <PostFashionLifestyle/> : null }</List.Item>
-                </Segment>
-            </Segment.Group>
+              </Segment.Group>
             </Grid>
-            ); })}
-            <Divider hidden></Divider>
-            <Divider hidden></Divider>
-            <Divider hidden></Divider>
-        </div>
-        );
-    }
-
+          );
+        })}
+        <Divider hidden />
+        <Divider hidden />
+        <Divider hidden />
+      </div>
+    );
+  }
 }

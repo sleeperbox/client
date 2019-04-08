@@ -23,7 +23,7 @@ export default class PostingOther extends Component {
       posting: [],
       tgl: new Date().toDateString(),
       month: new Date().getMonth(),
-      year : new Date().getFullYear(),
+      year: new Date().getFullYear(),
       date: new Date().getDay(),
       datemonth: new Date().toDateString().slice(4, -5),
       jam: new Date().getHours(),
@@ -50,8 +50,10 @@ export default class PostingOther extends Component {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
-      },
-    }).then(result => this.setState({ posting: result.data, isLoading: false }));
+      }
+    }).then(result =>
+      this.setState({ posting: result.data, isLoading: false })
+    );
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -71,9 +73,8 @@ export default class PostingOther extends Component {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
           Accept: "application/json"
-        },
+        }
       }).then(result => this.setState({ posting: result.data, thanks: 0 }));
-      
     }
   }
 
@@ -90,7 +91,9 @@ export default class PostingOther extends Component {
         email: this.state.email,
         _id: value // This is the body part
       }
-    }).then((result) => this.setState({ thanks: 1, kode: result.data.kode.kode}));
+    }).then(result =>
+      this.setState({ thanks: 1, kode: result.data.kode.kode })
+    );
   }
 
   generateSkeleton() {
@@ -154,17 +157,17 @@ export default class PostingOther extends Component {
   }
 
   discuss(value) {
-    window.location = '#/posts?id='+ value + '' 
+    window.location = "#/posts?id=" + value + "";
   }
 
   render() {
-    
     const { posting, isLoading } = this.state;
     const gridMargin = {
       marginBottom: "40px"
     };
     const textMargin = {
-      marginLeft: "2%"
+      fontSize: "15px",
+      color: "black"
     };
     return (
       <div>
@@ -181,98 +184,77 @@ export default class PostingOther extends Component {
                         <List style={gridMargin}>
                           <List.Item>
                             <List.Content>
-                              <List.Header as="a">
-                                <small>
-                                {data.tags === "null" ? (
+                              <List verticalAlign="middle">
+                                <List.Item>
                                   <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/kategori.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
+                                    avatar
+                                    size="small"
+                                    circular
+                                    src={
+                                      "http://192.168.100.18/src/web-api/public/avatar/" +
+                                      data.foto
+                                    }
+                                    style={{ width: "11%" }}
                                   />
-                                ) : data.tags === "computer-gadget" ? (
+                                  <List.Content>
+                                    <List.Header as="a">
+                                      <span style={textMargin}>
+                                        @{data.username}
+                                      </span>
+                                    </List.Header>
+                                  </List.Content>
+                                </List.Item>
+                              </List>
+                              <br />
+                              <List.Description>
+                                {data.fotocontent !== null ? (
                                   <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/komp.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "family-love" ? (
-                                  <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/family.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "fact-rumour" ? (
-                                  <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/fr.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "business-work" ? (
-                                  <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/bisnis.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "fashion-lifestyle" ? (
-                                  <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/fashion.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "quotes" ? (
-                                  <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/quotes.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "other" ? (
-                                  <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/other.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "riddles" ? (
-                                  <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/riddle.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
+                                    src={
+                                      "http://192.168.100.18/src/web-api/public/posting/foto/" +
+                                      data.fotocontent
+                                    }
+                                    size="large"
                                   />
                                 ) : null}
-                              </small>
-                              <small>
-                                <i style={textMargin}>{data.tags}</i>
-                              </small>
-                            </List.Header>
-                            <br />
-                            <List.Description>
-                            { data.fotocontent !== null ? 
-                              <Image
-                              src={"http://192.168.100.18/src/web-api/public/posting/foto/" + data.fotocontent}
-                                    size="large" /> : null }
-                              <br />
-                              <b>{data.content}</b>
-                              <br />
-                              <br />
-                                <Popup trigger={
-                                <Icon
-                                  name="handshake outline"
-                                  onClick={() => this.givethanks(data._id)}
-                                />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
+                                <br />
+                                <b>{data.content}</b>
+                                <br />
+                                <br />
+                                <Popup
+                                  trigger={
+                                    <Icon
+                                      name="handshake outline"
+                                      onClick={() => this.givethanks(data._id)}
+                                    />
+                                  }
+                                >
+                                  {this.state.kode == 1
+                                    ? "Anda Telah Thanks"
                                     : "Anda Telah UnThanks"}
                                 </Popup>
-                              <small>
-                                <i>{data.thanks} Thanks </i>
-                              </small>
-                              <br/>
-                                <br/>
-                                <a onClick= {() => this.discuss(data.id_posts)}>comment</a>
-                              <small style={{ float: "right" }}>
-                                <i>
-                                {
-                                  data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? "Now" 
-                                  : this.state.menit - data.menit + " m ago"  : this.state.jam - data.jam + " h ago" : data.date.slice(4, -5) : data.date.slice(4)
-                                }
-                                </i>
+                                <small>
+                                  <i>{data.thanks} Thanks </i>
+                                </small>
+                                <br />
+                                <br />
+                                <a onClick={() => this.discuss(data.id_posts)}>
+                                  {data.comment} comment
+                                </a>
+                                <small style={{ float: "right" }}>
+                                  <i>
+                                    {data.date.slice(11) == this.state.year
+                                      ? data.date.slice(4, -5) ==
+                                        this.state.datemonth
+                                        ? data.jam == this.state.jam
+                                          ? data.menit == this.state.menit
+                                            ? "Now"
+                                            : this.state.menit -
+                                              data.menit +
+                                              " m ago"
+                                          : this.state.jam - data.jam + " h ago"
+                                        : data.date.slice(4, -5)
+                                      : data.date.slice(4)}
+                                  </i>
                                 </small>
                               </List.Description>
                             </List.Content>
@@ -284,7 +266,7 @@ export default class PostingOther extends Component {
                   </Grid>
                 );
               })}
-              <Divider hidden/>
+              <Divider hidden />
             </Segment>
           </Container>
         )}
