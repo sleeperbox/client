@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Grid, Divider, List, Icon, Header, Statistic, Label, TextArea, Button, Input, Image } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import HeaderMessagePrivate from "./HeaderMessagePrivate";
+import './style.css'
 import axios from "axios";
 
 export default class Index extends Component {
@@ -17,12 +18,22 @@ export default class Index extends Component {
       pesan: "",
       data_message: "",
       isLoading: true,
-      kode: 0
+      tombol: 0,
+      kode: 0,
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.generateZeroData = this.generateZeroData.bind(this);
     this.handlePost = this.handlePost.bind(this);
   }
+
+  addButtom() {
+    this.setState({tombol: 1});
+  }
+
+  delButtom() {
+    this.setState({tombol: 0});
+  }
+
 
   componentWillMount() {
     axios({
@@ -187,7 +198,7 @@ export default class Index extends Component {
   }
 
   render() {
-    const { datas } = this.state;
+    const { datas,tombol } = this.state;
     return (
       <div style={{ marginBottom: 45 }}>
         <HeaderMessagePrivate />
@@ -238,9 +249,22 @@ export default class Index extends Component {
             
           </Container>
         )}
-        <TextArea value={this.state.pesan} style={{ width:"90%",zIndex: 2,position: "fixed",bottom: 0 }} name="pesan" onChange={this.handlePost} placeholder='Ketik Pesan...' />
-        <Input name="focus" hidden style={{ width:"90%",zIndex: -2,position: "fixed",bottom: 0 }}/>
-        <Button onClick={this.message.bind(this)} style={{ backgroundColor: "transparent",zIndex: 2,position: "fixed",bottom: 0,right: -0 }}  icon="paper plane outline"></Button>
+        {tombol == 0 ? <Button onClick={this.addButtom.bind(this)} circular icon='plus circle' style={{zIndex: 2,position: "fixed",bottom: 45 ,left: 5}}/> :
+         <Button.Group icon style={{zIndex: 2,position: "fixed",bottom: 45 ,left: 5}}>
+         <Button>
+           <Icon name='camera' />
+         </Button>
+         <Button>
+           <Icon name='file image' />
+         </Button>
+         <Button onClick={this.delButtom.bind(this)}>
+           <Icon name='close' />
+         </Button>
+       </Button.Group>}
+        <textarea className="type-input"
+          value={this.state.pesan} style={{ width:"85%",zIndex: 2,position: "fixed",bottom: 3, left: 5 }} name="pesan" onChange={this.handlePost}
+          required icon="picture"/>
+        <Button color="teal" onClick={this.message.bind(this)} style={{zIndex: 2,position: "fixed",bottom: 3,right: 2, borderRadius: "18px", color: "#2F4A57" }}  icon="paper plane outline"></Button>
       </div>
     );
   }
