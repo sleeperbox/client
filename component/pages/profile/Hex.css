@@ -43,6 +43,12 @@ body {
   transform: skewY(-30deg) rotate(60deg);
 }
 
+#grid li .imgzoom {
+  -moz-transform: scale(1.75);
+  -webkit-transform: scale(1.75);
+  transform: scale(1.75);
+}
+
 #grid li {
   list-style-type: none;
   position: relative;
