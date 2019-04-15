@@ -7,7 +7,8 @@ import {
   Icon,
   GridColumn,
   List,
-  Image
+  Image,
+  Popup
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -22,6 +23,7 @@ export default class TagsPost extends Component {
       posting: []
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
+    this.givethanks = this.givethanks.bind(this);
   }
 
   componentDidMount() {
@@ -103,6 +105,25 @@ export default class TagsPost extends Component {
 
   discuss(value) {
     window.location = '#/posts?id='+ value + '' 
+  }
+
+  givethanks(value, value2) {
+    axios({
+      method: "put",
+      url: "http://192.168.100.18:8080/api/posting/thanks/post/user",
+      headers: {
+        "Acces-Control-Allow-Origin": true,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email,
+        _id: value,
+        username: value2 // This is the body part
+      }
+    }).then(result =>
+      this.setState({ thanks: 1, kode: result.data.kode.kode })
+    );
   }
 
   render() {
@@ -206,10 +227,21 @@ export default class TagsPost extends Component {
                               <b>{data.content}</b>
                               <br />
                               <br />
-                              <Icon name="handshake outline" />
-                              <small>
-                                <i>{data.thanks} Thanks </i>
-                              </small>
+                              <Popup
+                                  trigger={
+                                    <Icon
+                                      name="handshake outline"
+                                      onClick={() => this.givethanks(data._id, data.username)}
+                                    />
+                                  }
+                                >
+                                  {this.state.kode == 1
+                                    ? "Anda Telah Thanks"
+                                    : "Anda Telah UnThanks"}
+                                </Popup>
+                                <small>
+                                  <i>{data.thanks} Thanks </i>
+                                </small>
                               <br/>
                                 <br/>
                                 <a onClick= {() => this.discuss(data.id_posts)}>comment</a>

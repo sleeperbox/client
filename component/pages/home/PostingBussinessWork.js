@@ -78,10 +78,10 @@ export default class PostingOther extends Component {
     }
   }
 
-  givethanks(value) {
+  givethanks(value, value2) {
     axios({
       method: "put",
-      url: "http://192.168.100.18:8080/api/posting/thanks/up",
+      url: "http://192.168.100.18:8080/api/posting/thanks/post/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -89,7 +89,8 @@ export default class PostingOther extends Component {
       },
       data: {
         email: this.state.email,
-        _id: value // This is the body part
+        _id: value,
+        username: value2 // This is the body part
       }
     }).then(result =>
       this.setState({ thanks: 1, kode: result.data.kode.kode })
@@ -224,7 +225,7 @@ export default class PostingOther extends Component {
                                   trigger={
                                     <Icon
                                       name="handshake outline"
-                                      onClick={() => this.givethanks(data._id)}
+                                      onClick={() => this.givethanks(data._id, data.username)}
                                     />
                                   }
                                 >
