@@ -301,9 +301,8 @@ export default class MyPost extends Component {
     const textMargin = {
       marginLeft: "2%"
     };
-    const postSize = {
-      width: "1%",
-      float: "left"
+    const imagePost = {
+      marginTop: "1.5em"
     };
     return (
       <div>
@@ -339,11 +338,9 @@ export default class MyPost extends Component {
                             onClose={this.close} closeIcon
                             trigger={<Image
                               src={"http://192.168.100.18/src/web-api/public/posting/foto/" + data.fotocontent}
-                              style={{
-                                height: "100%",
-                                width: "100%"
-                            }}
-                            />} 
+                              className="imgzoom"
+                              style={imagePost}
+                            />}
                             >
                             <Header ><small>
                                 {data.tags === "null" ? (
@@ -410,10 +407,6 @@ export default class MyPost extends Component {
                               <Modal.Content>
                                 <Image
                                   src={"http://192.168.100.18/src/web-api/public/posting/foto/" + data.fotocontent}
-                                  style={{
-                                    height: "260px",
-                                    width: "260px"
-                                }}
                                   />
                                 <Grid>
                                   <Grid.Row columns={4}>
