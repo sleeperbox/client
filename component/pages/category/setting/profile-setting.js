@@ -103,7 +103,7 @@ export default class ProfileSetting extends Component {
           first_name2: result.data.first_name,
           last_name2: result.data.last_name,
           phone_number2: result.data.phone_number,
-          gender2: result.data.jenis_kelamin,
+          gender2: result.data.jenis_kelamin
         },
       )
     );
@@ -166,13 +166,32 @@ export default class ProfileSetting extends Component {
       gender: this.state.gender,
       tags: this.state.log
     };
+    var data2 = {
+      email: this.state.email,
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      phone_number: this.state.phone_number,
+      gender: this.state.gender,
+      tags: this.state.tags
+    };
     if(this.state.kode == 1){
       this.setState({kode: 0})
     }else{
       this.setState({kode: 0})
     }
     if(this.state.first_name != this.state.first_name2 || this.state.last_name != this.state.last_name2 || this.state.phone_number != this.state.phone_number2 || this.state.gender != this.state.gender2 || this.state.log != 0){
-      fetch("http://192.168.100.18:8080/api/user/tags", {
+      if( this.state.log.length == 0){
+        fetch("http://192.168.100.18:8080/api/user/tags", {
+        method: "PUT",
+        headers: {
+          "Acces-Control-Allow-Origin": true,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(data2)
+      }).then(window.location.reload());  
+      }else{
+        fetch("http://192.168.100.18:8080/api/user/tags", {
         method: "PUT",
         headers: {
           "Acces-Control-Allow-Origin": true,
@@ -181,6 +200,7 @@ export default class ProfileSetting extends Component {
         },
         body: JSON.stringify(data)
       }).then(window.location.reload());
+      }
     }else{
       this.setState({kode: 1})
   }
@@ -249,7 +269,6 @@ export default class ProfileSetting extends Component {
   }
 
   handleRemove(del) {
-    console.log("check data: ",del)
     this.deleteTags(del)
     this.handleClose(del)
   }

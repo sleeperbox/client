@@ -195,7 +195,7 @@ export default class PostingOther extends Component {
                                       "http://192.168.100.18/src/web-api/public/avatar/" +
                                       data.foto
                                     }
-                                    style={{ width: "11%" }}
+                                    style={{ width:"30px", height:"30px"}}
                                   />
                                   <List.Content>
                                     <List.Header as="a">

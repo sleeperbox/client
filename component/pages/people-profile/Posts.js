@@ -23,6 +23,7 @@ export default class MyPost extends Component {
       isLoading: true,
       username: sessionStorage.getItem("username"),
       email: sessionStorage.getItem("email"),
+      email2: localStorage.getItem("email").slice(1, -1),
       posting: [],
       tgl: new Date().toDateString(),
       month: new Date().getMonth(),
@@ -79,7 +80,7 @@ export default class MyPost extends Component {
     }
   }
 
-  givethanks(value) {
+  givethanks(value, value2) {
     axios({
       method: "put",
       url: "http://192.168.100.18:8080/api/posting/thanks/post/user",
@@ -89,9 +90,9 @@ export default class MyPost extends Component {
         Accept: "application/json"
       },
       data: {
-        email: this.state.email,
+        email: this.state.email2,
         _id: value,
-        username : this.state.username // This is the body part
+        username : value2 // This is the body part
       }
     }).then((result) => this.setState({ thanks: 1, kode: result.data.kode.kode}));
   }
@@ -276,7 +277,7 @@ export default class MyPost extends Component {
                                   trigger={
                                   <Icon
                                     name="handshake outline"
-                                    onClick={() => this.givethanks(data._id)}
+                                    onClick={() => this.givethanks(data._id, data.username)}
                                   />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
                                       : "Anda Telah UnThanks"}
                                   </Popup>

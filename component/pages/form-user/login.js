@@ -124,6 +124,7 @@ export default class Register extends Component {
         this.setState({ warning:result.data, kode: 1, isLogin: result.data.auth})
         localStorage.setItem('email', JSON.stringify(result.data.email))
         localStorage.setItem('auth', JSON.stringify(result.data.auth))
+        localStorage.setItem('username', JSON.stringify(result.data.username))
     });
   }
 

@@ -23,7 +23,7 @@ export default class Posts extends Component {
     super(props);
     this.state = {
       email: localStorage.getItem("email").slice(1, -1),
-      username: localStorage.getItem("username"),
+      username: localStorage.getItem("username"), 
       posts: [],
       commentByPostId: [],
       comment: "",
@@ -54,6 +54,7 @@ export default class Posts extends Component {
   }
 
   componentWillMount() {
+    console.log(this.state.username)
     axios
       .get("http://192.168.100.18:8080/api/posts/" + this.state.url)
       .then(response => {
@@ -158,7 +159,8 @@ export default class Posts extends Component {
               <Item.Content>
                 <ItemMeta as="a" style={{ color: "black" }}>
                   <Image
-                    avatar
+                    circular
+                    style={{ width:"30px", height:"30px" }}
                     src={
                       "http://192.168.100.18/src/web-api/public/avatar/" +
                       posts.foto
@@ -206,6 +208,7 @@ export default class Posts extends Component {
               return (
                 <Comment key={data._id}>
                   <Comment.Avatar
+                    style={{ width:"30px", height:"30px", borderRadius: "80px" }}
                     src={
                       "http://192.168.100.18/src/web-api/public/avatar/" +
                       data.foto
@@ -214,12 +217,12 @@ export default class Posts extends Component {
                   <Comment.Content>
                     <Comment.Author>
                       {data.username}
-                      <Icon
+                      { this.state.username == data.username ? <Icon
                         onClick={() => this.openModal(data._id)}
                         name="trash alternate outline"
-                        style={{ float: "right", color: "#595959" }}
-                        size={"small"}
-                      />
+                        style={{ float: "right", color: "#595959", fontSize:"19px"}}
+                        size={"large"}
+                      /> : null}
                       <Modal
                         id={data._id}
                         open={this.state.modalOpen}
