@@ -23,10 +23,13 @@ import TagsPost from "./component/pages/posts/"
 import Message from "./component/pages/message/"
 import NewMessage from "./component/pages/newmessage/"
 import MessagePrivate from "./component/pages/MessagePrivate/"
+import Posting from "./component/pages/profile/Post"
+
 //people
 import UserProfile from "./component/pages/people-profile/"
 import Influence from "./component/pages/people-profile/influence-list/"
 import Posts from "./component/pages/discuss/"
+
 //home
 import Home from "./component/pages/home/"
 
@@ -53,6 +56,7 @@ ReactDOM.render(
       <Route path="/tagspost/:tag" component={TagsPost} />
       <Route path="/dm" component={MessagePrivate} />
       <Route path="/newdm" component={NewMessage} />
+      <Route path="/posting" component={Posting} />
     </div>
   </HashRouter>
   </Provider>,
