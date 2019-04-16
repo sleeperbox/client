@@ -55,6 +55,7 @@ export default class ProfileSetting extends Component {
       tag6: 0,
       tag7: 0,
       tag8: 0,
+      preview: ""
       // message: '3'
     };
     this.handleTags = this.handleTags.bind(this);
@@ -135,7 +136,7 @@ export default class ProfileSetting extends Component {
       data.append("avatar", this.state.file, this.state.file.name);
       data.append("email", this.state.email);
 
-      axios.post("http://192.168.100.18:8080/api/upload/avatar", data).then(() =>
+      axios.post("http://192.168.100.18:8080/api/upload/avatar", data)
         axios({
           method: "post",
           url: "http://192.168.100.18:8080/api/user/avatar",
@@ -152,7 +153,6 @@ export default class ProfileSetting extends Component {
             { avatar: result.data, reload: "0" },
           )
         )
-      );
     }
   }
 
@@ -187,10 +187,15 @@ export default class ProfileSetting extends Component {
   }
 
   fileHandler = event => {
-    this.setState({
-      file: event.target.files[0],
-      reload: "1"
-    });
+    if(this.state.preview !== ""){
+      return false
+    }else{
+      this.setState({
+        file: event.target.files[0],
+        preview: URL.createObjectURL(event.target.files[0]),
+        reload: "1"
+      });
+    }
   };
 
   handlePost(event) {
@@ -288,7 +293,7 @@ export default class ProfileSetting extends Component {
             
           <Grid verticalAlign="middle" columns={2} centered>
             <GridColumn>
-              <Image
+              { this.state.preview === "" ? <Image
                 bordered
                 size="large"
                 src={
@@ -298,7 +303,17 @@ export default class ProfileSetting extends Component {
                 circular
                 centered
                 style={{height: "120px", width: "120px"}}
-              />
+              /> : <Image
+              bordered
+              size="large"
+              src={
+                this.state.preview
+              }
+              circular
+              centered
+              style={{height: "120px", width: "120px"}}
+            /> }
+              
             
               <Form style={{marginTop: "-30px", float: "right"}}>
                 <Form.Field>
