@@ -10,13 +10,17 @@ export default class App extends Component {
     this.state = {
       isLogin: false,
       slideIndex: 0,
-      pindah: 0
+      pindah: 0,
+      login: localStorage.getItem("email").slice(1, -1)
     }
   }
 
   componentWillMount() {
     const {isLogin} = this.state;
-    isLogin === true ? window.location = '#/profile' : ''; 
+    isLogin === true ? window.location = '#/profile' : '';
+    if( this.state.login !==  null){
+      window.location = '#/profile'
+    }
   }
   
   render() {
