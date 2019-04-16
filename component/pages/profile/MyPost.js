@@ -412,15 +412,18 @@ export default class MyPost extends Component {
                                   <Grid.Row columns={4}>
                                     <Grid.Column>
                                       {/* thanks */}
-                                      { this.state.kode == 1 ? <Icon
-                                        name="handshake"
-                                        size='large'
-                                        onClick={() => this.givethanks(data._id)}
-                                      /> : <Icon
-                                      name="handshake outline"
-                                      size='large'
-                                      onClick={() => this.givethanks(data._id)}
-                                    /> }
+                                      <Popup
+                                        trigger={
+                                        <Icon
+                                          name="handshake outline"
+                                          onClick={() => this.givethanks(data._id, data.username)}
+                                        />
+                                        }
+                                      >
+                                  {this.state.kode == 1
+                                    ? "Anda Telah Thanks"
+                                    : "Anda Telah UnThanks"}
+                                </Popup>
                                       
                                       <br />
                                       <small>
