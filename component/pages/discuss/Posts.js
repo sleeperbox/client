@@ -16,6 +16,7 @@ import {
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
+import "./../MessagePrivate/style.css";
 
 export default class Posts extends Component {
   constructor(props) {
@@ -29,15 +30,14 @@ export default class Posts extends Component {
       message: "",
       modalOpen: false,
       comments: 0,
-      tgl: new Date().toDateString(),
-      month: new Date().getMonth(),
+      date: "",
       year: new Date().getFullYear(),
-      date: new Date().getDay(),
       datemonth: new Date().toDateString().slice(4, -5),
       jam: new Date().getHours(),
       menit: new Date().getMinutes(),
       id: null,
-      url: window.location.href.split("=")[1]
+      url: window.location.href.split("=")[1],
+      tombol: 0,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -45,11 +45,20 @@ export default class Posts extends Component {
 
   handleClose = () => this.setState({ modalOpen: false });
 
+  addButtom() {
+    this.setState({tombol: 1});
+  }
+
+  delButtom() {
+    this.setState({tombol: 0});
+  }
 
   componentWillMount() {
-    axios.get("http://192.168.100.18:8080/api/posts/" + this.state.url).then(response => {
-      this.setState({ posts: response.data });
-    });
+    axios
+      .get("http://192.168.100.18:8080/api/posts/" + this.state.url)
+      .then(response => {
+        this.setState({ posts: response.data, date: response.data.date });
+      });
     axios({
       method: "POST",
       url: "http://192.168.100.18:8080/api/comments",
@@ -118,7 +127,6 @@ export default class Posts extends Component {
     }).then(window.location.reload());
   }
 
-
   delete() {
     axios({
       method: "delete",
@@ -141,7 +149,7 @@ export default class Posts extends Component {
   }
 
   render() {
-    const { posts, url, commentByPostId } = this.state;
+    const { posts, date, tombol, url, commentByPostId } = this.state;
     return (
       <div>
         <Container>
@@ -173,19 +181,26 @@ export default class Posts extends Component {
                   {posts.content}
                 </Item.Description>
                 <Divider hidden />
-                <Divider hidden />
                 <ItemMeta>
                   <small>
                     <i>post on {posts.tags}</i>
                   </small>
                   <small style={{ float: "right" }}>
-                    {posts.jam}:{posts.menit}{" "}
+                    {date.slice(11) == this.state.year
+                      ? date.slice(4, -5) == this.state.datemonth
+                        ? posts.jam == this.state.jam
+                          ? posts.menit == this.state.menit
+                            ? "Now"
+                            : this.state.menit - posts.menit + " m ago"
+                          : this.state.jam - posts.jam + " h ago"
+                        : date.slice(4, -5)
+                      : date.slice(4)}
                   </small>
                 </ItemMeta>
               </Item.Content>
             </Item>
           </Item.Group>
-          <Divider />
+          <Divider style={{ marginTop: "-1.5em" }} />
           <Comment.Group>
             {commentByPostId.map(data => {
               return (
@@ -204,8 +219,7 @@ export default class Posts extends Component {
                         name="trash alternate outline"
                         style={{ float: "right", color: "#595959" }}
                         size={"small"}
-                      >
-                      </Icon>
+                      />
                       <Modal
                         id={data._id}
                         open={this.state.modalOpen}
@@ -250,24 +264,56 @@ export default class Posts extends Component {
             })}
             <Comment.Action>
               <Divider hidden />
-              <Form onSubmit={this.handleSubmit}>
-                <Input
-                  name="comment"
-                  style={{
-                    bottom: 10,
-                    position: "fixed",
-                    zIndex: 99,
-                    padding: 10,
-                    margin: 5,
-                    width: "85%"
-                  }}
-                  size="large"
-                  transparent
-                  placeholder="komentari ..."
-                  icon="paper plane outline"
-                  onChange={this.handleChange}
+              {tombol == 0 ? (
+                <Button
+                  onClick={this.addButtom.bind(this)}
+                  circular
+                  icon="plus circle"
+                  style={{ zIndex: 9, position: "fixed", bottom: 50, left: 8 }}
                 />
-              </Form>
+              ) : (
+                <Button.Group
+                  icon
+                  style={{ zIndex: 9, position: "fixed", bottom: 50, left: 8 }}
+                >
+                  <Button>
+                    <Icon name="camera" />
+                  </Button>
+                  <Button>
+                    <Icon name="file image" />
+                  </Button>
+                  <Button onClick={this.delButtom.bind(this)}>
+                    <Icon name="close" />
+                  </Button>
+                </Button.Group>
+              )}
+              <textarea
+                name="comment"
+                className="type-input"
+                style={{
+                  left: 8,
+                  bottom: 8,
+                  position: "fixed",
+                  zIndex: 99,
+                  width: "84%"
+                }}
+                onChange={this.handleChange}
+                placeholder="Write a comment.."
+                required
+              />
+              <Button
+                color="teal"
+                onClick={this.handleSubmit}
+                style={{
+                  zIndex: 9,
+                  position: "fixed",
+                  bottom: 8,
+                  right: 4,
+                  borderRadius: "18px",
+                  color: "#2F4A57"
+                }}
+                icon="paper plane outline"
+              />
             </Comment.Action>
           </Comment.Group>
         </Container>

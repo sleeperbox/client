@@ -263,7 +263,7 @@ export default class Index extends Component {
        </Button.Group>}
         <textarea className="type-input"
           value={this.state.pesan} style={{ width:"85%",zIndex: 2,position: "fixed",bottom: 3, left: 5 }} name="pesan" onChange={this.handlePost}
-          required icon="picture"/>
+          required/>
         <Button color="teal" onClick={this.message.bind(this)} style={{zIndex: 2,position: "fixed",bottom: 3,right: 2, borderRadius: "18px", color: "#2F4A57" }}  icon="paper plane outline"></Button>
       </div>
     );
