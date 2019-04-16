@@ -13,13 +13,7 @@ export default class HeaderNewMessage extends Component {
         </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item name="help">
-            <Header as="h5">
-              <small>
-                <i>
-                  Contack
-                </i>
-              </small>
-            </Header>
+            <Header as="h5">Contact</Header>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
