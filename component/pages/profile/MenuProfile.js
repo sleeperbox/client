@@ -338,14 +338,14 @@ export default class MenuProfile extends Component {
                   size="small"
                   circular
                   src={"http://192.168.100.18/src/web-api/public/avatar/" + this.state.foto}
-                  style={{width:"50%"}}
+                  style={{width:"30px", height:"30px"}}
                   />
                 ) : (
                   <Image
                   size="small"
                   circular
                   src={"http://192.168.100.18/src/web-api/public/avatar/" + this.state.foto}
-                  style={{width:"50%"}}
+                  style={{width:"30px", height:"30px"}}
                   />
                   )}
               </Menu.Item>

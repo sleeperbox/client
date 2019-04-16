@@ -245,46 +245,38 @@ export default class allPeople extends Component {
                 >
                     <Divider hidden/>
                     <Modal.Content>
-                    <Image
+                    <center><img
+
                             style={{
-                                alignSelf: 'center',
-                                height: 225, 
-                                width: 225, 
-                                bordeerWidth: 1, 
-                                borderRadius: 110
+                                height: "150px", 
+                                width: "150px",
+                                borderRadius: "80px"
                             }}
                              
                             src={"http://192.168.100.18/src/web-api/public/avatar/" + fotos} 
-                            />
+                            /></center>
                     <center><Header style={{color: "white"}}>{"@"+friendship.username}</Header></center>
+                    <Divider hidden/>
                         <p><i>Followed Tags:<br/><a style={{color: "white", marginLeft:"20px"}}>{friendship.tags}</a></i></p>
                     </Modal.Content>
                     <Modal.Actions>
                         <Grid>
                             <Grid.Row columns={4}>
-                                <Grid.Column>
+                                <Grid.Column width={3}>
+                                </Grid.Column>
+                                <Grid.Column width={5}>
                                     <Button circular size='big' icon='user circle' style={{background:"#5b90f6", color:"white"}} onClick={() => this.gotoprofile(friendship.username)} />
-                                    <div style={{marginRight:"15px", marginTop:"3px"}}>
-                                        View    
-                                    </div>            
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <Button circular size='big' icon='handshake outline' style={{background:"#5b90f6", color:"white"}}/>
-                                    <div style={{marginRight:"5px", marginTop:"3px"}}>
-                                        Tnks: {friendship.total_thanks}
-                                    </div>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <Button circular size='big' icon='edit' style={{background:"#5b90f6", color:"white"}}/>
-                                    <div style={{marginRight:"5px", marginTop:"3px"}}>
-                                        Post: {friendship.total_posts}
-                                    </div>               
-                                </Grid.Column>
-                                <Grid.Column>           
+                                    <div style={{ marginRight:" 10px", marginTop:"3px"}}>
+                                        profile  
+                                    </div>   
+                                    </Grid.Column>
+                                    <Grid.Column width={4}>           
                                     <Button circular size='big' icon='facebook messenger' style={{background:"#5b90f6", color:"white"}} onClick={() => this.newmessage(friendship.username)} />               
-                                    <div style={{marginRight:"15px", marginTop:"3px"}}>
-                                        Mail
+                                    <div style={{ marginTop:"3px"}}>
+                                        message
                                     </div>
+                                </Grid.Column>
+                                <Grid.Column width={3}>
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>

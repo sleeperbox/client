@@ -187,7 +187,7 @@ export default class ProfileSetting extends Component {
   }
 
   fileHandler = event => {
-    if(this.state.preview !== ""){
+    if(!URL.createObjectURL(event.target.files[0])){
       return false
     }else{
       this.setState({
