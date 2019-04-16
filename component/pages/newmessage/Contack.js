@@ -103,18 +103,20 @@ export default class Contack extends Component {
 
   render() {
     const { datas } = this.state
-
+    const marginSearch = {
+      marginLeft : "1em",
+      marginRight : "1em"
+    }
     return (
       <div>
-        <Input
+        <Input 
+          style={marginSearch}
           fluid
           icon="search"
           onChange={this.handlePost}
           name="cari"
           value={this.state.cari}
         />
-        <Divider hidden />
-        <Divider hidden />
         <Divider hidden />
         <Divider hidden />
             {datas.length === 0 ? (

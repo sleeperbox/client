@@ -221,8 +221,8 @@ export default class Index extends Component {
             float: "right",
             zIndex: 1,
             position: "fixed",
-            bottom: 65,
-            right: 1,
+            bottom: 70,
+            right: 5,
             background: "#5b90f6",
             color: "white" 
           }} 
