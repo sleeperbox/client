@@ -268,6 +268,8 @@ export default class MenuProfile extends Component {
       window.location = "#/home";
     } else if (isMenu === "message") {
       window.location = "#/message";
+    } else if (isMenu === "posting") {
+      window.location = "#/posting";
     } else {
     }
     const postSize = {
@@ -306,7 +308,7 @@ export default class MenuProfile extends Component {
                   </Label></Icon> : null }
               </Menu.Item>
 
-              <Menu.Item name="post" onClick={this.show("blurring")}>
+              <Menu.Item name="post" onClick={() => this.handleMenu("posting")}>
                 {menu === "post" ? (
                   <Icon name="plus square" style={{ color: "#5b90f6" }} size="large" />
                 ) : (
