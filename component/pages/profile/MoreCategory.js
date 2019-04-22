@@ -4,7 +4,7 @@ import Skeleton from "react-skeleton-loader";
 import setting from "./../../../../../assets/images/icon/setting.png";
 import people from "./../../../../../assets/images/icon/group.png";
 import photo from "./../../../../../assets/images/icon/reputation.png";
-import store from "./../../../../../assets/images/icon/wallet.png";
+import news from "./../../../../../assets/images/icon/news.png";
 import axios from "axios";
 
 export default class MoreCategory extends Component {
@@ -139,7 +139,7 @@ export default class MoreCategory extends Component {
     const settingIcon = setting;
     const peopleIcon = people;
     const photoIcon = photo;
-    const storeIcon = store;
+    const newsIcon = news;
     const coloring = {
       color: "#555"
     };
@@ -151,8 +151,8 @@ export default class MoreCategory extends Component {
       window.location = "#/people";
     } else if (this.state.isCategory === "reputation") {
       return null;
-    } else if (this.state.isCategory === "store") {
-      window.location = "#/store";
+    } else if (this.state.isCategory === "news") {
+      window.location = "#/news";
     }
     return (
       <div style={{ marginBottom: 10 }}>
@@ -167,10 +167,10 @@ export default class MoreCategory extends Component {
             <Segment basic>
               <Grid columns={4} style={coloring}>
                 <GridColumn>
-                  <p style={this.noSpacing} onClick={() => this.handleMenu("store")}>
-                    <Image src={storeIcon} avatar />
+                  <p style={this.noSpacing} onClick={() => this.handleMenu("news")}>
+                    <Image src={newsIcon} avatar />
                   </p>
-                  <p style={this.smallFontCenter}>Store</p>
+                  <p style={this.smallFontCenter}>News</p>
                 </GridColumn>
                 <GridColumn>
                   <p style={this.noSpacing} onClick={() => this.setState({ dimmers: true })}>
