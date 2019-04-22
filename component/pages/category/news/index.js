@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Dimmer, Loader, Container, Card, CardHeader, CardMeta, Image, Divider, CardContent } from 'semantic-ui-react';
+import { Dimmer, Loader, Container, Card, Statistic, Icon, CardHeader, CardMeta, Image, Divider, CardContent } from 'semantic-ui-react';
 import HeaderNews from './HeaderNews';
 import MenuProfile from '../../profile/MenuProfile';
 import News from './News';
@@ -76,7 +76,7 @@ export default class Index extends Component {
 
     skeletonFirst() {
         return (
-            <div>
+            <div style={{marginTop: 18}}>
                 <Card centered fluid style={{padding: 15, margin: 5}}>
                     <CardHeader><Skeleton/></CardHeader>
                     <Divider hidden style={{marginTop: -1}}/>
@@ -119,7 +119,18 @@ export default class Index extends Component {
                 </Card>
             </div>
         )
-      }
+    }
+
+    readerStat(){
+        return <div style={{textAlign: "center"}}>
+            <Statistic color="olive">
+                <Statistic.Value>
+                    1,325
+                </Statistic.Value>
+                <Statistic.Label><Icon name="eye"/> people reading</Statistic.Label>
+            </Statistic>
+        </div>
+    }
 
     render() {
         const {loading, getNews, newsLoad} = this.state;
@@ -130,6 +141,7 @@ export default class Index extends Component {
                         <div>
                             <HeaderNews/>
                             <Container>
+                                {this.readerStat()}
                                 {newsLoad ? this.skeletonFirst() : (
                                     <News newsContent={getNews}/>
                                 )}
