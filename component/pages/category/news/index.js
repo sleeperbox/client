@@ -1,8 +1,8 @@
 import React, { Component } from "react"
-import { Dimmer, Loader, Container, Grid, Divider, Image, List, Header, Button, Icon } from 'semantic-ui-react';
-import HeaderStore from './HeaderStore';
+import { Dimmer, Loader, Container } from 'semantic-ui-react';
+import HeaderNews from './HeaderNews';
 import MenuProfile from '../../profile/MenuProfile';
-import Store from './Store';
+import News from './News';
 
 export default class Index extends Component {
     constructor(props) {
@@ -44,9 +44,6 @@ export default class Index extends Component {
         }
     }
 
-    componentWillUpdate(nextProps, nextState) {
-    }
-
     componentDidUpdate(prevProps, prevState) {
         const {isLogin} = this.state;
         if(isLogin === false){ 
@@ -65,16 +62,15 @@ export default class Index extends Component {
     }
 
     render() {
-        const {datas} = this.state;
-        const {isLoading, loading} = this.state;
+        const {loading} = this.state;
         return (
             <div style={{marginBottom: 45}}>
                 {loading ? (this.loading()
                     ) : (
                         <div>
-                            <HeaderStore/>
+                            <HeaderNews/>
                             <Container>
-                                <Store/>
+                                <News/>
                             </Container>
                             <MenuProfile/>
                         </div>

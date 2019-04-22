@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import { Grid, Image } from "semantic-ui-react";
 import Under from "../../../../assets/images/logo/comingsoon.png";
 
-export default class Store extends Component {
-  render() {
     const marginText = {
       marginTop: "100px"
-    };
+    }
+
+  const News = () => {
     return (
       <div>
         <Grid textAlign="center" columns={1}>
@@ -19,6 +19,7 @@ export default class Store extends Component {
           </Grid.Row>
         </Grid>
       </div>
-    );
+    )
   }
-}
+
+  export default News
