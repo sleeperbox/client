@@ -13,7 +13,7 @@ import { Card, CardHeader, CardContent, CardMeta, Image, Divider } from "semanti
        {datas.map((data, i) => {
         return (
         <div style={{marginTop: 20}} key={i}>
-          <Card centered fluid style={{padding: 15, margin: 5}}>
+          <Card centered fluid style={{padding: 15, margin: 5}} link={data.url}>
             <CardHeader>{JSON.stringify(data.title).slice(1, -1)}</CardHeader>
             <Divider hidden style={{marginTop: -1}}/>
             {data.urlToImage == null ? <p>no image</p> : (
