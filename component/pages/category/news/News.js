@@ -1,23 +1,30 @@
 import React from "react";
-import { Grid, Image } from "semantic-ui-react";
-import Under from "../../../../assets/images/logo/comingsoon.png";
+import { Card, CardHeader, CardContent, CardMeta, Image, Divider } from "semantic-ui-react";
 
-    const marginText = {
-      marginTop: "100px"
-    }
+  const marginText = {
+    marginBottom: 75
+  }
 
-  const News = () => {
+  const News = (props) => {
+    const datas = props.newsContent
     return (
-      <div>
-        <Grid textAlign="center" columns={1}>
-          <Grid.Row>
-            <Grid.Column style={marginText}>
-              <Image>
-                <Image src={Under} />
-              </Image>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+      <div style={marginText}>
+       {datas.map((data, i) => {
+        return (
+        <div style={{marginTop: 18}} key={i}>
+          <Card centered fluid style={{padding: 15, margin: 5}}>
+          <a href={data.url}><CardHeader>{JSON.stringify(data.title).slice(1, -1)}</CardHeader></a>
+            <Divider hidden style={{marginTop: -1}}/>
+            {data.urlToImage == null ? <p>no image</p> : (
+              <Image src={data.urlToImage} />
+            )}
+            <Divider hidden style={{marginTop: -1}}/>
+            <CardMeta style={{textAlign: "center"}}>{JSON.stringify(data.author)}</CardMeta>
+            <CardContent style={{fontSize: 12}}>{JSON.stringify(data.description)}</CardContent>
+          </Card>
+        </div>
+        )
+       })}
       </div>
     )
   }

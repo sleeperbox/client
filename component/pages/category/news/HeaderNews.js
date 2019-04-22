@@ -8,7 +8,8 @@ const back = () => {
 
 const HeaderStore = () => {
     return (
-        <Menu borderless size="huge">
+      <div style={{marginBottom: 65}}>
+        <Menu borderless size="huge" fixed="top">
         <Menu.Item name='back'>
           <Icon onClick={back} name="arrow left"/>
         </Menu.Item>
@@ -18,6 +19,7 @@ const HeaderStore = () => {
           </Menu.Item>
         </Menu.Menu>
       </Menu>
+      </div>
     );
 }
 

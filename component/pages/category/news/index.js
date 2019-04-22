@@ -1,8 +1,14 @@
 import React, { Component } from "react"
-import { Dimmer, Loader, Container } from 'semantic-ui-react';
+import { Dimmer, Loader, Container, Card, Statistic, Icon, CardHeader, CardMeta, Image, Divider, CardContent } from 'semantic-ui-react';
 import HeaderNews from './HeaderNews';
 import MenuProfile from '../../profile/MenuProfile';
 import News from './News';
+import axios from 'axios'
+import Skeleton from "react-skeleton-loader";
+
+
+const link = 'https://newsapi.org/v2/top-headlines?country=id&category=technology&apiKey=423ce8e876604636998481b856524a10'
+
 
 export default class Index extends Component {
     constructor(props) {
@@ -10,6 +16,8 @@ export default class Index extends Component {
         this.state = {
             email: '',
             datas: [],
+            getNews: [],
+            newsLoad: true,
             isLogin: '',
             loading: true,
             friend_email: localStorage.getItem('email').slice(1, -1),
@@ -18,12 +26,17 @@ export default class Index extends Component {
 
     componentWillMount() {
         if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
-            // this.setState({loading: false})
             setTimeout(() =>  {
                 this.setState({loading: false})
             }, 100)
         }
-       
+        axios.get(link)
+        .then((result) => (
+            result.data.status == 'ok' ? 
+            this.setState({getNews: result.data.articles, newsLoad: false}) : 
+            console.log('data not ok'))
+            )
+        .catch((err) => console.log('errornya: ', err))
     }
 
     componentDidMount() {
@@ -61,8 +74,66 @@ export default class Index extends Component {
         );
     }
 
+    skeletonFirst() {
+        return (
+            <div style={{marginTop: 18}}>
+                <Card centered fluid style={{padding: 15, margin: 5}}>
+                    <CardHeader><Skeleton/></CardHeader>
+                    <Divider hidden style={{marginTop: -1}}/>
+                    <Skeleton />
+                    <Divider hidden style={{marginTop: -1}}/>
+                    <CardMeta style={{textAlign: "center"}}><Skeleton/></CardMeta>
+                    <CardContent style={{fontSize: 12}}><Skeleton/></CardContent>
+                </Card>
+                <Card centered fluid style={{padding: 15, margin: 5, marginTop: 10}}>
+                    <CardHeader><Skeleton/></CardHeader>
+                    <Divider hidden style={{marginTop: -1}}/>
+                    <Skeleton />
+                    <Divider hidden style={{marginTop: -1}}/>
+                    <CardMeta style={{textAlign: "center"}}><Skeleton/></CardMeta>
+                    <CardContent style={{fontSize: 12}}><Skeleton/></CardContent>
+                </Card>
+                <Card centered fluid style={{padding: 15, margin: 5, marginTop: 10}}>
+                    <CardHeader><Skeleton/></CardHeader>
+                    <Divider hidden style={{marginTop: -1}}/>
+                    <Skeleton />
+                    <Divider hidden style={{marginTop: -1}}/>
+                    <CardMeta style={{textAlign: "center"}}><Skeleton/></CardMeta>
+                    <CardContent style={{fontSize: 12}}><Skeleton/></CardContent>
+                </Card>
+                <Card centered fluid style={{padding: 15, margin: 5, marginTop: 10}}>
+                    <CardHeader><Skeleton/></CardHeader>
+                    <Divider hidden style={{marginTop: -1}}/>
+                    <Skeleton />
+                    <Divider hidden style={{marginTop: -1}}/>
+                    <CardMeta style={{textAlign: "center"}}><Skeleton/></CardMeta>
+                    <CardContent style={{fontSize: 12}}><Skeleton/></CardContent>
+                </Card>
+                <Card centered fluid style={{padding: 15, margin: 5, marginTop: 10}}>
+                    <CardHeader><Skeleton/></CardHeader>
+                    <Divider hidden style={{marginTop: -1}}/>
+                    <Skeleton />
+                    <Divider hidden style={{marginTop: -1}}/>
+                    <CardMeta style={{textAlign: "center"}}><Skeleton/></CardMeta>
+                    <CardContent style={{fontSize: 12}}><Skeleton/></CardContent>
+                </Card>
+            </div>
+        )
+    }
+
+    readerStat(){
+        return <div style={{textAlign: "center"}}>
+            <Statistic color="olive">
+                <Statistic.Value>
+                    1,325
+                </Statistic.Value>
+                <Statistic.Label><Icon name="eye"/> people reading</Statistic.Label>
+            </Statistic>
+        </div>
+    }
+
     render() {
-        const {loading} = this.state;
+        const {loading, getNews, newsLoad} = this.state;
         return (
             <div style={{marginBottom: 45}}>
                 {loading ? (this.loading()
@@ -70,7 +141,10 @@ export default class Index extends Component {
                         <div>
                             <HeaderNews/>
                             <Container>
-                                <News/>
+                                {this.readerStat()}
+                                {newsLoad ? this.skeletonFirst() : (
+                                    <News newsContent={getNews}/>
+                                )}
                             </Container>
                             <MenuProfile/>
                         </div>
