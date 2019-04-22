@@ -275,7 +275,6 @@ export default class allPeople extends Component {
       open,
       dimmer,
       fotos,
-      allfoto,
       rank
     } = this.state;
     const reputationIcon = reputation;
