@@ -20,11 +20,11 @@ export default class HeaderMenu extends Component {
             <Menu.Item name='back'>
               <Icon onClick={this.back.bind(this)} name="arrow left" style={{color: "#555"}}/>
             </Menu.Item>
-            <Menu.Menu position='right'>
+            {/* <Menu.Menu position='right'>
               <Menu.Item name='help'>
               <Header as="h5"><a onClick={this.logout.bind(this)} style={{color: "#ED6A5E"}}>Logout</a></Header>
               </Menu.Item>
-            </Menu.Menu>
+            </Menu.Menu> */}
           </Menu>
         );
     }

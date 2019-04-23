@@ -7,7 +7,8 @@ import {
   Icon,
   GridColumn,
   List,
-  Image
+  Image,
+  Popup
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -22,13 +23,15 @@ export default class TagsPost extends Component {
       posting: []
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
+    this.givethanks = this.givethanks.bind(this);
   }
 
   componentDidMount() {
     axios({
       method: "post",
-      url: "/api/posting/tag",
+      url: "http://192.168.100.18:8080/api/posting/tag",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -100,6 +103,29 @@ export default class TagsPost extends Component {
     );
   }
 
+  discuss(value) {
+    window.location = '#/posts?id='+ value + '' 
+  }
+
+  givethanks(value, value2) {
+    axios({
+      method: "put",
+      url: "http://192.168.100.18:8080/api/posting/thanks/post/user",
+      headers: {
+        "Acces-Control-Allow-Origin": true,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email,
+        _id: value,
+        username: value2 // This is the body part
+      }
+    }).then(result =>
+      this.setState({ thanks: 1, kode: result.data.kode.kode })
+    );
+  }
+
   render() {
     const { posting } = this.state;
     const { isLoading } = this.state;
@@ -131,57 +157,57 @@ export default class TagsPost extends Component {
                             <br />
                             <List.Header as="a">
                             <small>
-                                {data.tags === "null" ? (
+                            {data.tags === "null" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/pilihkategori.png"
+                                    src="http://192.168.100.18/src/web-api/public/icon/kategori.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "computer-gadget" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/komputergadget.png"
+                                    src="http://192.168.100.18/src/web-api/public/icon/komp.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "family-love" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/keluargaasmara.png"
+                                    src="http://192.168.100.18/src/web-api/public/icon/family.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "fact-rumour" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/faktarumor.png"
+                                    src="http://192.168.100.18/src/web-api/public/icon/fr.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "business-work" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/bisnispekerjaan.png"
+                                    src="http://192.168.100.18/src/web-api/public/icon/bisnis.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "fashion-lifestyle" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/fashion.png"
+                                    src="http://192.168.100.18/src/web-api/public/icon/fashion.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "quotes" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/quotes.png"
+                                    src="http://192.168.100.18/src/web-api/public/icon/quotes.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "other" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/lainnya.png"
+                                    src="http://192.168.100.18/src/web-api/public/icon/other.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "riddles" ? (
                                   <Image
-                                    src="http://192.168.1.14/assets/icons/tags/riddle.png"
+                                    src="http://192.168.100.18/src/web-api/public/icon/riddle.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
@@ -193,13 +219,32 @@ export default class TagsPost extends Component {
                             </List.Header>
                             <br />
                             <List.Description>
+                            { data.fotocontent !== null ? 
+                              <Image
+                              src={"http://192.168.100.18/src/web-api/public/posting/foto/" + data.fotocontent}
+                                    size="large" /> : null }
+                              <br />
                               <b>{data.content}</b>
                               <br />
                               <br />
-                              <Icon name="handshake outline" />
-                              <small>
-                                <i>{data.thanks} Thanks </i>
-                              </small>
+                              <Popup
+                                  trigger={
+                                    <Icon
+                                      name="handshake outline"
+                                      onClick={() => this.givethanks(data._id, data.username)}
+                                    />
+                                  }
+                                >
+                                  {this.state.kode == 1
+                                    ? "Anda Telah Thanks"
+                                    : "Anda Telah UnThanks"}
+                                </Popup>
+                                <small>
+                                  <i>{data.thanks} Thanks </i>
+                                </small>
+                              <br/>
+                                <br/>
+                                <a onClick= {() => this.discuss(data.id_posts)}>comment</a>
                               <small style={{ float: "right" }}>
                                 <i>
                                   {data.jam} {data.menit} {data.date}

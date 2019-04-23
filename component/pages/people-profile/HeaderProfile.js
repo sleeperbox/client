@@ -9,18 +9,16 @@ export default class HeaderProfile extends Component {
       email: localStorage.getItem("email").slice(1, -1),
       username: sessionStorage.getItem("username"),
       status: "",
-      profile: [],
-      rank: null,
-      temp_total: null
+      profile: []
     };
-    this.gotoInfluenceList = this.gotoInfluenceList.bind(this);
   }
 
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/people/profile/get",
+      url: "http://192.168.100.18:8080/api/people/profile/get",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -35,39 +33,14 @@ export default class HeaderProfile extends Component {
         };
         axios({
           method: "post",
-          url: "/api/follow/status",
+          url: "http://192.168.100.18:8080/api/follow/status",
           headers: {
+            "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
             Accept: "application/json"
           },
           data: stat
         }).then(result => this.setState({ status: result.data }));
-      })
-    );
-    axios({
-      method: "post",
-      url: "/api/people/profile/get",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        username: this.state.username // This is the body part
-      }
-    }).then(result =>
-      this.setState({ profile: result.data, temp_total: result.data[0].total_friends }, () => {
-        let stat = {
-          email: this.state.profile[0].email
-        };
-        axios({
-          method: "post",
-          url: "/api/user/rank",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          },
-          data: stat
-        }).then(result => this.setState( {rank : result.data[0].rank+1}));
       })
     );
   }
@@ -80,10 +53,6 @@ export default class HeaderProfile extends Component {
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {}
-
-  componentDidUpdate(prevProps, prevState) {}
-
   handleFollow(value) {
     let add = {
       email: this.state.email,
@@ -91,13 +60,14 @@ export default class HeaderProfile extends Component {
     };
     axios({
       method: "post",
-      url: "/api/follow",
+      url: "http://192.168.100.18:8080/api/follow",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: add
-    }).then(result => this.setState({ status: result.data.status, temp_total: this.state.temp_total + 1 }));
+    }).then(result => this.setState({ status: result.data.status }));
   }
 
   handleUnfollow(value) {
@@ -107,102 +77,55 @@ export default class HeaderProfile extends Component {
     };
     axios({
       method: "put",
-      url: "/api/unfollow",
+      url: "http://192.168.100.18:8080/api/unfollow",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: unfoll
-    }).then(result => this.setState({ status: result.data.status, temp_total: this.state.temp_total - 1 }));
-  }
-
-  gotoInfluenceList() {
-    window.location = "#/user/influence/list";
+    }).then(result => this.setState({ status: result.data.status }));
   }
 
   render() {
-    const { profile, status, temp_total } = this.state;
-    var ranking = this.state.rank ;
-    //simple css styling
-    const smallFont = {
-      fontSize: 10
-    };
-    const toRight = {
-      float: "right"
-    };
+    const {profile, status} = this.state
     return (
-      <div style={{ marginBottom: 15, background: "#f5f5f5" }}>
+      <div style={{ marginBottom: 15 }}>
         <Container>
           {profile.map(data => {
             return (
-              <Grid columns={2} key={data._id}>
-                <Grid.Row stretched>
+              <Grid columns={1} key={data._id}>
+                <Grid.Row style={{background: 'linear-gradient(to bottom, #f7f8f9, #889998)'}}>
                   <Grid.Column>
-                    <Segment textAlign="center">
+                    <Segment basic textAlign="center">
                       <Image
-                        src={"http://localhost:3000/src/web-api/public/avatar/" + data.foto}
+                        src={"http://192.168.100.18/src/web-api/public/avatar/" + data.foto}
                         size="medium"
                         circular
+                        centered
                         bordered
-                      />
+                        style={{height: "150px", width: "150px" }} />
                       <br />@{data.username}
                       <br />
                       {data.first_name} {data.last_name}
-                      <Divider />
+                      <Divider hidden/>
                       {status === "followed" ? (
                         <Button
                           content="unfollow"
                           size="tiny"
-                          primary
                           fluid
+                          style={{background: "#6497c0", fontSize: "14px", color: "white"}}
                           onClick={() => this.handleUnfollow(data.email)}
                         />
                       ) : (
                         <Button
                           content="follow"
                           size="tiny"
-                          primary
+                          style={{background: "#6497c9", fontSize: "14px", color: "white"}}
                           fluid
                           onClick={() => this.handleFollow(data.email)}
                         />
                       )}
-                    </Segment>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Segment textAlign="center">
-                      <Statistic color="yellow">
-                        <Statistic.Label>User Rank</Statistic.Label>
-                        <Statistic.Value>{ranking}</Statistic.Value>
-                      </Statistic>
-                    </Segment>
-                    <Segment>
-                      <p style={smallFont}>
-                        Posts <span style={toRight}>{data.total_posts}</span>
-                      </p>
-                      <p style={smallFont}>
-                        Influencing{" "}
-                        <a onClick={this.gotoInfluenceList} style={toRight}>
-                          <u style={{ color: "blue" }}>{temp_total} person</u>
-                        </a>
-                      </p>
-                      <p style={smallFont}>
-                        Awards{" "}
-                        <span style={toRight}>
-                          <u style={{ color: "blue" }}>{data.awards}</u>
-                        </span>
-                      </p>
-                      <p style={smallFont}>
-                        Tags{" "}
-                        <span style={toRight}>
-                          <u style={{ color: "blue" }}>{data.tags}</u>
-                        </span>
-                      </p>
-                      <p style={smallFont}>
-                        Join Date{" "}
-                        <span style={toRight}>
-                          <i>{data.join_date}</i>
-                        </span>
-                      </p>
                     </Segment>
                   </Grid.Column>
                 </Grid.Row>

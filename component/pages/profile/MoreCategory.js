@@ -1,6 +1,20 @@
 import React, { Component } from "react";
-import { Image, Container, Divider, Grid, GridColumn, Segment, Dimmer, Header, Icon } from "semantic-ui-react";
+import {
+  Image,
+  Container,
+  Divider,
+  Grid,
+  GridColumn,
+  Segment,
+  Dimmer,
+  Header,
+  Icon
+} from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
+import setting from "./../../../../../assets/images/icon/setting.png";
+import people from "./../../../../../assets/images/icon/group.png";
+import photo from "./../../../../../assets/images/icon/reputation.png";
+import news from "./../../../../../assets/images/icon/news.png";
 import axios from "axios";
 
 export default class MoreCategory extends Component {
@@ -12,53 +26,96 @@ export default class MoreCategory extends Component {
       dimmers: false,
       total_influence: null,
       total_thank: null,
-      email: localStorage.getItem('email').slice(1, -1)
+      email: localStorage.getItem("email").slice(1, -1),
+      rank: null
     };
     this.handleMenu = this.handleMenu.bind(this);
     this.generateSkeleton = this.generateSkeleton.bind(this);
-    this.OpenDimmer = this.OpenDimmer.bind(this)
+    this.OpenDimmer = this.OpenDimmer.bind(this);
   }
 
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/profile",
+      url: "http://192.168.100.18:8080/api/profile",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({total_influence: result.data.total_friends, total_thank: result.data.total_thanks}));
+    }).then(result =>
+      this.setState({
+        total_influence: result.data.total_friends,
+        total_thank: result.data.total_thanks
+      })
+    );
+    axios({
+      method: "post",
+      url: "http://192.168.100.18:8080/api/user/rank",
+      headers: {
+        "Acces-Control-Allow-Origin": true,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result => this.setState({ rank: result.data[0].rank + 1 }));
   }
 
-  getReputation() {
-    const {total_influence, total_thank} = this.state
-    const total = ((total_influence + 1) * (total_thank + 1)) * 10
-    if(total >= 0 && total < 1000 ){
-      return "Baby Born " + total + " point"
-    }else if(total >= 1000 && total < 3500){
-      return "Settle Down " + total + " point"
-    }else if(total >= 3500 && total < 7500){
-      return "Familliar " + total + " point"
-    }else if(total >= 7500 && total < 15000){
-      return "Almost Huge " + total + " point"
-    }else if(total >= 15000 && total < 20000){
-      return "Way Of Glory " + total + " point"
-    }else if(total >= 20000 && total < 50000){
-      return "Geek Explorer " + total + " point"
-    }else if(total >= 50000 && total < 50000){
-      return "Masterpiece " + total + " point"
-    }else if(total > 100000){
-      return "Enough " + total + " point"
-    }else{
-      return "what???" + total + " point"
+  getReputationName() {
+    const { total_influence, total_thank } = this.state;
+    const total = (total_influence + 1) * (total_thank + 1) * 10;
+    if (total >= 0 && total < 1000) {
+      return "Baby Born ";
+    } else if (total >= 1000 && total < 3500) {
+      return "Settle Down ";
+    } else if (total >= 3500 && total < 7500) {
+      return "Familliar ";
+    } else if (total >= 7500 && total < 15000) {
+      return "Almost Huge ";
+    } else if (total >= 15000 && total < 20000) {
+      return "Way Of Glory ";
+    } else if (total >= 20000 && total < 50000) {
+      return "Geek Explorer ";
+    } else if (total >= 50000 && total < 50000) {
+      return "Masterpiece ";
+    } else if (total > 100000) {
+      return "Enough ";
+    } else {
+      return "what???";
+    }
+  }
+
+  getReputationPoint() {
+    const { total_influence, total_thank } = this.state;
+    const total = (total_influence + 1) * (total_thank + 1) * 10;
+    if (total >= 0 && total < 1000) {
+      return total;
+    } else if (total >= 1000 && total < 3500) {
+      return total;
+    } else if (total >= 3500 && total < 7500) {
+      return total;
+    } else if (total >= 7500 && total < 15000) {
+      return total;
+    } else if (total >= 15000 && total < 20000) {
+      return total;
+    } else if (total >= 20000 && total < 50000) {
+      return total;
+    } else if (total >= 50000 && total < 50000) {
+      return total;
+    } else if (total > 100000) {
+      return total;
+    } else {
+      return total;
     }
   }
 
   componentDidMount() {
-    if(this.state.email){
+    if (this.state.email) {
       this.setState({ isLoading: false });
     }
   }
@@ -71,13 +128,42 @@ export default class MoreCategory extends Component {
 
   OpenDimmer() {
     return (
-    <Dimmer active page onClickOutside={() => this.setState({ dimmers: false })}>
-                <Header as="h2" icon inverted>
-                  <Icon name="studiovinari" />
-                {this.getReputation()}
-                </Header>
-              </Dimmer>
-    )
+      <Dimmer
+        active
+        page
+        onClickOutside={() => this.setState({ dimmers: false })}
+      >
+        <Grid centered columns={1}>
+          <Grid.Column style={{marginBottom: "80px"}}>
+            <Header as="h1" inverted textAlign="center" dividing style={{fontSize:"50px"}}>
+              {this.getReputationName()}
+            </Header>
+          </Grid.Column>
+
+          <Grid.Row centered columns={1} style={{marginBottom: "100px"}}>
+            <Grid.Column>
+              <Header  size="huge" textAlign="center" inverted icon style={{fontSize:"50px"}}>
+                <Icon size="massive" name="studiovinari" />
+              </Header>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row centered columns={2}>
+            <Grid.Column>
+              <Header as="h4" block textAlign="center">
+                Your Rank : {this.state.rank}
+              </Header>
+            </Grid.Column>
+
+            <Grid.Column>
+              <Header as="h4" block textAlign="center">
+                Your Point : {this.getReputationPoint()}
+              </Header>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Dimmer>
+    );
   }
 
   generateSkeleton() {
@@ -131,10 +217,10 @@ export default class MoreCategory extends Component {
     const statisticIcon= 'http://192.168.1.14/assets/icons/more-categories/statistic.png';
     */
 
-    const settingIcon = "../../../../assets/images/icon/setting.png";
-    const peopleIcon = "../../../../assets/images/icon/group.png";
-    const photoIcon = "../../../../assets/images/icon/reputation.png";
-    const statisticIcon = "../../../../assets/images/icon/statistic.png";
+    const settingIcon = setting;
+    const peopleIcon = people;
+    const photoIcon = photo;
+    const newsIcon = news;
     const coloring = {
       color: "#555"
     };
@@ -146,8 +232,8 @@ export default class MoreCategory extends Component {
       window.location = "#/people";
     } else if (this.state.isCategory === "reputation") {
       return null;
-    } else if (this.state.isCategory === "statistic") {
-      window.location = "#/statistic";
+    } else if (this.state.isCategory === "news") {
+      window.location = "#/news";
     }
     return (
       <div style={{ marginBottom: 10 }}>
@@ -155,39 +241,49 @@ export default class MoreCategory extends Component {
           this.generateSkeleton()
         ) : (
           <Container>
-            {this.state.dimmers ? (
-              this.OpenDimmer()
-            ) : null}
+            {this.state.dimmers ? this.OpenDimmer() : null}
             <Divider hidden />
-            <Segment>
+            <Segment basic>
               <Grid columns={4} style={coloring}>
                 <GridColumn>
-                  <p style={this.noSpacing} onClick={() => this.handleMenu("statistic")}>
-                    <Image src={statisticIcon} avatar />
+                  <p
+                    style={this.noSpacing}
+                    onClick={() => this.handleMenu("news")}
+                  >
+                    <Image src={newsIcon} avatar />
                   </p>
-                  <p style={this.smallFontCenter}>Statistic</p>
+                  <p style={this.smallFontCenter}>News</p>
                 </GridColumn>
                 <GridColumn>
-                  <p style={this.noSpacing} onClick={() => this.setState({ dimmers: true })}>
+                  <p
+                    style={this.noSpacing}
+                    onClick={() => this.setState({ dimmers: true })}
+                  >
                     <Image src={photoIcon} avatar />
                   </p>
                   <p style={this.smallFontCenter}>Reputation</p>
                 </GridColumn>
                 <GridColumn>
-                  <p style={this.noSpacing} onClick={() => this.handleMenu("people")}>
+                  <p
+                    style={this.noSpacing}
+                    onClick={() => this.handleMenu("people")}
+                  >
                     <Image src={peopleIcon} avatar />
                   </p>
                   <p style={this.smallFontCenter}>People</p>
                 </GridColumn>
                 <GridColumn>
-                  <p style={this.noSpacing} onClick={() => this.handleMenu("setting")}>
+                  <p
+                    style={this.noSpacing}
+                    onClick={() => this.handleMenu("setting")}
+                  >
                     <Image src={settingIcon} avatar />
                   </p>
                   <p style={this.smallFontCenter}>Setting</p>
                 </GridColumn>
               </Grid>
             </Segment>
-            <Divider />
+            <Divider hidden />
           </Container>
         )}
       </div>

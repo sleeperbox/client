@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import store from '../../../store';
+import { emailAction, passwordAction, usernameAction, firstnameAction, lastnameAction } from '../actions';
 import {
   Button,
   Form,
@@ -18,22 +20,19 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      username: "",
-      first_name: "",
-      last_name: "",
-      password: "",
-      isLogin: "",
-      token: "",
+      isLogin: '',
       warning: null
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeEmail = this.handleChangeEmail.bind(this);
+    this.handleChangeUsername = this.handleChangeUsername.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.handleChangeFirstname = this.handleChangeFirstname.bind(this);
+    this.handleChangeLastname = this.handleChangeLastname.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  
   // eslint-disable-next-line react/no-deprecated
-  componentWillMount() {
-    this.setState({
+  componentWillMount() {this.setState({
       isLogin: localStorage.getItem("auth")
     });
   }
@@ -56,36 +55,57 @@ export default class Register extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { isLogin } = this.state;
     if (isLogin === true) {
-      localStorage.setItem("email", JSON.stringify(this.state.email));
+      localStorage.setItem("email", JSON.stringify(store.getState().form.email));
       localStorage.setItem("auth", JSON.stringify(this.state.isLogin));
       window.location = "#/profile";
     }
   }
 
-  handleChange(event) {
+  handleChangeEmail(event) {
     let target = event.target;
     let value = target.value;
-    let name = target.name;
-    this.setState({
-      [name]: value
-    });
+    store.dispatch(emailAction(value))
+  }
+
+  handleChangeUsername(event) {
+    let target = event.target;
+    let value = target.value;
+    store.dispatch(usernameAction(value))
+  }
+
+  handleChangePassword(event) {
+    let target = event.target;
+    let value = target.value;
+    store.dispatch(passwordAction(value))
+  }
+
+  handleChangeFirstname(event) {
+    let target = event.target;
+    let value = target.value;
+    store.dispatch(firstnameAction(value))
+  }
+
+  handleChangeLastname(event) {
+    let target = event.target;
+    let value = target.value;
+    store.dispatch(lastnameAction(value))
   }
 
   handleSubmit(event) {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "/api/register",
+      url: "http://192.168.100.18:8080/api/register",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
-        email: this.state.email,
-        username: this.state.username,
-        first_name: this.state.first_name,
-        last_name: this.state.last_name,
-        password: this.state.password
+        email: store.getState().form.email,
+        username: store.getState().form.username,
+        first_name: store.getState().form.first_name,
+        last_name: store.getState().form.last_name,
+        password: store.getState().form.password
       }
     }).then(result =>
       this.setState({
@@ -134,7 +154,7 @@ export default class Register extends Component {
                     placeholder="E-Mail Address"
                     name="email"
                     type="email"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeEmail}
                   />
                   <Form.Input
                     fluid
@@ -142,7 +162,7 @@ export default class Register extends Component {
                     iconPosition="left"
                     placeholder="Username"
                     name="username"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeUsername}
                   />
                   <Form.Input
                     fluid
@@ -150,7 +170,7 @@ export default class Register extends Component {
                     iconPosition="left"
                     placeholder="First name"
                     name="first_name"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeFirstname}
                   />
                   <Form.Input
                     fluid
@@ -158,7 +178,7 @@ export default class Register extends Component {
                     iconPosition="left"
                     placeholder="Last name"
                     name="last_name"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeLastname}
                   />
                   <Form.Input
                     fluid
@@ -167,7 +187,7 @@ export default class Register extends Component {
                     placeholder="Password"
                     type="password"
                     name="password"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangePassword}
                   />
                   <Button color="blue" fluid size="large">
                     Daftar

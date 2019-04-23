@@ -6,26 +6,27 @@ import {
   Grid,
   Divider,
   Header,
-  Label,
-  Flag,
+  Icon,
   Segment,
   Message
 } from "semantic-ui-react";
 import axios from "axios";
 import queryString from "query-string";
+import { emailAction, passwordAction, tipeAction } from '../actions';
+import store from '../../../store';
 
 export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
-      isLogin: false,
-      token: "",
+      isLogin: localStorage.getItem('auth'),
+      kode: 0,
       warning: null
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeEmail = this.handleChangeEmail.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.ShowHide = this.ShowHide.bind(this);
   }
 
   // eslint-disable-next-line react/no-deprecated
@@ -34,12 +35,13 @@ export default class Register extends Component {
     if (query.token) {
       axios.get('https://www.googleapis.com/plus/v1/people/me?access_token=' + query.token)
       .then(response => {
-        localStorage.setItem('email', JSON.stringify(response.data.emails[0].value))
-        localStorage.setItem('auth', true)
+        localStorage.setItem('email',JSON.stringify(response.data.emails[0].value))
+        localStorage.setItem('auth', "true")
         axios({
           method: "POST",
-          url: "/api/register",
+          url: "http://192.168.100.18:8080/api/register",
           headers: {
+            "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
             Accept: "application/json"
           },
@@ -54,11 +56,6 @@ export default class Register extends Component {
       }
       )
     }
-    this.setState(
-      {
-        isLogin: localStorage.getItem("auth")
-      }
-    );
   }
 
   componentDidMount() {
@@ -69,7 +66,7 @@ export default class Register extends Component {
   }
 
   shouldComponentUpdate(newProps, newState) {
-    if (newState.isLogin || newState.warning) {
+    if (newState.isLogin || newState.warning || newState.kode ) {
       return true;
     } else {
       return false;
@@ -79,41 +76,56 @@ export default class Register extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { isLogin } = this.state;
     if (isLogin == true) {
-      localStorage.setItem("email", JSON.stringify(this.state.email));
-      localStorage.setItem("auth", JSON.stringify(this.state.isLogin));
       window.location = "#/profile";
+    }else if(this.state.kode == 1){
+      this.setState({ kode : 0})
     }
   }
 
-  handleChange(event) {
+  handleChangeEmail(event) {
     let target = event.target;
     let value = target.value;
-    let name = target.name;
-    this.setState({
-      [name]: value
-    });
+    store.dispatch(emailAction(value))
+  }
+
+  handleChangePassword(event) {
+    let target = event.target;
+    let value = target.value;
+    store.dispatch(passwordAction(value))
+  }
+
+  ShowHide(event){
+    event.preventDefault();
+    event.stopPropagation();
+    if(store.getState().form.tipe == "password"){
+      store.dispatch(tipeAction('text'))
+      this.setState({kode: 1})
+    }else{
+        store.dispatch(tipeAction('password'))
+        this.setState({kode: 1})
+    }  
   }
 
   handleSubmit(event) {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "/api/login",
+      url: "http://192.168.100.18:8080/api/login",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
-        email: this.state.email,
-        password: this.state.password
+        email: store.getState().form.email,
+        password: store.getState().form.password
       }
-    }).then(result =>
-      this.setState({
-        warning: result.data,
-        isLogin: result.data.auth,
-        token: result.data.token
-      })
-    );
+    }).then(result => {
+        this.setState({ warning:result.data, kode: 1, isLogin: result.data.auth})
+        localStorage.setItem('email', JSON.stringify(result.data.email))
+        localStorage.setItem('auth', JSON.stringify(result.data.auth))
+        localStorage.setItem('username', JSON.stringify(result.data.username))
+    });
   }
 
   googleSignin() {
@@ -153,17 +165,19 @@ export default class Register extends Component {
                     placeholder="E-Mail Address"
                     name="email"
                     type="email"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeEmail}
                   />
                   <Form.Input
                     fluid
                     icon="lock"
                     iconPosition="left"
                     placeholder="Password"
-                    type="password"
+                    type={store.getState().form.tipe}
                     name="password"
-                    onChange={this.handleChange}
-                  />
+                    onChange={this.handleChangePassword}
+                    action={{ icon:"eye", onClick:this.ShowHide}}
+                    />
+                  
                   <Button color="blue" fluid size="large">
                     Log In
                   </Button>

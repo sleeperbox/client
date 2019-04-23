@@ -45,9 +45,6 @@ export default class Index extends Component {
     return (
       <div style={{ marginBottom: 45 }}>
         <HeaderInfluence />
-        <Divider hidden />
-        <Divider hidden />
-        <Divider hidden />
         <Influence />
       </div>
     );

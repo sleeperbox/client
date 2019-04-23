@@ -1,10 +1,9 @@
-import React, { Component } from "react"
-import {Container, Divider, Grid, GridColumn, Menu} from 'semantic-ui-react';
-import HeaderMenu from './header-menu-setting'
+import React, { Component } from "react";
+import {Dimmer, Loader, Container, Divider, Grid, GridColumn, Menu} from 'semantic-ui-react';
+import HeaderMenu from './header-menu-setting';
 import MenuProfile from '../../profile/MenuProfile';
-
-import AccountSetting from './account-setting'
-import ProfileSetting from './profile-setting'
+import AccountSetting from './account-setting';
+import ProfileSetting from './profile-setting';
 
 export default class Index extends Component {
 
@@ -12,11 +11,19 @@ export default class Index extends Component {
         super(props);
         this.state = {
             isLogin: '',
-            email: ''
+            email: '',
+            loading: true
         };
+        
     }
 
     componentWillMount() {
+        if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
+            // this.setState({loading: false})
+            setTimeout(() =>  {
+                this.setState({loading: false})
+            }, 100)
+        }
         const email = JSON.parse(localStorage.getItem('email'))
         const auth = JSON.parse(localStorage.getItem('auth'))
         this.setState({
@@ -53,23 +60,43 @@ export default class Index extends Component {
         window.location='#/login';
     }
 
-    render () {
+    loading() {
         return (
             <div>
-            <HeaderMenu/>
-            <Divider hidden/>
-            <Divider hidden/>
-            <Divider hidden/>
-            <Container>
-            <Divider hidden />
-                <Grid columns={1}>
-                    <GridColumn>
-                        <AccountSetting/>
-                        <ProfileSetting/>
-                    </GridColumn>
-                </Grid>
-            </Container>
-            <MenuProfile/>
+                <Dimmer active inverted>
+                    <Loader size='large'>Plase Wait</Loader>
+                </Dimmer>
+            </div>        
+        );
+    }
+
+
+    render () {
+        const { loading } = this.state;
+        return (
+            <div>
+                {loading ? (this.loading()
+                    ) : (
+                        <div>
+                            <HeaderMenu/>
+                            <Divider hidden/>
+                            <Divider hidden/>
+                            <Divider hidden/>
+                            <Container>
+                            <Divider hidden />
+                                <Grid columns={1}>
+                                    <GridColumn>
+                                        <ProfileSetting/>
+                                        <AccountSetting/>
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </GridColumn>
+                                </Grid>
+                            </Container>
+                            <MenuProfile/>
+                        </div>
+                    )}
             </div>
         );
     }

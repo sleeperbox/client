@@ -3,7 +3,7 @@ import HeaderProfile from "./HeaderProfile";
 import HeaderPeople from "./HeaderPeople";
 import Action from "./Action";
 import Posts from "./Posts";
-import { Container, Grid, Divider, Image, List, Header, Button, Modal } from "semantic-ui-react";
+import { Container, Grid, Divider, Image, List, Header, Button, Modal, Dimmer, Loader, Segment, } from "semantic-ui-react";
 import axios from "axios";
 
 export default class Index extends Component {
@@ -14,15 +14,18 @@ export default class Index extends Component {
       email: "",
       username: sessionStorage.getItem("username"),
       datas: [],
-      email_friend: ""
+      email_friend: "",
+      loading: true,
     };
+    this.loading = this.loading.bind(this)
   }
 
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/follow/user/data",
+      url: "http://192.168.100.18:8080/api/follow/user/data",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -43,6 +46,12 @@ export default class Index extends Component {
     if (this.state.isLogin != true) {
       window.location = "#/login";
     }
+    console.log('first ', this.state.loading)
+    setTimeout(() => {
+        if(this.state.loading == true){
+            this.setState({loading: false}, () => console.log('end: ', this.state.loading))
+        }
+    }, 100)
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -57,19 +66,34 @@ export default class Index extends Component {
     nextState.isLogin === "false" ? (window.location = "#/login") : "";
   }
 
+  loading() {
+    return (
+        <div>    
+            <Dimmer active inverted>
+                <Loader size='large'>Plase Wait</Loader>
+            </Dimmer>    
+        </div>  
+    );
+}
+
+
   componentDidUpdate(prevProps, prevState) {}
 
   render() {
     sessionStorage.setItem("email_friend", this.state.email_friend);
+    const {loading} = this.state
     return (
       <div style={{ marginBottom: 45 }}>
+        {loading ? (this.loading()) : ( <div>
         <HeaderPeople />
         <Divider hidden />
         <Divider hidden />
         <Divider hidden />
         <HeaderProfile />
         <Action />
-        <Posts />
+        </div>
+        )}
+        
       </div>
     );
   }

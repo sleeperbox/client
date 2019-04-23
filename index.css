@@ -1,0 +1,16 @@
+@fontface {
+    font-family: 'Poppins', cursive;
+    src: url('https://fonts.googleapis.com/css?family=Poppins|Encode+Sans+Condensed|Pompiere')
+  }
+
+  body, div, p {
+    font-family: 'Poppins', cursive;
+  }
+
+  h1, h2, h3{
+    font-family: 'Poppins', cursive;
+  }
+
+  i, u, a, li, b{
+    font-family: 'Poppins', cursive;
+  }

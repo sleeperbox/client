@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Header, Statistic, Container, Grid, List, Image, Label, Divider } from "semantic-ui-react";
+import { Header, Statistic, Container, Grid, List, Image, Label, Icon, Divider } from "semantic-ui-react";
 
 export default class Influence extends Component {
   constructor(props) {
@@ -15,8 +15,9 @@ export default class Influence extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/follower/list",
+      url: "http://192.168.100.18:8080/api/follower/list",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -28,27 +29,19 @@ export default class Influence extends Component {
 
   generateZeroData() {
     return (
-      <div>
         <Container>
-          <Header as="h2" icon textAlign="center">
-            <Divider hidden />
+          <Divider hidden/>
+          <Header as="h5" icon textAlign="center">
+          <Icon name="street view" />
             <Header.Content>
               <Statistic>
-                <Statistic.Value text>OMG,</Statistic.Value>
-                <Image
-                  centered
-                  size="large"
-                  src="https://image.spreadshirtmedia.com/image-server/v1/mp/designs/12346806,width=178,height=178/cute-devil.png"
-                />
-                <Divider hidden />
                 <Statistic.Label>
-                  <i>No One influenced</i>
+                  <i>not interested to someone yet</i>
                 </Statistic.Label>
               </Statistic>
             </Header.Content>
           </Header>
         </Container>
-      </div>
     );
   }
 

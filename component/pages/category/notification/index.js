@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
+import { Dimmer, Loader, Icon, Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import HeaderNotification from "./HeaderNotification";
-import MenuProfile from "../../profile/MenuProfile";
+import Action from "./action";
 import axios from "axios";
+import Menu from '../../profile/MenuProfile'
 
 export default class Index extends Component {
   constructor(props) {
@@ -12,17 +13,25 @@ export default class Index extends Component {
       email: localStorage.getItem("email").slice(1, -1),
       datas: [],
       isLogin: "",
-      isLoading: true
+      isLoading: true,
+      loading: true
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.generateZeroData = this.generateZeroData.bind(this);
   }
 
   componentWillMount() {
+    if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
+      // this.setState({loading: false})
+      setTimeout(() =>  {
+          this.setState({loading: false})
+      }, 100)
+  }
     axios({
       method: "post",
-      url: "/api/follow/notif",
+      url: "http://192.168.100.18:8080/api/follow/notif",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -41,6 +50,12 @@ export default class Index extends Component {
     }
     const { isLogin } = this.state;
     isLogin === "false" ? (window.location = "#/login") : "";
+    // console.log('first ', this.state.loading)
+    //     setTimeout(() => {
+    //         if(this.state.loading == true){
+    //             this.setState({loading: false}, () => console.log('end: ', this.state.loading))
+    //         }
+    //     }, 250)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -90,24 +105,18 @@ export default class Index extends Component {
 
   generateZeroData() {
     const divConten = {
-      marginTop: "40%",
-      marginBottom: "60%"
+      marginTop: "50%",
+      marginBottom: "50%"
     };
     return (
       <div style={divConten}>
-        <Header as="h2" icon textAlign="center">
-          <Image
-            centered
-            size="large"
-            src="https://image.spreadshirtmedia.com/image-server/v1/mp/designs/12346806,width=178,height=178/cute-devil.png"
-          />
+        <Header as="h5" icon textAlign="center">
+        <Icon name="bell slash outline" />
           <Header.Content>
             <Statistic>
-              <Statistic.Value text>Hell Yeah,</Statistic.Value>
               <Statistic.Label>
-                <i>0 Million</i>
+                <i>You Have No Notification</i>
               </Statistic.Label>
-              <Statistic.Label>Notification</Statistic.Label>
             </Statistic>
           </Header.Content>
         </Header>
@@ -115,47 +124,32 @@ export default class Index extends Component {
     );
   }
 
-  render() {
-    const { datas, isLoading } = this.state;
+  loading() {
     return (
-      <div style={{ marginBottom: 45 }}>
-        <HeaderNotification />
-        <Divider hidden />
-        <Divider hidden />
-        <Divider hidden />
-        <Divider hidden />
-        {datas.length === 0 ? (
-          this.generateZeroData()
-        ) : isLoading ? (
-          this.generateSkeleton()
-        ) : (
-          <Container>
-            {datas.map(data => {
-              return (
-                <Grid columns={2} key={data._id}>
-                  <Grid.Column>
-                    <List verticalAlign="middle">
-                      <List.Item>
-                        <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
-                        <List.Content>
-                          <List.Header>{data.username}</List.Header>
-                          <p>{data.name}</p>
-                        </List.Content>
-                      </List.Item>
-                    </List>
-                  </Grid.Column>
-                  <Grid.Column verticalAlign="middle">
-                    <Label style={{ width: "100px", float: "right", textAlign: "center" }} size="small">
-                      influenced
-                    </Label>
-                  </Grid.Column>
-                </Grid>
-              );
-            })}
-          </Container>
-        )}
-        <MenuProfile />
-      </div>
+        <div>
+            <Dimmer active inverted>
+                <Loader size='large'>Plase Wait</Loader>
+            </Dimmer>
+        </div>        
     );
-  }
+}
+
+render() {
+  sessionStorage.setItem("email_friend", this.state.email_friend);
+  const {loading} = this.state
+  return (
+    <div style={{ marginBottom: 45 }}>
+      {loading ? (this.loading()) : ( <div>
+      <HeaderNotification />
+      <Divider hidden />
+      <Divider hidden />
+      <Divider hidden />
+      <Action />
+      <Menu />
+      </div>
+      )}
+      
+    </div>
+  );
+}
 }
