@@ -399,6 +399,7 @@ export default class ProfileSetting extends Component {
               <label>Phone Number</label>
               <Input
                 type="text"
+                placeholder="0811xxxxxxxx"
               >
                 <InputMask
                   mask="9999999999999"
