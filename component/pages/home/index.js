@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import MenuProfile from '../profile/MenuProfile';
 import Content from "./content";
 import Navbar from "./Navbar";
-import { Dimmer, Loader, Image, Segment, Container } from "semantic-ui-react";
+import Alltag from "./allTag"
+import { Dimmer, Loader} from "semantic-ui-react";
 
 export default class Index extends Component {
     constructor(props) {
@@ -72,6 +73,7 @@ export default class Index extends Component {
                     <Navbar /> 
                     <br/>
                     <br/>
+                    <Alltag/>
                     <Content />
                     <MenuProfile />
                 </div>

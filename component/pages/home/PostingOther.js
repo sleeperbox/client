@@ -7,9 +7,10 @@ import {
   Icon,
   GridColumn,
   List,
-  Image,
   Popup,
-  GridRow
+  Item,
+  GridRow,
+  Image
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -164,19 +165,18 @@ export default class PostingOther extends Component {
   render() {
     const { posting, isLoading } = this.state;
     const gridMargin = {
-      marginBottom: "40px"
+      marginBottom: "20px"
     };
     const textMargin = {
-      fontSize: "15px",
-      color: "black"
+      fontSize: "13px",
+      color: "#222"
     };
     return (
       <div>
         {isLoading ? (
           this.generateSkeleton()
         ) : (
-          <Container>
-            <Segment basic>
+           <div>
               {posting.map((data, index) => {
                 return (
                   <Grid columns={1} key={data._id}>
@@ -218,7 +218,17 @@ export default class PostingOther extends Component {
                                   />
                                 ) : null}
                                 <br />
-                                <b>{data.content}</b>
+                                <div>
+                                  <p style={{
+                                    whiteSpace: "-moz-pre-wrap",
+                                    whiteSpace: "-moz-pre-wrap !important",
+                                    whiteSpace: "pre-wrap",
+                                    whiteSpace: "-webkit-pre-wrap",
+                                    wordBreak: "break-all",
+                                    whiteSpace: "normal"
+                                  }}><b>{data.username}</b> {data.content}</p>
+                                </div>
+
                                 <br />
                                 <br />
                                 <Popup
@@ -268,8 +278,7 @@ export default class PostingOther extends Component {
                 );
               })}
               <Divider hidden />
-            </Segment>
-          </Container>
+            </div>
         )}
       </div>
     );
