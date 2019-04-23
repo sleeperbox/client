@@ -121,10 +121,18 @@ export default class Register extends Component {
         password: store.getState().form.password
       }
     }).then(result => {
+<<<<<<< HEAD
       this.setState({ warning:result.data, kode: 1, isLogin: result.data.auth})
       localStorage.setItem('email', JSON.stringify(result.data.email))
       localStorage.setItem('auth', JSON.stringify(result.data.auth))
       localStorage.setItem('username', JSON.stringify(result.data.username))
+=======
+        this.setState({ warning:result.data, kode: 1, isLogin: result.data.auth})
+        localStorage.setItem('email', JSON.stringify(result.data.email))
+        localStorage.setItem('auth', JSON.stringify(result.data.auth))
+        localStorage.setItem('username', JSON.stringify(result.data.username))
+        localStorage.setItem('phone', JSON.stringify(result.data.phone_number))
+>>>>>>> 7135215c0dfb1bd90459a04286ac08110c3a41f2
     });
   }
 
@@ -139,8 +147,8 @@ export default class Register extends Component {
         <Container>
           <Divider hidden />
           {warning == 1 ? (
-            <Message negative>
-              <center>Email/Password is Wrong !</center>
+            <Message negative style={{marginBottom: "-3em", marginTop: "1em"}}>
+              <center>Your Input is Wrong !</center>
             </Message>
           ) : null}
           <Grid
@@ -153,7 +161,7 @@ export default class Register extends Component {
               <Divider hidden />
               <Divider hidden />
               <Header as="h1" color="orange">
-                <i>enjoy your Way!</i>
+                <i>enjoy your WAY!</i>
               </Header>
               <Divider hidden/>
               <Form size="large" onSubmit={this.handleSubmit}>
@@ -162,9 +170,8 @@ export default class Register extends Component {
                     fluid
                     icon="user"
                     iconPosition="left"
-                    placeholder="E-Mail Address"
+                    placeholder="Email, Phone Number or Username"
                     name="email"
-                    type="email"
                     onChange={this.handleChangeEmail}
                   />
                   <Form.Input
@@ -200,7 +207,7 @@ export default class Register extends Component {
             </Grid.Column>
           </Grid>
           <Segment textAlign="center">
-            <i>app version 1.5</i>
+            <i>app version 2.0</i>
           </Segment>
         </Container>
       </div>
