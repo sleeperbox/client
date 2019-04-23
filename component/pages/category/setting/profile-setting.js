@@ -15,10 +15,12 @@ import {
   Modal,
   Reveal,
   Icon,
-  label
+  label,
+  Input
 } from "semantic-ui-react";
 import "./Account.css";
 import axios from "axios";
+import InputMask from "react-input-mask";
 
 export default class ProfileSetting extends Component {
   constructor(props) {
@@ -61,13 +63,12 @@ export default class ProfileSetting extends Component {
     this.handleTags = this.handleTags.bind(this);
   }
 
-  
-
   handleOpenNotification = () => this.setState({ modalNotification: true });
 
-  handleCloseNotification = () => setTimeout(() => {
-    this.setState({ modalNotification: false })
-  }, 4500);
+  handleCloseNotification = () =>
+    setTimeout(() => {
+      this.setState({ modalNotification: false });
+    }, 4500);
 
   componentWillMount() {
     axios({
@@ -92,20 +93,18 @@ export default class ProfileSetting extends Component {
         email: this.state.email // This is the body part
       }
     }).then(result =>
-      this.setState(
-        {
-          tags: result.data.tags,
-          first_name: result.data.first_name,
-          last_name: result.data.last_name,
-          phone_number: result.data.phone_number,
-          gender: result.data.jenis_kelamin,
-          tags2: result.data.tags,
-          first_name2: result.data.first_name,
-          last_name2: result.data.last_name,
-          phone_number2: result.data.phone_number,
-          gender2: result.data.jenis_kelamin
-        },
-      )
+      this.setState({
+        tags: result.data.tags,
+        first_name: result.data.first_name,
+        last_name: result.data.last_name,
+        phone_number: result.data.phone_number,
+        gender: result.data.jenis_kelamin,
+        tags2: result.data.tags,
+        first_name2: result.data.first_name,
+        last_name2: result.data.last_name,
+        phone_number2: result.data.phone_number,
+        gender2: result.data.jenis_kelamin
+      })
     );
 
     axios({
@@ -136,23 +135,19 @@ export default class ProfileSetting extends Component {
       data.append("avatar", this.state.file, this.state.file.name);
       data.append("email", this.state.email);
 
-      axios.post("http://192.168.100.18:8080/api/upload/avatar", data)
-        axios({
-          method: "post",
-          url: "http://192.168.100.18:8080/api/user/avatar",
-          headers: {
-            "Acces-Control-Allow-Origin": true,
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          },
-          data: {
-            email: this.state.email // This is the body part
-          }
-        }).then(result =>
-          this.setState(
-            { avatar: result.data, reload: "0" },
-          )
-        )
+      axios.post("http://192.168.100.18:8080/api/upload/avatar", data);
+      axios({
+        method: "post",
+        url: "http://192.168.100.18:8080/api/user/avatar",
+        headers: {
+          "Acces-Control-Allow-Origin": true,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        data: {
+          email: this.state.email // This is the body part
+        }
+      }).then(result => this.setState({ avatar: result.data, reload: "0" }));
     }
   }
 
@@ -174,42 +169,48 @@ export default class ProfileSetting extends Component {
       gender: this.state.gender,
       tags: this.state.tags
     };
-    if(this.state.kode == 1){
-      this.setState({kode: 0})
-    }else{
-      this.setState({kode: 0})
+    if (this.state.kode == 1) {
+      this.setState({ kode: 0 });
+    } else {
+      this.setState({ kode: 0 });
     }
-    if(this.state.first_name != this.state.first_name2 || this.state.last_name != this.state.last_name2 || this.state.phone_number != this.state.phone_number2 || this.state.gender != this.state.gender2 || this.state.log != 0){
-      if( this.state.log.length == 0){
+    if (
+      this.state.first_name != this.state.first_name2 ||
+      this.state.last_name != this.state.last_name2 ||
+      this.state.phone_number != this.state.phone_number2 ||
+      this.state.gender != this.state.gender2 ||
+      this.state.log != 0
+    ) {
+      if (this.state.log.length == 0) {
         fetch("http://192.168.100.18:8080/api/user/tags", {
-        method: "PUT",
-        headers: {
-          "Acces-Control-Allow-Origin": true,
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(data2)
-      }).then(window.location.reload());  
-      }else{
+          method: "PUT",
+          headers: {
+            "Acces-Control-Allow-Origin": true,
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: JSON.stringify(data2)
+        }).then(window.location.reload());
+      } else {
         fetch("http://192.168.100.18:8080/api/user/tags", {
-        method: "PUT",
-        headers: {
-          "Acces-Control-Allow-Origin": true,
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(data)
-      }).then(window.location.reload());
+          method: "PUT",
+          headers: {
+            "Acces-Control-Allow-Origin": true,
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: JSON.stringify(data)
+        }).then(window.location.reload());
       }
-    }else{
-      this.setState({kode: 1})
-  }
+    } else {
+      this.setState({ kode: 1 });
+    }
   }
 
   fileHandler = event => {
-    if(!URL.createObjectURL(event.target.files[0])){
-      return false
-    }else{
+    if (!URL.createObjectURL(event.target.files[0])) {
+      return false;
+    } else {
       this.setState({
         file: event.target.files[0],
         preview: URL.createObjectURL(event.target.files[0]),
@@ -238,44 +239,61 @@ export default class ProfileSetting extends Component {
     this.setState({ value: event.target.value });
   };
 
-  saveTags = value => this.setState({log: [value, ...this.state.log]});
-  
-  deleteTags(value) {
-    let arr = this.state.log.filter(item => !value.includes(item))
-    this.setState({log: arr});
-  }
+  saveTags = value => this.setState({ log: [value, ...this.state.log] });
 
+  deleteTags(value) {
+    let arr = this.state.log.filter(item => !value.includes(item));
+    this.setState({ log: arr });
+  }
 
   handleTag = value => {
-    value == "computer-gadget" ? (this.setState({tag1: 1})) : 
-    value == "family-love" ? (this.setState({tag2: 1})) :
-    value == "fact-rumour" ? (this.setState({tag3: 1})) :
-    value == "business-work" ? (this.setState({tag4: 1})) :
-    value == "fashion-lifestyle" ? (this.setState({tag5: 1})) :
-    value == "quotes" ? (this.setState({tag6: 1})) :
-    value == "riddles" ? (this.setState({tag7: 1})) :
-    value == "other" ? (this.setState({tag8: 1})) : null
-  }
+    value == "computer-gadget"
+      ? this.setState({ tag1: 1 })
+      : value == "family-love"
+      ? this.setState({ tag2: 1 })
+      : value == "fact-rumour"
+      ? this.setState({ tag3: 1 })
+      : value == "business-work"
+      ? this.setState({ tag4: 1 })
+      : value == "fashion-lifestyle"
+      ? this.setState({ tag5: 1 })
+      : value == "quotes"
+      ? this.setState({ tag6: 1 })
+      : value == "riddles"
+      ? this.setState({ tag7: 1 })
+      : value == "other"
+      ? this.setState({ tag8: 1 })
+      : null;
+  };
 
   handleClose = value => {
-    value == "computer-gadget" ? (this.setState({tag1: 0})) : 
-    value == "family-love" ? (this.setState({tag2: 0})) :
-    value == "fact-rumour" ? (this.setState({tag3: 0})) :
-    value == "business-work" ? (this.setState({tag4: 0})) :
-    value == "fashion-lifestyle" ? (this.setState({tag5: 0})) :
-    value == "quotes" ? (this.setState({tag6: 0})) :
-    value == "riddles" ? (this.setState({tag7: 0})) :
-    value == "other" ? (this.setState({tag8: 0})) : null
-  }
+    value == "computer-gadget"
+      ? this.setState({ tag1: 0 })
+      : value == "family-love"
+      ? this.setState({ tag2: 0 })
+      : value == "fact-rumour"
+      ? this.setState({ tag3: 0 })
+      : value == "business-work"
+      ? this.setState({ tag4: 0 })
+      : value == "fashion-lifestyle"
+      ? this.setState({ tag5: 0 })
+      : value == "quotes"
+      ? this.setState({ tag6: 0 })
+      : value == "riddles"
+      ? this.setState({ tag7: 0 })
+      : value == "other"
+      ? this.setState({ tag8: 0 })
+      : null;
+  };
 
   handleRemove(del) {
-    this.deleteTags(del)
-    this.handleClose(del)
+    this.deleteTags(del);
+    this.handleClose(del);
   }
-  
+
   handleClick(save) {
-    this.saveTags(save)
-    this.handleTag(save)
+    this.saveTags(save);
+    this.handleTag(save);
   }
 
   render() {
@@ -294,47 +312,47 @@ export default class ProfileSetting extends Component {
       tag5,
       tag6,
       tag7,
-      tag8,
+      tag8
     } = this.state;
     const option_gender = [
-      {icon: "mars", text: "Male", value: "Laki-laki" },
-      {icon: "venus", text: "Female", value: "Perempuan" }
+      { icon: "mars", text: "Male", value: "Laki-laki" },
+      { icon: "venus", text: "Female", value: "Perempuan" }
     ];
     const maxButton = {
-      margin : "2px"
-    }
+      margin: "2px"
+    };
     return (
-      <div >
+      <div>
         <Header as="h3" dividing>
           Profile Setting
         </Header>
         <Container>
-            
           <Grid verticalAlign="middle" columns={2} centered>
             <GridColumn>
-              { this.state.preview === "" ? <Image
-                bordered
-                size="large"
-                src={
-                  "http://192.168.100.18/src/web-api/public/avatar/" +
-                  this.state.avatar
-                }
-                circular
-                centered
-                style={{height: "120px", width: "120px"}}
-              /> : <Image
-              bordered
-              size="large"
-              src={
-                this.state.preview
-              }
-              circular
-              centered
-              style={{height: "120px", width: "120px"}}
-            /> }
-              
-            
-              <Form style={{marginTop: "-30px", float: "right"}}>
+              {this.state.preview === "" ? (
+                <Image
+                  bordered
+                  size="large"
+                  src={
+                    "http://192.168.100.18/src/web-api/public/avatar/" +
+                    this.state.avatar
+                  }
+                  circular
+                  centered
+                  style={{ height: "120px", width: "120px" }}
+                />
+              ) : (
+                <Image
+                  bordered
+                  size="large"
+                  src={this.state.preview}
+                  circular
+                  centered
+                  style={{ height: "120px", width: "120px" }}
+                />
+              )}
+
+              <Form style={{ marginTop: "-30px", float: "right" }}>
                 <Form.Field>
                   <div className="input-file-container">
                     <input
@@ -343,24 +361,23 @@ export default class ProfileSetting extends Component {
                       type="file"
                       onChange={this.fileHandler}
                     />
-                    
+
                     <Icon
                       bordered
                       circular
                       // style={{color: "#5b90f6"}}
-                      name='camera'
-                      size='big'
+                      name="camera"
+                      size="big"
                       htmlFor="my-file"
                       // className="input-file-trigger"
                     />
-
                   </div>
                   <p className="file-return" />
                 </Form.Field>
               </Form>
             </GridColumn>
-          </Grid> 
-          
+          </Grid>
+
           <Form>
             <Form.Field>
               <label>First Name</label>
@@ -370,7 +387,7 @@ export default class ProfileSetting extends Component {
                 defaultValue={first_name}
                 onChange={this.handlePost.bind(this)}
               />
-              <Divider hidden/>
+              <Divider hidden />
               <label>Last Name</label>
               <input
                 placeholder="last name"
@@ -380,69 +397,144 @@ export default class ProfileSetting extends Component {
               />
               <Divider hidden />
               <label>Phone Number</label>
-              <input
-                type="number" 
-                pattern="[0-9]*" 
-                placeholder="0811xxxxx"
-                name="phone_number"
-                defaultValue={phone_number}
-                onChange={this.handlePost.bind(this)}
-              />
-            <Divider hidden />
-            <label>Gender</label>
-            <Dropdown
-              placeholder="Gender"
-              style={{ position: "relative", display: "block" }}
-              onChange={this.setGender.bind(this)}
-              options={option_gender}
-              fluid
-              selection
-              value={gender}
-            />
-            <Divider hidden />
-            <label>Choosen Tags :</label>
-            <b style={{color: "blue"}}><i>{tags}</i></b>
-            
-            <Divider hidden />
-            {option.map((data, index) => {
-              return(
-                <Button.Group key={data.value} widths='1' size='tiny' style={maxButton}>
-                  {tag1 == 1 && index == 0 ? 
-                  (<Button color='blue' onClick={() => this.handleRemove(data.value)}>{data.text}</Button>) : 
-                  tag2 == 1 && index == 1 ? 
-                  (<Button color='blue' onClick={() => this.handleRemove(data.value)}>{data.text}</Button>) : 
-                  tag3 == 1 && index == 2 ? 
-                  (<Button color='blue' onClick={() => this.handleRemove(data.value)}>{data.text}</Button>) : 
-                  tag4 == 1 && index == 3 ? 
-                  (<Button color='blue' onClick={() => this.handleRemove(data.value)}>{data.text}</Button>) : 
-                  tag5 == 1 && index == 4 ? 
-                  (<Button color='blue' onClick={() => this.handleRemove(data.value)}>{data.text}</Button>) : 
-                  tag6 == 1 && index == 5 ? 
-                  (<Button color='blue' onClick={() => this.handleRemove(data.value)}>{data.text}</Button>) : 
-                  tag7 == 1 && index == 6 ? 
-                  (<Button color='blue' onClick={() => this.handleRemove(data.value)}>{data.text}</Button>) : 
-                  tag8 == 1 && index == 7 ? 
-                  (<Button color='blue' onClick={() => this.handleRemove(data.value)}>{data.text}</Button>) : 
-                  <Button basic color="blue" onClick={() => this.handleClick(data.value)}>{data.text}</Button>}
-                </Button.Group>
-              )
-            })}
-           
-            <Modal
-              trigger={
-                <Button
-                  fluid
-                  style={{background: "#5b90f6", color: "white", marginTop: "10px"}}
-                  size="tiny"
-                  onClick={this.update.bind(this)}>Update Profile</Button>
-              }
-              open={this.state.modalOpenNotification}
-              onClose={this.handleCloseNotification}
-              basic
-              size="small"
+              <Input
+                type="text"
               >
-              {this.state.kode === 1 ? <Header style={{ textAlign: "center" }} content="No Updated !" /> : <Header style={{ textAlign: "center" }} content="Account Updated !" />}
-            </Modal>
+                <InputMask
+                  mask="9999999999999"
+                  maskChar={null}
+                  name="phone_number"
+                  value={phone_number}
+                  onChange={this.handlePost.bind(this)}
+                />
+              </Input>
+              <Divider hidden />
+              <label>Gender</label>
+              <Dropdown
+                placeholder="Gender"
+                style={{ position: "relative", display: "block" }}
+                onChange={this.setGender.bind(this)}
+                options={option_gender}
+                fluid
+                selection
+                value={gender}
+              />
+              <Divider hidden />
+              <label>Choosen Tags :</label>
+              <b style={{ color: "blue" }}>
+                <i>{tags}</i>
+              </b>
+
+              <Divider hidden />
+              {option.map((data, index) => {
+                return (
+                  <Button.Group
+                    key={data.value}
+                    widths="1"
+                    size="tiny"
+                    style={maxButton}
+                  >
+                    {tag1 == 1 && index == 0 ? (
+                      <Button
+                        color="blue"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag2 == 1 && index == 1 ? (
+                      <Button
+                        color="blue"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag3 == 1 && index == 2 ? (
+                      <Button
+                        color="blue"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag4 == 1 && index == 3 ? (
+                      <Button
+                        color="blue"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag5 == 1 && index == 4 ? (
+                      <Button
+                        color="blue"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag6 == 1 && index == 5 ? (
+                      <Button
+                        color="blue"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag7 == 1 && index == 6 ? (
+                      <Button
+                        color="blue"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag8 == 1 && index == 7 ? (
+                      <Button
+                        color="blue"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : (
+                      <Button
+                        basic
+                        color="blue"
+                        onClick={() => this.handleClick(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    )}
+                  </Button.Group>
+                );
+              })}
+
+              <Modal
+                trigger={
+                  <Button
+                    fluid
+                    style={{
+                      background: "#5b90f6",
+                      color: "white",
+                      marginTop: "10px"
+                    }}
+                    size="tiny"
+                    onClick={this.update.bind(this)}
+                  >
+                    Update Profile
+                  </Button>
+                }
+                open={this.state.modalOpenNotification}
+                onClose={this.handleCloseNotification}
+                basic
+                size="small"
+              >
+                {this.state.kode === 1 ? (
+                  <Header
+                    style={{ textAlign: "center" }}
+                    content="No Updated !"
+                  />
+                ) : (
+                  <Header
+                    style={{ textAlign: "center" }}
+                    content="Account Updated !"
+                  />
+                )}
+              </Modal>
             </Form.Field>
           </Form>
         </Container>
