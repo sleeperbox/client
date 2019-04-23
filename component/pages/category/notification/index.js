@@ -4,6 +4,7 @@ import Skeleton from "react-skeleton-loader";
 import HeaderNotification from "./HeaderNotification";
 import Action from "./action";
 import axios from "axios";
+import Menu from '../../profile/MenuProfile'
 
 export default class Index extends Component {
   constructor(props) {
@@ -144,6 +145,7 @@ render() {
       <Divider hidden />
       <Divider hidden />
       <Action />
+      <Menu />
       </div>
       )}
       
