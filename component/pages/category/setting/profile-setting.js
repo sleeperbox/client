@@ -416,7 +416,7 @@ export default class ProfileSetting extends Component {
                   mask="9999999999999"
                   maskChar={null}
                   name="phone_number"
-                  value={phone_number}
+                  value={phone_number == "" ? "" : phone_number}
                   onChange={this.handlePost.bind(this)}
                 />
               </Input>

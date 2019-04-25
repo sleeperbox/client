@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import Skeleton from "react-skeleton-loader";
-import { Grid, Container, Segment, Divider, Image, Icon, Header, Modal, Button, Popup } from "semantic-ui-react";
+import { Grid, Container, Accordion, Divider, Image, Icon, Header, Modal, Button, Popup } from "semantic-ui-react";
 import axios from "axios";
-
 export default class HeaderProfile extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +24,8 @@ export default class HeaderProfile extends Component {
       time: new Date(),
       hour: new Date().getHours(),
       minute: new Date().getMinutes(),
-      coloring: ""
+      coloring: "",
+      activeIndex: 0
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
   }
@@ -149,6 +149,14 @@ export default class HeaderProfile extends Component {
     );
   }
 
+  handleClick = (e, titleProps) => {
+    const { index } = titleProps
+    const { activeIndex } = this.state
+    const newIndex = activeIndex === index ? -1 : index
+
+    this.setState({ activeIndex: newIndex })
+  }
+
   render() {
     const {
       username,
@@ -160,7 +168,7 @@ export default class HeaderProfile extends Component {
       total_thanks,
       join_date,
       followed_topic,
-      background,
+      activeIndex,
       isLoading
     } = this.state;
 
@@ -189,64 +197,57 @@ export default class HeaderProfile extends Component {
           this.generateSkeleton()
         ) : (
           <Container>
-            <Grid columns={1} style={{ background: "#5190ed" }}>
-              <Divider hidden />
-              <Grid.Row>
+            <Grid columns={1} style={{ background: "#5190ed" }}> 
+              <Grid.Row style={{marginTop: 20}}>
                 <Grid.Column>
-                  <Segment basic textAlign="center">
-                  <Popup 
-                    trigger={
-                      <center>
+                  <Accordion fluid styled>
+                    <Accordion.Title  active={activeIndex === 1} index={1} onClick={this.handleClick}>
+                      <Icon name='dropdown' />
+                      Your public profile
+                    </Accordion.Title>
+                    <Accordion.Content  active={activeIndex === 1}>
+                    <center style={{marginTop: 1}}>
                         <Image
                         style={{
                             alignSelf: 'center',
-                            height: 150, 
-                            width: 150, 
-                            bordeerWidth: 1, 
-                            borderRadius:70 
+                            height: 140, 
+                            width: 140, 
+                            borderWidth: 1, 
+                            borderRadius:70
                         }}
-                        
                         src={"http://192.168.100.18/src/web-api/public/avatar/" + this.state.foto}
                       />
                       </center> 
-                    }
-
-                    position='top center'
-                    style={popupStyle}>
-                    {first_name} {last_name}
-                  </Popup>
-                  <Header as="p" style={{ marginTop: "7px", color: "#f7f7f7" }}>
-                    @{username}
-                  </Header>
-                  </Segment>
-                </Grid.Column>
-                <Grid.Column>
-                  <Segment>
-                    <p style={smallFont}>
-                      Posts <span style={toRight}>{total_posts}</span>
-                    </p>
-                    <p style={smallFont}>
-                      Thanks <span style={toRight}>{total_thanks}</span>
-                    </p>
-                    <p style={smallFont}>
-                      <i>Influencing <a style={toRight}>{total_friends} person</a></i>
-                    </p>
-                    <p style={smallFont}>
-                      Awards <a style={toRight}>{awards}</a>
-                    </p>
-                    <p style={smallFont}>
-                      Tags{" "}
-                      <span style={toRight}>
-                        <i><a onClick={this.post.bind(this)}>{followed_topic}</a></i>
-                      </span>
-                    </p>
-                    <p style={smallFont}>
-                      Join Date{" "}
-                      <span style={toRight}>
-                        <i>{join_date}</i>
-                      </span>
-                    </p>
-                  </Segment>
+                      <p style={smallFont}>
+                                  Username <span style={toRight}>@{username}</span>
+                                </p>
+                                <p style={smallFont}>
+                                  Posts <span style={toRight}>{total_posts}</span>
+                                </p>
+                                <p style={smallFont}>
+                                  Thanks <span style={toRight}>{total_thanks}</span>
+                                </p>
+                                <p style={smallFont}>
+                                Influencing <span style={toRight}>{total_friends} person</span>
+                                </p>
+                                <p style={smallFont}>
+                                  Awards <span style={toRight}>{awards}</span>
+                                </p>
+                                <p style={smallFont}>
+                                  Tags{" "}
+                                  <span style={toRight}>
+                                    <i>{followed_topic}</i>
+                                  </span>
+                                </p>
+                                <p style={smallFont}>
+                                  Join Date{" "}
+                                  <span style={toRight}>
+                                    <i>{join_date}</i>
+                                  </span>
+                                </p>
+                    </Accordion.Content>
+                    </Accordion>
+           
                 </Grid.Column>
               </Grid.Row>
             </Grid>

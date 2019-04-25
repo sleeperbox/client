@@ -173,12 +173,7 @@ export default class Index extends Component {
   render() {
     const { datas, isLoading, loading } = this.state;
     return (
-      <div style={{ marginBottom: 45 }}>
-        <HeaderMessage />
-        <Divider hidden />
-        <Divider hidden />
-        <Divider hidden />
-        <Divider hidden />
+      <div style={{ marginBottom: 45, marginTop: 20 }}>
         {loading ? (this.loading()) : datas.length === 0 ? (
           this.generateZeroData()
         ) : isLoading ? (
@@ -226,9 +221,7 @@ export default class Index extends Component {
             background: "#5b90f6",
             color: "white" 
           }} 
-          onClick={() => {this.newmessage()}} />
-          
-                                    
+          onClick={() => {this.newmessage()}} />                  
         <MenuProfile />
       </div>
     );

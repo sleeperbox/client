@@ -74,9 +74,10 @@ export default class Index extends Component {
             {loading ? (this.loading()
                 ) : (
                     <div>
+                        
                         <HeaderProfile />
-                        <MoreCategory />
-                        <MyPost />
+                        <MoreCategory/>
+                        <MyPost/>
                         <MenuProfile />
                     </div>
                 )}

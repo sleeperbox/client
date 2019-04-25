@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Dimmer, Loader, Icon, Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
-import HeaderNotification from "./HeaderNotification";
 import Action from "./action";
 import axios from "axios"
 import Menu from '../../profile/MenuProfile'
@@ -139,13 +138,10 @@ render() {
   const {loading} = this.state
   return (
     <div style={{ marginBottom: 45 }}>
-      {loading ? (this.loading()) : ( <div>
-      <HeaderNotification />
-      <Divider hidden />
-      <Divider hidden />
-      <Divider hidden />
-      <Action />
-      <Menu/>
+      {loading ? (this.loading()) : ( 
+      <div>
+        <Action />
+        <Menu/>
       </div>
       )}
       <Menu/>

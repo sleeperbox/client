@@ -8,7 +8,8 @@ import {
   Segment,
   Dimmer,
   Header,
-  Icon
+  Icon,
+  Statistic
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import setting from "./../../../../../assets/images/icon/setting.png";
@@ -134,34 +135,42 @@ export default class MoreCategory extends Component {
         onClickOutside={() => this.setState({ dimmers: false })}
       >
         <Grid centered columns={1}>
-          <Grid.Column style={{marginBottom: "80px"}}>
+          <Grid.Column style={{marginTop: 20}}>
             <Header as="h1" inverted textAlign="center" dividing style={{fontSize:"50px"}}>
               {this.getReputationName()}
             </Header>
           </Grid.Column>
 
-          <Grid.Row centered columns={1} style={{marginBottom: "100px"}}>
+          <Grid.Row centered columns={1} style={{marginBottom: "150px"}}>
             <Grid.Column>
               <Header  size="huge" textAlign="center" inverted icon style={{fontSize:"50px"}}>
-                <Icon size="massive" name="studiovinari" />
+                <Icon size="massive" name="universal access" />
               </Header>
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row centered columns={2}>
-            <Grid.Column>
-              <Header as="h4" block textAlign="center">
-                Your Rank : {this.state.rank}
-              </Header>
+          <Grid.Row centered columns={2} style={{marginTop: -185}}>
+            <Grid.Column style={{textAlign: "center"}}>
+              <Statistic color="teal">
+                <Statistic.Value>{this.state.rank}</Statistic.Value>
+                <Statistic.Label style={{ color: "white"}}>Rank</Statistic.Label>
+              </Statistic>
             </Grid.Column>
 
-            <Grid.Column>
-              <Header as="h4" block textAlign="center">
-                Your Point : {this.getReputationPoint()}
-              </Header>
+            <Grid.Column style={{textAlign: "center"}}>
+              <Statistic color="olive" style={{textAlign: "center", color: "white"}}>
+                <Statistic.Value>{this.getReputationPoint()}</Statistic.Value>
+                <Statistic.Label style={{ color: "white"}}>Point</Statistic.Label>
+              </Statistic>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row centered columns={1}>
+            <Grid.Column  style={{textAlign: "center"}}>
             </Grid.Column>
           </Grid.Row>
         </Grid>
+        <br/><br/>
+        tap here to close...
       </Dimmer>
     );
   }
@@ -236,15 +245,11 @@ export default class MoreCategory extends Component {
       window.location = "#/news";
     }
     return (
-      <div style={{ marginBottom: 10 }}>
+      <div style={{background: "#f7f7f7", width: "100%"}}>
         {isLoading ? (
           this.generateSkeleton()
-        ) : (
-          <Container>
-            {this.state.dimmers ? this.OpenDimmer() : null}
-            <Divider hidden />
-            <Segment basic>
-              <Grid columns={4} style={coloring}>
+        ) : this.state.dimmers ? this.OpenDimmer() : null }
+              <Grid columns={4} style={coloring} style={{padding: 5, margin: 2, marginTop: 15}}>
                 <GridColumn>
                   <p
                     style={this.noSpacing}
@@ -252,7 +257,7 @@ export default class MoreCategory extends Component {
                   >
                     <Image src={newsIcon} avatar />
                   </p>
-                  <p style={this.smallFontCenter}>News</p>
+                  <p style={this.smallFontCenter}>W-news</p>
                 </GridColumn>
                 <GridColumn>
                   <p
@@ -282,10 +287,6 @@ export default class MoreCategory extends Component {
                   <p style={this.smallFontCenter}>Setting</p>
                 </GridColumn>
               </Grid>
-            </Segment>
-            <Divider hidden />
-          </Container>
-        )}
       </div>
     );
   }

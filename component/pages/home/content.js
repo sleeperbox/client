@@ -150,7 +150,7 @@ export default class Content extends Component {
     var judul = newArray.values();
     var isi = [];
     return (
-      <div>
+      <div style={{marginTop: 15}}>
         {newArray.map(data => {
           isi.push(data);
           return (
@@ -161,6 +161,7 @@ export default class Content extends Component {
             >
               <Segment.Group>
                 <Segment.Inline style={{marginBottom: 7}}>
+                <br/>
                     {data === "null" ? (
                       <Image
                         src="http://192.168.100.18/src/web-api/public/icon/kategori.png"
@@ -216,11 +217,11 @@ export default class Content extends Component {
                         style={{ float: "left" }}
                       />
                     ) : null}
-                  <h3>
+                  <p style={{fontSize: 18}}>
                     &nbsp;
                     {judul.next().value}
-                    <Icon onClick={this.view.bind(this)} name="angle right" />
-                  </h3>
+                    <Icon onClick={this.view.bind(this)} name="angle right" style={{float: "right"}}/>
+                  </p>
                 </Segment.Inline>
                 <Segment>
                   <List.Item style={{ float: "block" }}>

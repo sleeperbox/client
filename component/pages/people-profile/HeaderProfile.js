@@ -95,7 +95,7 @@ export default class HeaderProfile extends Component {
           {profile.map(data => {
             return (
               <Grid columns={1} key={data._id}>
-                <Grid.Row style={{background: 'linear-gradient(to bottom, #f7f8f9, #889998)'}}>
+                <Grid.Row style={{background: '#5190ed'}}>
                   <Grid.Column>
                     <Segment basic textAlign="center">
                       <Image
@@ -114,14 +114,14 @@ export default class HeaderProfile extends Component {
                           content="unfollow"
                           size="tiny"
                           fluid
-                          style={{background: "#6497c0", fontSize: "14px", color: "white"}}
+                          style={{background: "#f7f7f7", fontSize: "14px", color: "#5190ed"}}
                           onClick={() => this.handleUnfollow(data.email)}
                         />
                       ) : (
                         <Button
                           content="follow"
                           size="tiny"
-                          style={{background: "#6497c9", fontSize: "14px", color: "white"}}
+                          style={{background: "#f7f7f7", fontSize: "14px", color: "#5190ed"}}
                           fluid
                           onClick={() => this.handleFollow(data.email)}
                         />

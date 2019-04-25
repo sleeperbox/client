@@ -14,16 +14,16 @@ export default class Action extends Component {
   render() {
     const panes = [
       {menuItem: (
-        <Menu.Item key='compose' name="Influence" style={{width: "50%"}}/>
+        <Menu.Item key='compose' name={"Influence"} style={{width: "50%", fontSize: 18}}/>
       ), render: () => <Tab.Pane attached={false} basic><Infuenced/></Tab.Pane> },
       {menuItem: (
-        <Menu.Item key='user' name="Disccusion" style={{width: "50%"}}/>
+        <Menu.Item key='user' name="Discussion" style={{width: "50%", fontSize: 18}}/>
       ), render: () => <Tab.Pane attached={false} basic><Comment/></Tab.Pane> },
     ]
 
     return (
         <div>
-          <Tab menu={{ secondary: true, pointing: true }} panes={panes}/>
+          <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
         </div>
         )
     }

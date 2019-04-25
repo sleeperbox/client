@@ -309,7 +309,7 @@ export default class MyPost extends Component {
         {isLoading ? (
           this.generateSkeleton()
         ) : nopost == 0 ? (
-          <Container>
+          <Container style={{marginTop: 80}}>
             <Header as="h2" icon textAlign="center">
               <Icon name="wordpress forms" />
               No Post
@@ -326,9 +326,8 @@ export default class MyPost extends Component {
           </Container>
         ) : (
           <Container>
-            <Segment basic>
-            
-            <ul id="grid" className="clear" style={{marginTop: -45}}>
+            <Segment basic style={{marginTop: 15}}>
+            <ul id="grid" className="clear">
               {posting.map((data, index) => {
                 return (
                     <li key={data._id}>
@@ -416,6 +415,7 @@ export default class MyPost extends Component {
                                         trigger={
                                         <Icon
                                           name="handshake outline"
+                                          size="large"
                                           onClick={() => this.givethanks(data._id, data.username)}
                                         />
                                         }
@@ -424,16 +424,11 @@ export default class MyPost extends Component {
                                     ? "Anda Telah Thanks"
                                     : "Anda Telah UnThanks"}
                                 </Popup>
-                                      
-                                      <br />
-                                      <small>
-                                        <i> {data.thanks} Thanks </i>
-                                      </small>
                                     </Grid.Column>
                                     <Grid.Column style={{marginLeft: -50}}>
                                       {/* Coment */}                                
                                       <Icon 
-                                        name="facebook messenger"
+                                        name="comment outline"
                                         size='large'
                                         onClick= {() => this.discuss(data.id_posts)}
                                       />{this.state.comment}
@@ -443,21 +438,21 @@ export default class MyPost extends Component {
                                     <Grid.Column style={{marginLeft: 50}}>
                                       {/* delete */}
                                       <Modal
-                                        trigger={<Label onClick={this.handleOpen} style={{color: "black", border: "1", background: "white", float: "right", marginRight: "-4%"}}><Icon name="trash alternate outline"/></Label>}
+                                        trigger={<Label onClick={this.handleOpen} style={{color: "black", border: "1", float: "right", background: "transparent", marginTop: -8, marginRight: -22}}><Icon name="trash alternate outline" size="large"/></Label>}
                                         open={this.state.modal}
                                         onClose={this.handleClose}
                                         basic
                                       >
-                                        <Header icon="trash alternate outline" content="Delete Posting!" />
+                                        <Header icon="trash alternate outline" size="large" content="Delete Posting!" />
                                         <Modal.Content>
                                           <p>Are You Sure?</p>
                                         </Modal.Content>
                                         <Modal.Actions>
-                                        <Button onClick={this.handleClose} inverted>
-                                          <Icon name="remove" /> No
-                                        </Button>
                                         <Button inverted onClick={() => this.delete(data._id)}>
                                           <Icon name="checkmark" /> Yes
+                                        </Button>
+                                        <Button onClick={this.handleClose} inverted>
+                                          <Icon name="remove" /> No
                                         </Button>
                                         </Modal.Actions>
                                       </Modal>
@@ -465,8 +460,9 @@ export default class MyPost extends Component {
                                   </Grid.Row>
                                   <Grid.Row columns={1}>
                                     <GridColumn>
-                                      <b style={{fontSize: 15}}>{data.content}.</b>
-                                        <small>
+                                      <p style={{fontSize: 15}}>{data.content} </p>
+                                      <br/>
+                                        <small style={{float: "right"}}>
                                           <i>
                                           {
                                             data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? "Now" 
@@ -627,8 +623,9 @@ export default class MyPost extends Component {
                                 <Grid>
                                 <Grid.Row columns={1}>
                                     <GridColumn>
-                                      <b style={{fontSize: 15}}>{data.content}.</b>
-                                        <small>
+                                      <p style={{fontSize: 15}}>{data.content} </p>
+                                      <br/>
+                                        <small style={{float: "right"}}>
                                           <i>
                                           {
                                             data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? "Now" 
@@ -652,15 +649,11 @@ export default class MyPost extends Component {
                                       />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
                                           : "Anda Telah UnThanks"}
                                       </Popup>
-                                      <br />
-                                      <small>
-                                        <i> {data.thanks} Thanks </i>
-                                      </small>
                                     </Grid.Column>
                                     <Grid.Column style={{marginLeft: -50}}>
                                       {/* Coment */}                                
                                       <Icon 
-                                        name="facebook messenger"
+                                        name="comment outline"
                                         size='large'
                                         onClick= {() => this.discuss(data.id_posts)}
                                       />{this.state.comment}
@@ -670,21 +663,21 @@ export default class MyPost extends Component {
                                     <Grid.Column style={{marginLeft: 50}}>
                                       {/* delete */}
                                       <Modal
-                                        trigger={<Label onClick={this.handleOpen} style={{color: "black", border: "1", background: "white", float: "right", marginRight: "-4%"}}><Icon name="trash alternate outline"/></Label>}
+                                        trigger={<Label onClick={this.handleOpen} style={{color: "black", border: "1", float: "right",  background: "transparent", marginTop: -8, marginRight: -22}}><Icon name="trash alternate outline" size="large"/></Label>}
                                         open={this.state.modal}
                                         onClose={this.handleClose}
                                         basic
                                       >
-                                        <Header icon="trash alternate outline" content="Delete Posting!" />
+                                        <Header icon="trash alternate outline" size="large" content="Delete Posting!" />
                                         <Modal.Content>
                                           <p>Are You Sure?</p>
                                         </Modal.Content>
                                         <Modal.Actions>
-                                        <Button onClick={this.handleClose} inverted>
-                                          <Icon name="remove" /> No
-                                        </Button>
                                         <Button inverted onClick={() => this.delete(data._id)}>
                                           <Icon name="checkmark" /> Yes
+                                        </Button>
+                                        <Button onClick={this.handleClose} inverted>
+                                          <Icon name="remove" /> No
                                         </Button>
                                         </Modal.Actions>
                                       </Modal>

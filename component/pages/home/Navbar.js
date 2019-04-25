@@ -1,30 +1,22 @@
 import React, { Component } from "react";
 import {
   Menu,
-  Header
+  Header,
+  Icon
 } from "semantic-ui-react";
-import axios from "axios";
-import Back from "../category/notification/goBack"
 export default class Navbar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  componentWillMount() {}
 
   render() {
     return (
       <div>
-        <Menu borderless size="huge" fixed="top">
-            <Menu.Item name='back'>
-            <Back />
+        <Menu borderless size="large" fixed="top">
+            <Menu.Item name='camera' size="large">
+              <Icon name="camera" size="large" style={{color: "#222"}}/>
+            <Header as="h4" style={{marginTop: -0}}>Way Home</Header>
             </Menu.Item>
-            <Menu.Menu position='right'>
-              <Menu.Item name='help'>
-                <Header as="h5">Home</Header>
-              </Menu.Item>
-            </Menu.Menu>
+            <Menu.Item name='gift'  position="right">
+              <Icon name="gift"  size="large" style={{color: "#222"}}/>
+            </Menu.Item>
           </Menu>
       </div>
     );

@@ -199,7 +199,7 @@ export default class PostingOther extends Component {
                                   <List.Content>
                                     <List.Header as="a">
                                       <span style={textMargin}>
-                                        @{data.username}
+                                        {data.username}
                                       </span>
                                     </List.Header>
                                   </List.Content>

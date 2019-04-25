@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {Icon, Menu, Header, Divider} from 'semantic-ui-react';
-import Back from "../category/notification/goBack"
 
 export default class HeaderMessage extends Component {
 
@@ -17,10 +16,6 @@ export default class HeaderMessage extends Component {
     render () {
         return (
             <Menu borderless size="huge" fixed="top">
-            <Menu.Item name='back'>
-              {/* <Icon onClick={this.back.bind(this)} name="arrow left"/> */}
-              <Back />
-            </Menu.Item>
             <Menu.Menu position='right'>
               <Menu.Item name='help'>
                 <Header as="h5">Message Way</Header>
