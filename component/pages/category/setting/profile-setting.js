@@ -380,7 +380,7 @@ export default class ProfileSetting extends Component {
 
           <Form>
             <Form.Field>
-              <label>First Name</label>
+              <label>first name</label>
               <input
                 placeholder="first name"
                 name="first_name"
@@ -388,7 +388,7 @@ export default class ProfileSetting extends Component {
                 onChange={this.handlePost.bind(this)}
               />
               <Divider hidden />
-              <label>Last Name</label>
+              <label>last name</label>
               <input
                 placeholder="last name"
                 name="last_name"
@@ -396,7 +396,18 @@ export default class ProfileSetting extends Component {
                 onChange={this.handlePost.bind(this)}
               />
               <Divider hidden />
-              <label>Phone Number</label>
+              <label>gender</label>
+              <Dropdown
+                placeholder="Gender"
+                style={{ position: "relative", display: "block" }}
+                onChange={this.setGender.bind(this)}
+                options={option_gender}
+                fluid
+                selection
+                value={gender}
+              />
+              <Divider hidden />
+                <label>phone number</label>
               <Input
                 type="text"
                 placeholder="0811xxxxxxxx"
@@ -410,21 +421,10 @@ export default class ProfileSetting extends Component {
                 />
               </Input>
               <Divider hidden />
-              <label>Gender</label>
-              <Dropdown
-                placeholder="Gender"
-                style={{ position: "relative", display: "block" }}
-                onChange={this.setGender.bind(this)}
-                options={option_gender}
-                fluid
-                selection
-                value={gender}
-              />
-              <Divider hidden />
-              <label>Choosen Tags :</label>
-              <b style={{ color: "blue" }}>
+              <label>choosen tags :</label>
+              <p>
                 <i>{tags}</i>
-              </b>
+              </p>
 
               <Divider hidden />
               {option.map((data, index) => {
@@ -516,7 +516,7 @@ export default class ProfileSetting extends Component {
                     size="tiny"
                     onClick={this.update.bind(this)}
                   >
-                    Update Profile
+                    update profile
                   </Button>
                 }
                 open={this.state.modalOpenNotification}
@@ -538,6 +538,7 @@ export default class ProfileSetting extends Component {
               </Modal>
             </Form.Field>
           </Form>
+          <Divider hidden />
         </Container>
         <Divider hidden />
         <Divider hidden />

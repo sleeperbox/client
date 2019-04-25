@@ -104,16 +104,16 @@ export default class AccountSetting extends Component {
           <Divider hidden />
           <Form>
             <Form.Field>
-              <label>Your Email</label>
+              <label>your email</label>
               <input defaultValue={this.state.email} disabled />
             </Form.Field>
             <Form.Field>
-              <label>Username</label>
+              <label>username</label>
               <input defaultValue={this.state.username} disabled />
             </Form.Field>
 
             <Modal
-              trigger={<a onClick={this.handleOpenPassword} ><i>Change Password</i></a>}
+              trigger={<a onClick={this.handleOpenPassword} style={{float: "right"}}><i>change password</i></a>}
               open={this.state.modalOpenPassword}
               onClose={this.handleClosePassword}
               basic
@@ -148,47 +148,16 @@ export default class AccountSetting extends Component {
                   onClick={this.ubahPassword.bind(this)}
                   inverted
                 >
-                  <Icon name="checkmark" /> Change Password
+                change password
                 </Button>
               </Modal.Actions>
             </Modal>
           </Form>
-          <br />
-          
-          <Modal
-            trigger={
-              <div>
-                <Button size="tiny" style={{ float: "right", background: "#5b90f6", color: "white", marginTop: "-10px"}}>
-                  <Button.Content onClick={this.handleOpen}>
-                    <Icon name='user delete' />
-                  </Button.Content>
-                </Button>
-              </div>
-            }
-            open={this.state.modalOpen}
-            onClose={this.handleClose}
-            basic
-            size="small"
-          >
-            <Header icon="trash" content="Delete Account!" />
-            <Modal.Content>
-              <p>Are You Sure?</p>
-            </Modal.Content>
-            <Modal.Actions>
-              <Button onClick={this.handleClose} inverted>
-                <Icon name="remove"  color="red" /> No
-              </Button>
-              <Button inverted onClick={this.delete.bind(this)}>
-                <Icon name="checkmark" color="green" /> Yes
-              </Button>
-            </Modal.Actions>
-          </Modal>
-            <div>
-              <Button size="tiny" style={{ float: "right", background: "#5b90f6", color: "white", marginTop: "-10px"}}>
-                <Button.Content onClick={this.logout.bind(this)}>
-                  <Icon name='log out' />
-                </Button.Content>
-              </Button>
+          <br/>
+            <div style={{marginTop: 8, float: "right"}}>
+                <a onClick={this.logout.bind(this)}>
+                  <i>logout</i>
+                </a>
             </div>
           <Divider hidden />
         </Container>
