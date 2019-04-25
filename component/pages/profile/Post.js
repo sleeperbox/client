@@ -203,7 +203,8 @@ export default class Posting extends Component {
             bottom: 0
           }}
         >
-          <Menu.Item name="button" style={{ left: 40 }}>
+          <Menu.Item name="button" style={{ left: 65 }}>
+            <i style={{marginRight: 12}}>category</i>
             <Dropdown
               onChange={this.setValue.bind(this)}
               options={options}
