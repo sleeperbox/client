@@ -309,11 +309,10 @@ export default class MenuProfile extends Component {
               </Menu.Item>
 
               <Menu.Item name="post" onClick={() => this.handleMenu("posting")}>
-                {menu === "post" ? (
-                  <Icon name="plus square" style={{ color: "#5b90f6" }} size="large" />
-                ) : (
-                    <Icon name="plus square outline" style={{ color: "#555" }} size="large" />
-                  )}
+              &nbsp;
+                <div>
+                  <Icon name="plus circle" size="big" style={{ color: "#555" }} />
+                </div>
               </Menu.Item>
 
               <Menu.Item
