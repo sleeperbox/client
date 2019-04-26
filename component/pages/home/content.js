@@ -167,7 +167,7 @@ export default class Content extends Component {
                 <br/>
                     {data === "null" ? (
                       <Image
-                        src="http://192.168.100.18/src/web-api/public/icon/kategori.png"
+                        src="http://192.168.100.18/src/web-api/public/icon/follow.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
@@ -185,7 +185,7 @@ export default class Content extends Component {
                       />
                     ) : data === "fact-rumour" ? (
                       <Image
-                        src="http://192.168.100.18/src/web-api/public/icon/fr.png"
+                        src="http://192.168.100.18/src/web-api/public/icon/f&r.png"
                         width="7%"
                         style={{ float: "left" }}
                       />

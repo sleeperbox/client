@@ -10,6 +10,7 @@ import {
   Input,
   
 } from "semantic-ui-react";
+import axios from 'axios'
 
 export default class AccountSetting extends Component {
   constructor(props) {
@@ -20,9 +21,29 @@ export default class AccountSetting extends Component {
       password_lama: "",
       password_baru: "",
       modalOpen: false,
-      modalOpenPassword: false
+      modalOpenPassword: false,
+      username_: ""
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentWillMount() {
+    axios({
+      method: "post",
+      url: "http://192.168.100.18:8080/api/user",
+      headers: {
+        "Acces-Control-Allow-Origin": true,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result =>
+      this.setState({
+        username_: result.data.username
+      })
+    );
   }
 
   handleOpen = () => this.setState({ modalOpen: true });
@@ -109,26 +130,28 @@ export default class AccountSetting extends Component {
             </Form.Field>
             <Form.Field>
               <label>username</label>
-              <input defaultValue={this.state.username} disabled />
+              <input defaultValue={this.state.username_} disabled />
             </Form.Field>
 
             <Modal
-              trigger={<a onClick={this.handleOpenPassword} style={{float: "right"}}><i>change password</i></a>}
+              trigger={<a onClick={this.handleOpenPassword} style={{float: "right"}}><i>update password</i></a>}
               open={this.state.modalOpenPassword}
               onClose={this.handleClosePassword}
               basic
               size="small"
               closeIcon
             >
-              <Header icon="exchange" content="Change Password" />
+              <Header content="" />
               <Modal.Content>
                 <label style={marginFieldPassword}>Old Password : </label>
+                <br />
                 <Input
                   type="password"
                   name="password_lama"
                   onChange={this.handlePost.bind(this)}
                   icon={{name: "lock", circular: true, link: true }}
-                  placeholder="Old Password"
+                  placeholder='type your current or last password'
+                  fluid
                 />
                 <br />
                 <br />
@@ -138,7 +161,8 @@ export default class AccountSetting extends Component {
                   name="password_baru"
                   onChange={this.handlePost.bind(this)}
                   icon={{name: "lock", circular: true, link: true }}
-                  placeholder="New Password"
+                  placeholder='we recommend an unpredictable character'
+                  fluid
                 />
               </Modal.Content>
               <Modal.Actions>
@@ -148,7 +172,7 @@ export default class AccountSetting extends Component {
                   onClick={this.ubahPassword.bind(this)}
                   inverted
                 >
-                change password
+                update
                 </Button>
               </Modal.Actions>
             </Modal>
