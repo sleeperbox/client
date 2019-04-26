@@ -6,7 +6,8 @@ import {
   Image
 } from "semantic-ui-react";
 import { Camera } from 'react-cam';
-
+import gift from "../../../assets/icon/gift.png";
+import camera from "../../../assets/icon/camera.png";
 export default class Navbar extends Component {
 
   constructor(props){
@@ -39,13 +40,13 @@ export default class Navbar extends Component {
     return (
       <div>
         {this.state.open ? this.openModal() : (
-        <Menu borderless size="large" fixed="top">
-            <Menu.Item name='camera' size="large">
-              <Icon name="camera" size="large" style={{color: "#222"}} onClick={()=> this.modal()}/>
-            <Header as="h4" style={{marginTop: -0}}>Way Home</Header>
+        <Menu borderless size="large" fixed="top" style={{background: "#5190ed"}}>
+            <Menu.Item name='camera' size="large" style={{color: "white"}}>
+              <Image src={camera} style={{width: 25, height: 25}}/> &nbsp;&nbsp;
+              <p style={{marginTop: -0, color: "#ffffff", fontFamily: "Trebuchet MS, Helvetica, sans-serif", fontStyle: "italic"}}> &nbsp;Wayhome</p>
             </Menu.Item>
             <Menu.Item name='gift'  position="right">
-              <Icon name="gift"  size="large" style={{color: "#222"}}/>
+              <Image src={gift} style={{width: 22, height: 20}}/>
             </Menu.Item>
           </Menu>
           )}

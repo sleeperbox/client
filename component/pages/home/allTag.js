@@ -1,5 +1,20 @@
 import React, { Component } from "react";
 import { TabComponent } from '@syncfusion/ej2-react-navigations';
+import { Divider, Image } from "semantic-ui-react";
+import comp from '../../../assets/icon/komp.png'
+import fam from '../../../assets/icon/family.png'
+import fnr from '../../../assets/icon/f&r.png'
+import bis from '../../../assets/icon/bisnis.png'
+import fash from '../../../assets/icon/fashion.png'
+import quo from '../../../assets/icon/quotes.png'
+import rid from '../../../assets/icon/riddle.png'
+import oth from '../../../assets/icon/other.png'
+import fol from '../../../assets/icon/follow.png'
+
+
+const iconSizing = {
+  width: 18, height: 18
+}
 
 export default class Alltag extends Component {
   constructor(props) {
@@ -14,17 +29,17 @@ export default class Alltag extends Component {
   render() {
     return (
       <div style={{ position: "relative",top: 20, zIndex: 2}}>
-        <TabComponent id='defaultTab' overflowMode='Scrollable' style={{position: "fixed", background: "#fff" }}>
+        <TabComponent id='defaultTab' overflowMode='Scrollable' style={{position: "fixed", background: "#fff", boxShadow: '0 8px 6px -6px #999999' }}>
           <div className="e-tab-header">
-            <div> You Follow </div>
-            <div> Computer &amp; Gadget </div>
-            <div> Family &amp; Love </div>
-            <div> Fact &amp; Rumor </div>
-            <div> Business &amp; Work </div>
-            <div> Fashion &amp; Lifestyle </div>
-            <div> Quotes </div>
-            <div> Riddles </div>
-            <div> Other </div>
+            <div> <Image src={fol} style={iconSizing}/> You Follow </div>
+            <div> <Image src={comp} style={iconSizing}/>&nbsp;Computer &amp; Gadget </div>
+            <div> <Image src={fam}  style={iconSizing}/>&nbsp;Family &amp; Love </div>
+            <div> <Image src={fnr}  style={iconSizing}/>&nbsp;Fact &amp; Rumor </div>
+            <div> <Image src={bis}  style={iconSizing}/>&nbsp;Business &amp; Work </div>
+            <div> <Image src={fash}  style={iconSizing}/>Fashion &amp; Lifestyle </div>
+            <div> <Image src={quo} style={iconSizing}/>&nbsp;Quotes </div>
+            <div> <Image src={rid} style={iconSizing}/> Riddles </div>
+            <div> <Image src={oth}  style={iconSizing}/>&nbsp;Other </div>
           </div>
           <div className="e-content">
             <div>
