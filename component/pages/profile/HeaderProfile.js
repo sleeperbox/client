@@ -246,8 +246,7 @@ export default class HeaderProfile extends Component {
                                   </span>
                                 </p>
                     </Accordion.Content>
-                    </Accordion>
-           
+                    </Accordion>           
                 </Grid.Column>
               </Grid.Row>
             </Grid>

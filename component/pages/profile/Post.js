@@ -5,7 +5,7 @@ import {
   Header,
   Container,
   Grid,
-  TextArea,
+  Modal,
   Form,
   Button,
   Dropdown,
@@ -27,7 +27,8 @@ export default class Posting extends Component {
       tag: 0,
       post: 0,
       email: localStorage.getItem("email").slice(1, -1),
-      kode_post: 1
+      kode_post: 1,
+      open: false
     };
     this.handlePost = this.handlePost.bind(this);
   }
@@ -53,6 +54,31 @@ export default class Posting extends Component {
   back() {
     window.location = "#/profile";
     localStorage.setItem("menu", "profile");
+  }
+
+  backConfirmation() {
+    return <Modal basic size='small' open={this.state.open}>
+    <Modal.Content>
+      <p>
+       Are you sure wanna cancel this post?
+      </p>
+    </Modal.Content>
+    <Modal.Actions>
+      <Button basic inverted onClick={()=>this.back()}>
+        Yes
+      </Button>
+      <Button inverted onClick={() => this.handleBackClose()}>
+        No
+      </Button>
+    </Modal.Actions>
+  </Modal>
+  }
+  
+  handleBack() {
+    this.setState({open: true})
+  }
+  handleBackClose() {
+    this.setState({open: false})
   }
 
   setValue(e, data) {
@@ -120,12 +146,13 @@ export default class Posting extends Component {
   }
 
   render() {
-    const { options, value, content } = this.state;
+    const {open, options, value, content } = this.state;
     return (
       <div>
+        {open ? this.backConfirmation() : null}
         <Menu borderless size="small">
           <Menu.Item name="back">
-            <Icon onClick={this.back.bind(this)} name="arrow left" />
+            <Icon onClick={() => this.handleBack()} name="arrow left" />
           </Menu.Item>
           <Menu.Menu position="right">
             <Menu.Item>
@@ -196,25 +223,27 @@ export default class Posting extends Component {
         <Menu
           borderless
           size="small"
-          widths={2}
+          widths={3}
           style={{
             zIndex: 2,
             position: "fixed",
             bottom: 0
           }}
         >
-          <Menu.Item name="button" style={{ left: 65 }}>
-            <i style={{marginRight: 12}}>category</i>
+         <Menu.Item style={{ minWidth: "65px", width: "75px", maxWidth: "100px" }} >
+            <i style={{marginLeft: 15, marginRight: 15 }}>category</i>
+          </Menu.Item>
+          <Menu.Item name="button" style={{ minWidth: "180px", width: "215px", maxWidth: "500px" }}>
             <Dropdown
               onChange={this.setValue.bind(this)}
               options={options}
               value={value}
               selection
-              style={{ minWidth: "17em" }}
+              style={{ width: "100%" }}
             />
           </Menu.Item>
           <Menu.Menu position="right">
-            <Menu.Item style={{ right: 15 }}>
+            <Menu.Item style={{ minWidth: "35px"}}>
               <div className="input-file-container">
                 <input
                   className="input-file"
@@ -222,7 +251,7 @@ export default class Posting extends Component {
                   type="file"
                   onChange={this.fileHandler}
                 />
-                <Icon name="picture" size="large" htmlFor="my-file" />
+                <Icon name="picture" size="large" htmlFor="my-file" style={{marginLeft: 15, marginRight: 15 }} />
               </div>
             </Menu.Item>
           </Menu.Menu>

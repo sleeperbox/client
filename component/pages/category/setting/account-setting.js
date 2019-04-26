@@ -154,7 +154,8 @@ export default class AccountSetting extends Component {
             </Modal>
           </Form>
           <br/>
-            <div style={{marginTop: 8, float: "right"}}>
+          <br/>
+            <div style={{marginTop: -8, position: "relative", right: 0, float: "right"}}>
                 <a onClick={this.logout.bind(this)}>
                   <i>logout</i>
                 </a>

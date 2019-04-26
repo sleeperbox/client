@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import {
-  Container
-} from "semantic-ui-react";
 import { TabComponent } from '@syncfusion/ej2-react-navigations';
-const src = "https://increasify.com.au/wp-content/uploads/2016/08/default-image.png"
+
 export default class Alltag extends Component {
   constructor(props) {
     super(props);
@@ -16,8 +13,8 @@ export default class Alltag extends Component {
 
   render() {
     return (
-      <Container style={{ marginTop: 15, marginBottom: 15 }}>
-        <TabComponent id='defaultTab' overflowMode='Scrollable'>
+      <div style={{ position: "relative",top: 20, zIndex: 2}}>
+        <TabComponent id='defaultTab' overflowMode='Scrollable' style={{position: "fixed", background: "#fff" }}>
           <div className="e-tab-header">
             <div> You Follow </div>
             <div> Computer &amp; Gadget </div>
@@ -67,7 +64,7 @@ export default class Alltag extends Component {
             </div>
           </div>
         </TabComponent>
-      </Container>
+      </div>
     )
   }
 }

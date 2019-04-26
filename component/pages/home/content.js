@@ -79,6 +79,9 @@ export default class Content extends Component {
     console.log("oke");
   }
   view(e, data) {
+    if(data.isi == null){
+      return false
+    }
     this.setState({
       nilai: data.isi
     });
@@ -150,7 +153,7 @@ export default class Content extends Component {
     var judul = newArray.values();
     var isi = [];
     return (
-      <div style={{marginTop: 15}}>
+      <div style={{marginTop: -5}}>
         {newArray.map(data => {
           isi.push(data);
           return (
