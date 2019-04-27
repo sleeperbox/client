@@ -46,7 +46,7 @@ export default class PostingOther extends Component {
   componentDidMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/posting/home/other",
+      url: "https://api.aprizal.com/api/posting/home/other",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export default class PostingOther extends Component {
     if (this.state.thanks == 1) {
       axios({
         method: "post",
-        url: "http://192.168.100.18:8080/api/posting/home/other",
+        url: "https://api.aprizal.com/api/posting/home/other",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -82,7 +82,7 @@ export default class PostingOther extends Component {
   givethanks(value, value2) {
     axios({
       method: "put",
-      url: "http://192.168.100.18:8080/api/posting/thanks/post/user",
+      url: "https://api.aprizal.com/api/posting/thanks/post/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -192,7 +192,7 @@ export default class PostingOther extends Component {
                                     size="small"
                                     circular
                                     src={
-                                      "http://192.168.100.18/src/web-api/public/avatar/" +
+                                      "http://aprizal.com/public/avatar/" +
                                       data.foto
                                     }
                                     style={{ width:"30px", height:"30px" }}
@@ -211,7 +211,7 @@ export default class PostingOther extends Component {
                                 {data.fotocontent !== null ? (
                                   <Image
                                     src={
-                                      "http://192.168.100.18/src/web-api/public/posting/foto/" +
+                                      "http://aprizal.com/public/posting/foto/" +
                                       data.fotocontent
                                     }
                                     size="large"

@@ -36,7 +36,7 @@ export default class MenuProfile extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/follow/notif",
+      url: "https://api.aprizal.com/api/follow/notif",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/follow/notif/count",
+      url: "https://api.aprizal.com/api/follow/notif/count",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/notif/comment",
+      url: "https://api.aprizal.com/api/notif/comment",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/notif/message",
+      url: "https://api.aprizal.com/api/notif/message",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -88,7 +88,7 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "get",
-      url: "http://192.168.100.18:8080/api/tags",
+      url: "https://api.aprizal.com/api/tags",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -98,7 +98,7 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/user/avatar",
+      url: "https://api.aprizal.com/api/user/avatar",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -126,7 +126,7 @@ export default class MenuProfile extends Component {
         if (this.state.isMenu === "notification") {
           axios({
             method: "put",
-            url: "http://192.168.100.18:8080/api/follow/notif/seen",
+            url: "https://api.aprizal.com/api/follow/notif/seen",
             headers: {
               "Acces-Control-Allow-Origin": true,
               "Content-Type": "application/json",
@@ -138,7 +138,7 @@ export default class MenuProfile extends Component {
           })
           axios({
             method: "put",
-            url: "http://192.168.100.18:8080/api/notif/comment/seen",
+            url: "https://api.aprizal.com/api/notif/comment/seen",
             headers: {
               "Acces-Control-Allow-Origin": true,
               "Content-Type": "application/json",
@@ -226,7 +226,7 @@ export default class MenuProfile extends Component {
     }else if (this.state.file == null) {
       axios({
         method: "post",
-        url: "http://192.168.100.18:8080/api/posting",
+        url: "https://api.aprizal.com/api/posting",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -247,7 +247,7 @@ export default class MenuProfile extends Component {
         data.append("tags", this.state.value);
         data.append("kode_post", this.state.kode_post);
   
-        axios.post("http://192.168.100.18:8080/api/posting", data).then(() => console.log(this.state.file)).then(() => window.location.reload());
+        axios.post("https://api.aprizal.com/api/posting", data).then(() => console.log(this.state.file)).then(() => window.location.reload());
       }
   }
 
@@ -338,14 +338,14 @@ export default class MenuProfile extends Component {
                   <Image
                   size="small"
                   circular
-                  src={"http://192.168.100.18/src/web-api/public/avatar/" + this.state.foto}
+                  src={"http://aprizal.com/public/avatar/" + this.state.foto}
                   style={{width:"30px", height:"30px"}}
                   />
                 ) : (
                   <Image
                   size="small"
                   circular
-                  src={"http://192.168.100.18/src/web-api/public/avatar/" + this.state.foto}
+                  src={"http://aprizal.com/public/avatar/" + this.state.foto}
                   style={{width:"30px", height:"30px"}}
                   />
                   )}

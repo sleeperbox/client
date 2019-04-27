@@ -73,7 +73,7 @@ export default class ProfileSetting extends Component {
   componentWillMount() {
     axios({
       method: "get",
-      url: "http://192.168.100.18:8080/api/tags",
+      url: "https://api.aprizal.com/api/tags",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -83,7 +83,7 @@ export default class ProfileSetting extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/user",
+      url: "https://api.aprizal.com/api/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -109,7 +109,7 @@ export default class ProfileSetting extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/user/avatar",
+      url: "https://api.aprizal.com/api/user/avatar",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -135,10 +135,10 @@ export default class ProfileSetting extends Component {
       data.append("avatar", this.state.file, this.state.file.name);
       data.append("email", this.state.email);
 
-      axios.post("http://192.168.100.18:8080/api/upload/avatar", data);
+      axios.post("https://api.aprizal.com/api/upload/avatar", data);
       axios({
         method: "post",
-        url: "http://192.168.100.18:8080/api/user/avatar",
+        url: "https://api.aprizal.com/api/user/avatar",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -182,7 +182,7 @@ export default class ProfileSetting extends Component {
       this.state.log != 0
     ) {
       if (this.state.log.length == 0) {
-        fetch("http://192.168.100.18:8080/api/user/tags", {
+        fetch("https://api.aprizal.com/api/user/tags", {
           method: "PUT",
           headers: {
             "Acces-Control-Allow-Origin": true,
@@ -192,7 +192,7 @@ export default class ProfileSetting extends Component {
           body: JSON.stringify(data2)
         }).then(window.location.reload());
       } else {
-        fetch("http://192.168.100.18:8080/api/user/tags", {
+        fetch("https://api.aprizal.com/api/user/tags", {
           method: "PUT",
           headers: {
             "Acces-Control-Allow-Origin": true,
@@ -334,7 +334,7 @@ export default class ProfileSetting extends Component {
                   bordered
                   size="large"
                   src={
-                    "http://192.168.100.18/src/web-api/public/avatar/" +
+                    "http://aprizal.com/public/avatar/" +
                     this.state.avatar
                   }
                   circular

@@ -46,7 +46,7 @@ export default class Content extends Component {
       () =>
         axios({
           method: "post",
-          url: "http://192.168.100.18:8080/api/profile",
+          url: "https://api.aprizal.com/api/profile",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
@@ -167,55 +167,55 @@ export default class Content extends Component {
                 <br/>
                     {data === "null" ? (
                       <Image
-                        src="http://192.168.100.18/src/web-api/public/icon/follow.png"
+                        src="http://aprizal.com/public/icon/follow.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "computer-gadget" ? (
                       <Image
-                        src="http://192.168.100.18/src/web-api/public/icon/komp.png"
+                        src="http://aprizal.com/public/icon/komp.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "family-love" ? (
                       <Image
-                        src="http://192.168.100.18/src/web-api/public/icon/family.png"
+                        src="http://aprizal.com/public/icon/family.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "fact-rumour" ? (
                       <Image
-                        src="http://192.168.100.18/src/web-api/public/icon/f&r.png"
+                        src="http://aprizal.com/public/icon/f&r.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "business-work" ? (
                       <Image
-                        src="http://192.168.100.18/src/web-api/public/icon/bisnis.png"
+                        src="http://aprizal.com/public/icon/bisnis.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "fashion-lifestyle" ? (
                       <Image
-                        src="http://192.168.100.18/src/web-api/public/icon/fashion.png"
+                        src="http://aprizal.com/public/icon/fashion.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "quotes" ? (
                       <Image
-                        src="http://192.168.100.18/src/web-api/public/icon/quotes.png"
+                        src="http://aprizal.com/public/icon/quotes.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "other" ? (
                       <Image
-                        src="http://192.168.100.18/src/web-api/public/icon/other.png"
+                        src="http://aprizal.com/public/icon/other.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "riddles" ? (
                       <Image
-                        src="http://192.168.100.18/src/web-api/public/icon/riddle.png"
+                        src="http://aprizal.com/public/icon/riddle.png"
                         width="7%"
                         style={{ float: "left" }}
                       />

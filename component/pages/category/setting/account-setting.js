@@ -30,7 +30,7 @@ export default class AccountSetting extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/user",
+      url: "https://api.aprizal.com/api/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export default class AccountSetting extends Component {
     var data = {
       email: this.state.email
     };
-    fetch("http://192.168.100.18:8080/api/user/delete", {
+    fetch("https://api.aprizal.com/api/user/delete", {
       method: "DELETE",
       headers: {
         "Acces-Control-Allow-Origin": true,
@@ -93,7 +93,7 @@ export default class AccountSetting extends Component {
       password_lama: this.state.password_lama,
       password_baru: this.state.password_baru
     };
-    fetch("http://192.168.100.18:8080api/user/ubahpassword", {
+    fetch("http://api.aprizal.comapi/user/ubahpassword", {
       method: "PUT",
       headers: {
         "Acces-Control-Allow-Origin": true,

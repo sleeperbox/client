@@ -43,7 +43,7 @@ export default class MyPost extends Component {
   componentDidMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/posting/people",
+      url: "https://api.aprizal.com/api/posting/people",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export default class MyPost extends Component {
     if (this.state.thanks == 1) {
       axios({
         method: "post",
-        url: "http://192.168.100.18:8080/api/posting/people",
+        url: "https://api.aprizal.com/api/posting/people",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -83,7 +83,7 @@ export default class MyPost extends Component {
   givethanks(value, value2) {
     axios({
       method: "put",
-      url: "http://192.168.100.18:8080/api/posting/thanks/post/user",
+      url: "https://api.aprizal.com/api/posting/thanks/post/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -205,55 +205,55 @@ export default class MyPost extends Component {
                                 <small>
                                 {data.tags === "null" ? (
                                   <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/kategori.png"
+                                    src="http://aprizal.com/public/icon/kategori.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "computer-gadget" ? (
                                   <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/komp.png"
+                                    src="http://aprizal.com/public/icon/komp.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "family-love" ? (
                                   <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/family.png"
+                                    src="http://aprizal.com/public/icon/family.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "fact-rumour" ? (
                                   <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/fr.png"
+                                    src="http://aprizal.com/public/icon/fr.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "business-work" ? (
                                   <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/bisnis.png"
+                                    src="http://aprizal.com/public/icon/bisnis.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "fashion-lifestyle" ? (
                                   <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/fashion.png"
+                                    src="http://aprizal.com/public/icon/fashion.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "quotes" ? (
                                   <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/quotes.png"
+                                    src="http://aprizal.com/public/icon/quotes.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "other" ? (
                                   <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/other.png"
+                                    src="http://aprizal.com/public/icon/other.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "riddles" ? (
                                   <Image
-                                    src="http://192.168.100.18/src/web-api/public/icon/riddle.png"
+                                    src="http://aprizal.com/public/icon/riddle.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
@@ -267,7 +267,7 @@ export default class MyPost extends Component {
                               <List.Description>
                               { data.fotocontent !== null ? 
                               <Image
-                                src={"http://192.168.100.18/src/web-api/public/posting/foto/" + data.fotocontent}
+                                src={"http://aprizal.com/public/posting/foto/" + data.fotocontent}
                                 size="large" /> : null }
                               <br />
                                 <b>{data.content}</b>

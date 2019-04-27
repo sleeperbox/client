@@ -55,14 +55,9 @@ export default class Posts extends Component {
 
   componentWillMount() {
     console.log(this.state.username)
-    axios
-      .get("http://192.168.100.18:8080/api/posts/" + this.state.url)
-      .then(response => {
-        this.setState({ posts: response.data, date: response.data.date });
-      });
     axios({
       method: "POST",
-      url: "http://192.168.100.18:8080/api/comments",
+      url: "https://api.aprizal.com/api/comments",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -86,7 +81,7 @@ export default class Posts extends Component {
     if (this.state.comments == 1) {
       axios({
         method: "POST",
-        url: "http://192.168.100.18:8080/api/comments",
+        url: "https://api.aprizal.com/api/comments",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -112,7 +107,7 @@ export default class Posts extends Component {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "http://192.168.100.18:8080/api/posts/comments",
+      url: "https://api.aprizal.com/api/posts/comments",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -131,7 +126,7 @@ export default class Posts extends Component {
   delete() {
     axios({
       method: "delete",
-      url: "http://192.168.100.18:8080/api/comment/delete",
+      url: "https://api.aprizal.com/api/comment/delete",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -162,7 +157,7 @@ export default class Posts extends Component {
                     circular
                     style={{ width:"30px", height:"30px" }}
                     src={
-                      "http://192.168.100.18/src/web-api/public/avatar/" +
+                      "http://aprizal.com/public/avatar/" +
                       posts.foto
                     }
                   />{" "}
@@ -172,7 +167,7 @@ export default class Posts extends Component {
                   {posts.fotocontent !== null ? (
                     <Image
                       src={
-                        "http://192.168.100.18/src/web-api/public/posting/foto/" +
+                        "http://aprizal.com/public/posting/foto/" +
                         posts.fotocontent
                       }
                       size="large"
@@ -210,7 +205,7 @@ export default class Posts extends Component {
                   <Comment.Avatar
                     style={{ width:"30px", height:"30px", borderRadius: "80px" }}
                     src={
-                      "http://192.168.100.18/src/web-api/public/avatar/" +
+                      "http://aprizal.com/public/avatar/" +
                       data.foto
                     }
                   />

@@ -6,7 +6,7 @@ export default class HeaderProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       isLoading: true,
       username: "",
       first_name: "",
@@ -35,7 +35,7 @@ export default class HeaderProfile extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/profile",
+      url: "https://api.aprizal.com/api/profile",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -46,21 +46,21 @@ export default class HeaderProfile extends Component {
       }
     }).then(result =>
       this.setState({
-        username: result.data.username,
-        first_name: result.data.first_name,
-        last_name: result.data.last_name,
-        awards: result.data.awards,
-        total_friends: result.data.total_friends,
-        total_posts: result.data.total_posts,
-        total_thanks: result.data.total_thanks,
-        join_date: result.data.join_date,
-        followed_topic: result.data.tags
+        username: result.data[0].username,
+        first_name: result.data[0].first_name,
+        last_name: result.data[0].last_name,
+        awards: result.data[0].awards,
+        total_friends: result.data[0].total_friends,
+        total_posts: result.data[0].total_posts,
+        total_thanks: result.data[0].total_thanks,
+        join_date: result.data[0].join_date,
+        followed_topic: result.data[0].tags
       })
     );
 
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/user/avatar",
+      url: "https://api.aprizal.com/api/user/avatar",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export default class HeaderProfile extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ foto: result.data }));
+    }).then(result => this.setState({ foto: result.data[0] }));
 
     if (hour > 5 && hour < 10) {
       this.setState({
@@ -215,7 +215,7 @@ export default class HeaderProfile extends Component {
                             borderWidth: 1, 
                             borderRadius:70
                         }}
-                        src={"http://192.168.100.18/src/web-api/public/avatar/" + this.state.foto}
+                        src={"http://aprizal.com/public/avatar/" + this.state.foto}
                       />
                       </center> 
                       <p style={smallFont}>

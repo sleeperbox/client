@@ -43,7 +43,7 @@ export default class allPeople extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/friend",
+      url: "https://api.aprizal.com/api/friend",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export default class allPeople extends Component {
     if (this.state.kode == 1) {
       axios({
         method: "post",
-        url: "http://192.168.100.18:8080/api/search",
+        url: "https://api.aprizal.com/api/search",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -126,7 +126,7 @@ export default class allPeople extends Component {
     this.setState({ email_friend: value, dimmer: "blurring", open: true }, () =>
       axios({
         method: "post",
-        url: "http://192.168.100.18:8080/api/user/avatar",
+        url: "https://api.aprizal.com/api/user/avatar",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -140,7 +140,7 @@ export default class allPeople extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/user",
+      url: "https://api.aprizal.com/api/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -159,7 +159,7 @@ export default class allPeople extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/user/rank",
+      url: "https://api.aprizal.com/api/user/rank",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -319,7 +319,7 @@ export default class allPeople extends Component {
                           <Image
                             avatar
                             src={
-                              "http://192.168.100.18/src/web-api/public/avatar/" +
+                              "http://aprizal.com/public/avatar/" +
                               data.foto
                             }
                           />
@@ -353,7 +353,7 @@ export default class allPeople extends Component {
                     }}
                     circular
                     src={
-                      "http://192.168.100.18/src/web-api/public/avatar/" + fotos
+                      "http://aprizal.com/public/avatar/" + fotos
                     }
                   />
                   <Header style={{ color: "white" }}>

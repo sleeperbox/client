@@ -12,37 +12,20 @@ export default class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: store.getState().form.isLogin,
-            email: store.getState().form.email,
+            isLogin: localStorage.getItem('auth'),
+            email: localStorage.getItem('email'),
             loading: true,
         };
     }
 
     componentWillMount() {
+        console.log('login: ', this.state)
         if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
-            // this.setState({loading: false})
             setTimeout(() =>  {
                 this.setState({loading: false})
             }, 100)
         }
-        const email = JSON.parse(localStorage.getItem('email'))
-            const auth = JSON.parse(localStorage.getItem('auth'))
-            this.setState({
-                email,
-                isLogin: auth
-            }) 
-    }
-
-    componentDidMount() {
-        if(this.state.isLogin != true){
-            window.location='#/login';
-        }
-        // console.log('first ', this.state.loading)
-        // setTimeout(() => {
-        //     if(this.state.loading == true){
-        //         this.setState({loading: false}, () => console.log('end: ', this.state.loading))
-        //     }
-        // }, 500)
+       
     }
 
     shouldComponentUpdate(newProps, newState){

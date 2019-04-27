@@ -38,7 +38,7 @@ export default class Index extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/detail/message",
+      url: "https://api.aprizal.com/api/detail/message",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export default class Index extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/read/message",
+      url: "https://api.aprizal.com/api/read/message",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export default class Index extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/message/head",
+      url: "https://api.aprizal.com/api/message/head",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export default class Index extends Component {
     if (this.state.kode == 1) {
       axios({
         method: "post",
-        url: "http://192.168.100.18:8080/api/detail/message",
+        url: "https://api.aprizal.com/api/detail/message",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -122,7 +122,7 @@ export default class Index extends Component {
   message() {
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/send/message",
+      url: "https://api.aprizal.com/api/send/message",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -211,7 +211,7 @@ export default class Index extends Component {
             <Divider hidden />
               <Header as="h4" textAlign="center"><Image size="tiny"
                   circular
-                  src={"http://192.168.100.18/src/web-api/public/avatar/" + this.state.data_name.foto}
+                  src={"http://aprizal.com/public/avatar/" + this.state.data_name.foto}
                   style={{width:"15%"}}></Image><Icon></Icon>{this.state.data_name.first_name + " " + this.state.data_name.last_name}
               <br />
               <Label size="small" style={{ backgroundColor: "transparent" }}><i>{"@" + this.state.data_name.username}</i></Label></Header>

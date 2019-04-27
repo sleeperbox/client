@@ -33,7 +33,7 @@ export default class Index extends Component {
   }
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/list/message",
+      url: "https://api.aprizal.com/api/list/message",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export default class Index extends Component {
     
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/profile",
+      url: "https://api.aprizal.com/api/profile",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

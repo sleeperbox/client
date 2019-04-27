@@ -16,7 +16,7 @@ export default class HeaderProfile extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/people/profile/get",
+      url: "https://api.aprizal.com/api/people/profile/get",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export default class HeaderProfile extends Component {
         };
         axios({
           method: "post",
-          url: "http://192.168.100.18:8080/api/follow/status",
+          url: "https://api.aprizal.com/api/follow/status",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export default class HeaderProfile extends Component {
     };
     axios({
       method: "post",
-      url: "http://192.168.100.18:8080/api/follow",
+      url: "https://api.aprizal.com/api/follow",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export default class HeaderProfile extends Component {
     };
     axios({
       method: "put",
-      url: "http://192.168.100.18:8080/api/unfollow",
+      url: "https://api.aprizal.com/api/unfollow",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -99,7 +99,7 @@ export default class HeaderProfile extends Component {
                   <Grid.Column>
                     <Segment basic textAlign="center">
                       <Image
-                        src={"http://192.168.100.18/src/web-api/public/avatar/" + data.foto}
+                        src={"http://aprizal.com/public/avatar/" + data.foto}
                         size="medium"
                         circular
                         centered
