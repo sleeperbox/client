@@ -7,7 +7,7 @@ export default class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       datas: [],
       isLogin: "",
       isLoading: true,
@@ -73,7 +73,7 @@ export default class Comment extends Component {
           <Divider />
           {datas.map(data => {
             return (
-              <Grid columns={2} key={data._id}>
+              <Grid columns={2} key={data.email}>
                 <Grid.Column>
                   <List verticalAlign="middle">
                     <List.Item>
@@ -148,7 +148,7 @@ export default class Comment extends Component {
           <Container>
             {datas.map(data => {
               return (
-                <Grid columns={1} key={data._id}>
+                <Grid columns={1} key={data.email}>
                   <Grid.Column>
                     <List verticalAlign="middle">
                       <List.Item onClick={() => this.discuss(data.id_posts)}>

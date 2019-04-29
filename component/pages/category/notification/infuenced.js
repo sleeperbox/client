@@ -1,5 +1,17 @@
 import React, { Component } from "react";
-import { Dimmer, Loader, Icon, Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
+import {
+  Dimmer,
+  Loader,
+  Icon,
+  Container,
+  Grid,
+  Divider,
+  Image,
+  List,
+  Header,
+  Label,
+  Statistic
+} from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
 
@@ -7,7 +19,7 @@ export default class Infuenced extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       datas: [],
       isLogin: "",
       isLoading: true,
@@ -18,12 +30,16 @@ export default class Infuenced extends Component {
   }
 
   componentWillMount() {
-    if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
+    if (
+      this.state.loading == true ||
+      this.setState.isLogin == "" ||
+      this.setState.email == ""
+    ) {
       // this.setState({loading: false})
-      setTimeout(() =>  {
-          this.setState({loading: false})
-      }, 100)
-  }
+      setTimeout(() => {
+        this.setState({ loading: false });
+      }, 100);
+    }
     axios({
       method: "post",
       url: "https://api.aprizal.com/api/follow/notif",
@@ -43,7 +59,7 @@ export default class Infuenced extends Component {
 
   componentDidMount() {
     if (this.state.datas) {
-        this.setState({ isLoading: false });
+      this.setState({ isLoading: false });
     }
     const { isLogin } = this.state;
     isLogin === "false" ? (window.location = "#/login") : "";
@@ -73,7 +89,7 @@ export default class Infuenced extends Component {
           <Divider />
           {datas.map(data => {
             return (
-              <Grid columns={2} key={data._id}>
+              <Grid columns={2} key={data.email}>
                 <Grid.Column>
                   <List verticalAlign="middle">
                     <List.Item>
@@ -108,7 +124,7 @@ export default class Infuenced extends Component {
     return (
       <div style={divConten}>
         <Header as="h5" icon textAlign="center">
-        <Icon name="bell slash outline" />
+          <Icon name="bell slash outline" />
           <Header.Content>
             <Statistic>
               <Statistic.Label>
@@ -123,19 +139,20 @@ export default class Infuenced extends Component {
 
   loading() {
     return (
-        <div>
-            <Dimmer active inverted>
-                <Loader size='large'>Plase Wait</Loader>
-            </Dimmer>
-        </div>        
+      <div>
+        <Dimmer active inverted>
+          <Loader size="large">Plase Wait</Loader>
+        </Dimmer>
+      </div>
     );
-}
+  }
 
   render() {
     const { datas, isLoading, loading } = this.state;
     return (
       <div style={{ marginBottom: 45 }}>
-        { loading ? (this.loading()
+        {loading ? (
+          this.loading()
         ) : datas.length === 0 ? (
           this.generateZeroData()
         ) : isLoading ? (
@@ -144,14 +161,17 @@ export default class Infuenced extends Component {
           <Container>
             {datas.map(data => {
               return (
-                <Grid columns={1} key={data._id}>
+                <Grid columns={1} key={data.email}>
                   <Grid.Column>
                     <List verticalAlign="middle">
                       <List.Item>
-                        <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
+                        <Image
+                          avatar
+                          src="https://react.semantic-ui.com/images/avatar/small/tom.jpg"
+                        />
                         <List.Content>
                           <List.Header>{data.name}</List.Header>
-                          <i>{"Influenced by you"}</i>
+                          <i style={{fontSize: "12px"}}>{"Influenced by you"}</i>
                         </List.Content>
                       </List.Item>
                     </List>
