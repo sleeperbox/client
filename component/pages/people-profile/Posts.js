@@ -195,7 +195,7 @@ export default class MyPost extends Component {
             <Segment basic>
               {posting.map((data, index) => {
                 return (
-                  <Grid columns={1} key={data._id} style={gridMargin}>
+                  <Grid columns={1} key={index} style={gridMargin}>
                     <GridColumn>
                       <GridRow>
                         <List style={listMargin}>
@@ -277,7 +277,7 @@ export default class MyPost extends Component {
                                   trigger={
                                   <Icon
                                     name="handshake outline"
-                                    onClick={() => this.givethanks(data._id, data.username)}
+                                    onClick={() => this.givethanks(index, data.username)}
                                   />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
                                       : "Anda Telah UnThanks"}
                                   </Popup>

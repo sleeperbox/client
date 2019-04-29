@@ -201,7 +201,7 @@ export default class Posts extends Component {
           <Comment.Group>
             {commentByPostId.map(data => {
               return (
-                <Comment key={data._id}>
+                <Comment key={index}>
                   <Comment.Avatar
                     style={{ width:"30px", height:"30px", borderRadius: "80px" }}
                     src={
@@ -213,13 +213,13 @@ export default class Posts extends Component {
                     <Comment.Author>
                       {data.username}
                       { this.state.username == data.username ? <Icon
-                        onClick={() => this.openModal(data._id)}
+                        onClick={() => this.openModal(index)}
                         name="trash alternate outline"
                         style={{ float: "right", color: "#595959", fontSize:"19px"}}
                         size={"large"}
                       /> : null}
                       <Modal
-                        id={data._id}
+                        id={index}
                         open={this.state.modalOpen}
                         onClose={this.handleClose}
                         basic

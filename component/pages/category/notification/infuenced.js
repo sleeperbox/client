@@ -87,9 +87,9 @@ export default class Infuenced extends Component {
             <Header as="h2" textAlign="center" />
           </Skeleton>
           <Divider />
-          {datas.map(data => {
+          {datas.map((data,index) => {
             return (
-              <Grid columns={2} key={data.email}>
+              <Grid columns={2} key={index}>
                 <Grid.Column>
                   <List verticalAlign="middle">
                     <List.Item>
@@ -159,9 +159,9 @@ export default class Infuenced extends Component {
           this.generateSkeleton()
         ) : (
           <Container>
-            {datas.map(data => {
+            {datas.map((data,index) => {
               return (
-                <Grid columns={1} key={data.email}>
+                <Grid columns={1} key={index}>
                   <Grid.Column>
                     <List verticalAlign="middle">
                       <List.Item>
