@@ -21,9 +21,10 @@ export default class allPeople extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       datas: [],
       isLogin: "",
+      isLogin: localStorage.getItem("auth"),
       friendship: [],
       isLoading: true,
       email_friend: "",
@@ -43,29 +44,18 @@ export default class allPeople extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/friend",
+      url: "http://192.168.100.66:8080/api/friend",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
-        email: this.state.email // This is the body part
+        email: "test2@gmail.com" // This is the body part
       }
     }).then(result =>
-      this.setState({ datas: result.data.user, allfoto: result.data.foto })
+      this.setState({ datas: JSON.parse(result.data.user), allfoto: JSON.parse(result.data.foto), isLoading: false }, console.log(result))
     );
-    this.setState({
-      isLogin: localStorage.getItem("auth")
-    });
-  }
-
-  componentDidMount() {
-    if (this.state.datas) {
-      this.setState({ isLoading: false });
-    }
-    const { isLogin } = this.state;
-    isLogin === "false" ? (window.location = "#/login") : "";
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -80,7 +70,7 @@ export default class allPeople extends Component {
     if (this.state.kode == 1) {
       axios({
         method: "post",
-        url: "https://api.aprizal.com/api/search",
+        url: "http://192.168.100.66:8080/api/search",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -126,7 +116,7 @@ export default class allPeople extends Component {
     this.setState({ email_friend: value, dimmer: "blurring", open: true }, () =>
       axios({
         method: "post",
-        url: "https://api.aprizal.com/api/user/avatar",
+        url: "http://192.168.100.66:8080/api/user/avatar",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -140,7 +130,7 @@ export default class allPeople extends Component {
 
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/user",
+      url: "http://192.168.100.66:8080/api/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -159,7 +149,7 @@ export default class allPeople extends Component {
 
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/user/rank",
+      url: "http://192.168.100.66:8080/api/user/rank",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

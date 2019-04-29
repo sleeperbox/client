@@ -7,7 +7,7 @@ export default class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       datas: [],
       isLogin: "",
       isLoading: true,
@@ -26,7 +26,7 @@ export default class Comment extends Component {
   }
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/notif/comment/notice",
+      url: "http://192.168.100.66:8080/api/notif/comment/notice",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

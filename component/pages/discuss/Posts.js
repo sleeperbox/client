@@ -22,7 +22,7 @@ export default class Posts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       username: localStorage.getItem("username"), 
       posts: [],
       commentByPostId: [],
@@ -57,7 +57,7 @@ export default class Posts extends Component {
     console.log(this.state.username)
     axios({
       method: "POST",
-      url: "https://api.aprizal.com/api/comments",
+      url: "http://192.168.100.66:8080/api/comments",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -81,7 +81,7 @@ export default class Posts extends Component {
     if (this.state.comments == 1) {
       axios({
         method: "POST",
-        url: "https://api.aprizal.com/api/comments",
+        url: "http://192.168.100.66:8080/api/comments",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -107,7 +107,7 @@ export default class Posts extends Component {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "https://api.aprizal.com/api/posts/comments",
+      url: "http://192.168.100.66:8080/api/posts/comments",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -126,7 +126,7 @@ export default class Posts extends Component {
   delete() {
     axios({
       method: "delete",
-      url: "https://api.aprizal.com/api/comment/delete",
+      url: "http://192.168.100.66:8080/api/comment/delete",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

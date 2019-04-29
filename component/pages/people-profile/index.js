@@ -10,8 +10,8 @@ export default class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLogin: "",
-      email: "",
+      isLogin: localStorage.getItem("auth"),
+      email: localStorage.getItem("email"),
       username: sessionStorage.getItem("username"),
       datas: [],
       email_friend: "",
@@ -23,7 +23,7 @@ export default class Index extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/follow/user/data",
+      url: "http://192.168.100.66:8080/api/follow/user/data",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -32,26 +32,7 @@ export default class Index extends Component {
       data: {
         username: this.state.username // This is the body part
       }
-    }).then(result => this.setState({ datas: result.data[0], email_friend: result.data[0].email }));
-
-    const email = JSON.parse(localStorage.getItem("email"));
-    const auth = JSON.parse(localStorage.getItem("auth"));
-    this.setState({
-      email,
-      isLogin: auth
-    });
-  }
-
-  componentDidMount() {
-    if (this.state.isLogin != true) {
-      window.location = "#/login";
-    }
-    console.log('first ', this.state.loading)
-    setTimeout(() => {
-        if(this.state.loading == true){
-            this.setState({loading: false}, () => console.log('end: ', this.state.loading))
-        }
-    }, 100)
+    }).then(result => this.setState({ datas: result.data, email_friend: result.data.email, loading:false }));
   }
 
   shouldComponentUpdate(newProps, newState) {

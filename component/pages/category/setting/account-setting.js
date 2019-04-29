@@ -16,7 +16,7 @@ export default class AccountSetting extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       username: localStorage.getItem("username"),
       password_lama: "",
       password_baru: "",
@@ -30,7 +30,7 @@ export default class AccountSetting extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/user",
+      url: "http://192.168.100.66:8080/api/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export default class AccountSetting extends Component {
     var data = {
       email: this.state.email
     };
-    fetch("https://api.aprizal.com/api/user/delete", {
+    fetch("http://192.168.100.66:8080/api/user/delete", {
       method: "DELETE",
       headers: {
         "Acces-Control-Allow-Origin": true,

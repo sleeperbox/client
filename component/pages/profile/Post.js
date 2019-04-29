@@ -26,7 +26,7 @@ export default class Posting extends Component {
       value: "null",
       tag: 0,
       post: 0,
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       kode_post: 1,
       open: false
     };
@@ -36,7 +36,7 @@ export default class Posting extends Component {
   componentWillMount() {
     axios({
       method: "get",
-      url: "https://api.aprizal.com/api/tags",
+      url: "http://192.168.100.66:8080/api/tags",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -115,7 +115,7 @@ export default class Posting extends Component {
     } else if (this.state.file == null) {
       axios({
         method: "post",
-        url: "https://api.aprizal.com/api/posting",
+        url: "http://192.168.100.66:8080/api/posting",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -139,7 +139,7 @@ export default class Posting extends Component {
       data.append("kode_post", this.state.kode_post);
 
       axios
-        .post("https://api.aprizal.com/api/posting", data)
+        .post("http://192.168.100.66:8080/api/posting", data)
         .then(() => console.log(this.state.file))
         .then(() => window.location = "#/profile");
     }

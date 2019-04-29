@@ -9,25 +9,12 @@ export default class Index extends Component {
     super(props);
     this.state = {
       isLogin: "",
+      auth : localStorage.getItem("auth"),
+      email : localStorage.getItem("email"),
       email: ""
     };
   }
-
-  componentWillMount() {
-    const email = JSON.parse(localStorage.getItem("email"));
-    const auth = JSON.parse(localStorage.getItem("auth"));
-    this.setState({
-      email,
-      isLogin: auth
-    });
-  }
-
-  componentDidMount() {
-    if (this.state.isLogin != true) {
-      window.location = "#/login";
-    }
-  }
-
+  
   shouldComponentUpdate(newProps, newState) {
     if (newState.isLogin) {
       return true;

@@ -38,7 +38,7 @@ export default class Content extends Component {
   }
 
   componentDidMount() {
-    const email = localStorage.getItem("email").slice(1, -1);
+    const email = localStorage.getItem("email");
     this.setState(
       {
         email
@@ -46,7 +46,7 @@ export default class Content extends Component {
       () =>
         axios({
           method: "post",
-          url: "https://api.aprizal.com/api/profile",
+          url: "http://192.168.100.66:8080/api/profile",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",

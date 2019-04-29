@@ -23,7 +23,7 @@ export default class MyPost extends Component {
       isLoading: true,
       username: sessionStorage.getItem("username"),
       email: sessionStorage.getItem("email"),
-      email2: localStorage.getItem("email").slice(1, -1),
+      email2: localStorage.getItem("email"),
       posting: [],
       tgl: new Date().toDateString(),
       month: new Date().getMonth(),
@@ -43,7 +43,7 @@ export default class MyPost extends Component {
   componentDidMount() {
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/posting/people",
+      url: "http://192.168.100.66:8080/api/posting/people",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export default class MyPost extends Component {
     if (this.state.thanks == 1) {
       axios({
         method: "post",
-        url: "https://api.aprizal.com/api/posting/people",
+        url: "http://192.168.100.66:8080/api/posting/people",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -83,7 +83,7 @@ export default class MyPost extends Component {
   givethanks(value, value2) {
     axios({
       method: "put",
-      url: "https://api.aprizal.com/api/posting/thanks/post/user",
+      url: "http://192.168.100.66:8080/api/posting/thanks/post/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

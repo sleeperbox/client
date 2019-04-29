@@ -5,7 +5,7 @@ export default class Trophy extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       username: sessionStorage.getItem("username"),
     };
   }

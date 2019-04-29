@@ -36,21 +36,21 @@ export default class Register extends Component {
     if (query.token) {
       axios.get('https://www.googleapis.com/plus/v1/people/me?access_token=' + query.token)
       .then(response => {
-        localStorage.setItem('email',JSON.stringify(response.data.emails[0].value))
+        localStorage.setItem('email',JSON.stringify(response.data.emails.value))
         localStorage.setItem('auth', "true")
         axios({
           method: "POST",
-          url: "https://api.aprizal.com/api/register",
+          url: "http://192.168.100.66:8080/api/register",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
             Accept: "application/json"
           },
           data: {
-            email: response.data.emails[0].value,
-            username: response.data.name[0].givenName,
-            first_name: response.data.name[0].givenName,
-            last_name: response.data.name[0].familyName,
+            email: response.data.emails.value,
+            username: response.data.name.givenName,
+            first_name: response.data.name.givenName,
+            last_name: response.data.name.familyName,
             password: "123"
           }
         }).then(window.location = "/#/profile");
@@ -111,7 +111,7 @@ export default class Register extends Component {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "https://api.aprizal.com/api/login",
+      url: "http://192.168.100.66:8080/api/login",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -122,11 +122,11 @@ export default class Register extends Component {
         password: store.getState().form.password
       }
     }).then(result => {
-        this.setState({ warning:result.data[0], kode: 1, isLogin: result.data[0].auth})
-        window.localStorage.setItem('email', result.data[0].email)
-        window.localStorage.setItem('auth', JSON.stringify(result.data[0].auth))
-        window.localStorage.setItem('username', JSON.stringify(result.data[0].username))
-        window.localStorage.setItem('phone', JSON.stringify(result.data[0].phone_number))
+        this.setState({ warning:result.data, kode: 1, isLogin: result.data.auth})
+        window.localStorage.setItem('email', result.data.email)
+        window.localStorage.setItem('auth', result.data.auth)
+        window.localStorage.setItem('username', result.data.username)
+        window.localStorage.setItem('phone', result.data.phone_number)
         
     });
   }

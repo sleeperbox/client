@@ -18,7 +18,7 @@ export default class TagsPost extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       tag: localStorage.getItem("tag").slice(2, -2),
       posting: []
     };
@@ -29,7 +29,7 @@ export default class TagsPost extends Component {
   componentDidMount() {
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/posting/tag",
+      url: "http://192.168.100.66:8080/api/posting/tag",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -110,7 +110,7 @@ export default class TagsPost extends Component {
   givethanks(value, value2) {
     axios({
       method: "put",
-      url: "https://api.aprizal.com/api/posting/thanks/post/user",
+      url: "http://192.168.100.66:8080/api/posting/thanks/post/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

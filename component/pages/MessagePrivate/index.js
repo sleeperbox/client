@@ -9,7 +9,7 @@ export default class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       datas: [],
       data_name: [],
       username_user1 : window.location.href.split('=')[1],
@@ -38,7 +38,7 @@ export default class Index extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/detail/message",
+      url: "http://192.168.100.66:8080/api/detail/message",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export default class Index extends Component {
 
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/read/message",
+      url: "http://192.168.100.66:8080/api/read/message",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export default class Index extends Component {
 
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/message/head",
+      url: "http://192.168.100.66:8080/api/message/head",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export default class Index extends Component {
     if (this.state.kode == 1) {
       axios({
         method: "post",
-        url: "https://api.aprizal.com/api/detail/message",
+        url: "http://192.168.100.66:8080/api/detail/message",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -122,7 +122,7 @@ export default class Index extends Component {
   message() {
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/send/message",
+      url: "http://192.168.100.66:8080/api/send/message",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

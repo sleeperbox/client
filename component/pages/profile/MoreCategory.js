@@ -27,7 +27,7 @@ export default class MoreCategory extends Component {
       dimmers: false,
       total_influence: null,
       total_thank: null,
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       rank: null
     };
     this.handleMenu = this.handleMenu.bind(this);
@@ -38,7 +38,7 @@ export default class MoreCategory extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/profile",
+      url: "http://192.168.100.66:8080/api/profile",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export default class MoreCategory extends Component {
     );
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/user/rank",
+      url: "http://192.168.100.66:8080/api/user/rank",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

@@ -6,7 +6,7 @@ export default class DetailProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       username: sessionStorage.getItem("username"),
       profile: [],
       rank: null,
@@ -18,7 +18,7 @@ export default class DetailProfile extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/people/profile/get",
+      url: "http://192.168.100.66:8080/api/people/profile/get",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export default class DetailProfile extends Component {
     
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/people/profile/get",
+      url: "http://192.168.100.66:8080/api/people/profile/get",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -43,13 +43,13 @@ export default class DetailProfile extends Component {
         username: this.state.username // This is the body part
       }
     }).then(result =>
-      this.setState({ profile: result.data, temp_total: result.data[0].total_friends }, () => {
+      this.setState({ profile: result.data, temp_total: result.data.total_friends }, () => {
         let stat = {
           email: this.state.profile[0].email
         };
         axios({
           method: "post",
-          url: "https://api.aprizal.com/api/user/rank",
+          url: "http://192.168.100.66:8080/api/user/rank",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",

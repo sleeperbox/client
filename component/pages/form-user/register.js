@@ -55,8 +55,8 @@ export default class Register extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { isLogin } = this.state;
     if (isLogin === true) {
-      localStorage.setItem("email", JSON.stringify(store.getState().form.email));
-      localStorage.setItem("auth", JSON.stringify(this.state.isLogin));
+      localStorage.setItem("email", store.getState().form.email);
+      localStorage.setItem("auth", this.state.isLogin);
       window.location = "#/profile";
     }
   }
@@ -95,7 +95,7 @@ export default class Register extends Component {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "https://api.aprizal.com/api/register",
+      url: "http://192.168.100.66:8080/api/register",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

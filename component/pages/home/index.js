@@ -9,8 +9,8 @@ export default class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: '',
-            email: '',
+            isLogin: localStorage.getItem('auth'),
+            email: localStorage.getItem('email'),
             loading: true,
         };
         this.loading = this.loading.bind(this)
@@ -22,19 +22,7 @@ export default class Index extends Component {
             setTimeout(() =>  {
                 this.setState({loading: false})
             }, 100)
-        }
-            const email = JSON.parse(localStorage.getItem('email'))
-            const auth = JSON.parse(localStorage.getItem('auth'))
-            this.setState({
-                email,
-                isLogin: auth
-            })    
-        }
-
-    componentDidMount() {
-        if(this.state.isLogin != true){
-            window.location='#/login';
-        }
+        }   
     }
 
     shouldComponentUpdate(newProps, newState){

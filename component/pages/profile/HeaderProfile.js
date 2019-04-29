@@ -35,7 +35,7 @@ export default class HeaderProfile extends Component {
 
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/profile",
+      url: "http://192.168.100.66:8080/api/profile",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -46,21 +46,21 @@ export default class HeaderProfile extends Component {
       }
     }).then(result =>
       this.setState({
-        username: result.data[0].username,
-        first_name: result.data[0].first_name,
-        last_name: result.data[0].last_name,
-        awards: result.data[0].awards,
-        total_friends: result.data[0].total_friends,
-        total_posts: result.data[0].total_posts,
-        total_thanks: result.data[0].total_thanks,
-        join_date: result.data[0].join_date,
-        followed_topic: result.data[0].tags
+        username: result.data.username,
+        first_name: result.data.first_name,
+        last_name: result.data.last_name,
+        awards: result.data.awards,
+        total_friends: result.data.total_friends,
+        total_posts: result.data.total_posts,
+        total_thanks: result.data.total_thanks,
+        join_date: result.data.join_date,
+        followed_topic: result.data.tags
       })
     );
 
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/user/avatar",
+      url: "http://192.168.100.66:8080/api/user/avatar",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export default class HeaderProfile extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ foto: result.data[0] }));
+    }).then(result => this.setState({ foto: result.data }));
 
     if (hour > 5 && hour < 10) {
       this.setState({

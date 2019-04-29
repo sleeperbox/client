@@ -9,7 +9,7 @@ export default class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       datas: [],
       isLogin: "",
       isLoading: true,
@@ -28,7 +28,7 @@ export default class Index extends Component {
   }
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/follow/notif",
+      url: "http://192.168.100.66:8080/api/follow/notif",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
