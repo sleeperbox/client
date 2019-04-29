@@ -25,7 +25,7 @@ export default class MyPost extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       posting: [],
       tgl: new Date().toDateString(),
       month: new Date().getMonth(),
@@ -330,7 +330,7 @@ export default class MyPost extends Component {
             <ul id="grid" className="clear">
               {posting.map((data, index) => {
                 return (
-                    <li key={data._id}>
+                    <li key={index}>
                       <div className="hexagon">       
                         { data.fotocontent !== null ? 
                           (<Modal 
@@ -416,7 +416,7 @@ export default class MyPost extends Component {
                                         <Icon
                                           name="handshake outline"
                                           size="large"
-                                          onClick={() => this.givethanks(data._id, data.username)}
+                                          onClick={() => this.givethanks(index, data.username)}
                                         />
                                         }
                                       >
@@ -448,7 +448,7 @@ export default class MyPost extends Component {
                                           <p>Are You Sure?</p>
                                         </Modal.Content>
                                         <Modal.Actions>
-                                        <Button inverted onClick={() => this.delete(data._id)}>
+                                        <Button inverted onClick={() => this.delete(index)}>
                                           <Icon name="checkmark" /> Yes
                                         </Button>
                                         <Button onClick={this.handleClose} inverted>
@@ -645,7 +645,7 @@ export default class MyPost extends Component {
                                       <Icon
                                         name="handshake outline"
                                         size='large'
-                                        onClick={() => this.givethanks(data._id)}
+                                        onClick={() => this.givethanks(index)}
                                       />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
                                           : "Anda Telah UnThanks"}
                                       </Popup>
@@ -673,7 +673,7 @@ export default class MyPost extends Component {
                                           <p>Are You Sure?</p>
                                         </Modal.Content>
                                         <Modal.Actions>
-                                        <Button inverted onClick={() => this.delete(data._id)}>
+                                        <Button inverted onClick={() => this.delete(index)}>
                                           <Icon name="checkmark" /> Yes
                                         </Button>
                                         <Button onClick={this.handleClose} inverted>

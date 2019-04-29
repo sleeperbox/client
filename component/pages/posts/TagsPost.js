@@ -144,7 +144,7 @@ export default class TagsPost extends Component {
           <Container>
             {posting.map(data => {
               return (
-                <Grid columns={1} key={data._id}>
+                <Grid columns={1} key={index}>
                   <GridColumn style={gridMargin}>
                     <Segment basic>
                       <List>
@@ -231,7 +231,7 @@ export default class TagsPost extends Component {
                                   trigger={
                                     <Icon
                                       name="handshake outline"
-                                      onClick={() => this.givethanks(data._id, data.username)}
+                                      onClick={() => this.givethanks(index, data.username)}
                                     />
                                   }
                                 >

@@ -180,7 +180,7 @@ export default class PostingOther extends Component {
              {posting.length == 0 ? "no post yet" : (
                 posting.map((data, index) => {
                 return (
-                  <Grid columns={1} key={data._id}>
+                  <Grid columns={1} key={index}>
                     <GridColumn>
                       <GridRow>
                         <List style={gridMargin}>
@@ -236,7 +236,7 @@ export default class PostingOther extends Component {
                                   trigger={
                                     <Icon
                                       name="handshake outline"
-                                      onClick={() => this.givethanks(data._id, data.username)}
+                                      onClick={() => this.givethanks(index, data.username)}
                                     />
                                   }
                                 >

@@ -47,18 +47,18 @@ export default class MenuProfile extends Component {
       }
     }).then(result => this.setState({ foto: result.data[0].avatar }));
 
-    // axios({
-    //   method: "post",
-    //   url: "https://api.aprizal.com/api/follow/notif",
-    //   headers: {
-    //     "Acces-Control-Allow-Origin": true,
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json"
-    //   },
-    //   data: {
-    //     email: this.state.email // This is the body part
-    //   }
-    // }).then(result => this.setState({ datas: result.data }));
+    axios({
+      method: "post",
+      url: "https://api.aprizal.com/api/follow/notif",
+      headers: {
+        "Acces-Control-Allow-Origin": true,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result => this.setState({ datas: result.data }, ()=>console.log(result)));
 
     // axios({
     //   method: "post",

@@ -105,7 +105,7 @@ export default class Index extends Component {
           <Divider />
           {datas.map(data => {
             return (
-              <Grid columns={2} key={data._id}>
+              <Grid columns={2} key={index}>
                 <Grid.Column>
                   <List verticalAlign="middle">
                     <List.Item>
@@ -182,7 +182,7 @@ export default class Index extends Component {
           <Container>
             {datas.map(data => {
               return (
-                <Grid columns={1} key={data._id}>  
+                <Grid columns={1} key={index}>  
                   <Grid.Column>
                     { data.username_user1 === this.state.username_user1 ? <List verticalAlign="middle" onClick={() => {this.message(data.username_user2)}}>
                       <List.Item>
