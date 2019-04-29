@@ -45,7 +45,7 @@ export default class PostingOther extends Component {
   componentDidMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.66:8080/api/posting/home/riddles",
+      url: "http://192.168.100.33:8080/api/posting/home/riddles",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export default class PostingOther extends Component {
     if (this.state.thanks == 1) {
       axios({
         method: "post",
-        url: "http://192.168.100.66:8080/api/posting/home/riddles",
+        url: "http://192.168.100.33:8080/api/posting/home/riddles",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -81,7 +81,7 @@ export default class PostingOther extends Component {
   givethanks(value, value2) {
     axios({
       method: "put",
-      url: "http://192.168.100.66:8080/api/posting/thanks/post/user",
+      url: "http://192.168.100.33:8080/api/posting/thanks/post/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -172,10 +172,11 @@ export default class PostingOther extends Component {
     };
     return (
       <div>
-        {isLoading ? (
-          this.generateSkeleton()
-        ) : (
-           <div>
+      {posting.length == 0 ? "no post yet ..." : (
+      isLoading ? (
+        this.generateSkeleton()
+      ) : (
+         <div>
               {posting.map((data, index) => {
                 return (
                   <Grid columns={1} key={data._id}>
@@ -278,7 +279,7 @@ export default class PostingOther extends Component {
               })}
               <Divider hidden />
             </div>
-        )}
+        ))}
       </div>
     );
   }

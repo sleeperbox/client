@@ -37,15 +37,11 @@ export default class Index extends Component {
         nextState.isLogin === "false" ? window.location = '#/login' : '';
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        
-    }
-
     loading() {
         return (
             <div>
                 <Dimmer active inverted>
-                    <Loader size='large'>Plase Wait</Loader>
+                    <Loader size='large'>Please Wait</Loader>
                 </Dimmer>
             </div>        
         );

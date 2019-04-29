@@ -46,7 +46,7 @@ export default class Content extends Component {
       () =>
         axios({
           method: "post",
-          url: "http://192.168.100.66:8080/api/profile",
+          url: "http://192.168.100.33:8080/api/profile",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
@@ -167,55 +167,55 @@ export default class Content extends Component {
                 <br/>
                     {data === "null" ? (
                       <Image
-                        src="http://aprizal.com/public/icon/follow.png"
+                        src="http://aprizal.com/public/icon/icon/follow.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "computer-gadget" ? (
                       <Image
-                        src="http://aprizal.com/public/icon/komp.png"
+                        src="http://aprizal.com/public/icon/icon/komp.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "family-love" ? (
                       <Image
-                        src="http://aprizal.com/public/icon/family.png"
+                        src="http://aprizal.com/public/icon/icon/family.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "fact-rumour" ? (
                       <Image
-                        src="http://aprizal.com/public/icon/f&r.png"
+                        src="http://aprizal.com/public/icon/icon/f&r.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "business-work" ? (
                       <Image
-                        src="http://aprizal.com/public/icon/bisnis.png"
+                        src="http://aprizal.com/public/icon/icon/bisnis.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "fashion-lifestyle" ? (
                       <Image
-                        src="http://aprizal.com/public/icon/fashion.png"
+                        src="http://aprizal.com/public/icon/icon/fashion.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "quotes" ? (
                       <Image
-                        src="http://aprizal.com/public/icon/quotes.png"
+                        src="http://aprizal.com/public/icon/icon/quotes.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "other" ? (
                       <Image
-                        src="http://aprizal.com/public/icon/other.png"
+                        src="http://aprizal.com/public/icon/icon/other.png"
                         width="7%"
                         style={{ float: "left" }}
                       />
                     ) : data === "riddles" ? (
                       <Image
-                        src="http://aprizal.com/public/icon/riddle.png"
+                        src="http://aprizal.com/public/icon/icon/riddle.png"
                         width="7%"
                         style={{ float: "left" }}
                       />

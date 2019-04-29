@@ -40,7 +40,7 @@ export default class Register extends Component {
         localStorage.setItem('auth', "true")
         axios({
           method: "POST",
-          url: "http://192.168.100.66:8080/api/register",
+          url: "http://192.168.100.33:8080/api/register",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
@@ -111,7 +111,7 @@ export default class Register extends Component {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "http://192.168.100.66:8080/api/login",
+      url: "http://192.168.100.33:8080/api/login",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

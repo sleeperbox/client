@@ -43,7 +43,7 @@ export default class MyPost extends Component {
   componentDidMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.66:8080/api/posting/people",
+      url: "http://192.168.100.33:8080/api/posting/people",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export default class MyPost extends Component {
     if (this.state.thanks == 1) {
       axios({
         method: "post",
-        url: "http://192.168.100.66:8080/api/posting/people",
+        url: "http://192.168.100.33:8080/api/posting/people",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -83,7 +83,7 @@ export default class MyPost extends Component {
   givethanks(value, value2) {
     axios({
       method: "put",
-      url: "http://192.168.100.66:8080/api/posting/thanks/post/user",
+      url: "http://192.168.100.33:8080/api/posting/thanks/post/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

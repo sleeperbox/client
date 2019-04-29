@@ -30,7 +30,7 @@ export default class AccountSetting extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.66:8080/api/user",
+      url: "http://192.168.100.33:8080/api/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export default class AccountSetting extends Component {
     var data = {
       email: this.state.email
     };
-    fetch("http://192.168.100.66:8080/api/user/delete", {
+    fetch("http://192.168.100.33:8080/api/user/delete", {
       method: "DELETE",
       headers: {
         "Acces-Control-Allow-Origin": true,

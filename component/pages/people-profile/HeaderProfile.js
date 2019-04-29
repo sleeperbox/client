@@ -16,7 +16,7 @@ export default class HeaderProfile extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.66:8080/api/people/profile/get",
+      url: "http://192.168.100.33:8080/api/people/profile/get",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export default class HeaderProfile extends Component {
         };
         axios({
           method: "post",
-          url: "http://192.168.100.66:8080/api/follow/status",
+          url: "http://192.168.100.33:8080/api/follow/status",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export default class HeaderProfile extends Component {
     };
     axios({
       method: "post",
-      url: "http://192.168.100.66:8080/api/follow",
+      url: "http://192.168.100.33:8080/api/follow",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export default class HeaderProfile extends Component {
     };
     axios({
       method: "put",
-      url: "http://192.168.100.66:8080/api/unfollow",
+      url: "http://192.168.100.33:8080/api/unfollow",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

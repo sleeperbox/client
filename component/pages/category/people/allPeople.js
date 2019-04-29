@@ -42,20 +42,23 @@ export default class allPeople extends Component {
   }
 
   componentWillMount() {
+    
+  }
+  componentDidMount(){
     axios({
       method: "post",
-      url: "http://192.168.100.66:8080/api/friend",
+      url: "http://192.168.100.33:8080/api/friend",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
-        email: "test2@gmail.com" // This is the body part
+        email: "test@gmail.com" // This is the body part
       }
     }).then(result =>
-      this.setState({ datas: JSON.parse(result.data.user), allfoto: JSON.parse(result.data.foto), isLoading: false }, console.log(result))
-    );
+        this.setState({datas: result.data.user, allfoto: result.data.foto, isLoading: false})
+    )
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -70,7 +73,7 @@ export default class allPeople extends Component {
     if (this.state.kode == 1) {
       axios({
         method: "post",
-        url: "http://192.168.100.66:8080/api/search",
+        url: "http://192.168.100.33:8080/api/search",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -116,7 +119,7 @@ export default class allPeople extends Component {
     this.setState({ email_friend: value, dimmer: "blurring", open: true }, () =>
       axios({
         method: "post",
-        url: "http://192.168.100.66:8080/api/user/avatar",
+        url: "http://192.168.100.33:8080/api/user/avatar",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -125,12 +128,15 @@ export default class allPeople extends Component {
         data: {
           email: value
         } // This is the body part
-      }).then(result => this.setState({ fotos: result.data }))
+      }).then(result => 
+          // this.setState({ fotos: result.data })
+          console.log('avatar: ', result)
+        )
     );
 
     axios({
       method: "post",
-      url: "http://192.168.100.66:8080/api/user",
+      url: "http://192.168.100.33:8080/api/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -149,7 +155,7 @@ export default class allPeople extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.66:8080/api/user/rank",
+      url: "http://192.168.100.33:8080/api/user/rank",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -288,10 +294,10 @@ export default class allPeople extends Component {
           style={marginSearch}
         />
         <br />
-        {datas.length === 0 ? (
-          this.generateZeroData()
-        ) : isLoading ? (
+        { isLoading ? (
           this.generateSkeleton()
+        ) : datas.length === 0 ? (
+          this.generateZeroData()
         ) : (
           <Container>
             {datas.map(data => {

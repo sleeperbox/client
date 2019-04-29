@@ -18,7 +18,7 @@ export default class DetailProfile extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.66:8080/api/people/profile/get",
+      url: "http://192.168.100.33:8080/api/people/profile/get",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export default class DetailProfile extends Component {
     
     axios({
       method: "post",
-      url: "http://192.168.100.66:8080/api/people/profile/get",
+      url: "http://192.168.100.33:8080/api/people/profile/get",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ export default class DetailProfile extends Component {
         };
         axios({
           method: "post",
-          url: "http://192.168.100.66:8080/api/user/rank",
+          url: "http://192.168.100.33:8080/api/user/rank",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
