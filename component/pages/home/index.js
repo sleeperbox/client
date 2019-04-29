@@ -10,47 +10,20 @@ export default class Index extends Component {
         super(props);
         this.state = {
             isLogin: '',
-            email: '',
+            email: localStorage.getItem('email'),
             loading: true,
         };
         this.loading = this.loading.bind(this)
     }
 
     componentWillMount() {
-        if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
+        console.log()
+        if(this.state.loading == true || this.setState.email == ''){
             // this.setState({loading: false})
             setTimeout(() =>  {
                 this.setState({loading: false})
             }, 100)
         }
-            const email = JSON.parse(localStorage.getItem('email'))
-            const auth = JSON.parse(localStorage.getItem('auth'))
-            this.setState({
-                email,
-                isLogin: auth
-            })    
-        }
-
-    componentDidMount() {
-        if(this.state.isLogin != true){
-            window.location='#/login';
-        }
-    }
-
-    shouldComponentUpdate(newProps, newState){
-        if(newState.isLogin){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        nextState.isLogin === "false" ? window.location = '#/login' : '';
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        
     }
 
     loading() {
@@ -78,7 +51,7 @@ export default class Index extends Component {
                     <Divider hidden/>
                     <br/>
                     <Content />
-                    <MenuProfile />
+                    <MenuProfile /> 
                 </div>
                 )}
         </div>

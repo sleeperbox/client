@@ -38,7 +38,7 @@ export default class Content extends Component {
   }
 
   componentDidMount() {
-    const email = localStorage.getItem("email").slice(1, -1);
+    const email = localStorage.getItem("email");
     this.setState(
       {
         email
@@ -56,7 +56,7 @@ export default class Content extends Component {
             email: this.state.email // This is the body part
           }
         }).then(result =>
-          this.setState({ tags: result.data.tags, isLoading: false })
+          this.setState({ tags: result.data[0].tags, isLoading: false })
         )
     );
   }

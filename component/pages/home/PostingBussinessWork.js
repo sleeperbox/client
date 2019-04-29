@@ -19,7 +19,7 @@ export default class PostingOther extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       posting: [],
       tgl: new Date().toDateString(),
       month: new Date().getMonth(),
@@ -52,7 +52,7 @@ export default class PostingOther extends Component {
         Accept: "application/json"
       }
     }).then(result =>
-      this.setState({ posting: result.data, isLoading: false })
+       this.setState({ posting: result.data, isLoading: false })
     );
   }
 
@@ -65,36 +65,36 @@ export default class PostingOther extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.thanks == 1) {
-      axios({
-        method: "post",
-        url: "https://api.aprizal.com/api/posting/home/bussiness-work",
-        headers: {
-          "Acces-Control-Allow-Origin": true,
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        }
-      }).then(result => this.setState({ posting: result.data, thanks: 0 }));
-    }
+    // if (this.state.thanks == 1) {
+    //   axios({
+    //     method: "post",
+    //     url: "https://api.aprizal.com/api/posting/home/bussiness-work",
+    //     headers: {
+    //       "Acces-Control-Allow-Origin": true,
+    //       "Content-Type": "application/json",
+    //       Accept: "application/json"
+    //     }
+    //   }).then(result => this.setState({ posting: result.data, thanks: 0 }));
+    // }
   }
 
   givethanks(value, value2) {
-    axios({
-      method: "put",
-      url: "https://api.aprizal.com/api/posting/thanks/post/user",
-      headers: {
-        "Acces-Control-Allow-Origin": true,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        email: this.state.email,
-        _id: value,
-        username: value2 // This is the body part
-      }
-    }).then(result =>
-      this.setState({ thanks: 1, kode: result.data.kode.kode })
-    );
+    // axios({
+    //   method: "put",
+    //   url: "https://api.aprizal.com/api/posting/thanks/post/user",
+    //   headers: {
+    //     "Acces-Control-Allow-Origin": true,
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json"
+    //   },
+    //   data: {
+    //     email: this.state.email,
+    //     _id: value,
+    //     username: value2 // This is the body part
+    //   }
+    // }).then(result =>
+    //   this.setState({ thanks: 1, kode: result.data.kode.kode })
+    // );
   }
 
   generateSkeleton() {
@@ -176,7 +176,8 @@ export default class PostingOther extends Component {
           this.generateSkeleton()
         ) : (
            <div>
-              {posting.map((data, index) => {
+             {posting.length == 0 ? "no post yet" : (
+              posting.map((data, index) => {
                 return (
                   <Grid columns={1} key={data._id}>
                     <GridColumn>
@@ -275,7 +276,8 @@ export default class PostingOther extends Component {
                     </GridColumn>
                   </Grid>
                 );
-              })}
+              })
+              )}
               <Divider hidden />
             </div>
         )}

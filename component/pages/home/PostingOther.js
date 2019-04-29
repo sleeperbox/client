@@ -20,7 +20,7 @@ export default class PostingOther extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       posting: [],
       tgl: new Date().toDateString(),
       month: new Date().getMonth(),
@@ -177,7 +177,8 @@ export default class PostingOther extends Component {
           this.generateSkeleton()
         ) : (
            <div>
-              {posting.map((data, index) => {
+             {posting.length == 0 ? "no post yet" : (
+                posting.map((data, index) => {
                 return (
                   <Grid columns={1} key={data._id}>
                     <GridColumn>
@@ -276,7 +277,8 @@ export default class PostingOther extends Component {
                     </GridColumn>
                   </Grid>
                 );
-              })}
+              })
+              )}
               <Divider hidden />
             </div>
         )}
