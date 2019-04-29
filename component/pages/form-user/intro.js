@@ -20,7 +20,6 @@ export default class intro extends Component {
 
     componentWillMount(){
         const { hour } = this.state;
-        console.log(hour);
         if (hour < 12) {
             this.setState({
                 background: gambar
