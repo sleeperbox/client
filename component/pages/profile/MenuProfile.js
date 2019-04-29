@@ -12,7 +12,7 @@ export default class MenuProfile extends Component {
       menu: localStorage.getItem("menu"),
       datas: [],
       isLoading: true,
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       content: "",
       tags: "",
       file: null,
@@ -45,7 +45,7 @@ export default class MenuProfile extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ foto: result.data }));
+    }).then(result => this.setState({ foto: result.data[0].avatar }));
 
     // axios({
     //   method: "post",
