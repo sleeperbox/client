@@ -27,7 +27,7 @@ export default class MoreCategory extends Component {
       dimmers: false,
       total_influence: null,
       total_thank: null,
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       rank: null
     };
     this.handleMenu = this.handleMenu.bind(this);
@@ -49,8 +49,8 @@ export default class MoreCategory extends Component {
       }
     }).then(result =>
       this.setState({
-        total_influence: result.data.total_friends,
-        total_thank: result.data.total_thanks
+        total_influence: result.data[0].total_friends,
+        total_thank: result.data[0].total_thanks
       })
     );
     axios({
@@ -149,7 +149,7 @@ export default class MoreCategory extends Component {
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row centered columns={2} style={{marginTop: -185}}>
+          <Grid.Row centered columns={2} style={{marginTop: -170}}>
             <Grid.Column style={{textAlign: "center"}}>
               <Statistic color="teal">
                 <Statistic.Value>{this.state.rank}</Statistic.Value>
