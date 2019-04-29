@@ -238,7 +238,7 @@ export default class MenuProfile extends Component {
           tags: this.state.value,
           kode_post: 0
         }
-      }).then((result) => console.log(result)).then(() => window.location.reload());
+      }).then((result) => () => window.location.reload());
       }else{
         const data = new FormData();
         data.append("fotocontent", this.state.file, this.state.file.name);
@@ -247,7 +247,7 @@ export default class MenuProfile extends Component {
         data.append("tags", this.state.value);
         data.append("kode_post", this.state.kode_post);
   
-        axios.post("http://192.168.100.33:8080/api/posting", data).then(() => console.log(this.state.file)).then(() => window.location.reload());
+        axios.post("http://192.168.100.33:8080/api/posting", data).then(() => window.location.reload());
       }
   }
 

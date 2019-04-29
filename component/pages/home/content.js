@@ -76,7 +76,7 @@ export default class Content extends Component {
   }
 
   handleChange() {
-    console.log("oke");
+    
   }
   view(e, data) {
     if(data.isi == null){

@@ -129,8 +129,7 @@ export default class allPeople extends Component {
           email: value
         } // This is the body part
       }).then(result => 
-          // this.setState({ fotos: result.data })
-          console.log('avatar: ', result)
+          this.setState({ fotos: result.data })
         )
     );
 

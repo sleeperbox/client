@@ -169,7 +169,6 @@ export default class MyPost extends Component {
 
   handleOpen(value, postid) {
     this.setState({ modal: true, id: value, post: postid});
-    console.log(postid)
   }
 
   handleOpenUpdate(value) {

@@ -43,7 +43,6 @@ export default class SendMessage extends Component {
     this.setState({
       [name]: value
     })
-    console.log(this.state.pesan)
   }
 
   generateSkeleton() {

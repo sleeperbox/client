@@ -127,9 +127,7 @@ export default class Posting extends Component {
           tags: this.state.value,
           kode_post: 0
         }
-      })
-        .then(result => console.log(result))
-        .then(() => window.location = "#/profile");
+      }).then(() => window.location = "#/profile");
     } else {
       const data = new FormData();
       data.append("fotocontent", this.state.file, this.state.file.name);
@@ -140,7 +138,6 @@ export default class Posting extends Component {
 
       axios
         .post("http://192.168.100.33:8080/api/posting", data)
-        .then(() => console.log(this.state.file))
         .then(() => window.location = "#/profile");
     }
   }

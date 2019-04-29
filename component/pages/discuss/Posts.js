@@ -54,7 +54,6 @@ export default class Posts extends Component {
   }
 
   componentWillMount() {
-    console.log(this.state.username)
     axios({
       method: "POST",
       url: "http://192.168.100.33:8080/api/comments",
