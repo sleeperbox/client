@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Skeleton from "react-skeleton-loader";
-import { Grid, Container, Accordion, Divider, Image, Icon, Header, Modal, Button, Popup } from "semantic-ui-react";
+import { Grid, Container, Accordion, Divider, Image, Icon } from "semantic-ui-react";
 import axios from "axios";
 export default class HeaderProfile extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ export default class HeaderProfile extends Component {
   }
 
   componentWillMount() {
-    const { hour, total_posts, total_thanks } = this.state;
+    const { total_posts, total_thanks } = this.state;
 
     axios({
       method: "post",
@@ -54,45 +54,10 @@ export default class HeaderProfile extends Component {
         total_posts: result.data[0].total_posts,
         total_thanks: result.data[0].total_thanks,
         join_date: result.data[0].join_date,
-        followed_topic: result.data[0].tags
+        followed_topic: result.data[0].tags,
+        foto: result.data[0].foto
       })
     );
-
-    axios({
-      method: "post",
-      url: "https://api.aprizal.com/api/user/avatar",
-      headers: {
-        "Acces-Control-Allow-Origin": true,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        email: this.state.email // This is the body part
-      }
-    }).then(result => this.setState({ foto: result.data[0] }));
-
-    if (hour > 5 && hour < 10) {
-      this.setState({
-        background: "http://hdbackgroundspic.com/wp-content/uploads/2017/04/beautiful-view-good-morning.jpg",
-        coloring: "#625D5D"
-      });
-    } else if (hour > 9 && hour < 15) {
-      this.setState({
-        background: "https://c1.staticflickr.com/6/5010/5344146801_e8e2cea999_b.jpg",
-        coloring: "#3D3C3A"
-      });
-    } else if (hour > 14 && hour < 18) {
-      this.setState({
-        background:
-          "https://www.desktop-background.com/p/2014/02/13/716536_1024x1024-beautiful-beach-sunset-wallpapers_1024x1024_h.jpg",
-        coloring: "#f0f0f0"
-      });
-    } else {
-      this.setState({
-        background: "http://www.tabletwallpapers.org/download/stars-and-snow-night-in-the-alps-wallpaper_1024x1024.jpg",
-        coloring: "white"
-      });
-    }
 
     if (total_posts == 0) {
       this.setState({ img_posts: "" });
