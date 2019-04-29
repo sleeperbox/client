@@ -26,7 +26,7 @@ export default class Posting extends Component {
       value: "null",
       tag: 0,
       post: 0,
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       kode_post: 1,
       open: false
     };
@@ -103,14 +103,15 @@ export default class Posting extends Component {
 
   publish() {
     event.preventDefault();
-    var data = {
+    var sendingData = {
       email: this.state.email,
       content: this.state.content,
-      tags: this.state.value
+      tags: this.state.value,
+      kode_post: 0
     };
-    if (data.tags == "null") {
+    if (sendingData.tags == "null") {
       this.setState({ tag: 1, post: 0 });
-    } else if (data.content == "") {
+    } else if (sendingData.content == "") {
       this.setState({ tag: 0, post: 1 });
     } else if (this.state.file == null) {
       axios({
@@ -121,27 +122,27 @@ export default class Posting extends Component {
           "Content-Type": "application/json",
           Accept: "application/json"
         },
-        data: {
-          email: this.state.email,
-          content: this.state.content,
-          tags: this.state.value,
-          kode_post: 0
-        }
-      })
-        .then(result => console.log(result))
-        .then(() => window.location = "#/profile");
+        data: sendingData,
+      }).then(result => window.location = "#/profile");
     } else {
-      const data = new FormData();
-      data.append("fotocontent", this.state.file, this.state.file.name);
-      data.append("email", this.state.email);
-      data.append("content", this.state.content);
-      data.append("tags", this.state.value);
-      data.append("kode_post", this.state.kode_post);
+      console.log('upload photo under maintenance ')
+      // const datad = new FormData();
+      // datad.append("fotocontent", this.state.file, this.state.file.name);
+      // datad.append("email", this.state.email);
+      // datad.append("content", this.state.content);
+      // datad.append("tags", this.state.value);
+      // datad.append("kode_post", this.state.kode_post);
 
-      axios
-        .post("https://api.aprizal.com/api/posting", data)
-        .then(() => console.log(this.state.file))
-        .then(() => window.location = "#/profile");
+      // axios({
+      //   method: "post",
+      //   url: "https://api.aprizal.com/api/posting",
+      //   headers: {
+      //     "Acces-Control-Allow-Origin": true,
+      //     "Content-Type": "application/json",
+      //     Accept: "application/json"
+      //   },
+      //   data: datad,
+      // }).then(res => console.log(''));
     }
   }
 

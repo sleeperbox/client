@@ -94,7 +94,7 @@ export default class HeaderProfile extends Component {
         <Container>
           {profile.map(data => {
             return (
-              <Grid columns={1} key={data._id}>
+              <Grid columns={1} key={index}>
                 <Grid.Row style={{background: '#5190ed'}}>
                   <Grid.Column>
                     <Segment basic textAlign="center">

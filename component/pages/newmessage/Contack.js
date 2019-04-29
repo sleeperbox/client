@@ -125,7 +125,7 @@ export default class Contack extends Component {
             <Container>
             {datas.map(data => {
               return (
-                <Grid columns={2} key={data._id}>  
+                <Grid columns={2} key={index}>  
                   <Grid.Column>
                     <List verticalAlign="middle" onClick={() => {this.message(data.username)}}>
                       { data.email === this.state.email ? null : 

@@ -52,7 +52,7 @@ export default class Influence extends Component {
         <Container>
           {datas.map(data => {
             return (
-              <Grid columns={2} key={data._id}>
+              <Grid columns={2} key={index}>
                 <Grid.Column>
                   <List verticalAlign="middle">
                     <List.Item>

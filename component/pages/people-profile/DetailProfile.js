@@ -88,7 +88,7 @@ export default class DetailProfile extends Component {
         <Container>
           {profile.map(data => {
             return (
-              <Grid columns={1} key={data._id}>
+              <Grid columns={1} key={index}>
                 <Grid.Row>
                   <Grid.Column>
                     <center>

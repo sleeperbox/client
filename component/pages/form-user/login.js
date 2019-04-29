@@ -6,7 +6,6 @@ import {
   Grid,
   Divider,
   Header,
-  Icon,
   Segment,
   Message
 } from "semantic-ui-react";
@@ -14,7 +13,6 @@ import axios from "axios";
 import queryString from "query-string";
 import { emailAction, passwordAction, tipeAction } from '../actions';
 import store from '../../../store';
-import { LocalInstance } from "twilio/lib/rest/api/v2010/account/availablePhoneNumber/local";
 
 export default class Register extends Component {
   constructor(props) {
@@ -123,10 +121,12 @@ export default class Register extends Component {
       }
     }).then(result => {
         this.setState({ warning:result.data[0], kode: 1, isLogin: result.data[0].auth})
+
+        //set local storage
         window.localStorage.setItem('email', result.data[0].email)
-        window.localStorage.setItem('auth', JSON.stringify(result.data[0].auth))
-        window.localStorage.setItem('username', JSON.stringify(result.data[0].username))
-        window.localStorage.setItem('phone', JSON.stringify(result.data[0].phone_number))
+        window.localStorage.setItem('auth', result.data[0].auth)
+        window.localStorage.setItem('username', result.data[0].username)
+        window.localStorage.setItem('phone', result.data[0].phone_number)
         
     });
   }

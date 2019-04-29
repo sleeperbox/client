@@ -53,10 +53,10 @@ export default class Register extends Component {
   componentWillUpdate(nextProps, nextState) {}
 
   componentDidUpdate(prevProps, prevState) {
+    localStorage.setItem("email", store.getState().form.email);
+    localStorage.setItem("auth", this.state.isLogin);
     const { isLogin } = this.state;
-    if (isLogin === true) {
-      localStorage.setItem("email", JSON.stringify(store.getState().form.email));
-      localStorage.setItem("auth", JSON.stringify(this.state.isLogin));
+    if (isLogin == true) {
       window.location = "#/profile";
     }
   }
@@ -109,11 +109,7 @@ export default class Register extends Component {
         password: store.getState().form.password
       }
     }).then(result =>
-      this.setState({
-        warning: result.data,
-        isLogin: result.data.auth,
-        token: result.data.token
-      })
+      this.setState({isLogin: true})
     );
   }
 

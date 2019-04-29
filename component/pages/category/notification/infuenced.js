@@ -73,7 +73,7 @@ export default class Infuenced extends Component {
           <Divider />
           {datas.map(data => {
             return (
-              <Grid columns={2} key={data._id}>
+              <Grid columns={2} key={index}>
                 <Grid.Column>
                   <List verticalAlign="middle">
                     <List.Item>
@@ -144,7 +144,7 @@ export default class Infuenced extends Component {
           <Container>
             {datas.map(data => {
               return (
-                <Grid columns={1} key={data._id}>
+                <Grid columns={1} key={index}>
                   <Grid.Column>
                     <List verticalAlign="middle">
                       <List.Item>
