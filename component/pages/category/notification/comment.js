@@ -7,7 +7,7 @@ export default class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       datas: [],
       isLogin: "",
       isLoading: true,
@@ -71,7 +71,7 @@ export default class Comment extends Component {
             <Header as="h2" textAlign="center" />
           </Skeleton>
           <Divider />
-          {datas.map(data => {
+          {datas.map((data,index) => {
             return (
               <Grid columns={2} key={index}>
                 <Grid.Column>
@@ -146,7 +146,7 @@ export default class Comment extends Component {
           this.generateSkeleton()
         ) : (
           <Container>
-            {datas.map(data => {
+            {datas.map((data,index) => {
               return (
                 <Grid columns={1} key={index}>
                   <Grid.Column>
