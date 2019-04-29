@@ -36,68 +36,6 @@ export default class MenuProfile extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "https://api.aprizal.com/api/follow/notif",
-      headers: {
-        "Acces-Control-Allow-Origin": true,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        email: this.state.email // This is the body part
-      }
-    }).then(result => this.setState({ datas: result.data }));
-
-    axios({
-      method: "post",
-      url: "https://api.aprizal.com/api/follow/notif/count",
-      headers: {
-        "Acces-Control-Allow-Origin": true,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        email: this.state.email // This is the body part
-      }
-    }).then(result => this.setState({ seen: result.data }));
-
-    axios({
-      method: "post",
-      url: "https://api.aprizal.com/api/notif/comment",
-      headers: {
-        "Acces-Control-Allow-Origin": true,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        email: this.state.email // This is the body part
-      }
-    }).then(result => this.setState({ seen_comment: result.data }));
-
-    axios({
-      method: "post",
-      url: "https://api.aprizal.com/api/notif/message",
-      headers: {
-        "Acces-Control-Allow-Origin": true,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        email: this.state.email // This is the body part
-      }
-    }).then(result => this.setState({ message: result.data}));
-
-    axios({
-      method: "get",
-      url: "https://api.aprizal.com/api/tags",
-      headers: {
-        "Acces-Control-Allow-Origin": true,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      }
-    }).then(result => this.setState({ options: result.data }));
-
-    axios({
-      method: "post",
       url: "https://api.aprizal.com/api/user/avatar",
       headers: {
         "Acces-Control-Allow-Origin": true,
@@ -108,6 +46,68 @@ export default class MenuProfile extends Component {
         email: this.state.email // This is the body part
       }
     }).then(result => this.setState({ foto: result.data }));
+
+    // axios({
+    //   method: "post",
+    //   url: "https://api.aprizal.com/api/follow/notif",
+    //   headers: {
+    //     "Acces-Control-Allow-Origin": true,
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json"
+    //   },
+    //   data: {
+    //     email: this.state.email // This is the body part
+    //   }
+    // }).then(result => this.setState({ datas: result.data }));
+
+    // axios({
+    //   method: "post",
+    //   url: "https://api.aprizal.com/api/follow/notif/count",
+    //   headers: {
+    //     "Acces-Control-Allow-Origin": true,
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json"
+    //   },
+    //   data: {
+    //     email: this.state.email // This is the body part
+    //   }
+    // }).then(result => this.setState({ seen: result.data }));
+
+    // axios({
+    //   method: "post",
+    //   url: "https://api.aprizal.com/api/notif/comment",
+    //   headers: {
+    //     "Acces-Control-Allow-Origin": true,
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json"
+    //   },
+    //   data: {
+    //     email: this.state.email // This is the body part
+    //   }
+    // }).then(result => this.setState({ seen_comment: result.data }));
+
+    // axios({
+    //   method: "post",
+    //   url: "https://api.aprizal.com/api/notif/message",
+    //   headers: {
+    //     "Acces-Control-Allow-Origin": true,
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json"
+    //   },
+    //   data: {
+    //     email: this.state.email // This is the body part
+    //   }
+    // }).then(result => this.setState({ message: result.data}));
+
+    // axios({
+    //   method: "get",
+    //   url: "https://api.aprizal.com/api/tags",
+    //   headers: {
+    //     "Acces-Control-Allow-Origin": true,
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json"
+    //   }
+    // }).then(result => this.setState({ options: result.data }));
 
   }
 
