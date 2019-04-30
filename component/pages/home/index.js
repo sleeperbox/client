@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import MenuProfile from '../profile/MenuProfile';
-import Content from "./content";
 import Navbar from "./Navbar";
 import Alltag from "./allTag"
 import { Dimmer, Loader, Divider} from "semantic-ui-react";
@@ -59,9 +58,7 @@ export default class Index extends Component {
                     <Alltag/>
                     <Divider hidden/>
                     <Divider hidden/>
-                    <Divider hidden/>
                     <br/>
-                    <Content />
                     <MenuProfile />
                 </div>
                 )}
