@@ -343,55 +343,55 @@ export default class MyPost extends Component {
                             <Header ><small>
                                 {data.tags === "null" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/kategori.png"
+                                    src="http://aprizal.com/public/icon/icon/kategori.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "computer-gadget" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/komp.png"
+                                    src="http://aprizal.com/public/icon/icon/komp.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "family-love" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/family.png"
+                                    src="http://aprizal.com/public/icon/icon/family.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "fact-rumour" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/fr.png"
+                                    src="http://aprizal.com/public/icon/icon/f&r.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "business-work" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/bisnis.png"
+                                    src="http://aprizal.com/public/icon/icon/bisnis.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "fashion-lifestyle" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/fashion.png"
+                                    src="http://aprizal.com/public/icon/icon/fashion.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "quotes" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/quotes.png"
+                                    src="http://aprizal.com/public/icon/icon/quotes.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "other" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/other.png"
+                                    src="http://aprizal.com/public/icon/icon/other.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "riddles" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/riddle.png"
+                                    src="http://aprizal.com/public/icon/icon/riddle.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
@@ -483,12 +483,12 @@ export default class MyPost extends Component {
                             trigger={
                               data.tags === "null" ? (
                                 <Image
-                                  src="http://aprizal.com/public/icon/kategori.png"
+                                  src="http://aprizal.com/public/icon/icon/kategori.png"
                                   width="80%"
                                 />
                               ) : data.tags === "computer-gadget" ? (
                                 <Image
-                                  src="http://aprizal.com/public/icon/komp.png"
+                                  src="http://aprizal.com/public/icon/icon/komp.png"
                                   style={{
                                     height: "100%",
                                     width: "100%",
@@ -497,7 +497,7 @@ export default class MyPost extends Component {
                                 />
                               ) : data.tags === "family-love" ? (
                                 <Image
-                                  src="http://aprizal.com/public/icon/family.png"
+                                  src="http://aprizal.com/public/icon/icon/family.png"
                                   style={{
                                     height: "100%",
                                     width: "100%",
@@ -506,7 +506,7 @@ export default class MyPost extends Component {
                                 />
                               ) : data.tags === "fact-rumour" ? (
                                 <Image
-                                  src="http://aprizal.com/public/icon/fr.png"
+                                  src="http://aprizal.com/public/icon/icon/f&r.png"
                                   style={{
                                     height: "100%",
                                     width: "100%",
@@ -515,7 +515,7 @@ export default class MyPost extends Component {
                                 />
                               ) : data.tags === "business-work" ? (
                                 <Image
-                                  src="http://aprizal.com/public/icon/bisnis.png"
+                                  src="http://aprizal.com/public/icon/icon/bisnis.png"
                                   style={{
                                     height: "100%",
                                     width: "100%",
@@ -524,12 +524,12 @@ export default class MyPost extends Component {
                                 />
                               ) : data.tags === "fashion-lifestyle" ? (
                                 <Image
-                                  src="http://aprizal.com/public/icon/fashion.png"
+                                  src="http://aprizal.com/public/icon/icon/fashion.png"
                                   width="80%"
                                 />
                               ) : data.tags === "quotes" ? (
                                 <Image
-                                  src="http://aprizal.com/public/icon/quotes.png"
+                                  src="http://aprizal.com/public/icon/icon/quotes.png"
                                   style={{
                                     height: "100%",
                                     width: "100%",
@@ -538,7 +538,7 @@ export default class MyPost extends Component {
                                 />
                               ) : data.tags === "other" ? (
                                 <Image
-                                  src="http://aprizal.com/public/icon/other.png"
+                                  src="http://aprizal.com/public/icon/icon/other.png"
                                   style={{
                                     height: "100%",
                                     width: "100%",
@@ -547,7 +547,7 @@ export default class MyPost extends Component {
                                 />
                               ) : data.tags === "riddles" ? (
                                 <Image
-                                  src="http://aprizal.com/public/icon/riddle.png"
+                                  src="http://aprizal.com/public/icon/icon/riddle.png"
                                   style={{
                                     height: "100%",
                                     width: "100%",
@@ -559,55 +559,55 @@ export default class MyPost extends Component {
                             <Header ><small>
                                 {data.tags === "null" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/kategori.png"
+                                    src="http://aprizal.com/public/icon/icon/kategori.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "computer-gadget" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/komp.png"
+                                    src="http://aprizal.com/public/icon/icon/komp.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "family-love" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/family.png"
+                                    src="http://aprizal.com/public/icon/icon/family.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "fact-rumour" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/fr.png"
+                                    src="http://aprizal.com/public/icon/icon/fr.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "business-work" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/bisnis.png"
+                                    src="http://aprizal.com/public/icon/icon/bisnis.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "fashion-lifestyle" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/fashion.png"
+                                    src="http://aprizal.com/public/icon/icon/fashion.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "quotes" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/quotes.png"
+                                    src="http://aprizal.com/public/icon/icon/quotes.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "other" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/other.png"
+                                    src="http://aprizal.com/public/icon/icon/other.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
                                 ) : data.tags === "riddles" ? (
                                   <Image
-                                    src="http://aprizal.com/public/icon/riddle.png"
+                                    src="http://aprizal.com/public/icon/icon/riddle.png"
                                     width="7%"
                                     style={{ float: "left" }}
                                   />
