@@ -55,9 +55,7 @@ export default class Alltag extends Component {
           <br />
           <div className="e-content">
             <div>
-              <Container>
                 <Content />
-              </Container>
             </div>
             <div>
               <Container>

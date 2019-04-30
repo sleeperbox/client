@@ -162,8 +162,7 @@ export default class Content extends Component {
               columns={1}
               key={data}
             >
-              <Segment.Group>
-                <Segment.Inline style={{marginBottom: 7}}>
+                <Segment basic>
                 <br/>
                     {data === "null" ? (
                       <Image
@@ -225,8 +224,8 @@ export default class Content extends Component {
                     {judul.next().value}
                     <Icon onClick={this.view.bind(this)} name="angle right" style={{float: "right"}}/>
                   </p>
-                </Segment.Inline>
-                <Segment>
+                </Segment>
+                <Segment basic color="red">
                   <List.Item style={{ float: "block" }}>
                     {data === "other" ? (
                       <PostOther />
@@ -247,7 +246,6 @@ export default class Content extends Component {
                     ) : null}
                   </List.Item>
                 </Segment>
-              </Segment.Group>
             </Grid>
           );
         })}
