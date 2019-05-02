@@ -72,7 +72,7 @@ export default class MyPost extends Component {
   componentDidMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/posting/profile",
+      url: "http://apps.aprizal.com/api/posting/profile",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export default class MyPost extends Component {
 
     axios({
       method: "get",
-      url: "http://192.168.100.33:8080/api/tags",
+      url: "http://apps.aprizal.com/api/tags",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -112,7 +112,7 @@ export default class MyPost extends Component {
     if (this.state.thanks == 1) {
       axios({
         method: "post",
-        url: "http://192.168.100.33:8080/api/posting/profile",
+        url: "http://apps.aprizal.com/api/posting/profile",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -136,7 +136,7 @@ export default class MyPost extends Component {
   givethanks(value) {
     axios({
       method: "put",
-      url: "http://192.168.100.33:8080/api/posting/thanks/up",
+      url: "http://apps.aprizal.com/api/posting/thanks/up",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -153,7 +153,7 @@ export default class MyPost extends Component {
   delete(value) {
     axios({
       method: "delete",
-      url: "http://192.168.100.33:8080/api/posting/delete",
+      url: "http://apps.aprizal.com/api/posting/delete",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -175,7 +175,7 @@ export default class MyPost extends Component {
     this.setState({ id: value });
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/posting/detail",
+      url: "http://apps.aprizal.com/api/posting/detail",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -197,7 +197,7 @@ export default class MyPost extends Component {
   update() {
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/posting/update",
+      url: "http://apps.aprizal.com/api/posting/update",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

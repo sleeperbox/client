@@ -15,7 +15,7 @@ export default class Influence extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/follower/list",
+      url: "http://apps.aprizal.com/api/follower/list",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -29,19 +29,19 @@ export default class Influence extends Component {
 
   generateZeroData() {
     return (
-        <Container>
-          <Divider hidden/>
-          <Header as="h5" icon textAlign="center">
+      <Container>
+        <Divider hidden />
+        <Header as="h5" icon textAlign="center">
           <Icon name="street view" />
-            <Header.Content>
-              <Statistic>
-                <Statistic.Label>
-                  <i>not interested to someone yet</i>
-                </Statistic.Label>
-              </Statistic>
-            </Header.Content>
-          </Header>
-        </Container>
+          <Header.Content>
+            <Statistic>
+              <Statistic.Label>
+                <i>not interested to someone yet</i>
+              </Statistic.Label>
+            </Statistic>
+          </Header.Content>
+        </Header>
+      </Container>
     );
   }
 
@@ -52,30 +52,20 @@ export default class Influence extends Component {
         <Container>
           {datas.map(data => {
             return (
-              <Grid columns={2} key={data._id}>
-                <Grid.Column>
-                  <List verticalAlign="middle">
-                    <List.Item>
-                      <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
-                      <List.Content>
-                        <List.Header>{data.username}</List.Header>
-                        <p>{data.name}</p>
-                      </List.Content>
-                    </List.Item>
-                  </List>
-                </Grid.Column>
-                <Grid.Column verticalAlign="middle">
-                  <Label style={{ width: "100px", float: "right", textAlign: "center" }} color="red" size="small">
-                    Influenced
-                  </Label>
-                </Grid.Column>
-              </Grid>
+              <List horizontal relaxed key={data._id} style={{margin: 10}}>
+              <List.Item>
+                <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
+                <List.Content>
+                  <List.Header as='a'>{data.username}</List.Header>
+                </List.Content>
+              </List.Item>
+            </List>
             );
           })}
         </Container>
       </div>
     ) : (
-      this.generateZeroData()
-    );
+        this.generateZeroData()
+      );
   }
 }

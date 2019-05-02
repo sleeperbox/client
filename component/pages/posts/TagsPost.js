@@ -29,7 +29,7 @@ export default class TagsPost extends Component {
   componentDidMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/posting/tag",
+      url: "http://apps.aprizal.com/api/posting/tag",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -110,7 +110,7 @@ export default class TagsPost extends Component {
   givethanks(value, value2) {
     axios({
       method: "put",
-      url: "http://192.168.100.33:8080/api/posting/thanks/post/user",
+      url: "http://apps.aprizal.com/api/posting/thanks/post/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

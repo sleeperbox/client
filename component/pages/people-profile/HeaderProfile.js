@@ -21,7 +21,7 @@ export default class HeaderProfile extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/people/profile/get",
+      url: "http://apps.aprizal.com/api/people/profile/get",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export default class HeaderProfile extends Component {
         };
         axios({
           method: "post",
-          url: "http://192.168.100.33:8080/api/follow/status",
+          url: "http://apps.aprizal.com/api/follow/status",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export default class HeaderProfile extends Component {
     };
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/follow",
+      url: "http://apps.aprizal.com/api/follow",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -93,12 +93,12 @@ export default class HeaderProfile extends Component {
         />
       </div>
       <Modal.Content>
-        <p style={{ textAlign: "center" }}>
-          stop influence <b>{sessionStorage.getItem("username")}</b>?
+        <p style={{ textAlign: "center", color: "#fff" }}>
+          stop following <i>{sessionStorage.getItem("username")}</i>?
         </p>
         <center>
-          <Button basic inverted onClick={() => this.handleUnfollow(this.state.emailFriend)} style={{ margin: 5 }}>Yes</Button>
-          <Button basic inverted onClick={() => this.handleBackClose()} style={{ float: "right" }} style={{ margin: 5 }}>No</Button>
+          <Button basic inverted onClick={() => this.handleUnfollow(this.state.emailFriend)} style={{ margin: 5 }}><b>Yes</b></Button>
+          <Button basic inverted onClick={() => this.handleBackClose()} style={{ float: "right" }} style={{ margin: 5 }}><b>No</b></Button>
         </center>
       </Modal.Content>
       <Divider hidden />
@@ -119,7 +119,7 @@ export default class HeaderProfile extends Component {
     };
     axios({
       method: "put",
-      url: "http://192.168.100.33:8080/api/unfollow",
+      url: "http://apps.aprizal.com/api/unfollow",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -137,7 +137,7 @@ export default class HeaderProfile extends Component {
     const {msg} = this.state
     return <div style={{position: "fixed", bottom: 0, zIndex: 99, minWidth: "100%"}}>
     {msg ? (
-           <Message color='black' style={{textAlign: "center"}} onDismiss={() => this.handleCloseMsg()}>now you are influence to {sessionStorage.getItem("username")}</Message>
+           <Message color='black' style={{textAlign: "center"}} onDismiss={() => this.handleCloseMsg()}>you started following  {sessionStorage.getItem("username")}</Message>
     ) : null}
     </div>
   }

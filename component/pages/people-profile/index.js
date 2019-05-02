@@ -23,7 +23,7 @@ export default class Index extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/follow/user/data",
+      url: "http://apps.aprizal.com/api/follow/user/data",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export default class Index extends Component {
       data: {
         username: this.state.username // This is the body part
       }
-    }).then(result => this.setState({ datas: result.data, email_friend: result.data.email, loading:false }));
+    }).then(result => this.setState({ datas: result.data[0], email_friend: result.data[0].email, loading:false }));
   }
 
   shouldComponentUpdate(newProps, newState) {

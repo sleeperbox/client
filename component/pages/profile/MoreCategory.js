@@ -38,7 +38,7 @@ export default class MoreCategory extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/profile",
+      url: "http://apps.aprizal.com/api/profile",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export default class MoreCategory extends Component {
     );
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/user/rank",
+      url: "http://apps.aprizal.com/api/user/rank",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

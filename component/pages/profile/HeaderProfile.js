@@ -35,7 +35,7 @@ export default class HeaderProfile extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/profile",
+      url: "http://apps.aprizal.com/api/profile",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export default class HeaderProfile extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/user/avatar",
+      url: "http://apps.aprizal.com/api/user/avatar",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -222,19 +222,19 @@ export default class HeaderProfile extends Component {
                                   Username <span style={toRight}>@{username}</span>
                                 </p>
                                 <p style={smallFont}>
-                                  Posts <span style={toRight}>{total_posts}</span>
+                                  Post <span style={toRight}>{total_posts}</span>
                                 </p>
                                 <p style={smallFont}>
-                                  Thanks <span style={toRight}>{total_thanks}</span>
+                                  Thank <span style={toRight}>{total_thanks}</span>
                                 </p>
                                 <p style={smallFont}>
-                                Influencing <span style={toRight}>{total_friends} person</span>
+                                Follower <span style={toRight}>{total_friends}</span>
                                 </p>
                                 <p style={smallFont}>
-                                  Awards <span style={toRight}>{awards}</span>
+                                  Award <span style={toRight}>{awards}</span>
                                 </p>
                                 <p style={smallFont}>
-                                  Tags{" "}
+                                  Tag{" "}
                                   <span style={toRight}>
                                     <i>{followed_topic}</i>
                                   </span>

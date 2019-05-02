@@ -23,7 +23,7 @@ export default class Posts extends Component {
     super(props);
     this.state = {
       email: localStorage.getItem("email"),
-      username: localStorage.getItem("username"), 
+      username: localStorage.getItem("username"),
       posts: [],
       commentByPostId: [],
       comment: "",
@@ -46,17 +46,21 @@ export default class Posts extends Component {
   handleClose = () => this.setState({ modalOpen: false });
 
   addButtom() {
-    this.setState({tombol: 1});
+    this.setState({ tombol: 1 });
   }
 
   delButtom() {
-    this.setState({tombol: 0});
+    this.setState({ tombol: 0 });
   }
 
   componentWillMount() {
+    axios.get('http://apps.aprizal.com/api/posts/' + this.state.url)
+      .then(response => {
+        this.setState({ posts: response.data })
+      })
     axios({
       method: "POST",
-      url: "http://192.168.100.33:8080/api/comments",
+      url: "http://apps.aprizal.com/api/comments",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -80,7 +84,7 @@ export default class Posts extends Component {
     if (this.state.comments == 1) {
       axios({
         method: "POST",
-        url: "http://192.168.100.33:8080/api/comments",
+        url: "http://apps.aprizal.com/api/comments",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -106,7 +110,7 @@ export default class Posts extends Component {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "http://192.168.100.33:8080/api/posts/comments",
+      url: "http://apps.aprizal.com/api/posts/comments",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -125,7 +129,7 @@ export default class Posts extends Component {
   delete() {
     axios({
       method: "delete",
-      url: "http://192.168.100.33:8080/api/comment/delete",
+      url: "http://apps.aprizal.com/api/comment/delete",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -151,16 +155,15 @@ export default class Posts extends Component {
           <Item.Group>
             <Item>
               <Item.Content>
-                <ItemMeta as="a" style={{ color: "black" }}>
+                <ItemMeta>
                   <Image
-                    circular
-                    style={{ width:"30px", height:"30px" }}
+                    style={{ width: "35px", height: "35px", marginLeft: 10, marginBottom: 5 }}
                     src={
                       "http://aprizal.com/public/avatar/" +
                       posts.foto
                     }
                   />{" "}
-                  <b>{posts.username}</b>
+                  <b style={{ color: "#222" }}>{posts.username}</b>
                 </ItemMeta>
                 <Item.Description style={{ padding: 15, margin: 5 }}>
                   {posts.fotocontent !== null ? (
@@ -202,7 +205,7 @@ export default class Posts extends Component {
               return (
                 <Comment key={data._id}>
                   <Comment.Avatar
-                    style={{ width:"30px", height:"30px", borderRadius: "80px" }}
+                    style={{ width: "30px", height: "30px", borderRadius: "80px" }}
                     src={
                       "http://aprizal.com/public/avatar/" +
                       data.foto
@@ -211,10 +214,10 @@ export default class Posts extends Component {
                   <Comment.Content>
                     <Comment.Author>
                       {data.username}
-                      { this.state.username == data.username ? <Icon
+                      {this.state.username == data.username ? <Icon
                         onClick={() => this.openModal(data._id)}
                         name="trash alternate outline"
-                        style={{ float: "right", color: "#595959", fontSize:"19px"}}
+                        style={{ float: "right", color: "#595959", fontSize: "19px" }}
                         size={"large"}
                       /> : null}
                       <Modal
@@ -222,20 +225,19 @@ export default class Posts extends Component {
                         open={this.state.modalOpen}
                         onClose={this.handleClose}
                         basic
+                        size='small'
                       >
-                        <Header
-                          icon="trash alternate outline"
-                          content="Delete Comment!"
-                        />
                         <Modal.Content>
-                          <p>Are You Sure?</p>
+                          <p style={{ textAlign: "center", color: "#fff" }}>
+                            are you sure want to delete your comment?
+                          </p>
                         </Modal.Content>
                         <Modal.Actions>
-                          <Button onClick={this.handleClose} inverted>
-                            <Icon name="remove" /> No
+                          <Button basic inverted onClick={() => this.delete()} style={{ margin: 5 }}>
+                          <b>Yes</b>
                           </Button>
-                          <Button onClick={() => this.delete()}>
-                            <Icon name="checkmark" /> Yes
+                          <Button basic inverted onClick={this.handleClose} style={{ margin: 5 }}>
+                          <b>No</b>
                           </Button>
                         </Modal.Actions>
                       </Modal>
@@ -264,50 +266,53 @@ export default class Posts extends Component {
               {tombol == 0 ? (
                 <Button
                   onClick={this.addButtom.bind(this)}
-                  circular
                   icon="plus circle"
-                  style={{ zIndex: 9, position: "fixed", bottom: 50, left: 8 }}
+                  style={{ zIndex: 9, position: "fixed", bottom: 52, left: 2, background: "#5b90f6", color: "#fff" }}
                 />
               ) : (
-                <Button.Group
-                  icon
-                  style={{ zIndex: 9, position: "fixed", bottom: 50, left: 8 }}
-                >
-                  <Button>
-                    <Icon name="camera" />
-                  </Button>
-                  <Button>
-                    <Icon name="file image" />
-                  </Button>
-                  <Button onClick={this.delButtom.bind(this)}>
-                    <Icon name="close" />
-                  </Button>
-                </Button.Group>
-              )}
+                  <Button.Group
+                    icon
+                    style={{ zIndex: 9, position: "fixed", bottom: 52, left: 2, background: "#5b90f6", color: "#fff" }}
+                  >
+                    <Button style={{ background: "#5b90f6", color: "#fff" }}>
+                      <Icon name="camera" />
+                    </Button>
+                    <Button style={{ background: "#5b90f6", color: "#fff" }}>
+                      <Icon name="file image" />
+                    </Button>
+                    <Button style={{ background: "#5b90f6", color: "#fff" }} onClick={this.delButtom.bind(this)}>
+                      <Icon name="close" />
+                    </Button>
+                  </Button.Group>
+                )}
               <textarea
                 name="comment"
                 className="type-input"
                 style={{
-                  left: 8,
-                  bottom: 8,
+                  left: 0,
+                  bottom: 0,
                   position: "fixed",
-                  zIndex: 99,
-                  width: "84%"
+                  zIndex: 8,
+                  width: "100%",
+                  background: "#fff",
+                  border: "2px solid #999",
+                  borderRadius: 5,
+                  height: "50px"
                 }}
                 onChange={this.handleChange}
-                placeholder="Write a comment.."
+                placeholder=' write a comment..'
                 required
               />
               <Button
-                color="teal"
+                circular
                 onClick={this.handleSubmit}
                 style={{
                   zIndex: 9,
                   position: "fixed",
                   bottom: 8,
-                  right: 4,
-                  borderRadius: "18px",
-                  color: "#2F4A57"
+                  right: 5,
+                  color: "#fff",
+                  background: "#5b90f6"
                 }}
                 icon="paper plane outline"
               />

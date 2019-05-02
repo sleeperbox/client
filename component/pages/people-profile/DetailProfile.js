@@ -18,7 +18,7 @@ export default class DetailProfile extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/people/profile/get",
+      url: "http://apps.aprizal.com/api/people/profile/get",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export default class DetailProfile extends Component {
     
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/people/profile/get",
+      url: "http://apps.aprizal.com/api/people/profile/get",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ export default class DetailProfile extends Component {
         };
         axios({
           method: "post",
-          url: "http://192.168.100.33:8080/api/user/rank",
+          url: "http://apps.aprizal.com/api/user/rank",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
@@ -101,22 +101,22 @@ export default class DetailProfile extends Component {
                     </center>
                     <Segment basic>
                       <p style={smallFont}>
-                        Posts <span style={toRight}>{data.total_posts}</span>
+                        Post <span style={toRight}>{data.total_posts}</span>
                       </p>
                       <p style={smallFont}>
-                        Influencing{" "}
+                        Follower{" "}
                         <a onClick={this.gotoInfluenceList} style={toRight}>
-                          <u style={{ color: "blue" }}>{temp_total} person</u>
+                          <u style={{ color: "blue" }}>{temp_total}</u>
                         </a>
                       </p>
                       <p style={smallFont}>
-                        Awards{" "}
+                        Award{" "}
                         <span style={toRight}>
                           <u style={{ color: "blue" }}>{data.awards}</u>
                         </span>
                       </p>
                       <p style={smallFont}>
-                        Tags{" "}
+                        Tag{" "}
                         <span style={toRight}>
                           <u style={{ color: "blue" }}>{data.tags}</u>
                         </span>

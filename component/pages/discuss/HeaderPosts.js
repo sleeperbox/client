@@ -16,6 +16,7 @@ export default class HeaderPosts extends Component {
             <Header as="h5">
               <small>
                 <i>
+                  Discussion
                 </i>
               </small>
             </Header>

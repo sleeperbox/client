@@ -36,7 +36,7 @@ export default class MenuProfile extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/follow/notif",
+      url: "http://apps.aprizal.com/api/follow/notif",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/follow/notif/count",
+      url: "http://apps.aprizal.com/api/follow/notif/count",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/notif/comment",
+      url: "http://apps.aprizal.com/api/notif/comment",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/notif/message",
+      url: "http://apps.aprizal.com/api/notif/message",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -88,7 +88,7 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "get",
-      url: "http://192.168.100.33:8080/api/tags",
+      url: "http://apps.aprizal.com/api/tags",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -98,7 +98,7 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/user/avatar",
+      url: "http://apps.aprizal.com/api/user/avatar",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -126,7 +126,7 @@ export default class MenuProfile extends Component {
         if (this.state.isMenu === "notification") {
           axios({
             method: "put",
-            url: "http://192.168.100.33:8080/api/follow/notif/seen",
+            url: "http://apps.aprizal.com/api/follow/notif/seen",
             headers: {
               "Acces-Control-Allow-Origin": true,
               "Content-Type": "application/json",
@@ -138,7 +138,7 @@ export default class MenuProfile extends Component {
           })
           axios({
             method: "put",
-            url: "http://192.168.100.33:8080/api/notif/comment/seen",
+            url: "http://apps.aprizal.com/api/notif/comment/seen",
             headers: {
               "Acces-Control-Allow-Origin": true,
               "Content-Type": "application/json",
@@ -226,7 +226,7 @@ export default class MenuProfile extends Component {
     }else if (this.state.file == null) {
       axios({
         method: "post",
-        url: "http://192.168.100.33:8080/api/posting",
+        url: "http://apps.aprizal.com/api/posting",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -247,7 +247,7 @@ export default class MenuProfile extends Component {
         data.append("tags", this.state.value);
         data.append("kode_post", this.state.kode_post);
   
-        axios.post("http://192.168.100.33:8080/api/posting", data).then(() => window.location.reload());
+        axios.post("http://apps.aprizal.com/api/posting", data).then(() => window.location.reload());
       }
   }
 

@@ -26,7 +26,7 @@ export default class Infuenced extends Component {
   }
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/follow/notif",
+      url: "http://apps.aprizal.com/api/follow/notif",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

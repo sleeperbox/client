@@ -42,23 +42,23 @@ export default class allPeople extends Component {
   }
 
   componentWillMount() {
-    
-  }
-  componentDidMount(){
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/friend",
+      url: "http://apps.aprizal.com/api/friend",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
-        email: "test@gmail.com" // This is the body part
+        email: this.state.email // This is the body part
       }
     }).then(result =>
-        this.setState({datas: result.data.user, allfoto: result.data.foto, isLoading: false})
+      this.setState({datas: JSON.parse(result.data.user), allfoto: JSON.parse(result.data.foto), isLoading: false})
     )
+  }
+  componentDidMount(){
+   
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -73,7 +73,7 @@ export default class allPeople extends Component {
     if (this.state.kode == 1) {
       axios({
         method: "post",
-        url: "http://192.168.100.33:8080/api/search",
+        url: "http://apps.aprizal.com/api/search",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -119,7 +119,7 @@ export default class allPeople extends Component {
     this.setState({ email_friend: value, dimmer: "blurring", open: true }, () =>
       axios({
         method: "post",
-        url: "http://192.168.100.33:8080/api/user/avatar",
+        url: "http://apps.aprizal.com/api/user/avatar",
         headers: {
           "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
@@ -135,7 +135,7 @@ export default class allPeople extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/user",
+      url: "http://apps.aprizal.com/api/user",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -154,7 +154,7 @@ export default class allPeople extends Component {
 
     axios({
       method: "post",
-      url: "http://192.168.100.33:8080/api/user/rank",
+      url: "http://apps.aprizal.com/api/user/rank",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",

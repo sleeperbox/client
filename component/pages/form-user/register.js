@@ -95,7 +95,7 @@ export default class Register extends Component {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "http://192.168.100.33:8080/api/register",
+      url: "http://apps.aprizal.com/api/register",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
