@@ -151,7 +151,7 @@ export default class Infuenced extends Component {
                         <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
                         <List.Content>
                           <List.Header>{data.name}</List.Header>
-                          <i>{"Influenced by you"}</i>
+                          <i>{"Followed you"}</i>
                         </List.Content>
                       </List.Item>
                     </List>

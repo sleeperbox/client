@@ -234,26 +234,22 @@ export default class allPeople extends Component {
 
   generateZeroData() {
     const divConten = {
-      marginTop: "40%",
-      marginBottom: "60%"
+      marginTop: "30%",
+      marginBottom: "50%"
     };
     return (
       <div style={divConten}>
-        <Header as="h2" icon textAlign="center">
-          <Image
-            centered
-            size="large"
-            src="https://image.spreadshirtmedia.com/image-server/v1/mp/designs/12346806,width=178,height=178/cute-devil.png"
-          />
-          <Header.Content>
-            <Statistic>
-              <Statistic.Value text>You Haven't friend,</Statistic.Value>
-              <Statistic.Label />
-              <Statistic.Label>No Result</Statistic.Label>
-            </Statistic>
-          </Header.Content>
-        </Header>
-      </div>
+      <Header as="h5" icon textAlign="center">
+      <Icon name="bus" />
+        <Header.Content>
+          <Statistic>
+            <Statistic.Label>
+              <i>Nobody Here...</i>
+            </Statistic.Label>
+          </Statistic>
+        </Header.Content>
+      </Header>
+    </div>
     );
   }
 

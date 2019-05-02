@@ -34,10 +34,22 @@ export default class Register extends Component {
   componentWillMount() {
     var query = queryString.parse(this.props.location.search);
     if (query.token) {
-      axios.get('https://www.googleapis.com/plus/v1/people/me?access_token=' + query.token)
+      axios({
+        method: "GET",
+        url: 'https://www.googleapis.com/plus/v1/people/me?access_token=' + query.token,
+        headers: {
+          "Acces-Control-Allow-Origin": true,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }})
       .then(response => {
-        localStorage.setItem('email',JSON.stringify(response.data.emails.value))
-        localStorage.setItem('auth', "true")
+        var opt = {
+          email: response.data.emails[0].value,
+          username: response.data.name.givenName,
+          first_name: response.data.name.givenName,
+          last_name: response.data.name.familyName,
+          password: "123"
+        }
         axios({
           method: "POST",
           url: "http://apps.aprizal.com/api/register",
@@ -46,14 +58,13 @@ export default class Register extends Component {
             "Content-Type": "application/json",
             Accept: "application/json"
           },
-          data: {
-            email: response.data.emails.value,
-            username: response.data.name.givenName,
-            first_name: response.data.name.givenName,
-            last_name: response.data.name.familyName,
-            password: "123"
-          }
-        }).then(window.location = "/#/profile");
+          data: opt
+        }).then(() => {
+            localStorage.setItem('email',response.data.emails[0].value)
+            localStorage.setItem('auth', "true")
+            window.location = "/#/profile"
+        }
+        ).catch(err => console.log(err))
       }
       )
     }
@@ -132,7 +143,7 @@ export default class Register extends Component {
   }
 
   googleSignin() {
-    window.location = "/api/auth/google"
+    window.location = "http://apps.aprizal.com/api/auth/google"
   }
 
   render() {

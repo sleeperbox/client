@@ -60,7 +60,11 @@ export default class AccountSetting extends Component {
 
   logout() {
     localStorage.removeItem('email')
-    localStorage.removeItem('auth')
+    localStorage.removeItem('first_name')
+    localStorage.removeItem('last_name')
+    localStorage.removeItem('username')
+    localStorage.removeItem('auth'),
+    localStorage.removeItem('phone')
     localStorage.removeItem('menu')
     window.location='#/login';
 }
