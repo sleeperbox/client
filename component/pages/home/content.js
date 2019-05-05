@@ -94,6 +94,14 @@ export default class Content extends Component {
             <GridColumn>
               <Segment basic>
                 <List>
+                <List.Item>
+                    <List.Content>
+                      <List.Header as="a">
+                        <Skeleton />
+                      </List.Header>
+                      </List.Content>
+                  </List.Item>
+                  <Divider hidden/>
                   <List.Item>
                     <List.Content>
                       <List.Header as="a">
@@ -154,7 +162,8 @@ export default class Content extends Component {
     var isi = [];
     return (
       <div style={{marginTop: -5}}>
-        {newArray.map(data => {
+      {this.state.isLoading ? this.generateSkeleton() : (
+        newArray.map(data => {
           isi.push(data);
           return (
             <Grid
@@ -248,7 +257,8 @@ export default class Content extends Component {
                 </Segment>
             </Grid>
           );
-        })}
+        })
+        )}
         <Divider hidden />
         <Divider hidden />
         <Divider hidden />

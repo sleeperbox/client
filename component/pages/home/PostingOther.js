@@ -8,12 +8,13 @@ import {
   GridColumn,
   List,
   Popup,
-  Item,
   GridRow,
   Image
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
+
+const crying = 'http://aprizal.com/public/icon/icon/crying.png'
 
 export default class PostingOther extends Component {
   constructor(props) {
@@ -172,12 +173,14 @@ export default class PostingOther extends Component {
       color: "#222"
     };
     return (
-      <div>
-        {posting.length == 0 ? "no post yet ..." : (
-        isLoading ? (
-          this.generateSkeleton()
-        ) : (
-           <div>
+      <div style={{minHeight: "465px"}}>
+      {isLoading ? (
+        this.generateSkeleton()
+      ) : posting.length === 0 ? <center> <div style={{marginTop: 75}}>
+      <Image src={crying} size="small"/>
+      </div>
+      <h4 style={{color: "#999"}}>0 POST ...</h4></center>: (
+         <div>
               {posting.map((data, index) => {
                 return (
                   <Grid columns={1} key={data._id}>
@@ -280,7 +283,6 @@ export default class PostingOther extends Component {
               })}
               <Divider hidden />
             </div>
-        )
         )}
       </div>
     );

@@ -25,7 +25,9 @@ export default class MenuProfile extends Component {
       tag: 0,
       post: 0,
       preview: null,
-      kode_post: 1
+      kode_post: 1,
+      messageCount: 0,
+      lazyImage: true
     };
     this.handleMenu = this.handleMenu.bind(this);
     this.generateSkeleton = this.generateSkeleton.bind(this);
@@ -84,7 +86,7 @@ export default class MenuProfile extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ message: result.data}));
+    }).then(result => this.setState({ message: result.data, messageCount: result.data.length }));
 
     axios({
       method: "get",
@@ -107,12 +109,12 @@ export default class MenuProfile extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ foto: result.data }));
+    }).then(result => this.setState({ foto: result.data, lazyImage: false }));
 
   }
 
   componentDidMount() {
-    if(this.state.email){
+    if (this.state.email) {
       this.setState({ isLoading: false });
     }
   }
@@ -219,11 +221,11 @@ export default class MenuProfile extends Component {
       content: this.state.content,
       tags: this.state.value
     };
-    if(data.tags == "null"){
-      this.setState({tag : 1, post : 0})
-    }else if(data.content == ""){
-      this.setState({tag : 0, post : 1})
-    }else if (this.state.file == null) {
+    if (data.tags == "null") {
+      this.setState({ tag: 1, post: 0 })
+    } else if (data.content == "") {
+      this.setState({ tag: 0, post: 1 })
+    } else if (this.state.file == null) {
       axios({
         method: "post",
         url: "http://apps.aprizal.com/api/posting",
@@ -239,16 +241,16 @@ export default class MenuProfile extends Component {
           kode_post: 0
         }
       }).then((result) => () => window.location.reload());
-      }else{
-        const data = new FormData();
-        data.append("fotocontent", this.state.file, this.state.file.name);
-        data.append("email", this.state.email);
-        data.append("content", this.state.content);
-        data.append("tags", this.state.value);
-        data.append("kode_post", this.state.kode_post);
-  
-        axios.post("http://apps.aprizal.com/api/posting", data).then(() => window.location.reload());
-      }
+    } else {
+      const data = new FormData();
+      data.append("fotocontent", this.state.file, this.state.file.name);
+      data.append("email", this.state.email);
+      data.append("content", this.state.content);
+      data.append("tags", this.state.value);
+      data.append("kode_post", this.state.kode_post);
+
+      axios.post("http://apps.aprizal.com/api/posting", data).then(() => window.location.reload());
+    }
   }
 
   show = dimmer => () => this.setState({ dimmer, open: true });
@@ -259,7 +261,7 @@ export default class MenuProfile extends Component {
   }
 
   render() {
-    const { open, dimmer, isLoading, isMenu, menu, datas, options, value } = this.state;
+    const { messageCount, open, dimmer, isLoading, isMenu, menu, datas, options, value } = this.state;
     if (isMenu === "profile") {
       window.location = "#/profile";
     } else if (isMenu === "notification") {
@@ -301,15 +303,19 @@ export default class MenuProfile extends Component {
               </Menu.Item>
 
               <Menu.Item name="message" onClick={() => this.handleMenu("message")}>
-                {this.state.message === 0 && menu === "message" ? (<Icon name="comment alternate" style={{ color: "#5b90f6" }} size="large" />) : this.state.message !== 0 && menu === "message" ? <Icon name="comment alternate" style={{ color: "#5b90f6" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
-                    {this.state.message}
-                  </Label></Icon> : this.state.message === 0 && menu !== "message" ? (<Icon name="comment alternate outline" style={{ color: "#555" }} size="large" />) : this.state.message !== 0 && menu !== "message" ? <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
-                    {this.state.message}
-                  </Label></Icon> : null }
+                {menu === "message" ? <Icon name="comment alternate" style={{ color: "#5b90f6" }} size="large" ></Icon> :  (
+                messageCount === 0 || messageCount == null ? (
+                  <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ></Icon>
+                )
+                : 
+                <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
+                {messageCount}
+              </Label></Icon>
+                )}
               </Menu.Item>
 
-              <Menu.Item name="post" onClick={() => this.handleMenu("posting")}>
-              &nbsp;
+              <Menu.Item name="post"  onClick={() => this.handleMenu("posting")}>
+                &nbsp;
                 <div>
                   <Icon name="plus square outline" size="large" style={{ color: "#555" }} />
                 </div>
@@ -325,52 +331,45 @@ export default class MenuProfile extends Component {
                   ""
                 ) : (
 
-                  <Icon name="bell outline" style={{ color: "#5b90f6" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
-                    {notification}
-                  </Label></Icon>
-                )}
+                      <Icon name="bell outline" style={{ color: "#5b90f6" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
+                        {notification}
+                      </Label></Icon>
+                    )}
                 {menu === "notification" ? (<Icon name="bell outline" style={{ color: "#5b90f6" }} size="large" />) : notification === 0 ? (<Icon name="bell outline" style={{ color: "#555" }} size="large" />) : ""}
 
               </Menu.Item>
 
               <Menu.Item name="profile" onClick={() => this.handleMenu("profile")}>
-                {menu === "profile" ? (
-                  <Image
-                  size="small"
-                  circular
-                  src={"http://aprizal.com/public/avatar/" + this.state.foto}
-                  style={{width:"30px", height:"30px"}}
-                  />
-                ) : (
-                  <Image
-                  size="small"
-                  circular
-                  src={"http://aprizal.com/public/avatar/" + this.state.foto}
-                  style={{width:"30px", height:"30px"}}
-                  />
-                  )}
+              {this.state.lazyImage ? <Skeleton width="30px" borderRadius="120px" height="30px" color="#999" /> : (
+                <Image
+                size="small"
+                circular
+                src={"http://aprizal.com/public/avatar/" + this.state.foto}
+                style={{ width: "30px", height: "30px" }}
+                />
+              )}
               </Menu.Item>
             </Menu>
           )}
         <Modal dimmer={dimmer} size="large" open={open} onClose={this.close}>
           <Modal.Content>
             <Modal.Description>
-              {this.state.tag == 1 ? 
-              <i><Message error icon="warning circle" header='Anda Belum Memilih Tag' size="mini"/></i>
-              : this.state.post == 1 ?
-              <i><Message icon="warning circle" error header='Konten Tidak Boleh Kosong' size="mini"/></i> : null}
+              {this.state.tag == 1 ?
+                <i><Message error icon="warning circle" header='Anda Belum Memilih Tag' size="mini" /></i>
+                : this.state.post == 1 ?
+                  <i><Message icon="warning circle" error header='Konten Tidak Boleh Kosong' size="mini" /></i> : null}
               <Header as="h5">This will be great for your Followers</Header>
               <Form>
                 <TextArea maxLength={250} name="content" onChange={this.handlePost} autoHeight placeholder="What happen..." />
                 <br />
                 <div className="input-file-container">
-                  <input className="input-file" id="my-file" type="file" onChange={this.fileHandler}/>
+                  <input className="input-file" id="my-file" type="file" onChange={this.fileHandler} />
                   <Icon bordered name='attach' size='large' htmlFor="my-file" />
-                  <br /> { this.state.foto_posting === null ? null : this.state.foto_posting !== null ? this.state.posting : null }
-                  { this.state.foto_posting === null ? null : this.state.foto_posting !== null ? <Image
-                        src={this.state.preview}
-                        size="tiny"
-                      /> : null }
+                  <br /> {this.state.foto_posting === null ? null : this.state.foto_posting !== null ? this.state.posting : null}
+                  {this.state.foto_posting === null ? null : this.state.foto_posting !== null ? <Image
+                    src={this.state.preview}
+                    size="tiny"
+                  /> : null}
                 </div>
               </Form>
             </Modal.Description>
@@ -392,7 +391,7 @@ export default class MenuProfile extends Component {
               icon="checkmark"
               labelPosition="right"
               content="Post"
-              style={{background:"#5b90f6"}}
+              style={{ background: "#5b90f6" }}
               onClick={this.publish.bind(this)}
             />
           </Modal.Actions>

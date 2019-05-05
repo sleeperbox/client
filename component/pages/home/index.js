@@ -17,7 +17,6 @@ export default class Index extends Component {
 
     componentWillMount() {
         if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
-            // this.setState({loading: false})
             setTimeout(() =>  {
                 this.setState({loading: false})
             }, 100)
