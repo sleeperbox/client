@@ -1,10 +1,24 @@
 import React, { Component } from "react";
-import { Container, Grid, Divider, Image, List, Header, Statistic, Button, Modal, Dimmer, Loader, Segment, } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  Divider,
+  Image,
+  List,
+  Header,
+  Statistic,
+  Button,
+  Modal,
+  Dimmer,
+  Loader,
+  Segment,
+  Icon,
+  Input
+} from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import HeaderMessage from "./HeaderMessage";
 import MenuProfile from "../profile/MenuProfile";
 import axios from "axios";
-
 
 export default class Index extends Component {
   constructor(props) {
@@ -18,19 +32,24 @@ export default class Index extends Component {
       data_message: "",
       isLoading: true,
       loading: true,
+      maxlength: 30,
+      today: new Date().getDate()
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.generateZeroData = this.generateZeroData.bind(this);
   }
 
-
   componentWillMount() {
-    if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
+    if (
+      this.state.loading == true ||
+      this.setState.isLogin == "" ||
+      this.setState.email == ""
+    ) {
       // this.setState({loading: false})
-      setTimeout(() =>  {
-          this.setState({loading: false})
-      }, 100)
-  }
+      setTimeout(() => {
+        this.setState({ loading: false });
+      }, 100);
+    }
     axios({
       method: "post",
       url: "http://apps.aprizal.com/api/list/message",
@@ -43,7 +62,7 @@ export default class Index extends Component {
         email: this.state.email // This is the body part
       }
     }).then(result => this.setState({ datas: result.data }));
-    
+
     axios({
       method: "post",
       url: "http://apps.aprizal.com/api/profile",
@@ -55,16 +74,15 @@ export default class Index extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ username_user1: result.data.username}));
+    }).then(result => this.setState({ username_user1: result.data.username }));
     this.setState({
       isLogin: localStorage.getItem("auth")
     });
   }
 
-
   componentDidMount() {
     if (this.state.datas) {
-        this.setState({ isLoading: false });
+      this.setState({ isLoading: false });
     }
     const { isLogin } = this.state;
     isLogin === "false" ? (window.location = "#/login") : "";
@@ -85,12 +103,12 @@ export default class Index extends Component {
 
   message(Value) {
     event.preventDefault();
-    window.location = "#/dm?username=" + Value
+    window.location = "#/dm?username=" + Value;
   }
 
   newmessage() {
     event.preventDefault();
-    window.location = "#/newdm"
+    window.location = "#/newdm";
   }
 
   generateSkeleton() {
@@ -120,8 +138,8 @@ export default class Index extends Component {
                     </List.Item>
                   </List>
                 </Grid.Column>
-      
-    <Grid.Column verticalAlign="middle">
+
+                <Grid.Column verticalAlign="middle">
                   <Skeleton />
                 </Grid.Column>
               </Grid>
@@ -132,37 +150,30 @@ export default class Index extends Component {
     );
   }
 
-
-    loading() {
-        return (
-            <div>
-                <Dimmer active inverted>
-                    <Loader size='large'>Plase Wait</Loader>
-                </Dimmer>
-            </div>        
-        );
-    }
+  loading() {
+    return (
+      <div>
+        <Dimmer active inverted>
+          <Loader size="large">Plase Wait</Loader>
+        </Dimmer>
+      </div>
+    );
+  }
 
   generateZeroData() {
     const divConten = {
-      marginTop: "40%",
+      marginTop: "65%",
       marginBottom: "60%"
     };
     return (
       <div style={divConten}>
-        <Header as="h2" icon textAlign="center">
-          <Image
-            centered
-            size="large"
-            src="https://image.spreadshirtmedia.com/image-server/v1/mp/designs/12346806,width=178,height=178/cute-devil.png"
-          />
+        <Header as="h5" icon textAlign="center">
+          <Icon name="bell slash outline" />
           <Header.Content>
             <Statistic>
-              <Statistic.Value text>Hell Yeah,</Statistic.Value>
               <Statistic.Label>
-                <i>0 Million</i>
+                <i>You Have No Message</i>
               </Statistic.Label>
-              <Statistic.Label>Message</Statistic.Label>
             </Statistic>
           </Header.Content>
         </Header>
@@ -172,9 +183,27 @@ export default class Index extends Component {
 
   render() {
     const { datas, isLoading, loading } = this.state;
+    const marginSearch = {
+      marginTop : "1.5em",
+      marginBottom: "-0.8em",
+      marginLeft : "1em",
+      marginRight : "1em"
+    }
     return (
-      <div style={{ marginBottom: 45, marginTop: 20 }}>
-        {loading ? (this.loading()) : datas.length === 0 ? (
+      <div>
+        <Input 
+          style={marginSearch}
+          fluid
+          icon="search"
+          onChange={this.handlePost}
+          name="cari"
+          placeholder="Search Contact"
+          value={this.state.cari}
+        />
+        <Divider hidden />
+        {loading ? (
+          this.loading()
+        ) : datas.length === 0 ? (
           this.generateZeroData()
         ) : isLoading ? (
           this.generateSkeleton()
@@ -182,36 +211,103 @@ export default class Index extends Component {
           <Container>
             {datas.map(data => {
               return (
-                <Grid columns={1} key={data._id}>  
+                <Grid columns={1} key={data._id} style={{marginBottom: "-1.5em"}}>  
                   <Grid.Column>
-                    { data.username_user1 === this.state.username_user1 ? <List verticalAlign="middle" onClick={() => {this.message(data.username_user2)}}>
-                      <List.Item>
-                        <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
-                        <List.Content>
-                          { data.username_user1 === this.state.username_user1 ? (<List.Header>{data.username_user2}</List.Header>) : (<List.Header>{data.username_user1}</List.Header>)}
-                          <p><i><small>{data.message}</small></i></p>
-                        </List.Content>
-                      </List.Item>
-                    </List> : 
-                    <List verticalAlign="middle" onClick={() => {this.message(data.username_user1)}}>
-                    <List.Item>
-                      <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
-                      <List.Content>
-                        { data.username_user1 === this.state.username_user1 ? (<List.Header>{data.username_user2}</List.Header>) : (<List.Header>{data.username_user1}</List.Header>)}
-                        <p><i><small>{data.message}</small></i></p>
-                      </List.Content>
-                    </List.Item>
-                    </List> }
+                    {data.username_user1 === this.state.username_user1 ? (
+                      <List
+                        verticalAlign="middle"
+                        onClick={() => {
+                          this.message(data.username_user2);
+                        }}
+                      >
+                        <List.Item>
+                          <List.Content floated="right">
+                            <small>
+                              {data.date.slice(14, 16) == this.state.today
+                                ? data.date.slice(0, 5)
+                                : data.date.slice(10)}
+                            </small>
+                          </List.Content>
+                          <Image
+                            avatar
+                            src="https://react.semantic-ui.com/images/avatar/small/tom.jpg"
+                            style={{ width: "12%", height: "12%" }}
+                          />
+                          <List.Content>
+                            {data.username_user1 ===
+                            this.state.username_user1 ? (
+                              <List.Header style={{ fontSize: "15px" }}>
+                                {data.username_user2}
+                              </List.Header>
+                            ) : (
+                              <List.Header style={{ fontSize: "15px" }}>
+                                {data.username_user1}
+                              </List.Header>
+                            )}
+                            <p style={{ fontSize: "12px", color: "#8C8C8C" }}>
+                              {data.message.length > this.state.maxlength
+                                ? data.message.substring(
+                                    0,
+                                    this.state.maxlength
+                                  ) + "..."
+                                : data.message}
+                            </p>
+                          </List.Content>
+                        </List.Item>
+                      </List>
+                    ) : (
+                      <List
+                        verticalAlign="middle"
+                        onClick={() => {
+                          this.message(data.username_user1);
+                        }}
+                      >
+                        <List.Item>
+                          <List.Content floated="right">
+                            <small>
+                              {data.date.slice(14, 16) == this.state.today
+                                ? data.date.slice(0, 5)
+                                : data.date.slice(10)}
+                            </small>
+                          </List.Content>
+                          <Image
+                            avatar
+                            src="https://react.semantic-ui.com/images/avatar/small/tom.jpg"
+                            style={{ width: "12%", height: "12%" }}
+                          />
+                          <List.Content>
+                            {data.username_user1 ===
+                            this.state.username_user1 ? (
+                              <List.Header style={{ fontSize: "15px" }}>
+                                {data.username_user2}
+                              </List.Header>
+                            ) : (
+                              <List.Header style={{ fontSize: "15px" }}>
+                                {data.username_user1}
+                              </List.Header>
+                            )}
+                            <p style={{ fontSize: "12px", color: "#8C8C8C", marginTop: "5px" }}>
+                              {data.message.length > this.state.maxlength
+                                ? data.message.substring(
+                                    0,
+                                    this.state.maxlength
+                                  ) + "..."
+                                : data.message}
+                            </p>
+                          </List.Content>
+                        </List.Item>
+                      </List>
+                    )}
                   </Grid.Column>
                 </Grid>
               );
             })}
           </Container>
         )}
-        <Button 
-          circular 
-          size='big' 
-          icon='plus'  
+        <Button
+          circular
+          size="big"
+          icon="plus"
           style={{
             float: "right",
             zIndex: 1,
@@ -219,9 +315,12 @@ export default class Index extends Component {
             bottom: 70,
             right: 5,
             background: "#5b90f6",
-            color: "white" 
-          }} 
-          onClick={() => {this.newmessage()}} />                  
+            color: "white"
+          }}
+          onClick={() => {
+            this.newmessage();
+          }}
+        />
         <MenuProfile />
       </div>
     );

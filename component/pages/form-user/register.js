@@ -208,7 +208,7 @@ export default class Register extends Component {
           </Grid>
           <Divider />
           <Segment textAlign="center">
-            <i>app version 1.5</i>
+            <i>app version 2.0</i>
           </Segment>
         </Container>
       </div>
