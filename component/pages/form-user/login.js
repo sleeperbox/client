@@ -213,7 +213,7 @@ export default class Register extends Component {
             </Grid.Column>
           </Grid>
           <Segment textAlign="center">
-            <i>app version 2.0</i>
+            <i>app version 2.7</i>
           </Segment>
         </Container>
       </div>
