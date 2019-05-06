@@ -300,7 +300,7 @@ export default class Posts extends Component {
                   height: "50px"
                 }}
                 onChange={this.handleChange}
-                placeholder=' write a comment..'
+                placeholder=' Write a comment..'
                 required
               />
               <Button
