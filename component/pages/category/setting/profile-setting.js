@@ -153,22 +153,6 @@ export default class ProfileSetting extends Component {
 
   update() {
     event.preventDefault();
-    var data = {
-      email: this.state.email,
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      phone_number: this.state.phone_number,
-      gender: this.state.gender,
-      tags: this.state.log
-    };
-    var data2 = {
-      email: this.state.email,
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      phone_number: this.state.phone_number,
-      gender: this.state.gender,
-      tags: this.state.tags
-    };
     if (this.state.kode == 1) {
       this.setState({ kode: 0 });
     } else {
@@ -182,24 +166,41 @@ export default class ProfileSetting extends Component {
       this.state.log != 0
     ) {
       if (this.state.log.length == 0) {
-        fetch("http://apps.aprizal.com/api/user/tags", {
-          method: "PUT",
+        axios({
+          method: "put",
+          url: "http://apps.aprizal.com/api/user/updates",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
             Accept: "application/json"
           },
-          body: JSON.stringify(data2)
+          data: {
+            email: this.state.email,
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            phone_number: this.state.phone_number,
+            gender: this.state.gender,
+            tags: this.state.tags
+          }
         }).then(window.location.reload());
-      } else {
-        fetch("http://apps.aprizal.com/api/user/tags", {
-          method: "PUT",
+      } else 
+      {
+        axios({
+          method: "put",
+          url: "http://apps.aprizal.com/api/user/updates",
           headers: {
             "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
             Accept: "application/json"
           },
-          body: JSON.stringify(data)
+          data: {
+            email: this.state.email,
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            phone_number: this.state.phone_number,
+            gender: this.state.gender,
+            tags: this.state.log
+          }
         }).then(window.location.reload());
       }
     } else {

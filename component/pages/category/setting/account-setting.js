@@ -71,17 +71,17 @@ export default class AccountSetting extends Component {
 
   delete() {
     event.preventDefault();
-    var data = {
+    var datas = {
       email: this.state.email
     };
-    fetch("http://apps.aprizal.com/api/user/delete", {
+    axios("http://apps.aprizal.com/api/user/delete", {
       method: "DELETE",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
-      body: JSON.stringify(data)
+      data: datas
     }).then(
       localStorage.removeItem("email"),
       localStorage.removeItem("auth"),
@@ -92,19 +92,19 @@ export default class AccountSetting extends Component {
 
   ubahPassword() {
     event.preventDefault();
-    var data = {
+    var datas2 = {
       email: this.state.email,
       password_lama: this.state.password_lama,
       password_baru: this.state.password_baru
     };
-    fetch("http://apps.aprizal.comapi/user/ubahpassword", {
+    axios("http://apps.aprizal.com/api/user/ubahpassword", {
       method: "PUT",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
-      body: JSON.stringify(data)
+      data: datas2
     }).then(this.setState({ modalOpenPassword: false }));
   }
   handlePost(event) {
