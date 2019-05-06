@@ -52,7 +52,19 @@ export default class MoreCategory extends Component {
         total_influence: result.data.total_friends,
         total_thank: result.data.total_thanks
       })
-    );
+    )
+    axios({
+      method: "post",
+      url: "http://apps.aprizal.com/api/user/rank",
+      headers: {
+        "Acces-Control-Allow-Origin": true,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email
+      }
+    }).then(result => this.setState({ rank: result.data[0].rank + 1}));
   }
 
   getReputationName() {

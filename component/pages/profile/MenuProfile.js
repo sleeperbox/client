@@ -86,7 +86,7 @@ export default class MenuProfile extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ message: result.data, messageCount: result.data.length }));
+    }).then(result => this.setState({ messageCount: result.data }));
 
     axios({
       method: "get",
