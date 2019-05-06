@@ -6,8 +6,6 @@ import {
   Form,
   Container,
   Grid,
-  Label,
-  Flag,
   Divider,
   Header,
   Icon,
@@ -50,12 +48,10 @@ export default class Register extends Component {
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {}
-
   componentDidUpdate(prevProps, prevState) {
     const { isLogin } = this.state;
     if (isLogin === true) {
-      localStorage.setItem("email", store.getState().form.email);
+      localStorage.setItem("email", store.getState().form.email.toString().toLowerCase());
       localStorage.setItem("auth", this.state.isLogin);
       window.location = "#/profile";
     }
@@ -102,10 +98,10 @@ export default class Register extends Component {
         Accept: "application/json"
       },
       data: {
-        email: store.getState().form.email,
-        username: store.getState().form.username,
-        first_name: store.getState().form.first_name,
-        last_name: store.getState().form.last_name,
+        email: store.getState().form.email.toString().toLowerCase(),
+        username: store.getState().form.username.toString().toLowerCase(),
+        first_name: store.getState().form.first_name.toString().toLowerCase(),
+        last_name: store.getState().form.last_name.toString().toLowerCase(),
         password: store.getState().form.password
       }
     }).then(result =>
@@ -121,9 +117,6 @@ export default class Register extends Component {
     const { warning } = this.state;
     const areaRegisterButtonResponsive = {
       padding: "1%"
-    };
-    const registerButtonResponsive = {
-      width: "47%"
     };
     return (
       <div>
@@ -208,7 +201,7 @@ export default class Register extends Component {
           </Grid>
           <Divider />
           <Segment textAlign="center">
-            <i>app version 2.0</i>
+            <i>app version 2.7</i>
           </Segment>
         </Container>
       </div>

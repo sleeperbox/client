@@ -27,6 +27,7 @@ export default class allPeople extends Component {
       isLogin: localStorage.getItem("auth"),
       friendship: [],
       isLoading: true,
+      isFetching: true,
       email_friend: "",
       open: false,
       fotos: "",
@@ -129,7 +130,7 @@ export default class allPeople extends Component {
           email: value
         } // This is the body part
       }).then(result => 
-          this.setState({ fotos: result.data })
+          this.setState({ fotos: result.data, isFetching: false  })
         )
     );
 
@@ -148,7 +149,8 @@ export default class allPeople extends Component {
       this.setState({
         friendship: result.data,
         total_influence: result.data.total_friends,
-        total_thank: result.data.total_thanks
+        total_thank: result.data.total_thanks,
+        isFetching: false
       })
     );
 
@@ -163,7 +165,12 @@ export default class allPeople extends Component {
       data: {
         email: value
       }
-    }).then(result => this.setState({ rank: result.data[0].rank + 1 }));
+    }).then(result => this.setState({ rank: result.data[0].rank + 1, isFetching: false }));
+  }
+
+  close(){
+    sessionStorage.removeItem("username")
+    this.setState({ open: false, email_friend: "", rank: null, isFetching: true, total_influence: null, total_thank: null,fotos: null })
   }
 
   generateSkeleton() {
@@ -244,25 +251,21 @@ export default class allPeople extends Component {
         <Header.Content>
           <Statistic>
             <Statistic.Label>
-              <i>Nobody Here...</i>
+              <i style={{color: "#777"}}>Nobody Here...</i>
             </Statistic.Label>
           </Statistic>
         </Header.Content>
       </Header>
     </div>
     );
-  }
-
-  close = () =>
-    this.setState({ open: false, email_friend: "", friendship: [] }, () =>
-      sessionStorage.removeItem("username")
-    );
+  }    
 
   render() {
     const {
       datas,
       isLoading,
       friendship,
+      isFetching,
       open,
       dimmer,
       fotos,
@@ -277,6 +280,7 @@ export default class allPeople extends Component {
       marginLeft: "1em",
       marginRight: "1em"
     };
+    
     return (
       <div style={{ marginBottom: 45 }}>
         <Input
@@ -330,14 +334,16 @@ export default class allPeople extends Component {
             <Modal
               dimmer={dimmer}
               open={open}
-              onClose={this.close}
+              onClose={() => this.close()}
               basic
               closeIcon
               size="small"
             >
               <Modal.Header style={{ marginLeft: "14px" }}>
                 <center>
-                  <Image
+                  {isFetching ? <Skeleton/> : (
+                    <div>
+                    <Image
                     style={{
                       height: "210px",
                       width: "210px"
@@ -347,12 +353,18 @@ export default class allPeople extends Component {
                       "http://aprizal.com/public/avatar/" + fotos
                     }
                   />
+                   {isFetching ? <Skeleton/> : (
                   <Header style={{ color: "white" }}>
-                    {"@" + friendship.username}
+                      {"@" + friendship.username} 
                   </Header>
+                   )}
+                  </div>
+                  )}
+                  
                 </center>
               </Modal.Header>
               <Modal.Content>
+              {isFetching ? <center><Skeleton/><br/><Skeleton/></center> : (
                 <center>
                   <Image src={reputationIcon} size="mini" circular/>
                   <p style={{ fontSize: "14px", textTransform: "uppercase"}}>
@@ -363,6 +375,7 @@ export default class allPeople extends Component {
                     <Statistic.Label>User Rank</Statistic.Label>
                   </Statistic>
                 </center>
+              )}
               </Modal.Content>
               <Modal.Actions>
                 <Grid>
