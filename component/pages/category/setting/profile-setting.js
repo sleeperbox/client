@@ -180,9 +180,9 @@ export default class ProfileSetting extends Component {
             last_name: this.state.last_name,
             phone_number: this.state.phone_number,
             gender: this.state.gender,
-            tags: this.state.tags
+            tags: this.state.tags.toLocaleString()
           }
-        }).then(window.location.reload());
+        }).then(console.log(this.state));
       } else 
       {
         axios({
@@ -199,9 +199,9 @@ export default class ProfileSetting extends Component {
             last_name: this.state.last_name,
             phone_number: this.state.phone_number,
             gender: this.state.gender,
-            tags: this.state.log
+            tags: this.state.log.toLocaleString()
           }
-        }).then(window.location.reload());
+        }).then(console.log(this.state));
       }
     } else {
       this.setState({ kode: 1 });
