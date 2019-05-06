@@ -182,7 +182,7 @@ export default class ProfileSetting extends Component {
             gender: this.state.gender,
             tags: this.state.tags.toLocaleString()
           }
-        }).then(console.log(this.state));
+        }).then(window.location.reload());
       } else 
       {
         axios({
@@ -201,7 +201,7 @@ export default class ProfileSetting extends Component {
             gender: this.state.gender,
             tags: this.state.log.toLocaleString()
           }
-        }).then(console.log(this.state));
+        }).then(window.location.reload());
       }
     } else {
       this.setState({ kode: 1 });
