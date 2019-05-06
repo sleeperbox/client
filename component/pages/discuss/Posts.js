@@ -123,7 +123,9 @@ export default class Posts extends Component {
         comment: this.state.comment,
         status: "publish"
       }
-    }).then(window.location.reload());
+    }).then((a) => {
+      window.location.reload()
+    })
   }
 
   delete() {

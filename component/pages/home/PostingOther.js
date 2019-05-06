@@ -9,7 +9,8 @@ import {
   List,
   Popup,
   GridRow,
-  Image
+  Image,
+  Header
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -176,10 +177,17 @@ export default class PostingOther extends Component {
       <div style={{minHeight: "465px"}}>
       {isLoading ? (
         this.generateSkeleton()
-      ) : posting.length === 0 ? <center> <div style={{marginTop: 75}}>
-      <Image src={crying} size="small"/>
+      ) : posting.length === 0 ? <center>
+      <div style={{marginTop: 125}}>
+      <Header as="h2" icon textAlign="center">
+            <Icon name="wordpress forms" />
+            No Post
+            <Header.Subheader>
+            <i>Make It Now For This Category</i>
+            </Header.Subheader>
+          </Header>
       </div>
-      <h4 style={{color: "#999"}}>0 POST ...</h4></center>: (
+    </center> : (
          <div>
               {posting.map((data, index) => {
                 return (
