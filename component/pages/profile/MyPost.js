@@ -496,7 +496,7 @@ export default class MyPost extends Component {
                                     </Modal>
                                   </Grid.Column>
                                   <Grid.Column style={{ marginLeft: -100 }}>
-                                    {/* delete */}
+                                    {/* update */}
                                     <Modal
                                       trigger={
                                         <Label

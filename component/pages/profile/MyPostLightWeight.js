@@ -13,13 +13,13 @@ import {
   GridRow,
   Modal,
   Label,
-  Button
-
+  Button,
+  Form
 } from "semantic-ui-react";
 
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
-import "./Hex.css"
+import "./Hex.css";
 
 export default class MyPostLightWeight extends Component {
   constructor(props) {
@@ -53,6 +53,7 @@ export default class MyPostLightWeight extends Component {
       modalupdate: false,
       modalDiscuss: false,
       content: "",
+      pictcontent: "",
       preview: null
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
@@ -68,7 +69,7 @@ export default class MyPostLightWeight extends Component {
   handleCloseUpdate = () =>
     this.setState({ modalupdate: false, preview: null });
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     axios({
@@ -162,11 +163,12 @@ export default class MyPostLightWeight extends Component {
       },
       data: {
         email: this.state.email,
-        _id: value,
+        _id: value
       }
-    }).then(this.setState({ modal: false, thanks: 1, }, () => window.location.reload()));
+    }).then(
+      this.setState({ modal: false, thanks: 1 }, () => window.location.reload())
+    );
   }
-
 
   handleOpen(value, postid) {
     this.setState({ modal: true, id: value, post: postid });
@@ -189,9 +191,10 @@ export default class MyPostLightWeight extends Component {
       this.setState({
         modalupdate: true,
         contents: result.data,
+        pictcontent : result.data.fotocontent,
         content: result.data.content,
         tags: result.data.tags
-      })
+      }, ()=>console.log(result.data))
     );
   }
 
@@ -212,8 +215,6 @@ export default class MyPostLightWeight extends Component {
       }
     }).then(this.setState({ modalupdate: false, thanks: 1 }));
   }
-
-
 
   generateSkeleton() {
     return (
@@ -319,145 +320,245 @@ export default class MyPostLightWeight extends Component {
             <Divider hidden />
           </Container>
         ) : (
-              <div style={{ marginTop: -30, marginBottom: 50 }}>
-                <Segment basic>
-                  {posting.map((data, index) => {
-                    return (
-                      <Grid columns={1} key={data._id} style={gridMargin}>
-                        <GridColumn>
-                          <GridRow>
-                            {/* delete */}
-                            <Modal
-                              trigger={<Label onClick={this.handleOpen} style={{ color: "black", border: "1", float: "right", background: "transparent", marginTop: -8, marginRight: -22 }}><Icon name="trash alternate outline" size="large" /></Label>}
-                              open={this.state.modal}
-                              onClose={this.handleClose}
-                              basic
+          <div style={{ marginTop: -30, marginBottom: 50 }}>
+            <Segment basic>
+              {posting.map((data, index) => {
+                return (
+                  <Grid columns={1} key={data._id} style={gridMargin}>
+                    <GridColumn>
+                      <GridRow>
+                        {/* delete */}
+                        <Modal
+                          trigger={
+                            <Label
+                              onClick={this.handleOpen}
+                              style={{
+                                color: "black",
+                                border: "1",
+                                float: "right",
+                                background: "transparent",
+                                marginTop: -8,
+                                marginRight: -22
+                              }}
                             >
-                              <Header icon="trash alternate outline" size="large" content="Delete Posting!" />
-                              <Modal.Content>
-                                <p>Are You Sure?</p>
-                              </Modal.Content>
-                              <Modal.Actions>
-                                <Button inverted onClick={() => this.delete(data._id)}>
-                                  <Icon name="checkmark" /> Yes
-                                        </Button>
-                                <Button onClick={this.handleClose} inverted>
-                                  <Icon name="remove" /> No
-                                        </Button>
-                              </Modal.Actions>
-                            </Modal>
-                            <List style={listMargin}>
-                              <List.Item>
-                                <List.Content>
-                                  <List.Header as="a">
-                                    <small>
-                                      {data.tags === "null" ? (
-                                        <Image
-                                          src="http://aprizal.com/public/icon/icon/kategori.png"
-                                          width="7%"
-                                          style={{ float: "left" }}
-                                        />
-                                      ) : data.tags === "computer-gadget" ? (
-                                        <Image
-                                          src="http://aprizal.com/public/icon/icon/komp.png"
-                                          width="7%"
-                                          style={{ float: "left" }}
-                                        />
-                                      ) : data.tags === "family-love" ? (
-                                        <Image
-                                          src="http://aprizal.com/public/icon/icon/family.png"
-                                          width="7%"
-                                          style={{ float: "left" }}
-                                        />
-                                      ) : data.tags === "fact-rumour" ? (
-                                        <Image
-                                          src="http://aprizal.com/public/icon/icon/f&r.png"
-                                          width="7%"
-                                          style={{ float: "left" }}
-                                        />
-                                      ) : data.tags === "business-work" ? (
-                                        <Image
-                                          src="http://aprizal.com/public/icon/icon/bisnis.png"
-                                          width="7%"
-                                          style={{ float: "left" }}
-                                        />
-                                      ) : data.tags === "fashion-lifestyle" ? (
-                                        <Image
-                                          src="http://aprizal.com/public/icon/icon/fashion.png"
-                                          width="7%"
-                                          style={{ float: "left" }}
-                                        />
-                                      ) : data.tags === "quotes" ? (
-                                        <Image
-                                          src="http://aprizal.com/public/icon/icon/quotes.png"
-                                          width="7%"
-                                          style={{ float: "left" }}
-                                        />
-                                      ) : data.tags === "other" ? (
-                                        <Image
-                                          src="http://aprizal.com/public/icon/icon/other.png"
-                                          width="7%"
-                                          style={{ float: "left" }}
-                                        />
-                                      ) : data.tags === "riddles" ? (
-                                        <Image
-                                          src="http://aprizal.com/public/icon/icon/riddle.png"
-                                          width="7%"
-                                          style={{ float: "left" }}
-                                        />
-                                      ) : null}
-                                    </small>
-                                    <small>
-                                      <i style={textMargin}>{data.tags}</i>
-                                    </small>
-                                  </List.Header>
-                                  <br />
-                                  <List.Description>
-                                    {data.fotocontent !== null ?
-                                      <Image
-                                        src={"http://aprizal.com/public/posting/foto/" + data.fotocontent}
-                                        size="large" /> : null}
-                                    <br />
-                                    <b>{data.content}</b>
-                                    <br />
-                                    <br />
-                                    <Popup
-                                      trigger={
-                                        <Icon
-                                          name="handshake outline"
-                                          onClick={() => this.givethanks(data._id, data.username)}
-                                        />}>{this.state.kode == 1 ? "Anda Telah Thanks"
-                                          : "Anda Telah UnThanks"}
-                                    </Popup>
-                                    <small>
-                                      <i>{data.thanks} Thanks </i>
-                                    </small>
-                                    <br />
-                                    <br />
-                                    <a onClick={() => this.discuss(data.id_posts)}>comment</a>
-                                    <small style={{ float: "right" }}>
-                                      <i>
-                                        {
-                                          data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? "Now"
-                                            : this.state.menit - data.menit + " m ago" : this.state.jam - data.jam + " h ago" : data.date.slice(4, -5) : data.date.slice(4)
-                                        }
-                                      </i>
-                                    </small>
-                                  </List.Description>
-                                </List.Content>
-                              </List.Item>
-                            </List>
-                          </GridRow>
-                          <Divider fitted />
-                        </GridColumn>
-                        <Divider hidden />
-                      </Grid>
-                    );
-                  })}
-                  <Divider hidden />
-                </Segment>
-              </div>
-            )}
+                              <Icon
+                                name="trash alternate outline"
+                                size="large"
+                              />
+                            </Label>
+                          }
+                          open={this.state.modal}
+                          onClose={this.handleClose}
+                          basic
+                        >
+                          <Header
+                            icon="trash alternate outline"
+                            size="large"
+                            content="Delete Posting!"
+                          />
+                          <Modal.Content>
+                            <p>Are You Sure?</p>
+                          </Modal.Content>
+                          <Modal.Actions>
+                            <Button
+                              inverted
+                              onClick={() => this.delete(data._id)}
+                            >
+                              <Icon name="checkmark" /> Yes
+                            </Button>
+                            <Button onClick={this.handleClose} inverted>
+                              <Icon name="remove" /> No
+                            </Button>
+                          </Modal.Actions>
+                        </Modal>
+                        <Modal
+                          trigger={
+                            <Label
+                              onClick={() => this.handleOpenUpdate(data._id)}
+                              style={{
+                                color: "black",
+                                border: "1",
+                                float: "right",
+                                background: "transparent",
+                                marginTop: -8,
+                                marginRight: -24
+                              }}
+                            >
+                              <Icon name="edit" size="large" />
+                            </Label>
+                          }
+                          open={this.state.modalupdate}
+                          onClose={this.handleCloseUpdate}
+                        >
+                          <Header content="Edit Posting" />
+                          <Modal.Content>
+                            <Image
+                              src={
+                                "http://aprizal.com/public/posting/foto/" +
+                                this.state.pictcontent
+                              }
+                            />
+                            <Form>
+                              <textarea
+                                maxLength={250}
+                                name="content"
+                                onChange={this.handlePost}
+                                style={{ border: "none" }}
+                              >
+                                {this.state.content}
+                              </textarea>
+                            </Form>
+                          </Modal.Content>
+                          <Modal.Actions>
+                            <Button onClick={this.handleCloseUpdate}>
+                              <Icon name="remove" /> No
+                            </Button>
+                            <Button primary onClick={() => this.update()}>
+                              <Icon name="checkmark" /> Edit
+                            </Button>
+                          </Modal.Actions>
+                        </Modal>
+                        <List style={listMargin}>
+                          <List.Item>
+                            <List.Content>
+                              <List.Header as="a">
+                                <small>
+                                  {data.tags === "null" ? (
+                                    <Image
+                                      src="http://aprizal.com/public/icon/icon/kategori.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "computer-gadget" ? (
+                                    <Image
+                                      src="http://aprizal.com/public/icon/icon/komp.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "family-love" ? (
+                                    <Image
+                                      src="http://aprizal.com/public/icon/icon/family.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "fact-rumour" ? (
+                                    <Image
+                                      src="http://aprizal.com/public/icon/icon/f&r.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "business-work" ? (
+                                    <Image
+                                      src="http://aprizal.com/public/icon/icon/bisnis.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "fashion-lifestyle" ? (
+                                    <Image
+                                      src="http://aprizal.com/public/icon/icon/fashion.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "quotes" ? (
+                                    <Image
+                                      src="http://aprizal.com/public/icon/icon/quotes.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "other" ? (
+                                    <Image
+                                      src="http://aprizal.com/public/icon/icon/other.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "riddles" ? (
+                                    <Image
+                                      src="http://aprizal.com/public/icon/icon/riddle.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : null}
+                                </small>
+                                <small>
+                                  <i style={textMargin}>{data.tags}</i>
+                                </small>
+                              </List.Header>
+                              <br />
+                              <List.Description>
+                                {data.fotocontent !== null ? (
+                                  <Image
+                                    src={
+                                      "http://aprizal.com/public/posting/foto/" +
+                                      data.fotocontent
+                                    }
+                                    size="large"
+                                  />
+                                ) : null}
+                                <br />
+                                <b>{data.username}</b> {data.content}
+                                <br />
+                                <br />
+                                <Popup
+                                  trigger={
+                                    <Icon
+                                      name="handshake outline"
+                                      onClick={() =>
+                                        this.givethanks(data._id, data.username)
+                                      }
+                                    />
+                                  }
+                                >
+                                  {this.state.kode == 1
+                                    ? "Anda Telah Thanks"
+                                    : "Anda Telah UnThanks"}
+                                </Popup>
+                                <small>
+                                  <i>{data.thanks} Thanks </i>
+                                </small>
+                                <br />
+                                <br />
+                                <p
+                                  style={{
+                                    fontSize: "13px",
+                                    float: "left"
+                                  }}
+                                  onClick={() => this.discuss(data.id_posts)}
+                                >
+                                  View all <b>{data.comment}</b> comments
+                                </p>
+                                <small
+                                  style={{ float: "right", marginRight: "4px" }}
+                                >
+                                  <i>
+                                    {data.date.slice(11) == this.state.year
+                                      ? data.date.slice(4, -5) ==
+                                        this.state.datemonth
+                                        ? data.jam == this.state.jam
+                                          ? data.menit == this.state.menit
+                                            ? "Now"
+                                            : this.state.menit -
+                                              data.menit +
+                                              " m ago"
+                                          : this.state.jam - data.jam + " h ago"
+                                        : data.date.slice(4, -5)
+                                      : data.date.slice(4)}
+                                  </i>
+                                </small>
+                              </List.Description>
+                            </List.Content>
+                          </List.Item>
+                        </List>
+                      </GridRow>
+                      <Divider fitted />
+                    </GridColumn>
+                    <Divider hidden />
+                  </Grid>
+                );
+              })}
+              <Divider hidden />
+            </Segment>
+          </div>
+        )}
       </div>
     );
   }
