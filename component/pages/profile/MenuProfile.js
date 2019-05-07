@@ -303,18 +303,18 @@ export default class MenuProfile extends Component {
               </Menu.Item>
 
               <Menu.Item name="message" onClick={() => this.handleMenu("message")}>
-                {menu === "message" ? <Icon name="comment alternate" style={{ color: "#5b90f6" }} size="large" ></Icon> :  (
-                messageCount === 0 || messageCount == null ? (
-                  <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ></Icon>
-                )
-                : 
-                <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
-                {messageCount}
-              </Label></Icon>
+                {menu === "message" ? <Icon name="comment alternate" style={{ color: "#5b90f6" }} size="large" ></Icon> : (
+                  messageCount === 0 || messageCount == null ? (
+                    <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ></Icon>
+                  )
+                    :
+                    <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
+                      {messageCount}
+                    </Label></Icon>
                 )}
               </Menu.Item>
 
-              <Menu.Item name="post"  onClick={() => this.handleMenu("posting")}>
+              <Menu.Item name="post" onClick={() => this.handleMenu("posting")}>
                 &nbsp;
                 <div>
                   <Icon name="plus square outline" size="large" style={{ color: "#555" }} />
@@ -340,62 +340,17 @@ export default class MenuProfile extends Component {
               </Menu.Item>
 
               <Menu.Item name="profile" onClick={() => this.handleMenu("profile")}>
-              {this.state.lazyImage ? <Skeleton width="30px" borderRadius="120px" height="30px" color="#999" /> : (
-                <Image
-                size="small"
-                circular
-                src={"http://aprizal.com/public/avatar/" + this.state.foto}
-                style={{ width: "30px", height: "30px" }}
-                />
-              )}
+                {this.state.lazyImage ? <Skeleton width="30px" borderRadius="120px" height="30px" color="#999" /> : (
+                  <Image
+                    size="small"
+                    circular
+                    src={"http://aprizal.com/public/avatar/" + this.state.foto}
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                )}
               </Menu.Item>
             </Menu>
           )}
-        <Modal dimmer={dimmer} size="large" open={open} onClose={this.close}>
-          <Modal.Content>
-            <Modal.Description>
-              {this.state.tag == 1 ?
-                <i><Message error icon="warning circle" header='Anda Belum Memilih Tag' size="mini" /></i>
-                : this.state.post == 1 ?
-                  <i><Message icon="warning circle" error header='Konten Tidak Boleh Kosong' size="mini" /></i> : null}
-              <Header as="h5">This will be great for your Followers</Header>
-              <Form>
-                <TextArea maxLength={250} name="content" onChange={this.handlePost} autoHeight placeholder="What happen..." />
-                <br />
-                <div className="input-file-container">
-                  <input className="input-file" id="my-file" type="file" onChange={this.fileHandler} />
-                  <Icon bordered name='attach' size='large' htmlFor="my-file" />
-                  <br /> {this.state.foto_posting === null ? null : this.state.foto_posting !== null ? this.state.posting : null}
-                  {this.state.foto_posting === null ? null : this.state.foto_posting !== null ? <Image
-                    src={this.state.preview}
-                    size="tiny"
-                  /> : null}
-                </div>
-              </Form>
-            </Modal.Description>
-          </Modal.Content>
-          <Modal.Actions>
-            <span style={postSize}>
-              {
-                <Dropdown
-                  search
-                  onChange={this.setValue.bind(this)}
-                  options={options}
-                  selection
-                  value={value}
-                />
-              }
-            </span>
-            <Button
-              secondary
-              icon="checkmark"
-              labelPosition="right"
-              content="Post"
-              style={{ background: "#5b90f6" }}
-              onClick={this.publish.bind(this)}
-            />
-          </Modal.Actions>
-        </Modal>
       </div>
     );
   }
