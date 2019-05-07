@@ -260,10 +260,16 @@ export default class PostingOther extends Component {
                                 </small>
                                 <br />
                                 <br />
-                                <a onClick={() => this.discuss(data.id_posts)}>
-                                  {data.comment} comment
-                                </a>
-                                <small style={{ float: "right" }}>
+                                <p
+                                  style={{
+                                    fontSize: "13px",
+                                    float:"left",
+                                  }}
+                                  onClick={() => this.discuss(data.id_posts)}
+                                >
+                                  View all <b>{data.comment}</b> comments
+                                </p>
+                                <small style={{ float: "right", marginTop: "2.1px"}}>
                                   <i>
                                     {data.date.slice(11) == this.state.year
                                       ? data.date.slice(4, -5) ==
