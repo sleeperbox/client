@@ -10,6 +10,7 @@ export default class DetailProfile extends Component {
       username: sessionStorage.getItem("username"),
       profile: [],
       rank: null,
+      point: null,
       temp_total: null
     };
     this.gotoInfluenceList = this.gotoInfluenceList.bind(this);
@@ -56,7 +57,17 @@ export default class DetailProfile extends Component {
             Accept: "application/json"
           },
           data: stat
-        }).then(result => this.setState( {rank : result.data[0].rank+1}));
+        }).then(result => this.setState( {rank : result.data.rank}));
+        axios({
+          method: "post",
+          url: "http://apps.aprizal.com/api/user/point",
+          headers: {
+            "Acces-Control-Allow-Origin": true,
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          data: stat
+        }).then(result => this.setState({ point: result.data.total_score}));
       })
     );
   }
@@ -106,13 +117,13 @@ export default class DetailProfile extends Component {
                       <p style={smallFont}>
                         Follower{" "}
                         <a onClick={this.gotoInfluenceList} style={toRight}>
-                          <u style={{ color: "blue" }}>{temp_total}</u>
+                          <u style={{ color: "blue" }}>{data.total_friends}</u>
                         </a>
                       </p>
                       <p style={smallFont}>
-                        Award{" "}
+                        Point{" "}
                         <span style={toRight}>
-                          <u style={{ color: "blue" }}>{data.awards}</u>
+                          <u style={{ color: "blue" }}>{this.state.point}</u>
                         </span>
                       </p>
                       <p style={smallFont}>

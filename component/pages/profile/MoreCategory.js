@@ -28,7 +28,8 @@ export default class MoreCategory extends Component {
       total_influence: null,
       total_thank: null,
       email: localStorage.getItem("email"),
-      rank: null
+      rank: null,
+      point: null
     };
     this.handleMenu = this.handleMenu.bind(this);
     this.generateSkeleton = this.generateSkeleton.bind(this);
@@ -55,7 +56,7 @@ export default class MoreCategory extends Component {
     )
     axios({
       method: "post",
-      url: "http://apps.aprizal.com/api/user/rank",
+      url: "http://apps.aprizal.com/api/rank",
       headers: {
         "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
@@ -64,7 +65,7 @@ export default class MoreCategory extends Component {
       data: {
         email: this.state.email
       }
-    }).then(result => this.setState({ rank: result.data[0].rank + 1}));
+    })
   }
 
   getReputationName() {
@@ -119,6 +120,30 @@ export default class MoreCategory extends Component {
     if (this.state.email) {
       this.setState({ isLoading: false });
     }
+    axios({
+      method: "post",
+      url: "http://apps.aprizal.com/api/user/rank",
+      headers: {
+        "Acces-Control-Allow-Origin": true,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email
+      }
+    }).then(result => this.setState({ rank: result.data.rank}))
+    axios({
+      method: "post",
+      url: "http://apps.aprizal.com/api/user/point",
+      headers: {
+        "Acces-Control-Allow-Origin": true,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email
+      }
+    }).then(result => this.setState({ point: result.data.total_score}));
   }
 
   handleMenu(category) {
@@ -159,7 +184,7 @@ export default class MoreCategory extends Component {
 
             <Grid.Column style={{textAlign: "center"}}>
               <Statistic color="olive" style={{textAlign: "center", color: "white"}}>
-                <Statistic.Value>{this.getReputationPoint()}</Statistic.Value>
+                <Statistic.Value>{this.state.point}</Statistic.Value>
                 <Statistic.Label style={{ color: "white"}}>Point</Statistic.Label>
               </Statistic>
             </Grid.Column>

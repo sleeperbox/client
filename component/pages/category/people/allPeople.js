@@ -165,7 +165,7 @@ export default class allPeople extends Component {
       data: {
         email: value
       }
-    }).then(result => this.setState({ rank: result.data[0].rank + 1, isFetching: false }));
+    }).then(result => this.setState({ rank: result.data.rank, isFetching: false }));
   }
 
   close(){
