@@ -182,7 +182,11 @@ export default class ProfileSetting extends Component {
             gender: this.state.gender,
             tags: this.state.tags.toLocaleString()
           }
-        }).then(window.location.reload());
+        }).then(
+          setTimeout(() =>  {
+            this.setState({kode: 0})
+            }, 2000)
+        );
       } else 
       {
         axios({
@@ -201,7 +205,11 @@ export default class ProfileSetting extends Component {
             gender: this.state.gender,
             tags: this.state.log.toLocaleString()
           }
-        }).then(window.location.reload());
+        }).then(
+          setTimeout(() =>  {
+          this.setState({kode: 0}, () => window.location.reload())
+          }, 2000)
+      );
       }
     } else {
       this.setState({ kode: 1 });
@@ -527,15 +535,14 @@ export default class ProfileSetting extends Component {
               >
                 {this.state.kode === 1 ? (
                   <Header
-                    style={{ textAlign: "center" }}
-                    content="No Updated !"
-                  />
+                  style={{ textAlign: "center" }}
+                >Nothing Was Changing<br/><small>tap anywhere to close...</small></Header>
                 ) : (
                   <Header
                     style={{ textAlign: "center" }}
-                    content="Account Updated !"
-                  />
-                )}
+                  >Account Updated<br/><small>tap anywhere to close...</small></Header>
+                )
+                }
               </Modal>
             </Form.Field>
           </Form>
