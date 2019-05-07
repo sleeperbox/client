@@ -66,7 +66,7 @@ export default class Index extends Component {
             {loading ? (this.loading()) : loading ? this.generateSkeleton() :
             <Container>
                 <Header as="h2" textAlign="center" style={{marginTop: 25}}>
-                    <i>More People, More Influencer</i>            
+                    <i>More People, More Follower</i>            
                 </Header>
                 <Divider/>
             </Container>

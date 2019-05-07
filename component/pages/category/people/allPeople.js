@@ -174,41 +174,90 @@ export default class allPeople extends Component {
   }
 
   generateSkeleton() {
-    const { datas } = this.state;
+    const marginLayer = {
+      marginLeft: "2px",
+      marginRight: "2px"
+    };
+
     return (
       <div style={{ marginBottom: 45 }}>
         <Container>
-          <Divider hidden />
-          <Skeleton width="100%">
-            <Header as="h2" textAlign="center" />
-          </Skeleton>
-          <Divider />
-          {datas.map(data => {
-            return (
-              <Grid columns={2} key={data._id}>
-                <Grid.Column>
-                  <List verticalAlign="middle">
-                    <List.Item>
-                      <List.Content>
-                        <List.Header>
-                          <Skeleton />
-                        </List.Header>
-                        <p>
-                          <Skeleton />
-                        </p>
-                      </List.Content>
-                    </List.Item>
-                  </List>
-                </Grid.Column>
+          <Grid columns={2}style={marginLayer}>
+            <Grid.Column>
+              <List>
+                <List.Item>
+                  <Image>
+                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                  </Image>
+                  <List.Content>
+                    <List.Header>
+                      <p><Skeleton width="220px" he/></p>
+                    </List.Header>
+                    <p><Skeleton width="200px" he/></p>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Grid.Column>     
+          </Grid>
 
-                <Grid.Column verticalAlign="middle">
-                  <Skeleton />
-                </Grid.Column>
-              </Grid>
-            );
-          })}
+          <Grid columns={2} style={marginLayer}>
+            <Grid.Column>
+              <List>
+                <List.Item>
+                  <Image>
+                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                  </Image>
+                  <List.Content>
+                    <List.Header>
+                      <p><Skeleton width="220px" he/></p>
+                    </List.Header>
+                    <p><Skeleton width="200px" he/></p>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Grid.Column>     
+          </Grid>
+
+          <Grid columns={2} style={marginLayer}>
+            <Grid.Column>
+              <List>
+                <List.Item>
+                  <Image>
+                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                  </Image>
+                  <List.Content>
+                    <List.Header>
+                      <p><Skeleton width="220px" he/></p>
+                    </List.Header>
+                    <p><Skeleton width="200px" he/></p>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Grid.Column>     
+          </Grid>
+
+          <Grid columns={2} style={marginLayer}>
+            <Grid.Column>
+              <List>
+                <List.Item>
+                  <Image>
+                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                  </Image>
+                  <List.Content>
+                    <List.Header>
+                      <p><Skeleton width="220px" he/></p>
+                    </List.Header>
+                    <p><Skeleton width="200px" he/></p>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Grid.Column>     
+          </Grid>
+          
         </Container>
       </div>
+
+      
     );
   }
 
@@ -274,7 +323,8 @@ export default class allPeople extends Component {
     const reputationIcon = reputation;
     const marginLayer = {
       marginLeft: "2px",
-      marginRight: "2px"
+      marginRight: "2px",
+      fontSize: "17px"
     };
     const marginSearch = {
       marginLeft: "1em",
@@ -282,6 +332,7 @@ export default class allPeople extends Component {
     };
     
     return (
+      
       <div style={{ marginBottom: 45 }}>
         <Input
           fluid
