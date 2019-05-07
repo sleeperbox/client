@@ -12,13 +12,13 @@ import {
   Modal,
   Button,
   Popup,
-  Label
-
+  Label,
+  Form
 } from "semantic-ui-react";
 
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
-import "./Hex.css"
+import "./Hex.css";
 
 export default class MyPost extends Component {
   constructor(props) {
@@ -52,7 +52,7 @@ export default class MyPost extends Component {
       modalupdate: false,
       modalDiscuss: false,
       content: "",
-      preview: null
+      preview: null,
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.givethanks = this.givethanks.bind(this);
@@ -161,14 +161,13 @@ export default class MyPost extends Component {
       },
       data: {
         email: this.state.email,
-        _id: value,
+        _id: value
       }
-    }).then(this.setState({modal: false, thanks: 1,}));
+    }).then(this.setState({ modal: false, thanks: 1 }));
   }
 
-
   handleOpen(value, postid) {
-    this.setState({ modal: true, id: value, post: postid});
+    this.setState({ modal: true, id: value, post: postid });
   }
 
   handleOpenUpdate(value) {
@@ -211,8 +210,6 @@ export default class MyPost extends Component {
       }
     }).then(this.setState({ modalupdate: false, thanks: 1 }));
   }
-
-  
 
   generateSkeleton() {
     return (
@@ -291,12 +288,9 @@ export default class MyPost extends Component {
   };
 
   render() {
-    const { posting, isLoading, dimmer} = this.state;
+    const { posting, isLoading, dimmer } = this.state;
     const nopost = posting.length;
     // const hexagons = GridGenerator.parallelogram(-1, 2, -1, 0);
-    const gridMargin = {
-      marginBottom: "40px"
-    };
     const textMargin = {
       marginLeft: "2%"
     };
@@ -308,7 +302,7 @@ export default class MyPost extends Component {
         {isLoading ? (
           this.generateSkeleton()
         ) : nopost == 0 ? (
-          <Container style={{marginTop: 80}}>
+          <Container style={{ marginTop: 80 }}>
             <Header as="h2" icon textAlign="center">
               <Icon name="wordpress forms" />
               No Post
@@ -325,22 +319,29 @@ export default class MyPost extends Component {
           </Container>
         ) : (
           <Container>
-            <Segment basic style={{marginTop: 15}}>
-            <ul id="grid" className="clear">
-              {posting.map((data, index) => {
-                return (
+            <Segment basic style={{ marginTop: 15 }}>
+              <ul id="grid" className="clear">
+                {posting.map((data, index) => {
+                  return (
                     <li key={data._id}>
-                      <div className="hexagon">       
-                        { data.fotocontent !== null ? 
-                          (<Modal 
-                            onClose={this.close} closeIcon
-                            trigger={<Image
-                              src={"http://aprizal.com/public/posting/foto/" + data.fotocontent}
-                              className="imgzoom"
-                              style={imagePost}
-                            />}
-                            >
-                            <Header ><small>
+                      <div className="hexagon">
+                        {data.fotocontent !== null ? (
+                          <Modal
+                            onClose={this.close}
+                            closeIcon
+                            trigger={
+                              <Image
+                                src={
+                                  "http://aprizal.com/public/posting/foto/" +
+                                  data.fotocontent
+                                }
+                                className="imgzoom"
+                                style={imagePost}
+                              />
+                            }
+                          >
+                            <Header>
+                              <small>
                                 {data.tags === "null" ? (
                                   <Image
                                     src="http://aprizal.com/public/icon/icon/kategori.png"
@@ -396,90 +397,229 @@ export default class MyPost extends Component {
                                     style={{ float: "left" }}
                                   />
                                 ) : null}
-                                </small>
+                              </small>
 
-                                <small>
-                                  <i style={textMargin}>{data.tags}</i>
-                                </small></Header>
+                              <small>
+                                <i style={textMargin}>{data.tags}</i>
+                              </small>
+                            </Header>
 
-                              <Modal.Content>
-                                <Image
-                                  src={"http://aprizal.com/public/posting/foto/" + data.fotocontent}
-                                  />
-                                <Grid>
-                                  <Grid.Row columns={4}>
-                                    <Grid.Column>
-                                      {/* thanks */}
-                                      <Popup
-                                        trigger={
+                            <Modal.Content>
+                              <Image
+                                src={
+                                  "http://aprizal.com/public/posting/foto/" +
+                                  data.fotocontent
+                                }
+                              />
+                              <Grid>
+                                <Grid.Row columns={5}>
+                                  <Grid.Column>
+                                    {/* thanks */}
+                                    <Popup
+                                      trigger={
                                         <Icon
                                           name="handshake outline"
                                           size="large"
-                                          onClick={() => this.givethanks(data._id, data.username)}
+                                          onClick={() =>
+                                            this.givethanks(
+                                              data._id,
+                                              data.username
+                                            )
+                                          }
                                         />
-                                        }
-                                      >
-                                  {this.state.kode == 1
-                                    ? "Anda Telah Thanks"
-                                    : "Anda Telah UnThanks"}
-                                </Popup>
-                                    </Grid.Column>
-                                    <Grid.Column style={{marginLeft: -50}}>
-                                      {/* Coment */}                                
-                                      <Icon 
-                                        name="comment outline"
-                                        size='large'
-                                        onClick= {() => this.discuss(data.id_posts)}
-                                      />{this.state.comment}
-                                    </Grid.Column>
-                                    <Grid.Column></Grid.Column>
-                                    
-                                    <Grid.Column style={{marginLeft: 50}}>
-                                      {/* delete */}
-                                      <Modal
-                                        trigger={<Label onClick={this.handleOpen} style={{color: "black", border: "1", float: "right", background: "transparent", marginTop: -8, marginRight: -22}}><Icon name="trash alternate outline" size="large"/></Label>}
-                                        open={this.state.modal}
-                                        onClose={this.handleClose}
-                                        basic
-                                      >
-                                        <Header icon="trash alternate outline" size="large" content="Delete Posting!" />
-                                        <Modal.Content>
-                                          <p>Are You Sure?</p>
-                                        </Modal.Content>
-                                        <Modal.Actions>
-                                        <Button inverted onClick={() => this.delete(data._id)}>
+                                      }
+                                    >
+                                      {this.state.kode == 1
+                                        ? "Anda Telah Thanks"
+                                        : "Anda Telah UnThanks"}
+                                    </Popup>
+                                  </Grid.Column>
+                                  <Grid.Column style={{ marginLeft: -30 }}>
+                                    {/* Coment */}
+                                    <Icon
+                                      name="comment outline"
+                                      size="large"
+                                      onClick={() =>
+                                        this.discuss(data.id_posts)
+                                      }
+                                    />
+                                    {this.state.comment}
+                                  </Grid.Column>
+                                  <Grid.Column />
+                                  <Grid.Column style={{ marginLeft: 95 }}>
+                                    {/* delete */}
+                                    <Modal
+                                      trigger={
+                                        <Label
+                                          onClick={this.handleOpen}
+                                          style={{
+                                            color: "black",
+                                            border: "1",
+                                            float: "right",
+                                            background: "transparent",
+                                            marginTop: -8,
+                                            marginRight: -24
+                                          }}
+                                        >
+                                          <Icon
+                                            name="trash alternate outline"
+                                            size="large"
+                                          />
+                                        </Label>
+                                      }
+                                      open={this.state.modal}
+                                      onClose={this.handleClose}
+                                      basic
+                                    >
+                                      <Header
+                                        icon="trash alternate outline"
+                                        size="large"
+                                        content="Delete Posting!"
+                                      />
+                                      <Modal.Content>
+                                        <p>Are You Sure?</p>
+                                      </Modal.Content>
+                                      <Modal.Actions>
+                                        <Button
+                                          inverted
+                                          onClick={() => this.delete(data._id)}
+                                        >
                                           <Icon name="checkmark" /> Yes
                                         </Button>
-                                        <Button onClick={this.handleClose} inverted>
+                                        <Button
+                                          onClick={this.handleClose}
+                                          inverted
+                                        >
                                           <Icon name="remove" /> No
                                         </Button>
-                                        </Modal.Actions>
-                                      </Modal>
-                                    </Grid.Column>
-                                  </Grid.Row>
-                                  <Grid.Row columns={1}>
-                                    <GridColumn>
-                                      <p style={{fontSize: 15}}>{data.content} </p>
-                                      <br/>
-                                        <small style={{float: "right"}}>
-                                          <i>
-                                          {
-                                            data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? "Now" 
-                                            : this.state.menit - data.menit + " m ago"  : this.state.jam - data.jam + " h ago" : data.date.slice(4, -5) : data.date.slice(4)
+                                      </Modal.Actions>
+                                    </Modal>
+                                  </Grid.Column>
+                                  <Grid.Column style={{ marginLeft: -100 }}>
+                                    {/* delete */}
+                                    <Modal
+                                      trigger={
+                                        <Label
+                                          onClick={() =>
+                                            this.handleOpenUpdate(data._id)
                                           }
-                                          </i>
-                                        </small>
-                                        <br />
-                                        <br />
-                                 
-                                    </GridColumn>
-                                  </Grid.Row>
-                                  
-                                </Grid>                      
-                              </Modal.Content>
-                          </Modal>) : 
-                          (<Modal 
-                            onClose={this.close} closeIcon
+                                          style={{
+                                            color: "black",
+                                            border: "1",
+                                            float: "right",
+                                            background: "transparent",
+                                            marginTop: -8,
+                                            marginRight: -24
+                                          }}
+                                        >
+                                          <Icon name="edit" size="large" />
+                                        </Label>
+                                      }
+                                      open={this.state.modalupdate}
+                                      onClose={this.handleCloseUpdate}
+                                    >
+                                      <Header content="Edit Posting" />
+                                      <Modal.Content>
+                                        <Image
+                                          src={
+                                            "http://aprizal.com/public/posting/foto/" +
+                                            data.fotocontent
+                                          }
+                                        />
+                                        <Form>
+                                          <textarea
+                                            maxLength={250}
+                                            name="content"
+                                            onChange={this.handlePost}
+                                            style={{ border: "none" }}
+                                          >
+                                            {this.state.content}
+                                          </textarea>
+                                        </Form>
+                                      </Modal.Content>
+                                      <Modal.Actions>
+                                        <Button
+                                          onClick={this.handleCloseUpdate}
+                                        >
+                                          <Icon name="remove" /> No
+                                        </Button>
+                                        <Button
+                                          primary
+                                          onClick={() => this.update()}
+                                        >
+                                          <Icon name="checkmark" /> Edit
+                                        </Button>
+                                      </Modal.Actions>
+                                    </Modal>
+                                  </Grid.Column>
+                                </Grid.Row>
+                                <Grid.Row
+                                  style={{
+                                    marginTop: "-1.5em",
+                                    marginBottom: "-1.5em"
+                                  }}
+                                >
+                                  <GridColumn>
+                                    <p style={{ fontSize: "13px" }}>
+                                      <b>{data.thanks} Thanks </b>
+                                    </p>
+                                  </GridColumn>
+                                </Grid.Row>
+                                <Grid.Row columns={1}>
+                                  <GridColumn>
+                                    <p
+                                      style={{
+                                        whiteSpace: "-moz-pre-wrap",
+                                        whiteSpace: "-moz-pre-wrap !important",
+                                        whiteSpace: "pre-wrap",
+                                        whiteSpace: "-webkit-pre-wrap",
+                                        wordBreak: "break-all",
+                                        whiteSpace: "normal"
+                                      }}
+                                    >
+                                      <b>{data.username}</b> {data.content}
+                                    </p>
+                                    <p
+                                      style={{
+                                        fontSize: "13px",
+                                        float: "left"
+                                      }}
+                                      onClick={() =>
+                                        this.discuss(data.id_posts)
+                                      }
+                                    >
+                                      View all <b>{data.comment}</b> comments
+                                    </p>
+                                    <br />
+                                    <small style={{ float: "right", marginTop: "-18px" }}>
+                                      <i>
+                                        {data.date.slice(11) == this.state.year
+                                          ? data.date.slice(4, -5) ==
+                                            this.state.datemonth
+                                            ? data.jam == this.state.jam
+                                              ? data.menit == this.state.menit
+                                                ? "Now"
+                                                : this.state.menit -
+                                                  data.menit +
+                                                  " m ago"
+                                              : this.state.jam -
+                                                data.jam +
+                                                " h ago"
+                                            : data.date.slice(4, -5)
+                                          : data.date.slice(4)}
+                                      </i>
+                                    </small>
+                                    <br />
+                                    <br />
+                                  </GridColumn>
+                                </Grid.Row>
+                              </Grid>
+                            </Modal.Content>
+                          </Modal>
+                        ) : (
+                          <Modal
+                            onClose={this.close}
+                            closeIcon
                             trigger={
                               data.tags === "null" ? (
                                 <Image
@@ -493,7 +633,7 @@ export default class MyPost extends Component {
                                     height: "100%",
                                     width: "100%",
                                     background: "black"
-                                }}
+                                  }}
                                 />
                               ) : data.tags === "family-love" ? (
                                 <Image
@@ -502,7 +642,7 @@ export default class MyPost extends Component {
                                     height: "100%",
                                     width: "100%",
                                     background: "black"
-                                }}
+                                  }}
                                 />
                               ) : data.tags === "fact-rumour" ? (
                                 <Image
@@ -511,7 +651,7 @@ export default class MyPost extends Component {
                                     height: "100%",
                                     width: "100%",
                                     background: "black"
-                                }}
+                                  }}
                                 />
                               ) : data.tags === "business-work" ? (
                                 <Image
@@ -520,7 +660,7 @@ export default class MyPost extends Component {
                                     height: "100%",
                                     width: "100%",
                                     background: "black"
-                                }}
+                                  }}
                                 />
                               ) : data.tags === "fashion-lifestyle" ? (
                                 <Image
@@ -534,7 +674,7 @@ export default class MyPost extends Component {
                                     height: "100%",
                                     width: "100%",
                                     background: "black"
-                                }}
+                                  }}
                                 />
                               ) : data.tags === "other" ? (
                                 <Image
@@ -543,7 +683,7 @@ export default class MyPost extends Component {
                                     height: "100%",
                                     width: "100%",
                                     background: "black"
-                                }}
+                                  }}
                                 />
                               ) : data.tags === "riddles" ? (
                                 <Image
@@ -552,11 +692,13 @@ export default class MyPost extends Component {
                                     height: "100%",
                                     width: "100%",
                                     background: "black"
-                                }}
+                                  }}
                                 />
-                              ) : null}
-                            >
-                            <Header ><small>
+                              ) : null
+                            }
+                          >
+                            <Header>
+                              <small>
                                 {data.tags === "null" ? (
                                   <Image
                                     src="http://aprizal.com/public/icon/icon/kategori.png"
@@ -612,91 +754,139 @@ export default class MyPost extends Component {
                                     style={{ float: "left" }}
                                   />
                                 ) : null}
-                                </small>
+                              </small>
 
-                                <small>
-                                  <i style={textMargin}>{data.tags}</i>
-                                </small></Header>
+                              <small>
+                                <i style={textMargin}>{data.tags}</i>
+                              </small>
+                            </Header>
 
-                              <Modal.Content>
-                                <Grid>
+                            <Modal.Content>
+                              <Grid>
                                 <Grid.Row columns={1}>
-                                    <GridColumn>
-                                      <p style={{fontSize: 15}}>{data.content} </p>
-                                      <br/>
-                                        <small style={{float: "right"}}>
-                                          <i>
-                                          {
-                                            data.date.slice(11) == this.state.year ? data.date.slice(4, -5) == this.state.datemonth ? data.jam == this.state.jam ? data.menit == this.state.menit ? "Now" 
-                                            : this.state.menit - data.menit + " m ago"  : this.state.jam - data.jam + " h ago" : data.date.slice(4, -5) : data.date.slice(4)
+                                  <GridColumn>
+                                    <p style={{ fontSize: 15 }}>
+                                      {data.content}{" "}
+                                    </p>
+                                    <br />
+                                    <small style={{ float: "right" }}>
+                                      <i>
+                                        {data.date.slice(11) == this.state.year
+                                          ? data.date.slice(4, -5) ==
+                                            this.state.datemonth
+                                            ? data.jam == this.state.jam
+                                              ? data.menit == this.state.menit
+                                                ? "Now"
+                                                : this.state.menit -
+                                                  data.menit +
+                                                  " m ago"
+                                              : this.state.jam -
+                                                data.jam +
+                                                " h ago"
+                                            : data.date.slice(4, -5)
+                                          : data.date.slice(4)}
+                                      </i>
+                                    </small>
+                                    <br />
+                                    <br />
+                                  </GridColumn>
+                                </Grid.Row>
+                                <Grid.Row columns={4}>
+                                  <Grid.Column>
+                                    {/* thanks */}
+                                    <Popup
+                                      trigger={
+                                        <Icon
+                                          name="handshake outline"
+                                          size="large"
+                                          onClick={() =>
+                                            this.givethanks(data._id)
                                           }
-                                          </i>
-                                        </small>
-                                        <br />
-                                        <br />
-                                 
-                                    </GridColumn>
-                                  </Grid.Row>
-                                  <Grid.Row columns={4}>
-                                    <Grid.Column>
-                                      {/* thanks */}
-                                      <Popup trigger={
-                                      <Icon
-                                        name="handshake outline"
-                                        size='large'
-                                        onClick={() => this.givethanks(data._id)}
-                                      />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
-                                          : "Anda Telah UnThanks"}
-                                      </Popup>
-                                    </Grid.Column>
-                                    <Grid.Column style={{marginLeft: -50}}>
-                                      {/* Coment */}                                
-                                      <Icon 
-                                        name="comment outline"
-                                        size='large'
-                                        onClick= {() => this.discuss(data.id_posts)}
-                                      />{this.state.comment}
-                                    </Grid.Column>
-                                    <Grid.Column></Grid.Column>
-                                    
-                                    <Grid.Column style={{marginLeft: 50}}>
-                                      {/* delete */}
-                                      <Modal
-                                        trigger={<Label onClick={this.handleOpen} style={{color: "black", border: "1", float: "right",  background: "transparent", marginTop: -8, marginRight: -22}}><Icon name="trash alternate outline" size="large"/></Label>}
-                                        open={this.state.modal}
-                                        onClose={this.handleClose}
-                                        basic
-                                      >
-                                        <Header icon="trash alternate outline" size="large" content="Delete Posting!" />
-                                        <Modal.Content>
-                                          <p>Are You Sure?</p>
-                                        </Modal.Content>
-                                        <Modal.Actions>
-                                        <Button inverted onClick={() => this.delete(data._id)}>
+                                        />
+                                      }
+                                    >
+                                      {this.state.kode == 1
+                                        ? "Anda Telah Thanks"
+                                        : "Anda Telah UnThanks"}
+                                    </Popup>
+                                  </Grid.Column>
+                                  <Grid.Column style={{ marginLeft: -50 }}>
+                                    {/* Coment */}
+                                    <Icon
+                                      name="comment outline"
+                                      size="large"
+                                      onClick={() =>
+                                        this.discuss(data.id_posts)
+                                      }
+                                    />
+                                    {this.state.comment}
+                                  </Grid.Column>
+                                  <Grid.Column />
+
+                                  <Grid.Column style={{ marginLeft: 50 }}>
+                                    {/* delete */}
+                                    <Modal
+                                      trigger={
+                                        <Label
+                                          onClick={this.handleOpen}
+                                          style={{
+                                            color: "black",
+                                            border: "1",
+                                            float: "right",
+                                            background: "transparent",
+                                            marginTop: -8,
+                                            marginRight: -22
+                                          }}
+                                        >
+                                          <Icon
+                                            name="trash alternate outline"
+                                            size="large"
+                                          />
+                                        </Label>
+                                      }
+                                      open={this.state.modal}
+                                      onClose={this.handleClose}
+                                      basic
+                                    >
+                                      <Header
+                                        icon="trash alternate outline"
+                                        size="large"
+                                        content="Delete Posting!"
+                                      />
+                                      <Modal.Content>
+                                        <p>Are You Sure?</p>
+                                      </Modal.Content>
+                                      <Modal.Actions>
+                                        <Button
+                                          inverted
+                                          onClick={() => this.delete(data._id)}
+                                        >
                                           <Icon name="checkmark" /> Yes
                                         </Button>
-                                        <Button onClick={this.handleClose} inverted>
+                                        <Button
+                                          onClick={this.handleClose}
+                                          inverted
+                                        >
                                           <Icon name="remove" /> No
                                         </Button>
-                                        </Modal.Actions>
-                                      </Modal>
-                                    </Grid.Column>
-                                  </Grid.Row>
-                                </Grid>                      
-                              </Modal.Content>
-                          </Modal>)
-                          }
-                                
+                                      </Modal.Actions>
+                                    </Modal>
+                                  </Grid.Column>
+                                </Grid.Row>
+                              </Grid>
+                            </Modal.Content>
+                          </Modal>
+                        )}
                       </div>
                     </li>
-                );
-              })}
+                  );
+                })}
               </ul>
-              <Divider hidden/>
-              <Divider hidden/>
-              <Divider hidden/>
-              <Divider hidden/>
-              <Divider hidden/>
+              <Divider hidden />
+              <Divider hidden />
+              <Divider hidden />
+              <Divider hidden />
+              <Divider hidden />
             </Segment>
           </Container>
         )}
