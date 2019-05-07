@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { Dimmer, Loader, Image, Segment, Container } from "semantic-ui-react";
+import { Dimmer, Loader, Menu } from "semantic-ui-react";
 import MenuProfile from './MenuProfile';
 import HeaderProfile from './HeaderProfile';
 import MyPost from './MyPost';
+import MyPostLightWeight from './MyPostLightWeight';
 import MoreCategory from './MoreCategory';
-import { isloginAction, emailAction, passwordAction, tipeAction } from '../actions';
-import store from '../../../store';
 
 export default class Index extends Component {
 
@@ -15,22 +14,23 @@ export default class Index extends Component {
             isLogin: localStorage.getItem('auth'),
             email: localStorage.getItem('email'),
             loading: true,
+            activeItem: "hexagrid"
         };
     }
 
     componentWillMount() {
-        if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
-            setTimeout(() =>  {
-                this.setState({loading: false})
+        if (this.state.loading == true || this.setState.isLogin == '' || this.setState.email == '') {
+            setTimeout(() => {
+                this.setState({ loading: false })
             }, 100)
         }
-       
+
     }
 
-    shouldComponentUpdate(newProps, newState){
-        if(newState.isLogin){
+    shouldComponentUpdate(newProps, newState) {
+        if (newState.isLogin) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -45,25 +45,46 @@ export default class Index extends Component {
                 <Dimmer active inverted>
                     <Loader size='large'>Plase Wait</Loader>
                 </Dimmer>
-            </div>        
+            </div>
         );
     }
 
-    render () {
+    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+    filterPost() {
+        const { activeItem } = this.state
+        return <div style={{ marginTop: -30, padding: 10 }}>
+                 <Menu text>
+        <Menu.Item><b>Style</b></Menu.Item>
+        <Menu.Item
+          name='hexagrid'
+          active={activeItem === 'hexagrid'}
+          onClick={this.handleItemClick}
+        />
+        <Menu.Item
+          name='lightweight'
+          active={activeItem === 'lightweight'}
+          onClick={this.handleItemClick}
+        />
+      </Menu>
+        </div>
+    }
+
+    render() {
         const { loading } = this.state;
         return (
-        <div>
-            {loading ? (this.loading()
+            <div>
+                {loading ? (this.loading()
                 ) : (
-                    <div>
-                        
-                        <HeaderProfile />
-                        <MoreCategory/>
-                        <MyPost/>
-                        <MenuProfile />
-                    </div>
-                )}
-        </div>
+                        <div>
+                            <HeaderProfile />
+                            <MoreCategory />
+                            {this.filterPost()}
+                            {this.state.activeItem == "hexagrid" ? <MyPost /> : <MyPostLightWeight/> }
+                            <MenuProfile />
+                        </div>
+                    )}
+            </div>
         );
     }
 

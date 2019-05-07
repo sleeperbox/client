@@ -308,7 +308,7 @@ export default class MyPost extends Component {
         {isLoading ? (
           this.generateSkeleton()
         ) : nopost == 0 ? (
-          <Container style={{marginTop: 80}}>
+          <Container>
             <Header as="h2" icon textAlign="center">
               <Icon name="wordpress forms" />
               No Post
@@ -324,8 +324,8 @@ export default class MyPost extends Component {
             <Divider hidden />
           </Container>
         ) : (
-          <Container>
-            <Segment basic style={{marginTop: 15}}>
+          <div  style={{ marginTop: -30}}>
+            <Segment basic>
             <ul id="grid" className="clear">
               {posting.map((data, index) => {
                 return (
@@ -698,7 +698,7 @@ export default class MyPost extends Component {
               <Divider hidden/>
               <Divider hidden/>
             </Segment>
-          </Container>
+          </div>
         )}
       </div>
     );
