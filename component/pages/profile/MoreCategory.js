@@ -239,7 +239,7 @@ export default class MoreCategory extends Component {
   };
 
   smallFontCenter = {
-    fontSize: 10,
+    fontSize: 14,
     textAlign: "center"
   };
 

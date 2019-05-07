@@ -25,14 +25,14 @@ export default class HeaderProfile extends Component {
       hour: new Date().getHours(),
       minute: new Date().getMinutes(),
       coloring: "",
-      activeIndex: 0
+      activeIndex: 0,
+      myPoint: 0 
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
   }
 
   componentWillMount() {
     const { hour, total_posts, total_thanks } = this.state;
-
     axios({
       method: "post",
       url: "http://apps.aprizal.com/api/profile",
@@ -57,7 +57,6 @@ export default class HeaderProfile extends Component {
         followed_topic: result.data.tags
       })
     );
-
     axios({
       method: "post",
       url: "http://apps.aprizal.com/api/user/avatar",
@@ -70,45 +69,18 @@ export default class HeaderProfile extends Component {
         email: this.state.email // This is the body part
       }
     }).then(result => this.setState({ foto: result.data }));
-
-    if (hour > 5 && hour < 10) {
-      this.setState({
-        background: "http://hdbackgroundspic.com/wp-content/uploads/2017/04/beautiful-view-good-morning.jpg",
-        coloring: "#625D5D"
-      });
-    } else if (hour > 9 && hour < 15) {
-      this.setState({
-        background: "https://c1.staticflickr.com/6/5010/5344146801_e8e2cea999_b.jpg",
-        coloring: "#3D3C3A"
-      });
-    } else if (hour > 14 && hour < 18) {
-      this.setState({
-        background:
-          "https://www.desktop-background.com/p/2014/02/13/716536_1024x1024-beautiful-beach-sunset-wallpapers_1024x1024_h.jpg",
-        coloring: "#f0f0f0"
-      });
-    } else {
-      this.setState({
-        background: "http://www.tabletwallpapers.org/download/stars-and-snow-night-in-the-alps-wallpaper_1024x1024.jpg",
-        coloring: "white"
-      });
-    }
-
-    if (total_posts == 0) {
-      this.setState({ img_posts: "" });
-    } else if (total_posts == 1 || total_posts < 10) {
-      this.setState({ img_posts: "" });
-    } else if (total_posts == 11 || total_posts > 50) {
-      this.setState({ img_posts: "" });
-    }
-
-    if (total_thanks == 0) {
-      this.setState({ img_thanks: "" });
-    } else if (total_thanks == 1 || total_thanks < 10) {
-      this.setState({ img_thanks: "" });
-    } else if (total_thanks == 11 || total_thanks > 50) {
-      this.setState({ img_thanks: "" });
-    }
+    axios({
+      method: "post",
+      url: "http://apps.aprizal.com/api/user/point",
+      headers: {
+        "Acces-Control-Allow-Origin": true,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result => this.setState({myPoint: result.data.total_score}))
   }
 
   componentDidMount() {
@@ -162,7 +134,7 @@ export default class HeaderProfile extends Component {
       username,
       first_name,
       last_name,
-      awards,
+      myPoint,
       total_friends,
       total_posts,
       total_thanks,
@@ -179,7 +151,7 @@ export default class HeaderProfile extends Component {
 
     //simple css styling
     const smallFont = {
-      fontSize: 10,
+      fontSize: 14,
     };
     const toRight = {
       float: "right",
@@ -222,6 +194,9 @@ export default class HeaderProfile extends Component {
                                   Username <span style={toRight}>@{username}</span>
                                 </p>
                                 <p style={smallFont}>
+                                Point <span style={toRight}><b>{myPoint}</b></span>
+                                </p>
+                                <p style={smallFont}>
                                   Post <span style={toRight}>{total_posts}</span>
                                 </p>
                                 <p style={smallFont}>
@@ -231,10 +206,7 @@ export default class HeaderProfile extends Component {
                                 Follower <span style={toRight}>{total_friends}</span>
                                 </p>
                                 <p style={smallFont}>
-                                  Award <span style={toRight}>{awards}</span>
-                                </p>
-                                <p style={smallFont}>
-                                  Tag{" "}
+                                Tag{" "}
                                   <span style={toRight}>
                                     <i>{followed_topic}</i>
                                   </span>
