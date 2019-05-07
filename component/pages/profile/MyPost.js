@@ -217,6 +217,7 @@ export default class MyPost extends Component {
   generateSkeleton() {
     return (
       <div>
+        <Segment basic style={{marginTop: 15}}>
         <Container>
           <Grid>
             <GridColumn>
@@ -270,6 +271,7 @@ export default class MyPost extends Component {
             </GridColumn>
           </Grid>
         </Container>
+        </Segment>
       </div>
     );
   }
