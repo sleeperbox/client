@@ -412,95 +412,18 @@ export default class MyPost extends Component {
                                 }
                               />
                               <Grid>
-                                <Grid.Row columns={5}>
-                                  <Grid.Column>
-                                    {/* thanks */}
-                                    <Popup
-                                      trigger={
-                                        <Icon
-                                          name="handshake outline"
-                                          size="large"
-                                          onClick={() =>
-                                            this.givethanks(
-                                              data._id,
-                                              data.username
-                                            )
-                                          }
-                                        />
-                                      }
-                                    >
-                                     {  
-                                      thankLoad == false && loaders == 0 && kode == 0 ? "thank canceled" 
-                                      :
-                                      thankLoad == false && loaders == 0 && kode == 1 ? "thank has been sent"
-                                      :
-                                     "processing..." 
-                                    }
-                                    </Popup>
-                                  </Grid.Column>
-                                  <Grid.Column style={{ marginLeft: -30 }}>
-                                    {/* Coment */}
-                                    <Icon
-                                      name="comment outline"
-                                      size="large"
-                                      onClick={() =>
-                                        this.discuss(data.id_posts)
-                                      }
-                                    />
-                                    {this.state.comment}
-                                  </Grid.Column>
-                                  <Grid.Column />
-                                  <Grid.Column style={{ marginLeft: 95 }}>
-                                    {/* delete */}
-                                    <Modal
-                                    style={{marginTop: 175}}
-                                      trigger={
-                                        <Icon name="trash alternate outline" size="large"  onClick={() =>
-                                          this.handleOpen(data._id)
-                                        } 
-                                        style={{
-                                         float: "right",
-
-                                        }} />
-                                      }
-                                      open={this.state.modal}
-                                      onClose={this.handleClose}
-                                      basic
-                                    >
-                                      <Header
-                                        icon="trash alternate outline"
-                                        size="large"
-                                        content="Delete Posting!"
-                                      />
-                                      <Modal.Content>
-                                        <p>Are You Sure?</p>
-                                      </Modal.Content>
-                                      <Modal.Actions>
-                                        <Button
-                                          inverted
-                                          onClick={() => this.delete(data._id)}
-                                        >
-                                          <Icon name="checkmark" /> Yes
-                                        </Button>
-                                        <Button
-                                          onClick={this.handleClose}
-                                          inverted
-                                        >
-                                          <Icon name="remove" /> No
-                                        </Button>
-                                      </Modal.Actions>
-                                    </Modal>
-                                  </Grid.Column>
-                                  <Grid.Column style={{ marginLeft: -125 }}>
+                                <Grid.Row columns={4} centered textAlign="center">  
+                                <Grid.Column width={6} />
+                                  <Grid.Column  width={6} /> 
+                                  <Grid.Column width={2}>
                                     {/* update */}
                                     <Modal
                                       trigger={
                                           <Icon name="edit" size="large"  onClick={() =>
                                             this.handleOpenUpdate(data._id)
                                           } 
-                                          style={{
-                                            marginLeft: 35,
-                                          }} />
+                                          style={{marginLeft: 15}}
+                                         />
                                       }
                                       open={this.state.modalupdate}
                                       onClose={this.handleCloseUpdate}
@@ -528,14 +451,51 @@ export default class MyPost extends Component {
                                         <Button
                                           onClick={this.handleCloseUpdate}
                                         >
-                                          <Icon name="remove" /> No
+                                        cancel
                                         </Button>
                                         <Button
                                           primary
                                           onClick={() => this.update()}
                                         >
-                                          <Icon name="checkmark" /> Edit
+                                        edit
                                         </Button>
+                                      </Modal.Actions>
+                                    </Modal>
+                                  </Grid.Column>
+                                  <Grid.Column width={2}>
+                                    {/* delete */}
+                                    <Modal
+                                    style={{marginTop: 250}}
+                                      trigger={
+                                          <Icon
+                                            name="trash alternate outline"
+                                            size="large"
+                                            onClick={this.handleOpen}
+                                          />
+                                      }
+                                      open={this.state.modal}
+                                      onClose={this.handleClose}
+                                      basic
+                                    >
+                                      <Modal.Content>
+                                        <p style={{textAlign: "center"}}>are you sure want to delete this post?</p>
+                                      </Modal.Content>
+                                      <Modal.Actions>
+                                        <center>
+                                        <Button
+                                          inverted
+                                          onClick={() => this.delete(data._id)}
+                                        >
+                                        yes
+                                        </Button>
+                                        <Button
+                                          onClick={this.handleClose}
+                                          inverted
+                                        >
+                                        no
+                                        </Button>
+                                        </center>
+                                       
                                       </Modal.Actions>
                                     </Modal>
                                   </Grid.Column>
@@ -546,11 +506,6 @@ export default class MyPost extends Component {
                                     marginBottom: "-1.5em"
                                   }}
                                 >
-                                  <GridColumn>
-                                    <p style={{ fontSize: "13px" }}>
-                                      <b>{data.thanks} Thanks </b>
-                                    </p>
-                                  </GridColumn>
                                 </Grid.Row>
                                 <Grid.Row columns={1}>
                                   <GridColumn>
@@ -575,7 +530,7 @@ export default class MyPost extends Component {
                                         this.discuss(data.id_posts)
                                       }
                                     >
-                                       <b>{data.comment}</b> comments, <i style={{color: "#5b90f6"}}>see more...</i>
+                                       <b>{data.thanks}</b> thanks <b>{data.comment}</b> comments, <i style={{color: "#5b90f6"}}>see more...</i>
                                     </p>
                                     <br />
                                     <small style={{ float: "right", marginTop: "-18px" }}>
@@ -747,16 +702,123 @@ export default class MyPost extends Component {
                                 <i style={textMargin}>{data.tags}</i>
                               </small>
                             </Header>
-
                             <Modal.Content>
+                            <center><small><i>this post has no images...</i></small></center>
                               <Grid>
+                                <Grid.Row columns={4}>
+
+                                <Grid.Column width={6} />
+                                  <Grid.Column  width={6} /> 
+                                  <Grid.Column width={2}>
+                                    {/* update */}
+                                    <Modal
+                                      trigger={
+                                          <Icon name="edit" size="large"  onClick={() =>
+                                            this.handleOpenUpdate(data._id)
+                                          } 
+                                          style={{marginLeft: 15}}
+                                         />
+                                      }
+                                      open={this.state.modalupdate}
+                                      onClose={this.handleCloseUpdate}
+                                    >
+                                      <Header sub textAlign="center" size="tiny" content={<div><Icon name="pencil square"/>update your post</div>}/>
+                                      <Modal.Content>
+                                        <Form>
+                                          <textarea
+                                            maxLength={250}
+                                            name="content"
+                                            onChange={this.handlePost}
+                                            defaultValue={this.state.content}
+                                            />
+                                        </Form>
+                                      </Modal.Content>
+                                      <Modal.Actions>
+                                        <Button
+                                         primary
+                                         onClick={() => this.update()}
+                                        >
+                                        update
+                                        </Button>
+                                        <Button
+                                          onClick={this.handleCloseUpdate}
+                                        >
+                                        cancel
+                                        </Button>
+                                      </Modal.Actions>
+                                    </Modal>
+                                  </Grid.Column>
+                                  <Grid.Column width={2}>
+                                    {/* delete */}
+                                    <Modal
+                                      trigger={
+                                          <Icon
+                                            name="trash alternate outline"
+                                            size="large"
+                                            onClick={this.handleOpen}
+                                          />
+                                      }
+                                      open={this.state.modal}
+                                      onClose={this.handleClose}
+                                      basic
+                                    >
+                                      <Modal.Content>
+                                        <p style={{textAlign: "center"}}>are you sure want to delete this post?</p>
+                                      </Modal.Content>
+                                      <Modal.Actions>
+                                        <center>
+                                        <Button
+                                          inverted
+                                          onClick={() => this.delete(data._id)}
+                                        >
+                                        yes
+                                        </Button>
+                                        <Button
+                                          onClick={this.handleClose}
+                                          inverted
+                                        >
+                                        no
+                                        </Button>
+                                        </center>
+                                       
+                                      </Modal.Actions>
+                                    </Modal>
+                                  </Grid.Column>
+                                </Grid.Row>
+                                <Grid.Row
+                                  style={{
+                                    marginTop: "-1.5em",
+                                    marginBottom: "-1.5em"
+                                  }}
+                                >
+                                </Grid.Row>
                                 <Grid.Row columns={1}>
                                   <GridColumn>
-                                    <p style={{ fontSize: 15 }}>
-                                      {data.content}{" "}
+                                    <p
+                                      style={{
+                                        whiteSpace: "-moz-pre-wrap",
+                                        whiteSpace: "-moz-pre-wrap !important",
+                                        whiteSpace: "pre-wrap",
+                                        whiteSpace: "-webkit-pre-wrap",
+                                        wordBreak: "break-all",
+                                        whiteSpace: "normal"
+                                      }}
+                                    >
+                                      <b>{data.username}</b> {data.content}
+                                    </p>
+                                    <p
+                                      style={{
+                                        fontSize: "13px",
+                                        float: "left"
+                                      }}
+                                      onClick={() =>
+                                        this.discuss(data.id_posts)
+                                      }
+                                    >
+                                       <b>{data.thanks}</b> thanks <b>{data.comment}</b> comments, <i style={{color: "#5b90f6"}}>see more...</i>
                                     </p>
                                     <br />
-                                    <small style={{ float: "right" }}>
+                                    <small style={{ float: "right", marginTop: "-18px" }}>
                                       <i>
                                         {data.date.slice(11) == this.state.year
                                           ? data.date.slice(4, -5) ==
@@ -777,92 +839,19 @@ export default class MyPost extends Component {
                                     <br />
                                     <br />
                                   </GridColumn>
-                                </Grid.Row>
-                                <Grid.Row columns={4}>
-                                  <Grid.Column>
-                                    {/* thanks */}
-                                    <Popup
-                                      trigger={
-                                        <Icon
-                                          name="handshake outline"
-                                          size="large"
-                                          onClick={() =>
-                                            this.givethanks(data._id)
-                                          }
-                                        />
-                                      }
-                                    >
-                                     {  
-                                      thankLoad == false && loaders == 0 && kode == 0 ? "thank canceled" 
-                                      :
-                                      thankLoad == false && loaders == 0 && kode == 1 ? "thank has been sent"
-                                      :
-                                     "processing..." 
-                                    }
-                                    </Popup>
-                                  </Grid.Column>
-                                  <Grid.Column style={{ marginLeft: -50 }}>
-                                    {/* Coment */}
-                                    <Icon
-                                      name="comment outline"
-                                      size="large"
-                                      onClick={() =>
-                                        this.discuss(data.id_posts)
-                                      }
-                                    />
-                                    {this.state.comment}
-                                  </Grid.Column>
-                                  <Grid.Column />
 
-                                  <Grid.Column style={{ marginLeft: 50 }}>
-                                    {/* delete */}
-                                    <Modal
-                                      trigger={
-                                        <Label
-                                          onClick={this.handleOpen}
-                                          style={{
-                                            color: "black",
-                                            border: "1",
-                                            float: "right",
-                                            background: "transparent",
-                                            marginTop: -8,
-                                            marginRight: -22
-                                          }}
-                                        >
-                                          <Icon
-                                            name="trash alternate outline"
-                                            size="large"
-                                          />
-                                        </Label>
-                                      }
-                                      open={this.state.modal}
-                                      onClose={this.handleClose}
-                                      basic
-                                    >
-                                      <Header
-                                        icon="trash alternate outline"
-                                        size="large"
-                                        content="Delete Posting!"
-                                      />
-                                      <Modal.Content>
-                                        <p>Are You Sure?</p>
-                                      </Modal.Content>
-                                      <Modal.Actions>
-                                        <Button
-                                          inverted
-                                          onClick={() => this.delete(data._id)}
-                                        >
-                                          <Icon name="checkmark" /> Yes
-                                        </Button>
-                                        <Button
-                                          onClick={this.handleClose}
-                                          inverted
-                                        >
-                                          <Icon name="remove" /> No
-                                        </Button>
-                                      </Modal.Actions>
-                                    </Modal>
-                                  </Grid.Column>
+
+
+
+
+
+
+
+
+
+
+
+
                                 </Grid.Row>
                               </Grid>
                             </Modal.Content>

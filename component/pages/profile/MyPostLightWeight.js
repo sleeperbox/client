@@ -347,24 +347,7 @@ export default class MyPostLightWeight extends Component {
                                 ) : null}
                                 <br/>
                                 <Grid>
-                                <Grid.Row>
-                                  <Grid.Column>
-                                    {/* thanks */}
-                                    <Popup
-                                      trigger={
-                                        <Icon name="handshake outline" size="large" onClick={() => this.givethanks( data._id, data.username)}/>
-                                      }>
-                                    {  
-                                      thankLoad == false && loaders == 0 && kode == 0 ? "thank canceled" 
-                                      :
-                                      thankLoad == false && loaders == 0 && kode == 1 ? "thank has been sent"
-                                      :
-                                     "processing..." 
-                                    }
-                                    </Popup>
-                                    <span>&nbsp; {data.thanks} Thanks</span>
-                                  </Grid.Column>
-                                </Grid.Row>
+                               
                                 <Grid.Row columns={1}>
                                   <GridColumn>
                                     <p
@@ -388,7 +371,7 @@ export default class MyPostLightWeight extends Component {
                                         this.discuss(data.id_posts)
                                       }
                                     >
-                                    <b>{data.comment}</b> comments, <i style={{color: "#5b90f6"}}>see more...</i>
+                                    <b>{data.thanks}</b> thanks <b>{data.comment}</b> comments, <i style={{color: "#5b90f6"}}>see more...</i>
                                     </p>
                                     <br />
                                     <small style={{ float: "right", marginTop: "-18px" }}>
