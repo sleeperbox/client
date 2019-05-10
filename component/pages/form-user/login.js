@@ -5,8 +5,8 @@ import {
   Container,
   Grid,
   Divider,
-  Header,
   Icon,
+  Image,
   Segment,
   Message
 } from "semantic-ui-react";
@@ -14,7 +14,6 @@ import axios from "axios";
 import queryString from "query-string";
 import { emailAction, passwordAction, tipeAction } from '../actions';
 import store from '../../../store';
-import { LocalInstance } from "twilio/lib/rest/api/v2010/account/availablePhoneNumber/local";
 
 export default class Register extends Component {
   constructor(props) {
@@ -149,7 +148,13 @@ export default class Register extends Component {
   render() {
     const { warning } = this.state;
     return (
-      <div>
+      <div style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        height: "100%",
+        background: "#fb607f" 
+      }}>
         <Container>
           <Divider hidden />
           {warning == 1 ? (
@@ -165,10 +170,10 @@ export default class Register extends Component {
           >
             <Grid.Column style={{ maxWidth: 450 }}>
               <Divider hidden />
-              <Divider hidden />
-              <Header as="h1" color="orange">
-                <i>enjoy your WAY!</i>
-              </Header>
+              <div style={{textAlign: "center", fontSize: 22,color: "#222" }}>
+              <Image src="http://aprizal.com/public/icon/icon/fashion.png" size="tiny" centered/>
+              <p style={{marginTop: -15}}>enjoy your way</p>
+              </div>
               <Divider hidden/>
               <Form size="large" onSubmit={this.handleSubmit}>
                 <Segment stacked>
@@ -176,7 +181,7 @@ export default class Register extends Component {
                     fluid
                     icon="user"
                     iconPosition="left"
-                    placeholder="Email, Phone Number or Username"
+                    placeholder="email, phone number or username"
                     name="email"
                     onChange={this.handleChangeEmail}
                   />
@@ -184,23 +189,23 @@ export default class Register extends Component {
                     fluid
                     icon="lock"
                     iconPosition="left"
-                    placeholder="Password"
+                    placeholder="password"
                     type={store.getState().form.tipe}
                     name="password"
                     onChange={this.handleChangePassword}
                     action={{ icon:"eye", onClick:this.ShowHide}}
                     />
                   
-                  <Button color="blue" fluid size="large">
-                    Log In
+                  <Button style={{background: "#222", color: "white"}}  fluid size="small">
+                    Sign In
                   </Button>
                 </Segment>
               </Form>
             </Grid.Column>
             <Grid.Column>
-              <Message>                
-                New to Way ? <a href="#/register"><i>Sign Up Here !</i></a>
-                <Divider horizontal>Or</Divider>
+              <Message style={{background: "#222", color: "#fff"}}>                
+                new to way? <a href="#/register"><i style={{color: "#fff"}}>sign up now!</i></a>
+                {/* <Divider horizontal>or</Divider>
                 <Button
                   onClick={this.googleSignin.bind(this)}
                   content="Sign in with Google"
@@ -208,12 +213,12 @@ export default class Register extends Component {
                   icon="google"
                   size="small"
                   fluid
-                />
+                /> */}
               </Message>
             </Grid.Column>
           </Grid>
-          <Segment textAlign="center">
-            <i>app version 2.7</i>
+          <Segment basic textAlign="center">
+            <small>app version 2.7</small>
           </Segment>
         </Container>
       </div>
