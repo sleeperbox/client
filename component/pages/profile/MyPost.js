@@ -53,6 +53,8 @@ export default class MyPost extends Component {
       modalDiscuss: false,
       content: "",
       preview: null,
+      loaders: 1,
+      thanksLoad: true
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.givethanks = this.givethanks.bind(this);
@@ -121,7 +123,7 @@ export default class MyPost extends Component {
         data: {
           email: this.state.email // This is the body part
         }
-      }).then(result => this.setState({ posting: result.data, thanks: 0 }));
+      }).then(result => this.setState({ posting: result.data, thanks: 0 }, () => window.location.reload()));
     }
   }
   handlePost(event) {
@@ -147,7 +149,7 @@ export default class MyPost extends Component {
         _id: value // This is the body part
       }
     }).then(result =>
-      this.setState({ thanks: 1, kode: result.data.kode.kode })
+      this.setState({ thanks: 1, kode: result.data.kode.kode, loaders: 0, thankLoad: false })
     );
   }
   delete(value) {
@@ -236,7 +238,6 @@ export default class MyPost extends Component {
                             <Skeleton />
                           </i>
                         </small>
-                        .
                       </List.Description>
                     </List.Content>
                   </List.Item>
@@ -258,7 +259,6 @@ export default class MyPost extends Component {
                             <Skeleton />
                           </i>
                         </small>
-                        .
                       </List.Description>
                     </List.Content>
                   </List.Item>
@@ -288,7 +288,7 @@ export default class MyPost extends Component {
   };
 
   render() {
-    const { posting, isLoading, dimmer } = this.state;
+    const { posting, isLoading, thankLoad, kode, loaders} = this.state;
     const nopost = posting.length;
     // const hexagons = GridGenerator.parallelogram(-1, 2, -1, 0);
     const textMargin = {
@@ -429,9 +429,13 @@ export default class MyPost extends Component {
                                         />
                                       }
                                     >
-                                      {this.state.kode == 1
-                                        ? "Anda Telah Thanks"
-                                        : "Anda Telah UnThanks"}
+                                     {  
+                                      thankLoad == false && loaders == 0 && kode == 0 ? "thank canceled" 
+                                      :
+                                      thankLoad == false && loaders == 0 && kode == 1 ? "thank has been sent"
+                                      :
+                                     "processing..." 
+                                    }
                                     </Popup>
                                   </Grid.Column>
                                   <Grid.Column style={{ marginLeft: -30 }}>
@@ -449,23 +453,15 @@ export default class MyPost extends Component {
                                   <Grid.Column style={{ marginLeft: 95 }}>
                                     {/* delete */}
                                     <Modal
+                                    style={{marginTop: 175}}
                                       trigger={
-                                        <Label
-                                          onClick={this.handleOpen}
-                                          style={{
-                                            color: "black",
-                                            border: "1",
-                                            float: "right",
-                                            background: "transparent",
-                                            marginTop: -8,
-                                            marginRight: -24
-                                          }}
-                                        >
-                                          <Icon
-                                            name="trash alternate outline"
-                                            size="large"
-                                          />
-                                        </Label>
+                                        <Icon name="trash alternate outline" size="large"  onClick={() =>
+                                          this.handleOpen(data._id)
+                                        } 
+                                        style={{
+                                         float: "right",
+
+                                        }} />
                                       }
                                       open={this.state.modal}
                                       onClose={this.handleClose}
@@ -495,25 +491,16 @@ export default class MyPost extends Component {
                                       </Modal.Actions>
                                     </Modal>
                                   </Grid.Column>
-                                  <Grid.Column style={{ marginLeft: -100 }}>
+                                  <Grid.Column style={{ marginLeft: -125 }}>
                                     {/* update */}
                                     <Modal
                                       trigger={
-                                        <Label
-                                          onClick={() =>
+                                          <Icon name="edit" size="large"  onClick={() =>
                                             this.handleOpenUpdate(data._id)
-                                          }
+                                          } 
                                           style={{
-                                            color: "black",
-                                            border: "1",
-                                            float: "right",
-                                            background: "transparent",
-                                            marginTop: -8,
-                                            marginRight: -24
-                                          }}
-                                        >
-                                          <Icon name="edit" size="large" />
-                                        </Label>
+                                            marginLeft: 35,
+                                          }} />
                                       }
                                       open={this.state.modalupdate}
                                       onClose={this.handleCloseUpdate}
@@ -588,7 +575,7 @@ export default class MyPost extends Component {
                                         this.discuss(data.id_posts)
                                       }
                                     >
-                                      View all <b>{data.comment}</b> comments
+                                       <b>{data.comment}</b> comments, <i style={{color: "#5b90f6"}}>see more...</i>
                                     </p>
                                     <br />
                                     <small style={{ float: "right", marginTop: "-18px" }}>
@@ -805,9 +792,13 @@ export default class MyPost extends Component {
                                         />
                                       }
                                     >
-                                      {this.state.kode == 1
-                                        ? "Anda Telah Thanks"
-                                        : "Anda Telah UnThanks"}
+                                     {  
+                                      thankLoad == false && loaders == 0 && kode == 0 ? "thank canceled" 
+                                      :
+                                      thankLoad == false && loaders == 0 && kode == 1 ? "thank has been sent"
+                                      :
+                                     "processing..." 
+                                    }
                                     </Popup>
                                   </Grid.Column>
                                   <Grid.Column style={{ marginLeft: -50 }}>

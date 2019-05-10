@@ -54,11 +54,12 @@ export default class MyPostLightWeight extends Component {
       modalDiscuss: false,
       content: "",
       pictcontent: "",
-      preview: null
+      preview: null,
+      thankLoad: true,
+      loaders: 1
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.givethanks = this.givethanks.bind(this);
-    this.delete = this.delete.bind(this);
     this.handlePost = this.handlePost.bind(this);
   }
 
@@ -72,6 +73,7 @@ export default class MyPostLightWeight extends Component {
   componentWillMount() {}
 
   componentDidMount() {
+    console.log(this.state.kode)
     axios({
       method: "post",
       url: "http://apps.aprizal.com/api/posting/profile",
@@ -110,22 +112,6 @@ export default class MyPostLightWeight extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.thanks == 1) {
-      axios({
-        method: "post",
-        url: "http://apps.aprizal.com/api/posting/profile",
-        headers: {
-          "Acces-Control-Allow-Origin": true,
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        data: {
-          email: this.state.email // This is the body part
-        }
-      }).then(result => this.setState({ posting: result.data, thanks: 0 }));
-    }
-  }
   handlePost(event) {
     let target = event.target;
     let value = target.value;
@@ -135,86 +121,10 @@ export default class MyPostLightWeight extends Component {
     });
   }
 
-  givethanks(value) {
-    axios({
-      method: "put",
-      url: "http://apps.aprizal.com/api/posting/thanks/up",
-      headers: {
-        "Acces-Control-Allow-Origin": true,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        email: this.state.email,
-        _id: value // This is the body part
-      }
-    }).then(result =>
-      this.setState({ thanks: 1, kode: result.data.kode.kode })
-    );
-  }
-  delete(value) {
-    axios({
-      method: "delete",
-      url: "http://apps.aprizal.com/api/posting/delete",
-      headers: {
-        "Acces-Control-Allow-Origin": true,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        email: this.state.email,
-        _id: value
-      }
-    }).then(
-      this.setState({ modal: false, thanks: 1 }, () => window.location.reload())
-    );
-  }
-
   handleOpen(value, postid) {
     this.setState({ modal: true, id: value, post: postid });
   }
 
-  handleOpenUpdate(value) {
-    this.setState({ id: value });
-    axios({
-      method: "post",
-      url: "http://apps.aprizal.com/api/posting/detail",
-      headers: {
-        "Acces-Control-Allow-Origin": true,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        _id: value
-      }
-    }).then(result =>
-      this.setState({
-        modalupdate: true,
-        contents: result.data,
-        pictcontent : result.data.fotocontent,
-        content: result.data.content,
-        tags: result.data.tags
-      }, ()=>console.log(result.data))
-    );
-  }
-
-  update() {
-    axios({
-      method: "post",
-      url: "http://apps.aprizal.com/api/posting/update",
-      headers: {
-        "Acces-Control-Allow-Origin": true,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        id: this.state.id,
-        content: this.state.content,
-        tags: this.state.tags,
-        kode_post: 1
-      }
-    }).then(this.setState({ modalupdate: false, thanks: 1 }));
-  }
 
   generateSkeleton() {
     return (
@@ -241,7 +151,6 @@ export default class MyPostLightWeight extends Component {
                             <Skeleton />
                           </i>
                         </small>
-                        .
                       </List.Description>
                     </List.Content>
                   </List.Item>
@@ -263,7 +172,6 @@ export default class MyPostLightWeight extends Component {
                             <Skeleton />
                           </i>
                         </small>
-                        .
                       </List.Description>
                     </List.Content>
                   </List.Item>
@@ -292,8 +200,43 @@ export default class MyPostLightWeight extends Component {
     });
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.thanks == 1) {
+      axios({
+        method: "post",
+        url: "http://apps.aprizal.com/api/posting/profile",
+        headers: {
+          "Acces-Control-Allow-Origin": true,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        data: {
+          email: this.state.email // This is the body part
+        }
+      }).then(result => this.setState({ posting: result.data, thanks: 0 }, () => window.location.reload()));
+    }
+  }
+
+  givethanks(value) {
+    axios({
+      method: "put",
+      url: "http://apps.aprizal.com/api/posting/thanks/up",
+      headers: {
+        "Acces-Control-Allow-Origin": true,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email,
+        _id: value // This is the body part
+      }
+    }).then(result =>
+      this.setState({ thanks: 1, kode: result.data.kode.kode, thankLoad: false, loaders: 0 })
+    );
+  }
+
   render() {
-    const { posting, isLoading } = this.state;
+    const { posting, isLoading, thankLoad, kode, loaders } = this.state;
     const nopost = posting.length;
     const listMargin = {
       marginBottom: "20px"
@@ -320,107 +263,16 @@ export default class MyPostLightWeight extends Component {
             <Divider hidden />
           </Container>
         ) : (
-          <div style={{ marginTop: -30, marginBottom: 50 }}>
+          <Container style={{ marginTop: -30, marginBottom: 50 }}>
             <Segment basic>
               {posting.map((data, index) => {
                 return (
                   <Grid columns={1} key={data._id} style={gridMargin}>
                     <GridColumn>
-                      <GridRow>
-                        {/* delete */}
-                        <Modal
-                          trigger={
-                            <Label
-                              onClick={this.handleOpen}
-                              style={{
-                                color: "black",
-                                border: "1",
-                                float: "right",
-                                background: "transparent",
-                                marginTop: -8,
-                                marginRight: -22
-                              }}
-                            >
-                              <Icon
-                                name="trash alternate outline"
-                                size="large"
-                              />
-                            </Label>
-                          }
-                          open={this.state.modal}
-                          onClose={this.handleClose}
-                          basic
-                        >
-                          <Header
-                            icon="trash alternate outline"
-                            size="large"
-                            content="Delete Posting!"
-                          />
-                          <Modal.Content>
-                            <p>Are You Sure?</p>
-                          </Modal.Content>
-                          <Modal.Actions>
-                            <Button
-                              inverted
-                              onClick={() => this.delete(data._id)}
-                            >
-                              <Icon name="checkmark" /> Yes
-                            </Button>
-                            <Button onClick={this.handleClose} inverted>
-                              <Icon name="remove" /> No
-                            </Button>
-                          </Modal.Actions>
-                        </Modal>
-                        <Modal
-                          trigger={
-                            <Label
-                              onClick={() => this.handleOpenUpdate(data._id)}
-                              style={{
-                                color: "black",
-                                border: "1",
-                                float: "right",
-                                background: "transparent",
-                                marginTop: -8,
-                                marginRight: -24
-                              }}
-                            >
-                              <Icon name="edit" size="large" />
-                            </Label>
-                          }
-                          open={this.state.modalupdate}
-                          onClose={this.handleCloseUpdate}
-                        >
-                          <Header content="Edit Posting" />
-                          <Modal.Content>
-                            <Image
-                              src={
-                                "http://aprizal.com/public/posting/foto/" +
-                                this.state.pictcontent
-                              }
-                            />
-                            <Form>
-                              <textarea
-                                maxLength={250}
-                                name="content"
-                                onChange={this.handlePost}
-                                style={{ border: "none" }}
-                              >
-                                {this.state.content}
-                              </textarea>
-                            </Form>
-                          </Modal.Content>
-                          <Modal.Actions>
-                            <Button onClick={this.handleCloseUpdate}>
-                              <Icon name="remove" /> No
-                            </Button>
-                            <Button primary onClick={() => this.update()}>
-                              <Icon name="checkmark" /> Edit
-                            </Button>
-                          </Modal.Actions>
-                        </Modal>
                         <List style={listMargin}>
                           <List.Item>
                             <List.Content>
+                              <br/>
                               <List.Header as="a">
                                 <small>
                                   {data.tags === "null" ? (
@@ -494,70 +346,87 @@ export default class MyPostLightWeight extends Component {
                                     size="large"
                                   />
                                 ) : null}
-                                <br />
-                                <b>{data.username}</b> {data.content}
-                                <br />
-                                <br />
-                                <Popup
-                                  trigger={
-                                    <Icon
-                                      name="handshake outline"
+                                <br/>
+                                <Grid>
+                                <Grid.Row>
+                                  <Grid.Column>
+                                    {/* thanks */}
+                                    <Popup
+                                      trigger={
+                                        <Icon name="handshake outline" size="large" onClick={() => this.givethanks( data._id, data.username)}/>
+                                      }>
+                                    {  
+                                      thankLoad == false && loaders == 0 && kode == 0 ? "thank canceled" 
+                                      :
+                                      thankLoad == false && loaders == 0 && kode == 1 ? "thank has been sent"
+                                      :
+                                     "processing..." 
+                                    }
+                                    </Popup>
+                                    <span>&nbsp; {data.thanks} Thanks</span>
+                                  </Grid.Column>
+                                </Grid.Row>
+                                <Grid.Row columns={1}>
+                                  <GridColumn>
+                                    <p
+                                      style={{
+                                        whiteSpace: "-moz-pre-wrap",
+                                        whiteSpace: "-moz-pre-wrap !important",
+                                        whiteSpace: "pre-wrap",
+                                        whiteSpace: "-webkit-pre-wrap",
+                                        wordBreak: "break-all",
+                                        whiteSpace: "normal"
+                                      }}
+                                    >
+                                      <b>{data.username}</b> {data.content}
+                                    </p>
+                                    <p
+                                      style={{
+                                        fontSize: "13px",
+                                        float: "left"
+                                      }}
                                       onClick={() =>
-                                        this.givethanks(data._id, data.username)
+                                        this.discuss(data.id_posts)
                                       }
-                                    />
-                                  }
-                                >
-                                  {this.state.kode == 1
-                                    ? "Anda Telah Thanks"
-                                    : "Anda Telah UnThanks"}
-                                </Popup>
-                                <small>
-                                  <i>{data.thanks} Thanks </i>
-                                </small>
-                                <br />
-                                <br />
-                                <p
-                                  style={{
-                                    fontSize: "13px",
-                                    float: "left"
-                                  }}
-                                  onClick={() => this.discuss(data.id_posts)}
-                                >
-                                  View all <b>{data.comment}</b> comments
-                                </p>
-                                <small
-                                  style={{ float: "right", marginRight: "4px" }}
-                                >
-                                  <i>
-                                    {data.date.slice(11) == this.state.year
-                                      ? data.date.slice(4, -5) ==
-                                        this.state.datemonth
-                                        ? data.jam == this.state.jam
-                                          ? data.menit == this.state.menit
-                                            ? "Now"
-                                            : this.state.menit -
-                                              data.menit +
-                                              " m ago"
-                                          : this.state.jam - data.jam + " h ago"
-                                        : data.date.slice(4, -5)
-                                      : data.date.slice(4)}
-                                  </i>
-                                </small>
+                                    >
+                                    <b>{data.comment}</b> comments, <i style={{color: "#5b90f6"}}>see more...</i>
+                                    </p>
+                                    <br />
+                                    <small style={{ float: "right", marginTop: "-18px" }}>
+                                      <i>
+                                        {data.date.slice(11) == this.state.year
+                                          ? data.date.slice(4, -5) ==
+                                            this.state.datemonth
+                                            ? data.jam == this.state.jam
+                                              ? data.menit == this.state.menit
+                                                ? "Now"
+                                                : this.state.menit -
+                                                  data.menit +
+                                                  " m ago"
+                                              : this.state.jam -
+                                                data.jam +
+                                                " h ago"
+                                            : data.date.slice(4, -5)
+                                          : data.date.slice(4)}
+                                      </i>
+                                    </small>
+                                    <br />
+                                    <br />
+                                  </GridColumn>
+                                </Grid.Row>
+                              </Grid>
                               </List.Description>
                             </List.Content>
                           </List.Item>
                         </List>
-                      </GridRow>
                       <Divider fitted />
                     </GridColumn>
                     <Divider hidden />
                   </Grid>
                 );
               })}
-              <Divider hidden />
             </Segment>
-          </div>
+          </Container>
         )}
       </div>
     );

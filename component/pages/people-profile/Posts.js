@@ -35,7 +35,9 @@ export default class MyPost extends Component {
       menitPosting: [],
       waktu: [],
       thanks: 0,
-      kode: 0
+      kode: 0,
+      loaders: 1,
+      thankLoad: true
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
   }
@@ -76,7 +78,7 @@ export default class MyPost extends Component {
         data: {
           username: this.state.username // This is the body part
         }
-      }).then(result => this.setState({ posting: result.data }));
+      }).then(result => this.setState({ posting: result.data, thank: 0 }, () => window.location.reload()));
     }
   }
 
@@ -94,7 +96,7 @@ export default class MyPost extends Component {
         _id: value,
         username : value2 // This is the body part
       }
-    }).then((result) => this.setState({ thanks: 1, kode: result.data.kode.kode}));
+    }).then((result) => this.setState({ thanks: 1, kode: result.data.kode.kode, thankLoad: false, loaders: 0}));
   }
 
   generateSkeleton() {
@@ -162,7 +164,7 @@ export default class MyPost extends Component {
   }
 
   render() {
-    const { posting } = this.state;
+    const { posting, thankLoad, loaders, kode } = this.state;
     const { thankpost } = this.state;
     const nopost = posting.length;
     const { isLoading } = this.state;
@@ -278,8 +280,14 @@ export default class MyPost extends Component {
                                   <Icon
                                     name="handshake outline"
                                     onClick={() => this.givethanks(data._id, data.username)}
-                                  />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
-                                      : "Anda Telah UnThanks"}
+                                  />}>
+                                  {  
+                                      thankLoad == false && loaders == 0 && kode == 0 ? "thank canceled" 
+                                      :
+                                      thankLoad == false && loaders == 0 && kode == 1 ? "thank has been sent"
+                                      :
+                                     "processing..." 
+                                    }
                                   </Popup>
                                 <small>
                                   <i>{data.thanks} Thanks </i>
