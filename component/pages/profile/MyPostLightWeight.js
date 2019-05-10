@@ -73,7 +73,6 @@ export default class MyPostLightWeight extends Component {
   componentWillMount() {}
 
   componentDidMount() {
-    console.log(this.state.kode)
     axios({
       method: "post",
       url: "http://apps.aprizal.com/api/posting/profile",

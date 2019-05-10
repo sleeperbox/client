@@ -35,7 +35,8 @@ export default class PostingOther extends Component {
       waktu: [],
       thanks: 0,
       kode: 0,
-      modal: false
+      modal: false,loaders: 1,
+      thankLoad: true
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.givethanks = this.givethanks.bind(this);
@@ -77,7 +78,7 @@ export default class PostingOther extends Component {
           "Content-Type": "application/json",
           Accept: "application/json"
         }
-      }).then(result => this.setState({ posting: result.data, thanks: 0 }));
+      }).then(result => this.setState({ posting: result.data, thanks: 0 }, () => window.location.reload()));
     }
   }
 
@@ -96,7 +97,7 @@ export default class PostingOther extends Component {
         username: value2 // This is the body part
       }
     }).then(result =>
-      this.setState({ thanks: 1, kode: result.data.kode.kode })
+      this.setState({ thanks: 1, kode: result.data.kode.kode, thankLoad: false, loaders: 0  })
     );
   }
 
@@ -165,7 +166,7 @@ export default class PostingOther extends Component {
   }
 
   render() {
-    const { posting, isLoading } = this.state;
+    const { posting, isLoading, thankLoad, loaders, kode } = this.state;
     const gridMargin = {
       marginBottom: "20px"
     };
@@ -188,7 +189,7 @@ export default class PostingOther extends Component {
           </Header>
       </div>
     </center> : (
-         <div>
+         <Container>
               {posting.map((data, index) => {
                 return (
                   <Grid columns={1} key={data._id}>
@@ -251,9 +252,13 @@ export default class PostingOther extends Component {
                                     />
                                   }
                                 >
-                                  {this.state.kode == 1
-                                    ? "Anda Telah Thanks"
-                                    : "Anda Telah UnThanks"}
+                                   {  
+                                      thankLoad == false && loaders == 0 && kode == 0 ? "thank canceled" 
+                                      :
+                                      thankLoad == false && loaders == 0 && kode == 1 ? "thank has been sent"
+                                      :
+                                     "processing..." 
+                                    }
                                 </Popup>
                                 <small>
                                   <i>{data.thanks} Thanks </i>
@@ -267,7 +272,7 @@ export default class PostingOther extends Component {
                                   }}
                                   onClick={() => this.discuss(data.id_posts)}
                                 >
-                                  View all <b>{data.comment}</b> comments
+                                  <b>{data.comment}</b> comments, <i style={{color: "#5b90f6"}}>see more...</i>
                                 </p>
                                 <small style={{ float: "right", marginTop: "2.1px"}}>
                                   <i>
@@ -296,7 +301,7 @@ export default class PostingOther extends Component {
                 );
               })}
               <Divider hidden />
-            </div>
+            </Container>
         )}
       </div>
     );

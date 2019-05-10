@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Skeleton from "react-skeleton-loader";
 import { Grid, Container, Accordion, Divider, Image, Icon, Header, Modal, Button, Popup } from "semantic-ui-react";
 import axios from "axios";
+import MoreCategory from './MoreCategory'
 export default class HeaderProfile extends Component {
   constructor(props) {
     super(props);
@@ -157,39 +158,32 @@ export default class HeaderProfile extends Component {
       float: "right",
     };
 
-    const popupStyle = {
-      borderRadius: 0,
-      opacity: 0.7,
-      padding: '0.5em',
-    }
-
     return (
       <div>
         {isLoading ? (
           this.generateSkeleton()
         ) : (
-          <Container>
-            <Grid columns={1} style={{ background: "#5190ed" }}> 
-              <Grid.Row style={{marginTop: 20}}>
-                <Grid.Column>
+          <div>
                   <Accordion fluid styled>
-                    <Accordion.Title  active={activeIndex === 1} index={1} onClick={this.handleClick}>
+                    <Accordion.Title style={{background: "#5b90f6", color: "#fff", width: "100%",position: "fixed", top: 0, zIndex: 998}} active={activeIndex === 1} index={1} onClick={this.handleClick}>
+                    <span style={{fontSize: '16px'}}>
                       <Icon name='dropdown' />
-                      Your public profile
+                      Your Profile Menu
+                    </span>
                     </Accordion.Title>
+                    <Divider hidden/>
+                    <Divider hidden/>
                     <Accordion.Content  active={activeIndex === 1}>
-                    <center style={{marginTop: 1}}>
                         <Image
                         style={{
-                            alignSelf: 'center',
-                            height: 140, 
-                            width: 140, 
-                            borderWidth: 1, 
-                            borderRadius:70
+                            border: "1px solid #555",
+                            maxHeight: "700px",
+                            minWidth: "100%",
+                            maxWidth: "100%"
                         }}
                         src={"http://aprizal.com/public/avatar/" + this.state.foto}
                       />
-                      </center> 
+                      <br/>
                       <p style={smallFont}>
                                   Username <span style={toRight}>@{username}</span>
                                 </p>
@@ -217,12 +211,10 @@ export default class HeaderProfile extends Component {
                                     <i>{join_date}</i>
                                   </span>
                                 </p>
+                        <MoreCategory/>
                     </Accordion.Content>
                     </Accordion>           
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Container>
+          </div>
         )}
       </div>
     );

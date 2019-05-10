@@ -318,7 +318,7 @@ export default class MyPost extends Component {
             <Divider hidden />
           </Container>
         ) : (
-          <div  style={{ marginTop: -30}}>
+          <div>
             <Segment basic>
             <ul id="grid" className="clear">
               {posting.map((data, index) => {

@@ -26,7 +26,7 @@ export default class TagsPost extends Component {
     this.givethanks = this.givethanks.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     axios({
       method: "post",
       url: "http://apps.aprizal.com/api/posting/tag",
@@ -68,7 +68,6 @@ export default class TagsPost extends Component {
                             <Skeleton />
                           </i>
                         </small>
-                        .
                       </List.Description>
                     </List.Content>
                   </List.Item>
@@ -90,7 +89,6 @@ export default class TagsPost extends Component {
                             <Skeleton />
                           </i>
                         </small>
-                        .
                       </List.Description>
                     </List.Content>
                   </List.Item>
@@ -135,7 +133,6 @@ export default class TagsPost extends Component {
     const textMargin = {
       marginLeft: "2%"
     };
-    let a;
     return (
       <div>
         {isLoading ? (
@@ -235,9 +232,13 @@ export default class TagsPost extends Component {
                                     />
                                   }
                                 >
-                                  {this.state.kode == 1
-                                    ? "Anda Telah Thanks"
-                                    : "Anda Telah UnThanks"}
+                                   {  
+                                      thankLoad == false && loaders == 0 && kode == 0 ? "thank canceled" 
+                                      :
+                                      thankLoad == false && loaders == 0 && kode == 1 ? "thank has been sent"
+                                      :
+                                     "processing..." 
+                                    }
                                 </Popup>
                                 <small>
                                   <i>{data.thanks} Thanks </i>

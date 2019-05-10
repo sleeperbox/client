@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Dimmer, Loader, Menu } from "semantic-ui-react";
+import { Dimmer, Loader, Menu, Icon } from "semantic-ui-react";
 import MenuProfile from './MenuProfile';
 import HeaderProfile from './HeaderProfile';
 import MyPost from './MyPost';
 import MyPostLightWeight from './MyPostLightWeight';
-import MoreCategory from './MoreCategory';
 
 export default class Index extends Component {
 
@@ -53,21 +52,19 @@ export default class Index extends Component {
 
     filterPost() {
         const { activeItem } = this.state
-        return <div style={{ marginTop: -30, padding: 10 }}>
-                 <Menu text>
-        <Menu.Item><b>Style</b></Menu.Item>
-        <Menu.Item
-          name='hexagrid'
-          active={activeItem === 'hexagrid'}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name='lightweight'
-          active={activeItem === 'lightweight'}
-          onClick={this.handleItemClick}
-        />
-      </Menu>
-        </div>
+        return <Menu fluid pointing secondary widths={2} style={{marginTop: -5, position: "relative", background: "#fff", color: "#222"}}>
+                <Menu.Item
+                name='hexagrid'
+                active={activeItem === 'hexagrid'}
+                onClick={this.handleItemClick}
+                ><Icon name="h" style={{color: "#5b90f6"}}/><span style={{marginLeft: -5}}>exagrid</span></Menu.Item>
+                <Menu.Item
+                name='lightweight'
+                active={activeItem === 'lightweight'}
+                onClick={this.handleItemClick}
+                ><Icon name="bolt" style={{color: "#5b90f6"}}/><span style={{marginLeft: -7}}>ightweight</span></Menu.Item>
+          
+        </Menu>
     }
 
     render() {
@@ -78,7 +75,6 @@ export default class Index extends Component {
                 ) : (
                         <div>
                             <HeaderProfile />
-                            <MoreCategory />
                             {this.filterPost()}
                             {this.state.activeItem == "hexagrid" ? <MyPost /> : <MyPostLightWeight/> }
                             <MenuProfile />

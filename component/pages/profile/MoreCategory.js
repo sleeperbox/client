@@ -239,7 +239,7 @@ export default class MoreCategory extends Component {
   };
 
   smallFontCenter = {
-    fontSize: 14,
+    fontSize: 13,
     textAlign: "center"
   };
 
@@ -270,11 +270,11 @@ export default class MoreCategory extends Component {
       window.location = "#/news";
     }
     return (
-      <div style={{background: "#f7f7f7", width: "100%"}}>
+      <div style={{background: "#fff", width: "100%"}}>
         {isLoading ? (
           this.generateSkeleton()
         ) : this.state.dimmers ? this.OpenDimmer() : null }
-              <Grid columns={4} style={coloring} style={{padding: 5, margin: 2, marginTop: 15}}>
+              <Grid columns={4} style={coloring} style={{padding: 5, margin: 2}}>
                 <GridColumn>
                   <p
                     style={this.noSpacing}
@@ -282,7 +282,7 @@ export default class MoreCategory extends Component {
                   >
                     <Image src={newsIcon} avatar />
                   </p>
-                  <p style={this.smallFontCenter}>W-news</p>
+                  <p style={this.smallFontCenter}>news</p>
                 </GridColumn>
                 <GridColumn>
                   <p
@@ -291,7 +291,7 @@ export default class MoreCategory extends Component {
                   >
                     <Image src={photoIcon} avatar />
                   </p>
-                  <p style={this.smallFontCenter}>Reputation</p>
+                  <p style={this.smallFontCenter}>title</p>
                 </GridColumn>
                 <GridColumn>
                   <p
@@ -300,7 +300,7 @@ export default class MoreCategory extends Component {
                   >
                     <Image src={peopleIcon} avatar />
                   </p>
-                  <p style={this.smallFontCenter}>People</p>
+                  <p style={this.smallFontCenter}>people</p>
                 </GridColumn>
                 <GridColumn>
                   <p
@@ -309,7 +309,7 @@ export default class MoreCategory extends Component {
                   >
                     <Image src={settingIcon} avatar />
                   </p>
-                  <p style={this.smallFontCenter}>Setting</p>
+                  <p style={this.smallFontCenter}>setting</p>
                 </GridColumn>
               </Grid>
       </div>
