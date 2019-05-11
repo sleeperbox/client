@@ -129,11 +129,9 @@ export default class Index extends Component {
                     ) : (
                         <div>
                             <HeaderNews/>
-                            <Container>
                                 {newsLoad ? this.skeletonFirst() : (
                                     <News newsContent={getNews}/>
                                 )}
-                            </Container>
                             <MenuProfile/>
                         </div>
                     )}

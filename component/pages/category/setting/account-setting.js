@@ -138,7 +138,7 @@ export default class AccountSetting extends Component {
             </Form.Field>
 
             <Modal
-              trigger={<a onClick={this.handleOpenPassword} style={{float: "right"}}><i>update password</i></a>}
+              trigger={<a onClick={this.handleOpenPassword} style={{float: "right"}}><i style={{color: "#232323"}}>update password</i></a>}
               open={this.state.modalOpenPassword}
               onClose={this.handleClosePassword}
               basic
@@ -183,9 +183,9 @@ export default class AccountSetting extends Component {
           </Form>
           <br/>
           <br/>
-            <div style={{marginTop: -8, position: "relative", right: 0, float: "right"}}>
+            <div style={{marginTop: -12, position: "relative", right: 0, float: "right"}}>
                 <a onClick={this.logout.bind(this)}>
-                  <i>sign out</i>
+                  <i style={{color: "#232323"}}>sign out</i>
                 </a>
             </div>
           <Divider hidden />

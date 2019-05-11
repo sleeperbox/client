@@ -168,7 +168,7 @@ export default class HeaderProfile extends Component {
                     <Accordion.Title style={{background: "#5b90f6", color: "#fff", width: "100%",position: "fixed", top: 0, zIndex: 998}} active={activeIndex === 1} index={1} onClick={this.handleClick}>
                     <span style={{fontSize: '16px'}}>
                       <Icon name='dropdown' />
-                      Your Profile Menu
+                      your profile menu
                     </span>
                     </Accordion.Title>
                     <Divider hidden/>
@@ -202,13 +202,13 @@ export default class HeaderProfile extends Component {
                                 <p style={smallFont}>
                                 Tag{" "}
                                   <span style={toRight}>
-                                    <i>{followed_topic}</i>
+                                    <i style={{fontSize: 14}}>{followed_topic}</i>
                                   </span>
                                 </p>
                                 <p style={smallFont}>
                                   Join Date{" "}
                                   <span style={toRight}>
-                                    <i>{join_date}</i>
+                                    <i style={{fontSize: 14}}>{join_date}</i>
                                   </span>
                                 </p>
                         <MoreCategory/>

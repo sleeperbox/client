@@ -333,7 +333,7 @@ export default class ProfileSetting extends Component {
     return (
       <div>
         <Header as="h3" dividing>
-          Profile Setting
+          Account Information
         </Header>
         <Container>
           <Grid verticalAlign="middle" columns={2} centered>
@@ -341,23 +341,21 @@ export default class ProfileSetting extends Component {
               {this.state.preview === "" ? (
                 <Image
                   bordered
-                  size="large"
                   src={
                     "http://aprizal.com/public/avatar/" +
                     this.state.avatar
                   }
                   circular
                   centered
-                  style={{ height: "120px", width: "120px" }}
+                  style={{ height: "140px", width: "140px", border: "2px solid #555" }}
                 />
               ) : (
                 <Image
                   bordered
-                  size="large"
                   src={this.state.preview}
                   circular
                   centered
-                  style={{ height: "120px", width: "120px" }}
+                  style={{ height: "140px", width: "140px", border: "2px solid #555" }}
                 />
               )}
 
@@ -446,56 +444,56 @@ export default class ProfileSetting extends Component {
                   >
                     {tag1 == 1 && index == 0 ? (
                       <Button
-                        color="blue"
+                        color="black"
                         onClick={() => this.handleRemove(data.value)}
                       >
                         {data.text}
                       </Button>
                     ) : tag2 == 1 && index == 1 ? (
                       <Button
-                        color="blue"
+                        color="black"
                         onClick={() => this.handleRemove(data.value)}
                       >
                         {data.text}
                       </Button>
                     ) : tag3 == 1 && index == 2 ? (
                       <Button
-                        color="blue"
+                        color="black"
                         onClick={() => this.handleRemove(data.value)}
                       >
                         {data.text}
                       </Button>
                     ) : tag4 == 1 && index == 3 ? (
                       <Button
-                        color="blue"
+                        color="black"
                         onClick={() => this.handleRemove(data.value)}
                       >
                         {data.text}
                       </Button>
                     ) : tag5 == 1 && index == 4 ? (
                       <Button
-                        color="blue"
+                        color="black"
                         onClick={() => this.handleRemove(data.value)}
                       >
                         {data.text}
                       </Button>
                     ) : tag6 == 1 && index == 5 ? (
                       <Button
-                        color="blue"
+                        color="black"
                         onClick={() => this.handleRemove(data.value)}
                       >
                         {data.text}
                       </Button>
                     ) : tag7 == 1 && index == 6 ? (
                       <Button
-                        color="blue"
+                        color="black"
                         onClick={() => this.handleRemove(data.value)}
                       >
                         {data.text}
                       </Button>
                     ) : tag8 == 1 && index == 7 ? (
                       <Button
-                        color="blue"
+                        color="black"
                         onClick={() => this.handleRemove(data.value)}
                       >
                         {data.text}
@@ -503,7 +501,7 @@ export default class ProfileSetting extends Component {
                     ) : (
                       <Button
                         basic
-                        color="blue"
+                        color="black"
                         onClick={() => this.handleClick(data.value)}
                       >
                         {data.text}
@@ -518,8 +516,8 @@ export default class ProfileSetting extends Component {
                   <Button
                     fluid
                     style={{
-                      background: "#5b90f6",
-                      color: "white",
+                      background: "#232323",
+                      color: "#fff",
                       marginTop: "10px"
                     }}
                     size="tiny"

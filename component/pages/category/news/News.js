@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardHeader, CardContent, CardMeta, Image, Divider } from "semantic-ui-react";
+import { Card, CardHeader, CardContent, CardMeta, Image, Divider, Container } from "semantic-ui-react";
 
   const marginText = {
     marginBottom: 75
@@ -11,8 +11,8 @@ import { Card, CardHeader, CardContent, CardMeta, Image, Divider } from "semanti
       <div style={marginText}>
        {datas.map((data, i) => {
         return (
-        <div style={{marginTop: 18}} key={i}>
-          <Card centered fluid style={{padding: 15, margin: 5}}>
+        <div style={{marginTop: 15, padding: 2, margin: 1}} key={i}>
+          <Card centered fluid style={{padding: 5, margin: 2}}>
           <a href={data.url}><CardHeader>{JSON.stringify(data.title).slice(1, -1)}</CardHeader></a>
             <Divider hidden style={{marginTop: -1}}/>
             {data.urlToImage == null ? <p>no image</p> : (
