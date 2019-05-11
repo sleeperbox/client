@@ -7,7 +7,7 @@ import {
   Container,
   Grid,
   Divider,
-  Header,
+  Image,
   Icon,
   Segment,
   Message
@@ -28,9 +28,10 @@ export default class Register extends Component {
     this.handleChangeLastname = this.handleChangeLastname.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  
+
   // eslint-disable-next-line react/no-deprecated
-  componentWillMount() {this.setState({
+  componentWillMount() {
+    this.setState({
       isLogin: localStorage.getItem("auth")
     });
   }
@@ -119,7 +120,14 @@ export default class Register extends Component {
       padding: "1%"
     };
     return (
-      <div>
+      <div style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        height: "100%",
+        width: "100%",
+        background: "#5b90f6"
+      }}  >
         <Container>
           <Divider hidden />
           {warning == 1 ? (
@@ -133,76 +141,67 @@ export default class Register extends Component {
             columns={1}
             verticalAlign="middle"
           >
-            <Grid.Column style={{ maxWidth: 450 }}>
+            <Grid.Column>
               <Divider hidden />
-              <Header as="h3">
-                <Icon name="file alternate outline" size="large" />
-                Create your Account
-              </Header>
-              <Form size="large" onSubmit={this.handleSubmit}>
-                <Segment stacked>
-                  <Form.Input
-                    fluid
-                    icon="mail"
-                    iconPosition="left"
-                    placeholder="E-Mail Address"
-                    name="email"
-                    type="email"
-                    onChange={this.handleChangeEmail}
-                  />
-                  <Form.Input
-                    fluid
-                    icon="user circle outline"
-                    iconPosition="left"
-                    placeholder="Username"
-                    name="username"
-                    onChange={this.handleChangeUsername}
-                  />
-                  <Form.Input
-                    fluid
-                    icon="pencil alternate"
-                    iconPosition="left"
-                    placeholder="First name"
-                    name="first_name"
-                    onChange={this.handleChangeFirstname}
-                  />
-                  <Form.Input
-                    fluid
-                    icon="pencil alternate"
-                    iconPosition="left"
-                    placeholder="Last name"
-                    name="last_name"
-                    onChange={this.handleChangeLastname}
-                  />
-                  <Form.Input
-                    fluid
-                    icon="lock"
-                    iconPosition="left"
-                    placeholder="Password"
-                    type="password"
-                    name="password"
-                    onChange={this.handleChangePassword}
-                  />
-                  <Button color="blue" fluid size="large">
-                    Daftar
+              <div style={{ textAlign: "center", fontSize: 22, color: "#222" }}>
+                <Image src="http://aprizal.com/public/icon/icon/fashion.png" size="tiny" centered />
+                <p style={{ marginTop: -15 }}>enjoy your way</p>
+              </div>
+              <Divider hidden />
+              <Form size="small" onSubmit={this.handleSubmit}>
+                <Form.Input
+                  fluid
+                  icon="mail"
+                  iconPosition="left"
+                  placeholder="E-Mail Address"
+                  name="email"
+                  type="email"
+                  onChange={this.handleChangeEmail}
+                />
+                <Form.Input
+                  fluid
+                  icon="user circle outline"
+                  iconPosition="left"
+                  placeholder="Username"
+                  name="username"
+                  onChange={this.handleChangeUsername}
+                />
+                <Form.Input
+                  fluid
+                  icon="pencil alternate"
+                  iconPosition="left"
+                  placeholder="First name"
+                  name="first_name"
+                  onChange={this.handleChangeFirstname}
+                />
+                <Form.Input
+                  fluid
+                  icon="pencil alternate"
+                  iconPosition="left"
+                  placeholder="Last name"
+                  name="last_name"
+                  onChange={this.handleChangeLastname}
+                />
+                <Form.Input
+                  fluid
+                  icon="lock"
+                  iconPosition="left"
+                  placeholder="Password"
+                  type="password"
+                  name="password"
+                  onChange={this.handleChangePassword}
+                />
+                <Button fluid size="small" style={{ background: "#222", color: "#fff" }}>
+                  Sign Up
                   </Button>
-                </Segment>
               </Form>
-              <Message attached="bottom" warning>
-                Already signed up?&nbsp;<a href="#/login">Login Here</a>
-                &nbsp;instead.
-              </Message>
-            </Grid.Column>
-            <Grid.Column
-              verticalAlign="middle"
-              style={areaRegisterButtonResponsive}
-            >
-            </Grid.Column>
-          </Grid>
-          <Divider />
-          <Segment textAlign="center">
-            <i>app version 2.7</i>
-          </Segment>
+              <br />
+              <span style={{ background: "transparent", border: "none", color: "#fff" }}>
+                already signed up? <a href="#/login" style={{color: "#fff"}}><u>sign in here instead</u></a>
+                <Divider hidden style={{marginTop: -10}}/>
+                <small style={{ color: "#fff" }}>app version 2.7</small>
+              </span>
+            </Grid.Column></Grid>
         </Container>
       </div>
     );
