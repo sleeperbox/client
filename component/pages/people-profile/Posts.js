@@ -199,7 +199,7 @@ export default class MyPost extends Component {
                           <div className="hexagon">
                             {data.fotocontent !== null ? (
                               <Modal
-                                onClick={() => this.setState({ kode: 0 })}
+                                onClick={() => this.setState({ loaders: 1 })}
                                 onClose={this.close}
                                 closeIcon
                                 trigger={
@@ -359,7 +359,7 @@ export default class MyPost extends Component {
                               </Modal>
                             ) : (
                                 <Modal
-                                  onClick={() => this.setState({ kode: 0 })}
+                                  onClick={() => this.setState({ loaders: 1 })}
                                   onClose={this.close}
                                   closeIcon
                                   trigger={
