@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import HeaderProfile from "./HeaderProfile";
 import HeaderPeople from "./HeaderPeople";
 import Action from "./Action";
-import Posts from "./Posts";
-import { Container, Grid, Divider, Image, List, Header, Button, Modal, Dimmer, Loader, Segment, } from "semantic-ui-react";
+import Post from './Posts';
+import PostLightWeight from './PostsLightWeight';
+import { Icon,Menu, Dimmer, Loader } from "semantic-ui-react";
 import axios from "axios";
+import MenuProfile from '../profile/MenuProfile'
 
 export default class Index extends Component {
   constructor(props) {
@@ -16,6 +18,7 @@ export default class Index extends Component {
       datas: [],
       email_friend: "",
       loading: true,
+      activeItem: "hexagrid"
     };
     this.loading = this.loading.bind(this)
   }
@@ -56,22 +59,38 @@ export default class Index extends Component {
         </div>  
     );
 }
-
-
-  componentDidUpdate(prevProps, prevState) {}
+handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+filterPost() {
+  const { activeItem } = this.state
+  return <Menu fluid pointing secondary widths={2} style={{marginTop: -5, position: "relative", background: "#fff", color: "#222"}}>
+          <Menu.Item
+          name='hexagrid'
+          active={activeItem === 'hexagrid'}
+          onClick={this.handleItemClick}
+          ><Icon name="h" style={{color: "#5b90f6"}}/><span style={{marginLeft: -5}}>exagrid</span></Menu.Item>
+          <Menu.Item
+          name='lightweight'
+          active={activeItem === 'lightweight'}
+          onClick={this.handleItemClick}
+          ><Icon name="bolt" style={{color: "#5b90f6"}}/><span style={{marginLeft: -7}}>ightweight</span></Menu.Item>
+    
+  </Menu>
+}
 
   render() {
     sessionStorage.setItem("email_friend", this.state.email_friend);
     const {loading} = this.state
     return (
-      <div style={{ marginBottom: 45 }}>
+      <div>
         {loading ? (this.loading()) : ( <div>
-        <HeaderPeople />
+        {/* <HeaderPeople />
         <Divider hidden />
         <Divider hidden />
-        <Divider hidden />
+        <Divider hidden /> */}
         <HeaderProfile />
-        <Action />
+        {this.filterPost()}
+        {this.state.activeItem == "hexagrid" ? <Post /> : <PostLightWeight/> }
+        <MenuProfile/>
         </div>
         )}
         

@@ -123,7 +123,7 @@ export default class MyPost extends Component {
         data: {
           email: this.state.email // This is the body part
         }
-      }).then(result => this.setState({ posting: result.data, thanks: 0 }, () => window.location.reload()));
+      }).then(result => this.setState({ posting: result.data, thanks: 0 }));
     }
   }
   handlePost(event) {
@@ -318,7 +318,7 @@ export default class MyPost extends Component {
             <Divider hidden />
           </Container>
         ) : (
-          <div>
+          <Container>
             <Segment basic>
             <ul id="grid" className="clear">
               {posting.map((data, index) => {
@@ -327,6 +327,7 @@ export default class MyPost extends Component {
                       <div className="hexagon">
                         {data.fotocontent !== null ? (
                           <Modal
+                          onClick={() => this.setState({ kode: 0 })}
                             onClose={this.close}
                             closeIcon
                             trigger={
@@ -560,6 +561,7 @@ export default class MyPost extends Component {
                           </Modal>
                         ) : (
                           <Modal
+                          onClick={() => this.setState({ kode: 0 })}
                             onClose={this.close}
                             closeIcon
                             trigger={
@@ -839,19 +841,6 @@ export default class MyPost extends Component {
                                     <br />
                                     <br />
                                   </GridColumn>
-
-
-
-
-
-
-
-
-
-
-
-
-
                                 </Grid.Row>
                               </Grid>
                             </Modal.Content>
@@ -868,7 +857,7 @@ export default class MyPost extends Component {
               <Divider hidden />
               <Divider hidden />
             </Segment>
-          </div>
+          </Container>
         )}
       </div>
     );
