@@ -10,19 +10,40 @@ import {
   Input,
   
 } from "semantic-ui-react";
+import axios from 'axios'
 
 export default class AccountSetting extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       username: localStorage.getItem("username"),
       password_lama: "",
       password_baru: "",
       modalOpen: false,
-      modalOpenPassword: false
+      modalOpenPassword: false,
+      username_: ""
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentWillMount() {
+    axios({
+      method: "post",
+      url: "http://apps.aprizal.com/api/user",
+      headers: {
+        "Acces-Control-Allow-Origin": true,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result =>
+      this.setState({
+        username_: result.data.username
+      })
+    );
   }
 
   handleOpen = () => this.setState({ modalOpen: true });
@@ -39,23 +60,28 @@ export default class AccountSetting extends Component {
 
   logout() {
     localStorage.removeItem('email')
-    localStorage.removeItem('auth')
+    localStorage.removeItem('first_name')
+    localStorage.removeItem('last_name')
+    localStorage.removeItem('username')
+    localStorage.removeItem('auth'),
+    localStorage.removeItem('phone')
     localStorage.removeItem('menu')
     window.location='#/login';
 }
 
   delete() {
     event.preventDefault();
-    var data = {
+    var datas = {
       email: this.state.email
     };
-    fetch("/api/user/delete", {
+    axios("http://apps.aprizal.com/api/user/delete", {
       method: "DELETE",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
-      body: JSON.stringify(data)
+      data: datas
     }).then(
       localStorage.removeItem("email"),
       localStorage.removeItem("auth"),
@@ -66,18 +92,19 @@ export default class AccountSetting extends Component {
 
   ubahPassword() {
     event.preventDefault();
-    var data = {
+    var datas2 = {
       email: this.state.email,
       password_lama: this.state.password_lama,
       password_baru: this.state.password_baru
     };
-    fetch("/api/user/ubahpassword", {
+    axios("http://apps.aprizal.com/api/user/ubahpassword", {
       method: "PUT",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
-      body: JSON.stringify(data)
+      data: datas2
     }).then(this.setState({ modalOpenPassword: false }));
   }
   handlePost(event) {
@@ -102,31 +129,33 @@ export default class AccountSetting extends Component {
           <Divider hidden />
           <Form>
             <Form.Field>
-              <label>Your Email</label>
+              <label>your email</label>
               <input defaultValue={this.state.email} disabled />
             </Form.Field>
             <Form.Field>
-              <label>Username</label>
-              <input defaultValue={this.state.username} disabled />
+              <label>username</label>
+              <input defaultValue={this.state.username_} disabled />
             </Form.Field>
 
             <Modal
-              trigger={<a onClick={this.handleOpenPassword} ><i>Change Password</i></a>}
+              trigger={<a onClick={this.handleOpenPassword} style={{float: "right"}}><i style={{color: "#232323"}}>update password</i></a>}
               open={this.state.modalOpenPassword}
               onClose={this.handleClosePassword}
               basic
               size="small"
               closeIcon
             >
-              <Header icon="exchange" content="Change Password" />
+              <Header content="" />
               <Modal.Content>
                 <label style={marginFieldPassword}>Old Password : </label>
+                <br />
                 <Input
                   type="password"
                   name="password_lama"
                   onChange={this.handlePost.bind(this)}
                   icon={{name: "lock", circular: true, link: true }}
-                  placeholder="Old Password"
+                  placeholder='type your current or last password'
+                  fluid
                 />
                 <br />
                 <br />
@@ -136,7 +165,8 @@ export default class AccountSetting extends Component {
                   name="password_baru"
                   onChange={this.handlePost.bind(this)}
                   icon={{name: "lock", circular: true, link: true }}
-                  placeholder="New Password"
+                  placeholder='we recommend an unpredictable character'
+                  fluid
                 />
               </Modal.Content>
               <Modal.Actions>
@@ -146,47 +176,17 @@ export default class AccountSetting extends Component {
                   onClick={this.ubahPassword.bind(this)}
                   inverted
                 >
-                  <Icon name="checkmark" /> Change Password
+                update
                 </Button>
               </Modal.Actions>
             </Modal>
           </Form>
-          <br />
-          
-          <Modal
-            trigger={
-              <div>
-                <Button size="tiny" style={{ float: "right", background: "#575757", color: "white", marginTop: "-10px"}}>
-                  <Button.Content onClick={this.handleOpen}>
-                    <Icon name='user delete' />
-                  </Button.Content>
-                </Button>
-              </div>
-            }
-            open={this.state.modalOpen}
-            onClose={this.handleClose}
-            basic
-            size="small"
-          >
-            <Header icon="trash" content="Delete Account!" />
-            <Modal.Content>
-              <p>Are You Sure?</p>
-            </Modal.Content>
-            <Modal.Actions>
-              <Button onClick={this.handleClose} inverted>
-                <Icon name="remove"  color="red" /> No
-              </Button>
-              <Button inverted onClick={this.delete.bind(this)}>
-                <Icon name="checkmark" color="green" /> Yes
-              </Button>
-            </Modal.Actions>
-          </Modal>
-            <div>
-              <Button size="tiny" style={{ float: "right", background: "#575757", color: "white", marginTop: "-10px"}}>
-                <Button.Content onClick={this.logout.bind(this)}>
-                  <Icon name='log out' />
-                </Button.Content>
-              </Button>
+          <br/>
+          <br/>
+            <div style={{marginTop: -12, position: "relative", right: 0, float: "right"}}>
+                <a onClick={this.logout.bind(this)}>
+                  <i style={{color: "#232323"}}>sign out</i>
+                </a>
             </div>
           <Divider hidden />
         </Container>

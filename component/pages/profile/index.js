@@ -1,52 +1,35 @@
 import React, { Component } from "react";
-import { Dimmer, Loader, Image, Segment, Container } from "semantic-ui-react";
+import { Dimmer, Loader, Menu, Icon } from "semantic-ui-react";
 import MenuProfile from './MenuProfile';
 import HeaderProfile from './HeaderProfile';
 import MyPost from './MyPost';
-import MoreCategory from './MoreCategory';
+import MyPostLightWeight from './MyPostLightWeight';
 
 export default class Index extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: '',
-            email: '',
+            isLogin: localStorage.getItem('auth'),
+            email: localStorage.getItem('email'),
             loading: true,
+            activeItem: "hexagrid"
         };
     }
 
     componentWillMount() {
-        if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
-            // this.setState({loading: false})
-            setTimeout(() =>  {
-                this.setState({loading: false})
+        if (this.state.loading == true || this.setState.isLogin == '' || this.setState.email == '') {
+            setTimeout(() => {
+                this.setState({ loading: false })
             }, 100)
         }
-        const email = JSON.parse(localStorage.getItem('email'))
-            const auth = JSON.parse(localStorage.getItem('auth'))
-            this.setState({
-                email,
-                isLogin: auth
-            }) 
+
     }
 
-    componentDidMount() {
-        if(this.state.isLogin != true){
-            window.location='#/login';
-        }
-        // console.log('first ', this.state.loading)
-        // setTimeout(() => {
-        //     if(this.state.loading == true){
-        //         this.setState({loading: false}, () => console.log('end: ', this.state.loading))
-        //     }
-        // }, 500)
-    }
-
-    shouldComponentUpdate(newProps, newState){
-        if(newState.isLogin){
+    shouldComponentUpdate(newProps, newState) {
+        if (newState.isLogin) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -61,24 +44,43 @@ export default class Index extends Component {
                 <Dimmer active inverted>
                     <Loader size='large'>Plase Wait</Loader>
                 </Dimmer>
-            </div>        
+            </div>
         );
     }
 
-    render () {
+    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+    filterPost() {
+        const { activeItem } = this.state
+        return <Menu fluid pointing secondary widths={2} style={{marginTop: -5, position: "relative", background: "#fff", color: "#222"}}>
+                <Menu.Item
+                name='hexagrid'
+                active={activeItem === 'hexagrid'}
+                onClick={this.handleItemClick}
+                ><Icon name="h" style={{color: "#5b90f6"}}/><span style={{marginLeft: -5}}>exagrid</span></Menu.Item>
+                <Menu.Item
+                name='lightweight'
+                active={activeItem === 'lightweight'}
+                onClick={this.handleItemClick}
+                ><Icon name="bolt" style={{color: "#5b90f6"}}/><span style={{marginLeft: -7}}>ightweight</span></Menu.Item>
+          
+        </Menu>
+    }
+
+    render() {
         const { loading } = this.state;
         return (
-        <div>
-            {loading ? (this.loading()
+            <div>
+                {loading ? (this.loading()
                 ) : (
-                    <div>
-                        <HeaderProfile />
-                        <MoreCategory />
-                        <MyPost />
-                        <MenuProfile />
-                    </div>
-                )}
-        </div>
+                        <div>
+                            <HeaderProfile />
+                            {this.filterPost()}
+                            {this.state.activeItem == "hexagrid" ? <MyPost /> : <MyPostLightWeight/> }
+                            <MenuProfile />
+                        </div>
+                    )}
+            </div>
         );
     }
 

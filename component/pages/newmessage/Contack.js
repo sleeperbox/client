@@ -20,8 +20,9 @@ export default class Contack extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/search",
+      url: "http://apps.aprizal.com/api/search",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -46,8 +47,9 @@ export default class Contack extends Component {
     if (this.state.kode == 1) {
       axios({
         method: "post",
-        url: "/api/search",
+        url: "http://apps.aprizal.com/api/search",
         headers: {
+          "Acces-Control-Allow-Origin": true,
           "Content-Type": "application/json",
           Accept: "application/json"
         },
@@ -101,19 +103,23 @@ export default class Contack extends Component {
 
   render() {
     const { datas } = this.state
-
+    const marginSearch = {
+      marginTop : "1.5em",
+      marginBottom: "-0.8em",
+      marginLeft : "1em",
+      marginRight : "1em"
+    }
     return (
       <div>
-        <Input
+        <Input 
+          style={marginSearch}
           fluid
           icon="search"
           onChange={this.handlePost}
           name="cari"
+          placeholder="Search Contact"
           value={this.state.cari}
         />
-        <Divider hidden />
-        <Divider hidden />
-        <Divider hidden />
         <Divider hidden />
             {datas.length === 0 ? (
               this.generateZeroData()
@@ -121,14 +127,20 @@ export default class Contack extends Component {
             <Container>
             {datas.map(data => {
               return (
-                <Grid columns={2} key={data._id}>  
+                <Grid columns={2} key={data._id} style={{marginBottom: "-1.5em"}}>  
                   <Grid.Column>
                     <List verticalAlign="middle" onClick={() => {this.message(data.username)}}>
                       { data.email === this.state.email ? null : 
                       <List.Item>
-                        <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
+                        <Image
+                            avatar
+                            src={
+                              "http://aprizal.com/public/avatar/" + data.foto
+                            }
+                            style={{ width: "25%", height: "25%" }}
+                          />
                         <List.Content>
-                          <List.Header>{data.username}</List.Header>
+                          <List.Header style={{ fontSize: "15px" }}>{data.username}</List.Header>
                         </List.Content>
                       </List.Item>
                       }

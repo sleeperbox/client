@@ -5,27 +5,26 @@ import {
   Container,
   Grid,
   Divider,
-  Header,
   Icon,
+  Image,
   Segment,
   Message
 } from "semantic-ui-react";
 import axios from "axios";
 import queryString from "query-string";
+import { emailAction, passwordAction, tipeAction } from '../actions';
+import store from '../../../store';
 
 export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
-      isLogin: false,
-      token: "",
-      type: "password",
+      isLogin: localStorage.getItem('auth'),
       kode: 0,
       warning: null
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeEmail = this.handleChangeEmail.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.ShowHide = this.ShowHide.bind(this);
   }
@@ -34,33 +33,41 @@ export default class Register extends Component {
   componentWillMount() {
     var query = queryString.parse(this.props.location.search);
     if (query.token) {
-      axios.get('https://www.googleapis.com/plus/v1/people/me?access_token=' + query.token)
-      .then(response => {
-        localStorage.setItem('email', JSON.stringify(response.data.emails[0].value))
-        localStorage.setItem('auth', true)
-        axios({
-          method: "POST",
-          url: "/api/register",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          },
-          data: {
+      axios({
+        method: "GET",
+        url: 'https://www.googleapis.com/plus/v1/people/me?access_token=' + query.token,
+        headers: {
+          "Acces-Control-Allow-Origin": true,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      })
+        .then(response => {
+          var opt = {
             email: response.data.emails[0].value,
             username: response.data.name.givenName,
             first_name: response.data.name.givenName,
             last_name: response.data.name.familyName,
             password: "123"
           }
-        }).then(window.location = "/#/profile");
-      }
-      )
+          axios({
+            method: "POST",
+            url: "http://apps.aprizal.com/api/register",
+            headers: {
+              "Acces-Control-Allow-Origin": true,
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            },
+            data: opt
+          }).then(() => {
+            localStorage.setItem('email', response.data.emails[0].value)
+            localStorage.setItem('auth', "true")
+            window.location = "/#/profile"
+          }
+          ).catch(err => console.log(err))
+        }
+        )
     }
-    this.setState(
-      {
-        isLogin: localStorage.getItem("auth")
-      }
-    );
   }
 
   componentDidMount() {
@@ -81,68 +88,80 @@ export default class Register extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { isLogin } = this.state;
     if (isLogin == true) {
-      localStorage.setItem("email", JSON.stringify(this.state.email));
-      localStorage.setItem("auth", JSON.stringify(this.state.isLogin));
       window.location = "#/profile";
-    }else if(this.state.kode == 1){
-      this.setState({ kode: 0})
+    } else if (this.state.kode == 1) {
+      this.setState({ kode: 0 })
     }
   }
 
-  handleChange(event) {
+  handleChangeEmail(event) {
     let target = event.target;
     let value = target.value;
-    let name = target.name;
-    this.setState({
-      [name]: value
-    });
+    store.dispatch(emailAction(value))
   }
 
-  ShowHide(event){
+  handleChangePassword(event) {
+    let target = event.target;
+    let value = target.value;
+    store.dispatch(passwordAction(value))
+  }
+
+  ShowHide(event) {
     event.preventDefault();
     event.stopPropagation();
-    if(this.state.type == "password"){
-      this.setState({ type: "input", kode: 1})
-    }else{
-      this.setState({ type: "password", kode: 1})
-    }  
+    if (store.getState().form.tipe == "password") {
+      store.dispatch(tipeAction('text'))
+      this.setState({ kode: 1 })
+    } else {
+      store.dispatch(tipeAction('password'))
+      this.setState({ kode: 1 })
+    }
   }
 
   handleSubmit(event) {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "/api/login",
+      url: "http://apps.aprizal.com/api/login",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
-        email: this.state.email,
-        password: this.state.password
+        email: store.getState().form.email,
+        password: store.getState().form.password
       }
-    }).then(result =>
-      this.setState({
-        warning: result.data,
-        isLogin: result.data.auth,
-        token: result.data.token
-      })
-    );
+    }).then(result => {
+      this.setState({ warning: result.data, kode: 1, isLogin: result.data.auth })
+      window.localStorage.setItem('email', result.data.email)
+      window.localStorage.setItem('auth', result.data.auth)
+      window.localStorage.setItem('username', result.data.username)
+      window.localStorage.setItem('phone', result.data.phone_number)
+
+    });
   }
 
   googleSignin() {
-    window.location = "/api/auth/google"
+    window.location = "http://apps.aprizal.com/api/auth/google"
   }
 
   render() {
     const { warning } = this.state;
     return (
-      <div>
+      <div style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        height: "100%",
+        width: "100%",
+        background: "#5b90f6"
+      }}>
         <Container>
           <Divider hidden />
           {warning == 1 ? (
-            <Message negative>
-              <center>Email/Password is Wrong !</center>
+            <Message negative style={{ marginBottom: "-3em", marginTop: "1em" }}>
+              <center>Your Input is Wrong !</center>
             </Message>
           ) : null}
           <Grid
@@ -150,46 +169,44 @@ export default class Register extends Component {
             style={{ height: "100%" }}
             columns={1}
             verticalAlign="middle"
+
           >
-            <Grid.Column style={{ maxWidth: 450 }}>
+            <Grid.Column>
               <Divider hidden />
+              <div style={{ textAlign: "center", fontSize: 22, color: "#222" }}>
+                <Image src="http://aprizal.com/public/icon/icon/fashion.png" size="tiny" centered />
+                <p style={{ marginTop: -15 }}>enjoy your way</p>
+              </div>
               <Divider hidden />
-              <Header as="h1" color="orange">
-                <i>enjoy your Way!</i>
-              </Header>
-              <Divider hidden/>
-              <Form size="large" onSubmit={this.handleSubmit}>
-                <Segment stacked>
-                  <Form.Input
-                    fluid
-                    icon="user"
-                    iconPosition="left"
-                    placeholder="E-Mail Address"
-                    name="email"
-                    type="email"
-                    onChange={this.handleChange}
-                  />
-                  <Form.Input
-                    fluid
-                    icon="lock"
-                    iconPosition="left"
-                    placeholder="Password"
-                    type={this.state.type}
-                    name="password"
-                    onChange={this.handleChange}
-                    action={{ icon:"eye", onClick:this.ShowHide}}
-                    />
-                  
-                  <Button color="blue" fluid size="large">
-                    Log In
+              <Form size="small" onSubmit={this.handleSubmit}>
+                <Form.Input
+                  fluid
+                  icon="user"
+                  iconPosition="left"
+                  placeholder="email, phone number or username"
+                  name="email"
+                  onChange={this.handleChangeEmail}
+                />
+                <Form.Input
+                  fluid
+                  icon="lock"
+                  iconPosition="left"
+                  placeholder="password"
+                  type={store.getState().form.tipe}
+                  name="password"
+                  onChange={this.handleChangePassword}
+                  action={{ icon: "eye", onClick: this.ShowHide }}
+                />
+
+                <Button style={{ background: "#232323", color: "#fff" }} fluid size="small">
+                  Sign In
                   </Button>
-                </Segment>
               </Form>
             </Grid.Column>
             <Grid.Column>
-              <Message>                
-                New to Way ? <a href="#/register"><i>Sign Up Here !</i></a>
-                <Divider horizontal>Or</Divider>
+              <span style={{ background: "transparent", border: "none", color: "#fff" }}>
+                didn't have an account? <a href="#/register" style={{color: "#fff"}}><u>sign up now!</u></a>
+                {/* <Divider horizontal>or</Divider>
                 <Button
                   onClick={this.googleSignin.bind(this)}
                   content="Sign in with Google"
@@ -197,13 +214,12 @@ export default class Register extends Component {
                   icon="google"
                   size="small"
                   fluid
-                />
-              </Message>
+                /> */}
+                <Divider hidden style={{marginTop: -10}}/>
+                <small style={{ color: "#fff" }}>app version 2.7</small>
+              </span>
             </Grid.Column>
           </Grid>
-          <Segment textAlign="center">
-            <i>app version 1.5</i>
-          </Segment>
         </Container>
       </div>
     );

@@ -6,10 +6,11 @@ export default class DetailProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       username: sessionStorage.getItem("username"),
       profile: [],
       rank: null,
+      point: null,
       temp_total: null
     };
     this.gotoInfluenceList = this.gotoInfluenceList.bind(this);
@@ -18,8 +19,9 @@ export default class DetailProfile extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/people/profile/get",
+      url: "http://apps.aprizal.com/api/people/profile/get",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -32,8 +34,9 @@ export default class DetailProfile extends Component {
     
     axios({
       method: "post",
-      url: "/api/people/profile/get",
+      url: "http://apps.aprizal.com/api/people/profile/get",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -41,19 +44,30 @@ export default class DetailProfile extends Component {
         username: this.state.username // This is the body part
       }
     }).then(result =>
-      this.setState({ profile: result.data, temp_total: result.data[0].total_friends }, () => {
+      this.setState({ profile: result.data, temp_total: result.data.total_friends }, () => {
         let stat = {
           email: this.state.profile[0].email
         };
         axios({
           method: "post",
-          url: "/api/user/rank",
+          url: "http://apps.aprizal.com/api/user/rank",
           headers: {
+            "Acces-Control-Allow-Origin": true,
             "Content-Type": "application/json",
             Accept: "application/json"
           },
           data: stat
-        }).then(result => this.setState( {rank : result.data[0].rank+1}));
+        }).then(result => this.setState( {rank : result.data.rank}));
+        axios({
+          method: "post",
+          url: "http://apps.aprizal.com/api/user/point",
+          headers: {
+            "Acces-Control-Allow-Origin": true,
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          data: stat
+        }).then(result => this.setState({ point: result.data.total_score}));
       })
     );
   }
@@ -98,22 +112,22 @@ export default class DetailProfile extends Component {
                     </center>
                     <Segment basic>
                       <p style={smallFont}>
-                        Posts <span style={toRight}>{data.total_posts}</span>
+                        Post <span style={toRight}>{data.total_posts}</span>
                       </p>
                       <p style={smallFont}>
-                        Influencing{" "}
+                        Follower{" "}
                         <a onClick={this.gotoInfluenceList} style={toRight}>
-                          <u style={{ color: "blue" }}>{temp_total} person</u>
+                          <u style={{ color: "blue" }}>{data.total_friends}</u>
                         </a>
                       </p>
                       <p style={smallFont}>
-                        Awards{" "}
+                        Point{" "}
                         <span style={toRight}>
-                          <u style={{ color: "blue" }}>{data.awards}</u>
+                          <u style={{ color: "blue" }}>{this.state.point}</u>
                         </span>
                       </p>
                       <p style={smallFont}>
-                        Tags{" "}
+                        Tag{" "}
                         <span style={toRight}>
                           <u style={{ color: "blue" }}>{data.tags}</u>
                         </span>

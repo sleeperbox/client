@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { Dimmer, Loader, Icon, Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
-import HeaderNotification from "./HeaderNotification";
-import MenuProfile from "../../profile/MenuProfile";
-import axios from "axios";
+import Action from "./action";
+import axios from "axios"
+import Menu from '../../profile/MenuProfile'
 
 export default class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       datas: [],
       isLogin: "",
       isLoading: true,
@@ -28,8 +28,9 @@ export default class Index extends Component {
   }
     axios({
       method: "post",
-      url: "/api/follow/notif",
+      url: "http://apps.aprizal.com/api/follow/notif",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -132,43 +133,19 @@ export default class Index extends Component {
     );
 }
 
-  render() {
-    const { datas, isLoading, loading } = this.state;
-    return (
-      <div style={{ marginBottom: 45 }}>
-        <HeaderNotification />
-        <Divider hidden />
-        <Divider hidden />
-        <Divider hidden />
-        <Divider hidden />
-        { loading ? (this.loading()
-        ) : datas.length === 0 ? (
-          this.generateZeroData()
-        ) : isLoading ? (
-          this.generateSkeleton()
-        ) : (
-          <Container>
-            {datas.map(data => {
-              return (
-                <Grid columns={2} key={data._id}>
-                  <Grid.Column>
-                    <List verticalAlign="middle">
-                      <List.Item>
-                        <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
-                        <List.Content>
-                          <List.Header>{data.name}</List.Header>
-                          <i>{"Influenced by you"}</i>
-                        </List.Content>
-                      </List.Item>
-                    </List>
-                  </Grid.Column>
-                </Grid>
-              );
-            })}
-          </Container>
-        )}
-        <MenuProfile />
+render() {
+  sessionStorage.setItem("email_friend", this.state.email_friend);
+  const {loading} = this.state
+  return (
+    <div style={{ marginBottom: 45 }}>
+      {loading ? (this.loading()) : ( 
+      <div>
+        <Action />
+        <Menu/>
       </div>
-    );
-  }
+      )}
+      <Menu/>
+    </div>
+  );
+}
 }

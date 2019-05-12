@@ -16,7 +16,7 @@ export default class HeaderInfluence extends Component {
             <Header as="h5">
               <small>
                 <i>
-                  influenced by <a onClick={this.back.bind(this)}>{sessionStorage.getItem("username")}</a>
+                  <a onClick={this.back.bind(this)}>{sessionStorage.getItem("username")}</a>'s follower
                 </i>
               </small>
             </Header>

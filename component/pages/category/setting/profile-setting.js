@@ -15,16 +15,18 @@ import {
   Modal,
   Reveal,
   Icon,
-  label
+  label,
+  Input
 } from "semantic-ui-react";
 import "./Account.css";
 import axios from "axios";
+import InputMask from "react-input-mask";
 
 export default class ProfileSetting extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       username: "",
       first_name: "",
       last_name: "",
@@ -41,27 +43,39 @@ export default class ProfileSetting extends Component {
       value: [],
       tags: [],
       tags2: [],
+      tags3: [],
       option_gender: [],
       modalNotification: false,
       kode: 0,
+      log: [],
+      clicked: 0,
+      tag1: 0,
+      tag2: 0,
+      tag3: 0,
+      tag4: 0,
+      tag5: 0,
+      tag6: 0,
+      tag7: 0,
+      tag8: 0,
+      preview: ""
       // message: '3'
     };
     this.handleTags = this.handleTags.bind(this);
   }
 
-  
-
   handleOpenNotification = () => this.setState({ modalNotification: true });
 
-  handleCloseNotification = () => setTimeout(() => {
-    this.setState({ modalNotification: false })
-  }, 4500);
+  handleCloseNotification = () =>
+    setTimeout(() => {
+      this.setState({ modalNotification: false });
+    }, 4500);
 
   componentWillMount() {
     axios({
       method: "get",
-      url: "/api/tags",
+      url: "http://apps.aprizal.com/api/tags",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       }
@@ -69,8 +83,9 @@ export default class ProfileSetting extends Component {
 
     axios({
       method: "post",
-      url: "/api/user",
+      url: "http://apps.aprizal.com/api/user",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -78,26 +93,25 @@ export default class ProfileSetting extends Component {
         email: this.state.email // This is the body part
       }
     }).then(result =>
-      this.setState(
-        {
-          tags: result.data.tags,
-          first_name: result.data.first_name,
-          last_name: result.data.last_name,
-          phone_number: result.data.phone_number,
-          gender: result.data.jenis_kelamin,
-          tags2: result.data.tags,
-          first_name2: result.data.first_name,
-          last_name2: result.data.last_name,
-          phone_number2: result.data.phone_number,
-          gender2: result.data.jenis_kelamin,
-        },
-      )
+      this.setState({
+        tags: result.data.tags,
+        first_name: result.data.first_name,
+        last_name: result.data.last_name,
+        phone_number: result.data.phone_number,
+        gender: result.data.jenis_kelamin,
+        tags2: result.data.tags,
+        first_name2: result.data.first_name,
+        last_name2: result.data.last_name,
+        phone_number2: result.data.phone_number,
+        gender2: result.data.jenis_kelamin
+      })
     );
 
     axios({
       method: "post",
-      url: "/api/user/avatar",
+      url: "http://apps.aprizal.com/api/user/avatar",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -121,60 +135,97 @@ export default class ProfileSetting extends Component {
       data.append("avatar", this.state.file, this.state.file.name);
       data.append("email", this.state.email);
 
-      axios.post("/api/upload/avatar", data).then(() =>
-        axios({
-          method: "post",
-          url: "/api/user/avatar",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          },
-          data: {
-            email: this.state.email // This is the body part
-          }
-        }).then(result =>
-          this.setState(
-            { avatar: result.data, reload: "0" },
-          )
-        )
-      );
+      axios.post("http://apps.aprizal.com/api/upload/avatar", data);
+      axios({
+        method: "post",
+        url: "http://apps.aprizal.com/api/user/avatar",
+        headers: {
+          "Acces-Control-Allow-Origin": true,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        data: {
+          email: this.state.email // This is the body part
+        }
+      }).then(result => this.setState({ avatar: result.data, reload: "0" }));
     }
   }
 
   update() {
     event.preventDefault();
-    var data = {
-      email: this.state.email,
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      phone_number: this.state.phone_number,
-      gender: this.state.gender,
-      tags: this.state.value
-    };
-    if(this.state.kode == 1){
-      this.setState({kode: 0})
-    }else{
-      this.setState({kode: 0})
+    if (this.state.kode == 1) {
+      this.setState({ kode: 0 });
+    } else {
+      this.setState({ kode: 0 });
     }
-    if(this.state.first_name != this.state.first_name2 || this.state.last_name != this.state.last_name2 || this.state.phone_number != this.state.phone_number2 || this.state.gender != this.state.gender2 || this.state.tags == this.state.tags2){
-      fetch("/api/user/tags", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(data)
-      }).then(window.location.reload());
-    }else{
-      this.setState({kode: 1})
-  }
+    if (
+      this.state.first_name != this.state.first_name2 ||
+      this.state.last_name != this.state.last_name2 ||
+      this.state.phone_number != this.state.phone_number2 ||
+      this.state.gender != this.state.gender2 ||
+      this.state.log != 0
+    ) {
+      if (this.state.log.length == 0) {
+        axios({
+          method: "put",
+          url: "http://apps.aprizal.com/api/user/updates",
+          headers: {
+            "Acces-Control-Allow-Origin": true,
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          data: {
+            email: this.state.email,
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            phone_number: this.state.phone_number,
+            gender: this.state.gender,
+            tags: this.state.tags.toLocaleString()
+          }
+        }).then(
+          setTimeout(() =>  {
+            this.setState({kode: 0})
+            }, 2000)
+        );
+      } else 
+      {
+        axios({
+          method: "put",
+          url: "http://apps.aprizal.com/api/user/updates",
+          headers: {
+            "Acces-Control-Allow-Origin": true,
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          data: {
+            email: this.state.email,
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            phone_number: this.state.phone_number,
+            gender: this.state.gender,
+            tags: this.state.log.toLocaleString()
+          }
+        }).then(
+          setTimeout(() =>  {
+          this.setState({kode: 0}, () => window.location.reload())
+          }, 2000)
+      );
+      }
+    } else {
+      this.setState({ kode: 1 });
+    }
   }
 
   fileHandler = event => {
-    this.setState({
-      file: event.target.files[0],
-      reload: "1"
-    });
+    if (!URL.createObjectURL(event.target.files[0])) {
+      return false;
+    } else {
+      this.setState({
+        file: event.target.files[0],
+        preview: URL.createObjectURL(event.target.files[0]),
+        reload: "1"
+      });
+    }
   };
 
   handlePost(event) {
@@ -197,6 +248,62 @@ export default class ProfileSetting extends Component {
     this.setState({ value: event.target.value });
   };
 
+  saveTags = value => this.setState({ log: [value, ...this.state.log] });
+
+  deleteTags(value) {
+    let arr = this.state.log.filter(item => !value.includes(item));
+    this.setState({ log: arr });
+  }
+
+  handleTag = value => {
+    value == "computer-gadget"
+      ? this.setState({ tag1: 1 })
+      : value == "family-love"
+      ? this.setState({ tag2: 1 })
+      : value == "fact-rumour"
+      ? this.setState({ tag3: 1 })
+      : value == "business-work"
+      ? this.setState({ tag4: 1 })
+      : value == "fashion-lifestyle"
+      ? this.setState({ tag5: 1 })
+      : value == "quotes"
+      ? this.setState({ tag6: 1 })
+      : value == "riddles"
+      ? this.setState({ tag7: 1 })
+      : value == "other"
+      ? this.setState({ tag8: 1 })
+      : null;
+  };
+
+  handleClose = value => {
+    value == "computer-gadget"
+      ? this.setState({ tag1: 0 })
+      : value == "family-love"
+      ? this.setState({ tag2: 0 })
+      : value == "fact-rumour"
+      ? this.setState({ tag3: 0 })
+      : value == "business-work"
+      ? this.setState({ tag4: 0 })
+      : value == "fashion-lifestyle"
+      ? this.setState({ tag5: 0 })
+      : value == "quotes"
+      ? this.setState({ tag6: 0 })
+      : value == "riddles"
+      ? this.setState({ tag7: 0 })
+      : value == "other"
+      ? this.setState({ tag8: 0 })
+      : null;
+  };
+
+  handleRemove(del) {
+    this.deleteTags(del);
+    this.handleClose(del);
+  }
+
+  handleClick(save) {
+    this.saveTags(save);
+    this.handleTag(save);
+  }
 
   render() {
     const {
@@ -206,34 +313,53 @@ export default class ProfileSetting extends Component {
       first_name,
       last_name,
       phone_number,
-      gender
+      gender,
+      tag1,
+      tag2,
+      tag3,
+      tag4,
+      tag5,
+      tag6,
+      tag7,
+      tag8
     } = this.state;
     const option_gender = [
-      {icon: "mars", text: "Male", value: "Laki-laki" },
-      {icon: "venus", text: "Female", value: "Perempuan" }
+      { icon: "mars", text: "Male", value: "Laki-laki" },
+      { icon: "venus", text: "Female", value: "Perempuan" }
     ];
+    const maxButton = {
+      margin: "2px"
+    };
     return (
-      <div >
+      <div>
         <Header as="h3" dividing>
-          Profile Setting
+          Account Information
         </Header>
         <Container>
-            
           <Grid verticalAlign="middle" columns={2} centered>
             <GridColumn>
-              <Image
-                bordered
-                size="large"
-                src={
-                  "http://localhost:3000/src/web-api/public/avatar/" +
-                  this.state.avatar
-                }
-                circular
-                centered
-                style={{height: "120px", width: "120px"}}
-              />
-            
-              <Form style={{marginTop: "-30px", float: "right"}}>
+              {this.state.preview === "" ? (
+                <Image
+                  bordered
+                  src={
+                    "http://aprizal.com/public/avatar/" +
+                    this.state.avatar
+                  }
+                  circular
+                  centered
+                  style={{ height: "140px", width: "140px", border: "2px solid #555" }}
+                />
+              ) : (
+                <Image
+                  bordered
+                  src={this.state.preview}
+                  circular
+                  centered
+                  style={{ height: "140px", width: "140px", border: "2px solid #555" }}
+                />
+              )}
+
+              <Form style={{ marginTop: "-30px", float: "right" }}>
                 <Form.Field>
                   <div className="input-file-container">
                     <input
@@ -242,34 +368,34 @@ export default class ProfileSetting extends Component {
                       type="file"
                       onChange={this.fileHandler}
                     />
-                    
+
                     <Icon
                       bordered
                       circular
-                      name='camera'
-                      size='big'
+                      // style={{color: "#5b90f6"}}
+                      name="camera"
+                      size="big"
                       htmlFor="my-file"
                       // className="input-file-trigger"
                     />
-
                   </div>
                   <p className="file-return" />
                 </Form.Field>
               </Form>
             </GridColumn>
-          </Grid> 
-          
+          </Grid>
+
           <Form>
             <Form.Field>
-              <label>First Name</label>
+              <label>first name</label>
               <input
                 placeholder="first name"
                 name="first_name"
                 defaultValue={first_name}
                 onChange={this.handlePost.bind(this)}
               />
-              <Divider hidden/>
-              <label>Last Name</label>
+              <Divider hidden />
+              <label>last name</label>
               <input
                 placeholder="last name"
                 name="last_name"
@@ -277,59 +403,148 @@ export default class ProfileSetting extends Component {
                 onChange={this.handlePost.bind(this)}
               />
               <Divider hidden />
-              <label>Phone Number</label>
-              <input
-                type="number" 
-                pattern="[0-9]*" 
-                placeholder="0811xxxxx"
-                name="phone_number"
-                defaultValue={phone_number}
-                onChange={this.handlePost.bind(this)}
+              <label>gender</label>
+              <Dropdown
+                placeholder="Gender"
+                style={{ position: "relative", display: "block" }}
+                onChange={this.setGender.bind(this)}
+                options={option_gender}
+                fluid
+                selection
+                value={gender}
               />
-            <Divider hidden />
-            <label>Gender</label>
-            <Dropdown
-              placeholder="Gender"
-              style={{ position: "relative", display: "block" }}
-              onChange={this.setGender.bind(this)}
-              options={option_gender}
-              fluid
-              selection
-              value={gender}
-            />
-            <Divider hidden />
-            <label>Choosen Tags :</label>
-            <b style={{color: "blue"}}><i>&emsp;{tags}</i></b>
-            
-            <Divider hidden />
-            <Dropdown
-              placeholder="tags"
-              style={{ position: "relative", display: "block", marginTop: "10px" }}
-              onChange={this.setValue.bind(this)}
-              fluid
-              multiple
-              selection
-              options={option}
-              value={value}
-            />
-           
-            <Modal
-              trigger={
-                <Button
-                  fluid
-                  style={{background: "#575757", color: "white", marginTop: "10px"}}
-                  size="tiny"
-                  onClick={this.update.bind(this)}>Update Profile</Button>
-              }
-              open={this.state.modalOpenNotification}
-              onClose={this.handleCloseNotification}
-              basic
-              size="small"
+              <Divider hidden />
+                <label>phone number</label>
+              <Input
+                type="text"
+                placeholder="0811xxxxxxxx"
               >
-              {this.state.kode === 1 ? <Header style={{ textAlign: "center" }} content="No Updated !" /> : <Header style={{ textAlign: "center" }} content="Account Updated !" />}
-            </Modal>
+                <InputMask
+                  mask="9999999999999"
+                  maskChar={null}
+                  name="phone_number"
+                  value={phone_number == "" ? "" : phone_number}
+                  onChange={this.handlePost.bind(this)}
+                />
+              </Input>
+              <Divider hidden />
+              <label>choosen tags :</label>
+              <p>
+                <i>{tags}</i>
+              </p>
+
+              <Divider hidden />
+              {option.map((data, index) => {
+                return (
+                  <Button.Group
+                    key={data.value}
+                    widths="1"
+                    size="tiny"
+                    style={maxButton}
+                  >
+                    {tag1 == 1 && index == 0 ? (
+                      <Button
+                        color="black"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag2 == 1 && index == 1 ? (
+                      <Button
+                        color="black"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag3 == 1 && index == 2 ? (
+                      <Button
+                        color="black"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag4 == 1 && index == 3 ? (
+                      <Button
+                        color="black"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag5 == 1 && index == 4 ? (
+                      <Button
+                        color="black"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag6 == 1 && index == 5 ? (
+                      <Button
+                        color="black"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag7 == 1 && index == 6 ? (
+                      <Button
+                        color="black"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : tag8 == 1 && index == 7 ? (
+                      <Button
+                        color="black"
+                        onClick={() => this.handleRemove(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    ) : (
+                      <Button
+                        basic
+                        color="black"
+                        onClick={() => this.handleClick(data.value)}
+                      >
+                        {data.text}
+                      </Button>
+                    )}
+                  </Button.Group>
+                );
+              })}
+
+              <Modal
+                trigger={
+                  <Button
+                    fluid
+                    style={{
+                      background: "#232323",
+                      color: "#fff",
+                      marginTop: "10px"
+                    }}
+                    size="tiny"
+                    onClick={this.update.bind(this)}
+                  >
+                    update profile
+                  </Button>
+                }
+                open={this.state.modalOpenNotification}
+                onClose={this.handleCloseNotification}
+                basic
+                size="small"
+              >
+                {this.state.kode === 1 ? (
+                  <Header
+                  style={{ textAlign: "center" }}
+                >Nothing Was Changing<br/><small>tap anywhere to close...</small></Header>
+                ) : (
+                  <Header
+                    style={{ textAlign: "center" }}
+                  >Account Updated<br/><small>tap anywhere to close...</small></Header>
+                )
+                }
+              </Modal>
             </Form.Field>
           </Form>
+          <Divider hidden />
         </Container>
         <Divider hidden />
         <Divider hidden />

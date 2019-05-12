@@ -12,7 +12,7 @@ export default class SendMessage extends Component {
       menu: localStorage.getItem("menu"),
       datas: [],
       isLoading: true,
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       content: "",
       tags: "",
       options: [],
@@ -43,7 +43,6 @@ export default class SendMessage extends Component {
     this.setState({
       [name]: value
     })
-    console.log(this.state.pesan)
   }
 
   generateSkeleton() {

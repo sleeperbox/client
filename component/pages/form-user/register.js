@@ -1,13 +1,13 @@
 import React, { Component } from "react";
+import store from '../../../store';
+import { emailAction, passwordAction, usernameAction, firstnameAction, lastnameAction } from '../actions';
 import {
   Button,
   Form,
   Container,
   Grid,
-  Label,
-  Flag,
   Divider,
-  Header,
+  Image,
   Icon,
   Segment,
   Message
@@ -18,16 +18,14 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      username: "",
-      first_name: "",
-      last_name: "",
-      password: "",
-      isLogin: "",
-      token: "",
+      isLogin: '',
       warning: null
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeEmail = this.handleChangeEmail.bind(this);
+    this.handleChangeUsername = this.handleChangeUsername.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.handleChangeFirstname = this.handleChangeFirstname.bind(this);
+    this.handleChangeLastname = this.handleChangeLastname.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -51,41 +49,61 @@ export default class Register extends Component {
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {}
-
   componentDidUpdate(prevProps, prevState) {
     const { isLogin } = this.state;
     if (isLogin === true) {
-      localStorage.setItem("email", JSON.stringify(this.state.email));
-      localStorage.setItem("auth", JSON.stringify(this.state.isLogin));
+      localStorage.setItem("email", store.getState().form.email.toString().toLowerCase());
+      localStorage.setItem("auth", this.state.isLogin);
       window.location = "#/profile";
     }
   }
 
-  handleChange(event) {
+  handleChangeEmail(event) {
     let target = event.target;
     let value = target.value;
-    let name = target.name;
-    this.setState({
-      [name]: value
-    });
+    store.dispatch(emailAction(value))
+  }
+
+  handleChangeUsername(event) {
+    let target = event.target;
+    let value = target.value;
+    store.dispatch(usernameAction(value))
+  }
+
+  handleChangePassword(event) {
+    let target = event.target;
+    let value = target.value;
+    store.dispatch(passwordAction(value))
+  }
+
+  handleChangeFirstname(event) {
+    let target = event.target;
+    let value = target.value;
+    store.dispatch(firstnameAction(value))
+  }
+
+  handleChangeLastname(event) {
+    let target = event.target;
+    let value = target.value;
+    store.dispatch(lastnameAction(value))
   }
 
   handleSubmit(event) {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "/api/register",
+      url: "http://apps.aprizal.com/api/register",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
-        email: this.state.email,
-        username: this.state.username,
-        first_name: this.state.first_name,
-        last_name: this.state.last_name,
-        password: this.state.password
+        email: store.getState().form.email.toString().toLowerCase(),
+        username: store.getState().form.username.toString().toLowerCase(),
+        first_name: store.getState().form.first_name.toString().toLowerCase(),
+        last_name: store.getState().form.last_name.toString().toLowerCase(),
+        password: store.getState().form.password
       }
     }).then(result =>
       this.setState({
@@ -101,11 +119,15 @@ export default class Register extends Component {
     const areaRegisterButtonResponsive = {
       padding: "1%"
     };
-    const registerButtonResponsive = {
-      width: "47%"
-    };
     return (
-      <div>
+      <div style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        height: "100%",
+        width: "100%",
+        background: "#5b90f6"
+      }}  >
         <Container>
           <Divider hidden />
           {warning == 1 ? (
@@ -119,76 +141,67 @@ export default class Register extends Component {
             columns={1}
             verticalAlign="middle"
           >
-            <Grid.Column style={{ maxWidth: 450 }}>
+            <Grid.Column>
               <Divider hidden />
-              <Header as="h3">
-                <Icon name="file alternate outline" size="large" />
-                Create your Account
-              </Header>
-              <Form size="large" onSubmit={this.handleSubmit}>
-                <Segment stacked>
-                  <Form.Input
-                    fluid
-                    icon="mail"
-                    iconPosition="left"
-                    placeholder="E-Mail Address"
-                    name="email"
-                    type="email"
-                    onChange={this.handleChange}
-                  />
-                  <Form.Input
-                    fluid
-                    icon="user circle outline"
-                    iconPosition="left"
-                    placeholder="Username"
-                    name="username"
-                    onChange={this.handleChange}
-                  />
-                  <Form.Input
-                    fluid
-                    icon="pencil alternate"
-                    iconPosition="left"
-                    placeholder="First name"
-                    name="first_name"
-                    onChange={this.handleChange}
-                  />
-                  <Form.Input
-                    fluid
-                    icon="pencil alternate"
-                    iconPosition="left"
-                    placeholder="Last name"
-                    name="last_name"
-                    onChange={this.handleChange}
-                  />
-                  <Form.Input
-                    fluid
-                    icon="lock"
-                    iconPosition="left"
-                    placeholder="Password"
-                    type="password"
-                    name="password"
-                    onChange={this.handleChange}
-                  />
-                  <Button color="blue" fluid size="large">
-                    Daftar
+              <div style={{ textAlign: "center", fontSize: 22, color: "#222" }}>
+                <Image src="http://aprizal.com/public/icon/icon/fashion.png" size="tiny" centered />
+                <p style={{ marginTop: -15 }}>enjoy your way</p>
+              </div>
+              <Divider hidden />
+              <Form size="small" onSubmit={this.handleSubmit}>
+                <Form.Input
+                  fluid
+                  icon="mail"
+                  iconPosition="left"
+                  placeholder="E-Mail Address"
+                  name="email"
+                  type="email"
+                  onChange={this.handleChangeEmail}
+                />
+                <Form.Input
+                  fluid
+                  icon="user circle outline"
+                  iconPosition="left"
+                  placeholder="Username"
+                  name="username"
+                  onChange={this.handleChangeUsername}
+                />
+                <Form.Input
+                  fluid
+                  icon="pencil alternate"
+                  iconPosition="left"
+                  placeholder="First name"
+                  name="first_name"
+                  onChange={this.handleChangeFirstname}
+                />
+                <Form.Input
+                  fluid
+                  icon="pencil alternate"
+                  iconPosition="left"
+                  placeholder="Last name"
+                  name="last_name"
+                  onChange={this.handleChangeLastname}
+                />
+                <Form.Input
+                  fluid
+                  icon="lock"
+                  iconPosition="left"
+                  placeholder="Password"
+                  type="password"
+                  name="password"
+                  onChange={this.handleChangePassword}
+                />
+                <Button fluid size="small" style={{ background: "#222", color: "#fff" }}>
+                  Sign Up
                   </Button>
-                </Segment>
               </Form>
-              <Message attached="bottom" warning>
-                Already signed up?&nbsp;<a href="#/login">Login Here</a>
-                &nbsp;instead.
-              </Message>
-            </Grid.Column>
-            <Grid.Column
-              verticalAlign="middle"
-              style={areaRegisterButtonResponsive}
-            >
-            </Grid.Column>
-          </Grid>
-          <Divider />
-          <Segment textAlign="center">
-            <i>app version 1.5</i>
-          </Segment>
+              <br />
+              <span style={{ background: "transparent", border: "none", color: "#fff" }}>
+                already signed up? <a href="#/login" style={{color: "#fff"}}><u>sign in here instead</u></a>
+                <Divider hidden style={{marginTop: -10}}/>
+                <small style={{ color: "#fff" }}>app version 2.7</small>
+              </span>
+            </Grid.Column></Grid>
         </Container>
       </div>
     );

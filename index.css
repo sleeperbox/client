@@ -1,8 +1,18 @@
-@fontface {
-    font-family: 'Poppins', sans-serif;
-    src: url('https://fonts.googleapis.com/css?family=Poppins')
+@import '../../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../../node_modules/@syncfusion/ej2-react-navigations/styles/material.css';
+@import '../../node_modules/@syncfusion/ej2-buttons/styles/button/material.css';
+  
+  @fontface {
+    font-family: 'Poppins', cursive;
+    src: url('https://fonts.googleapis.com/css?family=Poppins|Encode+Sans+Condensed|Pompiere')
   }
-
-  body, div {
-    font-family: 'Poppins', sans-serif;
+  body {
+    font-family: 'Poppins', cursive;
+  }
+  h1, h2, h3{
+    font-family: 'Poppins', cursive;
+  }
+  b, u ,i,p {
+    font-family: "Tahoma", "Geneva", "sans-serif"
   }

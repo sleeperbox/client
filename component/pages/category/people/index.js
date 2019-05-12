@@ -10,8 +10,8 @@ export default class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: '',
-            email: '',
+            isLogin: localStorage.getItem('auth'),
+            email: localStorage.getItem('email'),
             isLoading: true,
             loading: true
         };
@@ -26,24 +26,6 @@ export default class Index extends Component {
                 this.setState({loading: false})
             }, 100)
         }
-        const email = JSON.parse(localStorage.getItem('email'))
-        const auth = JSON.parse(localStorage.getItem('auth'))
-        this.setState({
-            email,
-            isLogin: auth
-        })
-    }
-
-    componentDidMount() {
-        if(this.state.isLogin != true){
-            window.location='#/login';
-        }
-        // console.log('first ', this.state.loading)
-        // setTimeout(() => {
-        //     if(this.state.loading == true){
-        //         this.setState({loading: false}, () => console.log('end: ', this.state.loading))
-        //     }
-        // }, 1500)
     }
 
     shouldComponentUpdate(newProps, newState){
@@ -84,13 +66,12 @@ export default class Index extends Component {
             {loading ? (this.loading()) : loading ? this.generateSkeleton() :
             <Container>
                 <Header as="h2" textAlign="center" style={{marginTop: 25}}>
-                    <i>More People, More Influencer</i>            
+                    <i>More People, More Follower</i>            
                 </Header>
                 <Divider/>
             </Container>
             }
           
-            <Divider hidden/>
             <AllPeople/>
             <BottomMenu />
         </div>

@@ -12,16 +12,22 @@ export default class MenuProfile extends Component {
       menu: localStorage.getItem("menu"),
       datas: [],
       isLoading: true,
-      email: localStorage.getItem("email").slice(1, -1),
+      email: localStorage.getItem("email"),
       content: "",
       tags: "",
+      file: null,
       foto: "",
       options: [],
       value: "null",
-      seen: null,
+      seen: 0,
+      seen_comment: 0,
       notif: "",
       tag: 0,
-      post: 0
+      post: 0,
+      preview: null,
+      kode_post: 1,
+      messageCount: 0,
+      lazyImage: true
     };
     this.handleMenu = this.handleMenu.bind(this);
     this.generateSkeleton = this.generateSkeleton.bind(this);
@@ -32,8 +38,9 @@ export default class MenuProfile extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/follow/notif",
+      url: "http://apps.aprizal.com/api/follow/notif",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -44,8 +51,9 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "/api/follow/notif/count",
+      url: "http://apps.aprizal.com/api/follow/notif/count",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
@@ -56,20 +64,35 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "/api/notif/message",
+      url: "http://apps.aprizal.com/api/notif/comment",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ message: result.data}));
+    }).then(result => this.setState({ seen_comment: result.data }));
+
+    axios({
+      method: "post",
+      url: "http://apps.aprizal.com/api/notif/message",
+      headers: {
+        "Acces-Control-Allow-Origin": true,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result => this.setState({ messageCount: result.data }));
 
     axios({
       method: "get",
-      url: "/api/tags",
+      url: "http://apps.aprizal.com/api/tags",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       }
@@ -77,20 +100,21 @@ export default class MenuProfile extends Component {
 
     axios({
       method: "post",
-      url: "/api/user/avatar",
+      url: "http://apps.aprizal.com/api/user/avatar",
       headers: {
+        "Acces-Control-Allow-Origin": true,
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ foto: result.data }));
+    }).then(result => this.setState({ foto: result.data, lazyImage: false }));
 
   }
 
   componentDidMount() {
-    if(this.state.email){
+    if (this.state.email) {
       this.setState({ isLoading: false });
     }
   }
@@ -104,8 +128,21 @@ export default class MenuProfile extends Component {
         if (this.state.isMenu === "notification") {
           axios({
             method: "put",
-            url: "/api/follow/notif/seen",
+            url: "http://apps.aprizal.com/api/follow/notif/seen",
             headers: {
+              "Acces-Control-Allow-Origin": true,
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            },
+            data: {
+              email: this.state.email
+            }
+          })
+          axios({
+            method: "put",
+            url: "http://apps.aprizal.com/api/notif/comment/seen",
+            headers: {
+              "Acces-Control-Allow-Origin": true,
               "Content-Type": "application/json",
               Accept: "application/json"
             },
@@ -168,6 +205,13 @@ export default class MenuProfile extends Component {
     this.setState({ value: event.target.value });
   };
 
+  fileHandler = event => {
+    this.setState({
+      file: event.target.files[0],
+      preview: URL.createObjectURL(event.target.files[0])
+    });
+  };
+
   handleChange = (e, { value }) => this.setState({ value });
 
   publish() {
@@ -177,19 +221,35 @@ export default class MenuProfile extends Component {
       content: this.state.content,
       tags: this.state.value
     };
-    if(data.tags == "null"){
-      this.setState({tag : 1, post : 0})
-    }else if(data.content == ""){
-      this.setState({tag : 0, post : 1})
-    }else{
-    fetch("/api/posting", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify(data)
-    }).then(res => res.json()).then(() => window.location.reload());
+    if (data.tags == "null") {
+      this.setState({ tag: 1, post: 0 })
+    } else if (data.content == "") {
+      this.setState({ tag: 0, post: 1 })
+    } else if (this.state.file == null) {
+      axios({
+        method: "post",
+        url: "http://apps.aprizal.com/api/posting",
+        headers: {
+          "Acces-Control-Allow-Origin": true,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        data: {
+          email: this.state.email,
+          content: this.state.content,
+          tags: this.state.value,
+          kode_post: 0
+        }
+      }).then((result) => () => window.location.reload());
+    } else {
+      const data = new FormData();
+      data.append("fotocontent", this.state.file, this.state.file.name);
+      data.append("email", this.state.email);
+      data.append("content", this.state.content);
+      data.append("tags", this.state.value);
+      data.append("kode_post", this.state.kode_post);
+
+      axios.post("http://apps.aprizal.com/api/posting", data).then(() => window.location.reload());
     }
   }
 
@@ -201,7 +261,7 @@ export default class MenuProfile extends Component {
   }
 
   render() {
-    const { open, dimmer, isLoading, isMenu, menu, datas, options, value } = this.state;
+    const { messageCount, open, dimmer, isLoading, isMenu, menu, datas, options, value } = this.state;
     if (isMenu === "profile") {
       window.location = "#/profile";
     } else if (isMenu === "notification") {
@@ -210,6 +270,8 @@ export default class MenuProfile extends Component {
       window.location = "#/home";
     } else if (isMenu === "message") {
       window.location = "#/message";
+    } else if (isMenu === "posting") {
+      window.location = "#/posting";
     } else {
     }
     const postSize = {
@@ -221,6 +283,7 @@ export default class MenuProfile extends Component {
       marginTop: "-20%",
       marginLeft: "25%"
     }
+    let notification = this.state.seen + this.state.seen_comment
     return (
       <div>
         {isLoading ? (
@@ -236,23 +299,26 @@ export default class MenuProfile extends Component {
               }}
             >
               <Menu.Item name="home" onClick={() => this.handleMenu("home")}>
-                {menu === "home" ? <Icon name="clock" style={{ color: "#ED6A5E" }} size="large" /> : <Icon name="clock outline" style={{ color: "#555" }} size="large" />}
+                {menu === "home" ? <Icon name="clock" style={{ color: "#5b90f6" }} size="large" /> : <Icon name="clock outline" style={{ color: "#555" }} size="large" />}
               </Menu.Item>
 
               <Menu.Item name="message" onClick={() => this.handleMenu("message")}>
-                {this.state.message === 0 && menu === "message" ? (<Icon name="comment alternate" style={{ color: "#555" }} size="large" />) : this.state.message !== 0 && menu === "message" ? <Icon name="comment alternate" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
-                    {this.state.message}
-                  </Label></Icon> : this.state.message === 0 && menu !== "message" ? (<Icon name="comment alternate outline" style={{ color: "#555" }} size="large" />) : this.state.message !== 0 && menu !== "message" ? <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
-                    {this.state.message}
-                  </Label></Icon> : null }
+                {menu === "message" ? <Icon name="comment alternate" style={{ color: "#5b90f6" }} size="large" ></Icon> : (
+                  messageCount === 0 || messageCount == null ? (
+                    <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ></Icon>
+                  )
+                    :
+                    <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
+                      {messageCount}
+                    </Label></Icon>
+                )}
               </Menu.Item>
 
-              <Menu.Item name="post" onClick={this.show("blurring")}>
-                {menu === "post" ? (
-                  <Icon name="plus square" style={{ color: "#ED6A5E" }} size="large" />
-                ) : (
-                    <Icon name="plus square outline" style={{ color: "#555" }} size="large" />
-                  )}
+              <Menu.Item name="post" onClick={() => this.handleMenu("posting")}>
+                &nbsp;
+                <div>
+                  <Icon name="plus square outline" size="large" style={{ color: "#555" }} />
+                </div>
               </Menu.Item>
 
               <Menu.Item
@@ -261,69 +327,30 @@ export default class MenuProfile extends Component {
               >
                 {datas.length === 0 ? (
                   ""
-                ) : this.state.seen === 0 ? (
+                ) : notification === 0 ? (
                   ""
                 ) : (
-                  <Icon name="bell outline" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
-                    {this.state.seen}
-                  </Label></Icon>
-                )}
-                {menu === "notification" ? (<Icon name="bell outline" style={{ color: "#ED6A5E" }} size="large" />) : this.state.seen === 0 ? (<Icon name="bell outline" style={{ color: "#555" }} size="large" />) : ""}
+
+                      <Icon name="bell outline" style={{ color: "#5b90f6" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
+                        {notification}
+                      </Label></Icon>
+                    )}
+                {menu === "notification" ? (<Icon name="bell outline" style={{ color: "#5b90f6" }} size="large" />) : notification === 0 ? (<Icon name="bell outline" style={{ color: "#555" }} size="large" />) : ""}
+
               </Menu.Item>
 
               <Menu.Item name="profile" onClick={() => this.handleMenu("profile")}>
-                {menu === "profile" ? (
+                {this.state.lazyImage ? <Skeleton width="30px" borderRadius="120px" height="30px" color="#999" /> : (
                   <Image
-                  size="small"
-                  circular
-                  src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.foto}
-                  style={{width:"50%"}}
+                    size="small"
+                    circular
+                    src={"http://aprizal.com/public/avatar/" + this.state.foto}
+                    style={{ width: "30px", height: "30px" }}
                   />
-                ) : (
-                  <Image
-                  size="small"
-                  circular
-                  src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.foto}
-                  style={{width:"50%"}}
-                  />
-                  )}
+                )}
               </Menu.Item>
             </Menu>
           )}
-        <Modal dimmer={dimmer} size="large" open={open} onClose={this.close}>
-          <Modal.Content>
-            <Modal.Description>
-              {this.state.tag == 1 ? 
-              <i><Message error icon="warning circle" header='Anda Belum Memilih Tag' size="mini"/></i>
-              : this.state.post == 1 ?
-              <i><Message icon="warning circle" error header='Konten Tidak Boleh Kosong' size="mini"/></i> : null}
-              <Header as="h5">This will be great for your Followers</Header>
-              <Form>
-                <TextArea maxLength={250} name="content" onChange={this.handlePost} autoHeight placeholder="What happen..." />
-              </Form>
-            </Modal.Description>
-          </Modal.Content>
-          <Modal.Actions>
-            <span style={postSize}>
-              {
-                <Dropdown
-                  search
-                  onChange={this.setValue.bind(this)}
-                  options={options}
-                  selection
-                  value={value}
-                />
-              }
-            </span>
-            <Button
-              secondary
-              icon="checkmark"
-              labelPosition="right"
-              content="Post"
-              onClick={this.publish.bind(this)}
-            />
-          </Modal.Actions>
-        </Modal>
       </div>
     );
   }
