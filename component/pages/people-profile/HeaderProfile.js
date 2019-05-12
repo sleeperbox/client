@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Skeleton from "react-skeleton-loader";
-import { Container, Grid, Divider, Accordion, Image, Modal, Button, Message, Icon } from "semantic-ui-react";
+import { Container, Grid, Divider, Accordion, Image, Modal, Button, Message, Icon, Dimmer, Header } from "semantic-ui-react";
 import axios from "axios";
 
 
@@ -18,7 +18,8 @@ export default class HeaderProfile extends Component {
       openSnackbar: false,
       msg: false,
       activeIndex: 0,
-      isLoading: true
+      isLoading: true,
+      active: false
     };
   }
 
@@ -185,6 +186,10 @@ export default class HeaderProfile extends Component {
     window.location = "#/people";
   }
 
+  handleOpen = () => this.setState({ active: true })
+  handleClose = () => this.setState({ active: false })
+
+
   render() {
     const smallFont = {
       fontSize: 14,
@@ -192,16 +197,26 @@ export default class HeaderProfile extends Component {
     const toRight = {
       float: "right",
     };
-    const { profile, status, openSnackbar, activeIndex, isLoading } = this.state
+    const { profile, status, openSnackbar, active, activeIndex, isLoading } = this.state
     return (
       <div>
         {isLoading ? (
           this.generateSkeleton()
         ) : (
             <div>
+              {open ? this.unfollowConfirmation() : null}
+              {openSnackbar ? this.snackBar() : null}
+              <Dimmer active={active} onClickOutside={this.handleClose} page>
+                <Header as='h3' icon inverted>
+                  <Icon name='heart' color="red" />
+                  {sessionStorage.getItem('username')} favorited tags
+                  <br />
+                  <Header.Subheader>{profile[0].tags}</Header.Subheader>
+                </Header>
+              </Dimmer>
               <Accordion fluid styled>
                 <Accordion.Title style={{ background: "#5b90f6", color: "#fff", width: "100%", position: "fixed", top: 0, zIndex: 998 }} active={activeIndex === 1} index={1} onClick={this.handleClick}>
-                <span style={{float: "right",  fontSize: '16px'}} onClick={this.back.bind(this)}>back</span>
+                  <span style={{ float: "right", fontSize: '16px' }} onClick={this.back.bind(this)}>back</span>
                   <span style={{ fontSize: '16px' }}>
                     <Icon name='dropdown' />
                     {sessionStorage.getItem('username')} profile
@@ -235,15 +250,20 @@ export default class HeaderProfile extends Component {
                   <p style={smallFont}>
                     Tag{" "}
                     <span style={toRight}>
-                      <i style={{ fontSize: 14 }}>{profile[0].tags}</i>
+                      <a style={{ fontSize: 12 }} onClick={this.handleOpen}>show</a>
                     </span>
                   </p>
                   <p style={smallFont}>
                     Join Date{" "}
                     <span style={toRight}>
-                      <i style={{ fontSize: 14 }}>{profile[0].join_date}</i>
+                      <i style={{ fontSize: 14, textAlign: "right", }}>{profile[0].join_date}</i>
                     </span>
                   </p>
+                  {status == "followed" ? (
+                    <Button primary fluid size="small" onClick={() => this.handleBack(profile[0].email)}>unfollow</Button>
+                  ) : (
+                      <Button primary fluid size="small" onClick={() => this.handleFollow(profile[0].email)}>follow</Button>
+                    )}
                 </Accordion.Content>
               </Accordion>
             </div>

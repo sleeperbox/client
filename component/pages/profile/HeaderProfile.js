@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Skeleton from "react-skeleton-loader";
-import { Grid, Container, Accordion, Divider, Image, Icon, Header, Modal, Button, Popup } from "semantic-ui-react";
+import { Grid, Container, Accordion, Divider, Image, Icon, Header, Dimmer } from "semantic-ui-react";
 import axios from "axios";
 import MoreCategory from './MoreCategory'
 export default class HeaderProfile extends Component {
@@ -27,7 +27,8 @@ export default class HeaderProfile extends Component {
       minute: new Date().getMinutes(),
       coloring: "",
       activeIndex: 0,
-      myPoint: 0 
+      myPoint: 0,
+      active: false
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
   }
@@ -81,11 +82,11 @@ export default class HeaderProfile extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({myPoint: result.data.total_score}))
+    }).then(result => this.setState({ myPoint: result.data.total_score }))
   }
 
   componentDidMount() {
-    if(this.state.email){
+    if (this.state.email) {
       this.setState({ isLoading: false });
     }
   }
@@ -130,6 +131,9 @@ export default class HeaderProfile extends Component {
     this.setState({ activeIndex: newIndex })
   }
 
+  handleOpen = () => this.setState({ active: true })
+  handleClose = () => this.setState({ active: false })
+
   render() {
     const {
       username,
@@ -142,7 +146,8 @@ export default class HeaderProfile extends Component {
       join_date,
       followed_topic,
       activeIndex,
-      isLoading
+      isLoading,
+      active
     } = this.state;
 
     //set user data caching
@@ -163,59 +168,67 @@ export default class HeaderProfile extends Component {
         {isLoading ? (
           this.generateSkeleton()
         ) : (
-          <div>
-                  <Accordion fluid styled>
-                    <Accordion.Title style={{background: "#5b90f6", color: "#fff", width: "100%",position: "fixed", top: 0, zIndex: 998}} active={activeIndex === 1} index={1} onClick={this.handleClick}>
-                    <span style={{fontSize: '16px'}}>
-                      <Icon name='dropdown' />
-                      your profile menu
+            <div>
+              <Dimmer active={active} onClickOutside={this.handleClose} page>
+                <Header as='h3' icon inverted>
+                  <Icon name='heart' color="red" />
+                  your favorited tags
+                  <br/>
+                  <Header.Subheader>{followed_topic}</Header.Subheader>
+                </Header>
+              </Dimmer>
+              <Accordion fluid styled>
+                <Accordion.Title style={{ background: "#5b90f6", color: "#fff", width: "100%", position: "fixed", top: 0, zIndex: 998 }} active={activeIndex === 1} index={1} onClick={this.handleClick}>
+                  <span style={{ fontSize: '16px' }}>
+                    <Icon name='dropdown' />
+                    your profile menu
                     </span>
-                    </Accordion.Title>
-                    <Divider hidden/>
-                    <Divider hidden/>
-                    <Accordion.Content  active={activeIndex === 1}>
-                        <Image
-                        style={{
-                            border: "1px solid #555",
-                            maxHeight: "700px",
-                            minWidth: "100%",
-                            maxWidth: "100%"
-                        }}
-                        src={"http://aprizal.com/public/avatar/" + this.state.foto}
-                      />
-                      <br/>
-                      <p style={smallFont}>
-                                  Username <span style={toRight}>@{username}</span>
-                                </p>
-                                <p style={smallFont}>
-                                Point <span style={toRight}><b>{myPoint}</b></span>
-                                </p>
-                                <p style={smallFont}>
-                                  Post <span style={toRight}>{total_posts}</span>
-                                </p>
-                                <p style={smallFont}>
-                                  Thank <span style={toRight}>{total_thanks}</span>
-                                </p>
-                                <p style={smallFont}>
-                                Follower <span style={toRight}>{total_friends}</span>
-                                </p>
-                                <p style={smallFont}>
-                                Tag{" "}
-                                  <span style={toRight}>
-                                    <i style={{fontSize: 14}}>{followed_topic}</i>
-                                  </span>
-                                </p>
-                                <p style={smallFont}>
-                                  Join Date{" "}
-                                  <span style={toRight}>
-                                    <i style={{fontSize: 14}}>{join_date}</i>
-                                  </span>
-                                </p>
-                        <MoreCategory/>
-                    </Accordion.Content>
-                    </Accordion>           
-          </div>
-        )}
+                </Accordion.Title>
+                <Divider hidden />
+                <Divider hidden />
+                <Accordion.Content active={activeIndex === 1}>
+                  <Image
+                    style={{
+                      border: "1px solid #555",
+                      maxHeight: "700px",
+                      minWidth: "100%",
+                      maxWidth: "100%"
+                    }}
+                    src={"http://aprizal.com/public/avatar/" + this.state.foto}
+                  />
+                  <br />
+                  <p style={smallFont}>
+                    Username <span style={toRight}>@{username}</span>
+                  </p>
+                  <p style={smallFont}>
+                    Point <span style={toRight}><b>{myPoint}</b></span>
+                  </p>
+                  <p style={smallFont}>
+                    Post <span style={toRight}>{total_posts}</span>
+                  </p>
+                  <p style={smallFont}>
+                    Thank <span style={toRight}>{total_thanks}</span>
+                  </p>
+                  <p style={smallFont}>
+                    Follower <span style={toRight}>{total_friends}</span>
+                  </p>
+                  <p style={smallFont}>
+                    Tag{" "}
+                    <span style={toRight}>
+                      <a style={{ fontSize: 12 }} onClick={this.handleOpen}>show</a>
+                    </span>
+                  </p>
+                  <p style={smallFont}>
+                    Join Date{" "}
+                    <span style={toRight}>
+                      <i style={{ fontSize: 12 }}>{join_date.toLocaleLowerCase()}</i>
+                    </span>
+                  </p>
+                  <MoreCategory />
+                </Accordion.Content>
+              </Accordion>
+            </div>
+          )}
       </div>
     );
   }

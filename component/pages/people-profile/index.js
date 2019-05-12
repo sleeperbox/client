@@ -83,10 +83,6 @@ filterPost() {
     return (
       <div>
         {loading ? (this.loading()) : ( <div>
-        {/* <HeaderPeople />
-        <Divider hidden />
-        <Divider hidden />
-        <Divider hidden /> */}
         <HeaderProfile />
         {this.filterPost()}
         {this.state.activeItem == "hexagrid" ? <Post /> : <PostLightWeight/> }
