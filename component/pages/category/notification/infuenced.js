@@ -1,5 +1,17 @@
 import React, { Component } from "react";
-import { Dimmer, Loader, Icon, Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
+import {
+  Dimmer,
+  Loader,
+  Icon,
+  Container,
+  Grid,
+  Divider,
+  Image,
+  List,
+  Header,
+  Label,
+  Statistic
+} from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
 
@@ -18,12 +30,16 @@ export default class Infuenced extends Component {
   }
 
   componentWillMount() {
-    if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
+    if (
+      this.state.loading == true ||
+      this.setState.isLogin == "" ||
+      this.setState.email == ""
+    ) {
       // this.setState({loading: false})
-      setTimeout(() =>  {
-          this.setState({loading: false})
-      }, 100)
-  }
+      setTimeout(() => {
+        this.setState({ loading: false });
+      }, 100);
+    }
     axios({
       method: "post",
       url: "http://apps.aprizal.com/api/follow/notif",
@@ -43,7 +59,7 @@ export default class Infuenced extends Component {
 
   componentDidMount() {
     if (this.state.datas) {
-        this.setState({ isLoading: false });
+      this.setState({ isLoading: false });
     }
     const { isLogin } = this.state;
     isLogin === "false" ? (window.location = "#/login") : "";
@@ -108,7 +124,7 @@ export default class Infuenced extends Component {
     return (
       <div style={divConten}>
         <Header as="h5" icon textAlign="center">
-        <Icon name="bell slash outline" />
+          <Icon name="bell slash outline" />
           <Header.Content>
             <Statistic>
               <Statistic.Label>
@@ -123,19 +139,28 @@ export default class Infuenced extends Component {
 
   loading() {
     return (
-        <div>
-            <Dimmer active inverted>
-                <Loader size='large'>Plase Wait</Loader>
-            </Dimmer>
-        </div>        
+      <div>
+        <Dimmer active inverted>
+          <Loader size="large">Plase Wait</Loader>
+        </Dimmer>
+      </div>
     );
-}
+  }
 
   render() {
     const { datas, isLoading, loading } = this.state;
+    const border = {
+      width: "32px",
+      height: "32px",
+      marginLeft: "-12px",
+      paddingTop: "4px",
+      borderRadius: "25px",
+      border: "2px solid"
+    };
     return (
       <div style={{ marginBottom: 45 }}>
-        { loading ? (this.loading()
+        {loading ? (
+          this.loading()
         ) : datas.length === 0 ? (
           this.generateZeroData()
         ) : isLoading ? (
@@ -144,14 +169,20 @@ export default class Infuenced extends Component {
           <Container>
             {datas.map(data => {
               return (
-                <Grid columns={1} key={data._id}>
-                  <Grid.Column>
+                <Grid columns={4} key={data._id}>
+                  <Grid.Column width={1}>
+                    <div style={border}>
+                      <b style={{marginLeft: "9px"}}>{data.username.charAt(0).toUpperCase()}</b>
+                    </div>
+                  </Grid.Column>
+                  <Grid.Column width={8}>
                     <List verticalAlign="middle">
                       <List.Item>
-                        <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
                         <List.Content>
-                          <List.Header>{data.name}</List.Header>
-                          <i>{"Followed you"}</i>
+                          <List.Header>
+                            <strong>{data.username}</strong>
+                          </List.Header>
+                          <span style={{ fontSize: 12 }}>{"Followed you"}</span>
                         </List.Content>
                       </List.Item>
                     </List>
