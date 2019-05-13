@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Dimmer, Loader, Icon, Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
+import { Icon, Container, Grid, Divider, Image, List, Header,  Statistic } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
-import axios from "axios";
+import axios from "axios";``
 
 export default class Infuenced extends Component {
   constructor(props) {
@@ -19,7 +19,6 @@ export default class Infuenced extends Component {
 
   componentWillMount() {
     if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
-      // this.setState({loading: false})
       setTimeout(() =>  {
           this.setState({loading: false})
       }, 100)
@@ -43,17 +42,6 @@ export default class Infuenced extends Component {
         datas: result.data, 
         isLoading: false
       }));
-      
-    // this.setState({
-    //   isLogin: localStorage.getItem("auth")
-    // });
-
-    // if (this.state.datas) {
-    //     this.setState({ isLoading: false });
-    // }
-    // const { isLogin } = this.state;
-    // isLogin === "false" ? (window.location = "#/login") : "";
-    
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -157,7 +145,6 @@ export default class Infuenced extends Component {
   render() {
     const { datas, isLoading} = this.state;
     const nodatas = datas.length;
-    console.log(datas.length)
     return (
       <div style={{ marginBottom: 45 }}>
         { isLoading ? (

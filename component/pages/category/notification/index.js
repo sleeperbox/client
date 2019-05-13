@@ -46,7 +46,6 @@ export default class Index extends Component {
 render() {
   sessionStorage.setItem("email_friend", this.state.email_friend);
   const {loading} = this.state
-  console.log("index.")
   return (
     <div style={{ marginBottom: 45 }}>
       {loading ? (this.loading()) : ( 
