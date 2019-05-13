@@ -90,6 +90,8 @@ export default class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    let gmail = store.getState().form.email.slice(-10)
+    if(gmail == '@gmail.com'){
     axios({
       method: "POST",
       url: "http://apps.aprizal.com/api/register",
@@ -112,6 +114,11 @@ export default class Register extends Component {
         token: result.data.token
       })
     );
+    }else{
+      this.setState({
+        warning : 2
+      })
+    }
   }
 
   render() {
@@ -130,11 +137,15 @@ export default class Register extends Component {
       }}  >
         <Container>
           <Divider hidden />
-          {warning == 1 ? (
+          {warning === 1 ? (
             <Message negative>
               <center>Username/Email Has Been Used !</center>
             </Message>
-          ) : null}
+          ) : warning === 2 ? (
+            <Message negative>
+              <center>Google email only</center>
+            </Message>
+          ) : null }
           <Grid
             textAlign="center"
             style={{ height: "100%" }}
