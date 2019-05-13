@@ -10,7 +10,7 @@ import {
   List,
   Header,
   Label,
-  Statistic
+  Statistic,
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -21,6 +21,7 @@ export default class Comment extends Component {
     this.state = {
       email: localStorage.getItem("email"),
       datas: [],
+      datass: [],
       isLogin: "",
       isLoading: true,
       loading: true,
@@ -72,7 +73,7 @@ export default class Comment extends Component {
       }
     }).then(result => 
       this.setState({ 
-        datas: result.data, 
+        datass: result.data, 
         isLoading: false
       }));
   }
@@ -85,7 +86,7 @@ export default class Comment extends Component {
   }
 
   generateSkeleton() {
-    const { datas } = this.state;
+    const { datass } = this.state;
     const marginLayer = {
       marginLeft: "2px",
       marginRight: "2px"
@@ -179,8 +180,8 @@ export default class Comment extends Component {
 
 
   render() {
-    const { datas, isLoading } = this.state;
-    const nodatas = datas.length;
+    const { datas, datass, isLoading } = this.state;
+    const nodatas = datass.length;
     const border = {
       width: "32px",
       height: "32px",
@@ -216,7 +217,7 @@ export default class Comment extends Component {
                             {"commented : "}
                           </span>
                           <span style={{ fontSize: 12 }}>
-                            {data.comment.length > this.state.maxlength
+                            {data.comment.length > 2
                               ? data.comment.substring(
                                   0,
                                   this.state.maxlength
