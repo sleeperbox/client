@@ -4,7 +4,7 @@ import MenuProfile from './MenuProfile';
 import HeaderProfile from './HeaderProfile';
 import MyPost from './MyPost';
 import MyPostLightWeight from './MyPostLightWeight';
-
+import PullToRefresh from 'pulltorefreshjs';
 export default class Index extends Component {
 
     constructor(props) {
@@ -15,6 +15,22 @@ export default class Index extends Component {
             loading: true,
             activeItem: "hexagrid"
         };
+    }
+
+    componentDidMount() {
+        PullToRefresh.init({
+            mainElement: 'body',
+            onRefresh() {
+                window.location.reload();
+            }
+        });
+    }
+
+    componentWillUnmount() 
+    {
+        // Don't forget to destroy all instances on unmout
+        // or you will get some glitches.
+        PullToRefresh.destroyAll();
     }
 
     componentWillMount() {
