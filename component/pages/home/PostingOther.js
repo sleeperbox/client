@@ -76,7 +76,7 @@ export default class PostingOther extends Component {
           "Content-Type": "application/json",
           Accept: "application/json"
         }
-      }).then(result => this.setState({ posting: result.data, thanks: 0 }, () => window.location.reload()));
+      }).then(result => this.setState({ posting: result.data, thanks: 0}));
     }
   }
 
@@ -243,6 +243,8 @@ export default class PostingOther extends Component {
                                 <br />
                                 <br />
                                 <Popup
+                                style={{zIndex: 97 }}
+                                 onClose={() => this.setState({loaders: 1})}
                                   trigger={
                                     <Icon
                                       name="handshake outline"
