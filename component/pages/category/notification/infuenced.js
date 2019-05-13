@@ -17,7 +17,7 @@ export default class Infuenced extends Component {
     this.generateZeroData = this.generateZeroData.bind(this);
   }
 
-  componentWillMount() {
+  omponentWillMount() {
     if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
       setTimeout(() =>  {
           this.setState({loading: false})
@@ -50,6 +50,7 @@ export default class Infuenced extends Component {
       window.location = "#/login";
     }
   }
+
 
   generateSkeleton() {
     const { datas } = this.state;
@@ -127,7 +128,7 @@ export default class Infuenced extends Component {
     return (
       <div style={divConten}>
         <Header as="h5" icon textAlign="center">
-        <Icon name="bell slash outline" />
+          <Icon name="bell slash outline" />
           <Header.Content>
             <Statistic>
               <Statistic.Label>
@@ -139,12 +140,18 @@ export default class Infuenced extends Component {
       </div>
     );
   }
-
- 
-
+  
   render() {
     const { datas, isLoading} = this.state;
     const nodatas = datas.length;
+    const border = {
+      width: "32px",
+      height: "32px",
+      marginLeft: "-12px",
+      paddingTop: "4px",
+      borderRadius: "25px",
+      border: "2px solid"
+    };
     return (
       <div style={{ marginBottom: 45 }}>
         { isLoading ? (
@@ -155,14 +162,20 @@ export default class Infuenced extends Component {
           <Container>
             {datas.map(data => {
               return (
-                <Grid columns={1} key={data._id}>
-                  <Grid.Column>
+                <Grid columns={4} key={data._id}>
+                  <Grid.Column width={1}>
+                    <div style={border}>
+                      <b style={{marginLeft: "9px"}}>{data.username.charAt(0).toUpperCase()}</b>
+                    </div>
+                  </Grid.Column>
+                  <Grid.Column width={8}>
                     <List verticalAlign="middle">
                       <List.Item>
-                        <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
                         <List.Content>
-                          <List.Header>{data.name}</List.Header>
-                          <i>{"Followed you"}</i>
+                          <List.Header>
+                            <strong>{data.username}</strong>
+                          </List.Header>
+                          <span style={{ fontSize: 12 }}>{"Followed you"}</span>
                         </List.Content>
                       </List.Item>
                     </List>
