@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Dimmer, Loader, Icon, Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
-import Skeleton from "react-skeleton-loader";
+import { Dimmer, Loader } from "semantic-ui-react";
 import Action from "./action";
-import axios from "axios"
 import Menu from '../../profile/MenuProfile'
 
 export default class Index extends Component {
@@ -15,8 +13,6 @@ export default class Index extends Component {
       isLoading: true,
       loading: true
     };
-    // this.generateSkeleton = this.generateSkeleton.bind(this);
-    // this.generateZeroData = this.generateZeroData.bind(this);
   }
 
   componentWillMount() {
@@ -31,35 +27,12 @@ export default class Index extends Component {
   componentDidMount() {
     
     if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
-      // this.setState({loading: false})
       setTimeout(() =>  {
           this.setState({loading: false})
       }, 100)
   }
-    // axios({
-    //   method: "post",
-    //   url: "http://apps.aprizal.com/api/follow/notif",
-    //   headers: {
-    //     "Acces-Control-Allow-Origin": true,
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json"
-    //   },
-    //   data: {
-    //     email: this.state.email // This is the body part
-    //   }
-    // }).then(result => this.setState({ datas: result.data }));
-    // this.setState({
-    //   isLogin: localStorage.getItem("auth")
-    // });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // const { isLogin } = this.state;
-    // if (isLogin === false) {
-    //   window.location = "#/login";
-    // }
-  }
-  
   loading() {
     return (
         <div>

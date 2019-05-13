@@ -4,7 +4,6 @@ import MenuProfile from './MenuProfile';
 import HeaderProfile from './HeaderProfile';
 import MyPost from './MyPost';
 import MyPostLightWeight from './MyPostLightWeight';
-import PullToRefresh from 'pulltorefreshjs';
 export default class Index extends Component {
 
     constructor(props) {
@@ -17,21 +16,7 @@ export default class Index extends Component {
         };
     }
 
-    componentDidMount() {
-        PullToRefresh.init({
-            mainElement: 'body',
-            onRefresh() {
-                window.location.reload();
-            }
-        });
-    }
-
-    componentWillUnmount() 
-    {
-        // Don't forget to destroy all instances on unmout
-        // or you will get some glitches.
-        PullToRefresh.destroyAll();
-    }
+   
 
     componentWillMount() {
         if (this.state.loading == true || this.setState.isLogin == '' || this.setState.email == '') {
@@ -79,7 +64,6 @@ export default class Index extends Component {
                 active={activeItem === 'lightweight'}
                 onClick={this.handleItemClick}
                 ><Icon name="bolt" style={{color: "#5b90f6"}}/><span style={{marginLeft: -7}}>ightweight</span></Menu.Item>
-          
         </Menu>
     }
 
