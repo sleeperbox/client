@@ -13,7 +13,8 @@ import {
   Loader,
   Segment,
   Icon,
-  Input
+  Input,
+  Flag
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import HeaderMessage from "./HeaderMessage";
@@ -61,7 +62,11 @@ export default class Index extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ datas: result.data }));
+    }).then(result => 
+      this.setState({ 
+        datas: result.data, 
+        isLoading:false 
+      }));
 
     axios({
       method: "post",
@@ -74,24 +79,23 @@ export default class Index extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ username_user1: result.data.username }));
+    }).then(result => 
+      this.setState({ 
+        username_user1: result.data.username, 
+        isLoading:false 
+      }));
     this.setState({
       isLogin: localStorage.getItem("auth")
     });
   }
 
   componentDidMount() {
-    if (this.state.datas) {
-      this.setState({ isLoading: false });
-    }
+    // if (this.state.datas) {
+    //   this.setState({ isLoading: false });
+    // }
     const { isLogin } = this.state;
     isLogin === "false" ? (window.location = "#/login") : "";
-    // console.log('first ', this.state.loading)
-    //     setTimeout(() => {
-    //         if(this.state.loading == true){
-    //             this.setState({loading: false}, () => console.log('end: ', this.state.loading))
-    //         }
-    //     }, 500)
+    
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -113,52 +117,80 @@ export default class Index extends Component {
 
   generateSkeleton() {
     const { datas } = this.state;
+    const marginLayer = {
+      marginLeft: "2px",
+      marginRight: "2px"
+    };
     return (
       <div style={{ marginBottom: 45 }}>
         <Container>
-          <Divider hidden />
-          <Skeleton width="100%">
-            <Header as="h2" textAlign="center" />
-          </Skeleton>
-          <Divider />
-          {datas.map(data => {
-            return (
-              <Grid columns={2} key={data._id}>
-                <Grid.Column>
-                  <List verticalAlign="middle">
-                    <List.Item>
-                      <List.Content>
-                        <List.Header>
-                          <Skeleton />
-                        </List.Header>
-                        <p>
-                          <Skeleton />
-                        </p>
-                      </List.Content>
-                    </List.Item>
-                  </List>
-                </Grid.Column>
+          <Grid columns={2} style={marginLayer}>
+            <Grid.Column>
+              <List>
+                <List.Item>
+                  <Image>
+                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                  </Image>
+                  <List.Content>
+                    <List.Header>
+                      <p><Skeleton width="220px" he/></p>
+                    </List.Header>
+                    <p><Skeleton width="200px" he/></p>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Grid.Column>     
+          </Grid>
 
-                <Grid.Column verticalAlign="middle">
-                  <Skeleton />
-                </Grid.Column>
-              </Grid>
-            );
-          })}
+          <Grid columns={2}style={marginLayer}>
+            <Grid.Column>
+              <List>
+                <List.Item>
+                  <Image>
+                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                  </Image>
+                  <List.Content>
+                    <List.Header>
+                      <p><Skeleton width="220px" he/></p>
+                    </List.Header>
+                    <p><Skeleton width="200px" he/></p>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Grid.Column>     
+          </Grid>
+
+          <Grid columns={2}style={marginLayer}>
+            <Grid.Column>
+              <List>
+                <List.Item>
+                  <Image>
+                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                  </Image>
+                  <List.Content>
+                    <List.Header>
+                      <p><Skeleton width="220px" he/></p>
+                    </List.Header>
+                    <p><Skeleton width="200px" he/></p>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Grid.Column>     
+          </Grid>
         </Container>
       </div>
     );
   }
 
-  loading() {
-    return (
-      <div>
-        <Dimmer active inverted>
-          <Loader size="large">Plase Wait</Loader>
-        </Dimmer>
-      </div>
-    );
-  }
+  // loading() {
+  //   return (
+  //     <div>
+  //       <Dimmer active inverted>
+  //         <Loader size="large">Plase Wait</Loader>
+  //       </Dimmer>
+  //     </div>
+  //   );
+  // }
 
   generateZeroData() {
     const divConten = {
@@ -182,13 +214,15 @@ export default class Index extends Component {
   }
 
   render() {
-    const { datas, isLoading, loading } = this.state;
+    const { datas, isLoading } = this.state;
     const marginSearch = {
       marginTop : "1.5em",
       marginBottom: "-0.8em",
       marginLeft : "1em",
       marginRight : "1em"
     }
+    const nodatas = datas.length;
+    console.log(nodatas)
     return (
       <div>
         <Input 
@@ -201,12 +235,10 @@ export default class Index extends Component {
           value={this.state.cari}
         />
         <Divider hidden />
-        {loading ? (
-          this.loading()
-        ) : datas.length === 0 ? (
-          this.generateZeroData()
-        ) : isLoading ? (
+        {isLoading ? (
           this.generateSkeleton()
+        ) : nodatas === 0 ? (
+          this.generateZeroData()
         ) : (
           <Container>
             {datas.map(data => {

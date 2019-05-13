@@ -234,6 +234,7 @@ export default class MyPostLightWeight extends Component {
     );
   }
 
+
   render() {
     const { posting, isLoading, thankLoad, kode, loaders } = this.state;
     const nopost = posting.length;
@@ -246,11 +247,13 @@ export default class MyPostLightWeight extends Component {
     const textMargin = {
       marginLeft: "2%"
     };
+    
     return (
       <div>
         {isLoading ? (
           this.generateSkeleton()
         ) : nopost == 0 ? (
+          
           <Container>
             <Header as="h2" icon textAlign="center">
               <Icon name="wordpress forms" />

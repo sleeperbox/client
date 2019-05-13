@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import HeaderProfile from "./HeaderProfile";
-import HeaderPeople from "./HeaderPeople";
-import Action from "./Action";
 import Post from './Posts';
 import PostLightWeight from './PostsLightWeight';
 import { Icon,Menu, Dimmer, Loader } from "semantic-ui-react";

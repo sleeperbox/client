@@ -4,7 +4,6 @@ import MenuProfile from './MenuProfile';
 import HeaderProfile from './HeaderProfile';
 import MyPost from './MyPost';
 import MyPostLightWeight from './MyPostLightWeight';
-
 export default class Index extends Component {
 
     constructor(props) {
@@ -16,6 +15,8 @@ export default class Index extends Component {
             activeItem: "hexagrid"
         };
     }
+
+   
 
     componentWillMount() {
         if (this.state.loading == true || this.setState.isLogin == '' || this.setState.email == '') {
@@ -63,7 +64,6 @@ export default class Index extends Component {
                 active={activeItem === 'lightweight'}
                 onClick={this.handleItemClick}
                 ><Icon name="bolt" style={{color: "#5b90f6"}}/><span style={{marginLeft: -7}}>ightweight</span></Menu.Item>
-          
         </Menu>
     }
 

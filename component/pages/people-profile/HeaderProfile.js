@@ -260,9 +260,9 @@ export default class HeaderProfile extends Component {
                     </span>
                   </p>
                   {status == "followed" ? (
-                    <Button primary fluid size="small" onClick={() => this.handleBack(profile[0].email)}>unfollow</Button>
+                    <Button style={{background: "#5b90f6", color: "#fff"}} fluid size="small" onClick={() => this.handleBack(profile[0].email)}>unfollow</Button>
                   ) : (
-                      <Button primary fluid size="small" onClick={() => this.handleFollow(profile[0].email)}>follow</Button>
+                      <Button style={{background: "#5b90f6", color: "#fff"}} fluid size="small" onClick={() => this.handleFollow(profile[0].email)}>follow</Button>
                     )}
                 </Accordion.Content>
               </Accordion>
