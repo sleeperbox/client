@@ -35,24 +35,18 @@ export default class Comment extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ datas: result.data }));
+    }).then(result => this.setState({ datas: result.data, isLoading : false }));
     this.setState({
       isLogin: localStorage.getItem("auth")
     });
   }
 
   componentDidMount() {
-    if (this.state.datas) {
-        this.setState({ isLoading: false });
-    }
+    // if (this.state.datas) {
+    //     this.setState({ isLoading: false });
+    // }
     const { isLogin } = this.state;
     isLogin === "false" ? (window.location = "#/login") : "";
-    // console.log('first ', this.state.loading)
-    //     setTimeout(() => {
-    //         if(this.state.loading == true){
-    //             this.setState({loading: false}, () => console.log('end: ', this.state.loading))
-    //         }
-    //     }, 250)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -61,40 +55,70 @@ export default class Comment extends Component {
       window.location = "#/login";
     }
   }
+
   generateSkeleton() {
     const { datas } = this.state;
+    const marginLayer = {
+      marginLeft: "2px",
+      marginRight: "2px"
+    };
     return (
       <div style={{ marginBottom: 45 }}>
+        
         <Container>
-          <Divider hidden />
-          <Skeleton width="100%">
-            <Header as="h2" textAlign="center" />
-          </Skeleton>
-          <Divider />
-          {datas.map(data => {
-            return (
-              <Grid columns={2} key={data._id}>
-                <Grid.Column>
-                  <List verticalAlign="middle">
-                    <List.Item>
-                      <List.Content>
-                        <List.Header>
-                          <Skeleton />
-                        </List.Header>
-                        <p>
-                          <Skeleton />
-                        </p>
-                      </List.Content>
-                    </List.Item>
-                  </List>
-                </Grid.Column>
+          <Grid columns={2}style={marginLayer}>
+            <Grid.Column>
+              <List>
+                <List.Item>
+                  <Image>
+                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                  </Image>
+                  <List.Content>
+                    <List.Header>
+                      <p><Skeleton width="220px" he/></p>
+                    </List.Header>
+                    <p><Skeleton width="200px" he/></p>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Grid.Column>     
+          </Grid>
 
-                <Grid.Column verticalAlign="middle">
-                  <Skeleton />
-                </Grid.Column>
-              </Grid>
-            );
-          })}
+          <Grid columns={2}style={marginLayer}>
+            <Grid.Column>
+              <List>
+                <List.Item>
+                  <Image>
+                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                  </Image>
+                  <List.Content>
+                    <List.Header>
+                      <p><Skeleton width="220px" he/></p>
+                    </List.Header>
+                    <p><Skeleton width="200px" he/></p>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Grid.Column>     
+          </Grid>
+
+          <Grid columns={2}style={marginLayer}>
+            <Grid.Column>
+              <List>
+                <List.Item>
+                  <Image>
+                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                  </Image>
+                  <List.Content>
+                    <List.Header>
+                      <p><Skeleton width="220px" he/></p>
+                    </List.Header>
+                    <p><Skeleton width="200px" he/></p>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Grid.Column>     
+          </Grid>
         </Container>
       </div>
     );
@@ -125,25 +149,16 @@ export default class Comment extends Component {
     window.location = '#/posts?id='+ value + '' 
   }
 
-  loading() {
-    return (
-        <div>
-            <Dimmer active inverted>
-                <Loader size='large'>Plase Wait</Loader>
-            </Dimmer>
-        </div>        
-    );
-}
 
   render() {
-    const { datas, isLoading, loading } = this.state;
+    const { datas, isLoading } = this.state;
+    const nodatas = datas.length;
     return (
       <div style={{ marginBottom: 45 }}>
-        { loading ? (this.loading()
-        ) : datas.length === 0 ? (
-          this.generateZeroData()
-        ) : isLoading ? (
+        { isLoading ? (
           this.generateSkeleton()
+        ) : nodatas === 0 ? (
+          this.generateZeroData()
         ) : (
           <Container>
             {datas.map(data => {

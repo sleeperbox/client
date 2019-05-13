@@ -15,114 +15,51 @@ export default class Index extends Component {
       isLoading: true,
       loading: true
     };
-    this.generateSkeleton = this.generateSkeleton.bind(this);
-    this.generateZeroData = this.generateZeroData.bind(this);
+    // this.generateSkeleton = this.generateSkeleton.bind(this);
+    // this.generateZeroData = this.generateZeroData.bind(this);
   }
 
   componentWillMount() {
+    if (this.state.datas) {
+      this.setState({ isLoading: false });
+  }
+  const { isLogin } = this.state;
+  isLogin === "false" ? (window.location = "#/login") : "";
+
+  }
+
+  componentDidMount() {
+    
     if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
       // this.setState({loading: false})
       setTimeout(() =>  {
           this.setState({loading: false})
       }, 100)
   }
-    axios({
-      method: "post",
-      url: "http://apps.aprizal.com/api/follow/notif",
-      headers: {
-        "Acces-Control-Allow-Origin": true,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        email: this.state.email // This is the body part
-      }
-    }).then(result => this.setState({ datas: result.data }));
-    this.setState({
-      isLogin: localStorage.getItem("auth")
-    });
-  }
-
-  componentDidMount() {
-    if (this.state.datas) {
-        this.setState({ isLoading: false });
-    }
-    const { isLogin } = this.state;
-    isLogin === "false" ? (window.location = "#/login") : "";
-    // console.log('first ', this.state.loading)
-    //     setTimeout(() => {
-    //         if(this.state.loading == true){
-    //             this.setState({loading: false}, () => console.log('end: ', this.state.loading))
-    //         }
-    //     }, 250)
+    // axios({
+    //   method: "post",
+    //   url: "http://apps.aprizal.com/api/follow/notif",
+    //   headers: {
+    //     "Acces-Control-Allow-Origin": true,
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json"
+    //   },
+    //   data: {
+    //     email: this.state.email // This is the body part
+    //   }
+    // }).then(result => this.setState({ datas: result.data }));
+    // this.setState({
+    //   isLogin: localStorage.getItem("auth")
+    // });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { isLogin } = this.state;
-    if (isLogin === false) {
-      window.location = "#/login";
-    }
+    // const { isLogin } = this.state;
+    // if (isLogin === false) {
+    //   window.location = "#/login";
+    // }
   }
-  generateSkeleton() {
-    const { datas } = this.state;
-    return (
-      <div style={{ marginBottom: 45 }}>
-        <Container>
-          <Divider hidden />
-          <Skeleton width="100%">
-            <Header as="h2" textAlign="center" />
-          </Skeleton>
-          <Divider />
-          {datas.map(data => {
-            return (
-              <Grid columns={2} key={data._id}>
-                <Grid.Column>
-                  <List verticalAlign="middle">
-                    <List.Item>
-                      <List.Content>
-                        <List.Header>
-                          <Skeleton />
-                        </List.Header>
-                        <p>
-                          <Skeleton />
-                        </p>
-                      </List.Content>
-                    </List.Item>
-                  </List>
-                </Grid.Column>
-
-                <Grid.Column verticalAlign="middle">
-                  <Skeleton />
-                </Grid.Column>
-              </Grid>
-            );
-          })}
-        </Container>
-      </div>
-    );
-  }
-
-  generateZeroData() {
-    const divConten = {
-      marginTop: "50%",
-      marginBottom: "50%"
-    };
-    return (
-      <div style={divConten}>
-        <Header as="h5" icon textAlign="center">
-        <Icon name="bell slash outline" />
-          <Header.Content>
-            <Statistic>
-              <Statistic.Label>
-                <i>You Have No Notification</i>
-              </Statistic.Label>
-            </Statistic>
-          </Header.Content>
-        </Header>
-      </div>
-    );
-  }
-
+  
   loading() {
     return (
         <div>
@@ -136,6 +73,7 @@ export default class Index extends Component {
 render() {
   sessionStorage.setItem("email_friend", this.state.email_friend);
   const {loading} = this.state
+  console.log("index.")
   return (
     <div style={{ marginBottom: 45 }}>
       {loading ? (this.loading()) : ( 
@@ -144,7 +82,6 @@ render() {
         <Menu/>
       </div>
       )}
-      <Menu/>
     </div>
   );
 }
