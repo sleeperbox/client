@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import {
   Icon,
   Menu,
-  Header,
-  Container,
+  Loader,
   Grid,
   Modal,
   Form,
@@ -28,7 +27,9 @@ export default class Posting extends Component {
       post: 0,
       email: localStorage.getItem("email"),
       kode_post: 1,
-      open: false
+      open: false,
+      isLoading: false,
+      directing: false
     };
     this.handlePost = this.handlePost.bind(this);
   }
@@ -102,6 +103,9 @@ export default class Posting extends Component {
   }
 
   publish() {
+    this.setState({
+      isLoading: true
+    })
     event.preventDefault();
     var data = {
       email: this.state.email,
@@ -135,17 +139,24 @@ export default class Posting extends Component {
       data.append("content", this.state.content);
       data.append("tags", this.state.value);
       data.append("kode_post", this.state.kode_post);
-
-      axios
-        .post("http://apps.aprizal.com/api/posting", data)
-        .then(() => window.location = "#/profile");
+      axios({
+        method: "post",
+        url: "http://apps.aprizal.com/api/posting",
+        headers: {
+          "Acces-Control-Allow-Origin": true,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        data: data
+      }).then(() => this.setState({isLoading: false, directing: true}));
     }
   }
 
   render() {
-    const {open, options, value, content } = this.state;
+    const {open, options, value, content, isLoading, directing } = this.state;
     return (
       <div>
+        {directing ? window.location.href = "#/profile" : null}
         {open ? this.backConfirmation() : null}
         <Menu borderless size="small">
           <Menu.Item name="back">
@@ -162,7 +173,9 @@ export default class Posting extends Component {
                   content="Post"
                   style={{ background: "#5b90f6" }}
                 />
-              ) : (
+              ) : isLoading ? 
+              <Button loading secondary style={{ background: "#5b90f6" }} >&nbsp;-Loading&nbsp;&nbsp;</Button>
+              : (
                 <Button
                   secondary
                   icon="checkmark"

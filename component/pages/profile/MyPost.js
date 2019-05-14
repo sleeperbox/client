@@ -11,8 +11,8 @@ import {
   Image,
   Modal,
   Button,
-  Popup,
-  Label,
+  Dimmer,
+  Loader,
   Form
 } from "semantic-ui-react";
 
@@ -69,8 +69,6 @@ export default class MyPost extends Component {
   handleCloseUpdate = () =>
     this.setState({ modalupdate: false, preview: null });
 
-  componentWillMount() {}
-
   componentDidMount() {
     axios({
       method: "post",
@@ -123,7 +121,7 @@ export default class MyPost extends Component {
         data: {
           email: this.state.email // This is the body part
         }
-      }).then(result => this.setState({ posting: result.data, thanks: 0 }));
+      }).then(result => this.setState({ posting: result.data, thanks: 0}));
     }
   }
   handlePost(event) {
@@ -165,7 +163,7 @@ export default class MyPost extends Component {
         email: this.state.email,
         _id: value
       }
-    }).then(this.setState({ modal: false, thanks: 1 }));
+    }).then(this.setState({thanks: 1, modal: false}, () => window.location.reload()));
   }
 
   handleOpen(value, postid) {
@@ -288,7 +286,7 @@ export default class MyPost extends Component {
   };
 
   render() {
-    const { posting, isLoading, thankLoad, kode, loaders} = this.state;
+    const { posting, isLoading, confirmLoading, kode, loaders } = this.state;
     const nopost = posting.length;
     // const hexagons = GridGenerator.parallelogram(-1, 2, -1, 0);
     const textMargin = {
@@ -318,547 +316,545 @@ export default class MyPost extends Component {
             <Divider hidden />
           </Container>
         ) : (
-          <Container>
-            <Segment basic>
-            <ul id="grid" className="clear">
-              {posting.map((data, index) => {
-                return (
-                    <li key={data._id}>
-                      <div className="hexagon">
-                        {data.fotocontent !== null ? (
-                          <Modal
-                          onClick={() => this.setState({ kode: 0 })}
-                            onClose={this.close}
-                            closeIcon
-                            trigger={
-                              <Image
-                                src={
-                                  "http://aprizal.com/public/posting/foto/" +
-                                  data.fotocontent
+              <Container>
+                <Segment basic>
+                  <ul id="grid" className="clear">
+                    {posting.map((data, index) => {
+                      return (
+                        <li key={data._id}>
+                          <div className="hexagon">
+                            {data.fotocontent !== null ? (
+                              <Modal
+                                onClick={() => this.setState({ kode: 0 })}
+                                onClose={this.close}
+                                closeIcon
+                                trigger={
+                                  <Image
+                                    src={
+                                      "http://aprizal.com/public/posting/foto/" +
+                                      data.fotocontent
+                                    }
+                                    className="imgzoom"
+                                    style={imagePost}
+                                  />
                                 }
-                                className="imgzoom"
-                                style={imagePost}
-                              />
-                            }
-                          >
-                            <Header>
-                              <small>
-                                {data.tags === "null" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/kategori.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "computer-gadget" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/komp.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "family-love" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/family.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "fact-rumour" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/f&r.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "business-work" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/bisnis.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "fashion-lifestyle" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/fashion.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "quotes" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/quotes.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "other" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/other.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "riddles" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/riddle.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : null}
-                              </small>
+                              >
+                                <Header>
+                                  <small>
+                                    {data.tags === "null" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/kategori.png"
+                                        width="7%"
+                                        style={{ float: "left" }}
+                                      />
+                                    ) : data.tags === "computer-gadget" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/komp.png"
+                                        width="7%"
+                                        style={{ float: "left" }}
+                                      />
+                                    ) : data.tags === "family-love" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/family.png"
+                                        width="7%"
+                                        style={{ float: "left" }}
+                                      />
+                                    ) : data.tags === "fact-rumour" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/f&r.png"
+                                        width="7%"
+                                        style={{ float: "left" }}
+                                      />
+                                    ) : data.tags === "business-work" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/bisnis.png"
+                                        width="7%"
+                                        style={{ float: "left" }}
+                                      />
+                                    ) : data.tags === "fashion-lifestyle" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/fashion.png"
+                                        width="7%"
+                                        style={{ float: "left" }}
+                                      />
+                                    ) : data.tags === "quotes" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/quotes.png"
+                                        width="7%"
+                                        style={{ float: "left" }}
+                                      />
+                                    ) : data.tags === "other" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/other.png"
+                                        width="7%"
+                                        style={{ float: "left" }}
+                                      />
+                                    ) : data.tags === "riddles" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/riddle.png"
+                                        width="7%"
+                                        style={{ float: "left" }}
+                                      />
+                                    ) : null}
+                                  </small>
 
-                              <small>
-                                <i style={textMargin}>{data.tags}</i>
-                              </small>
-                            </Header>
+                                  <small>
+                                    <i style={textMargin}>{data.tags}</i>
+                                  </small>
+                                </Header>
 
-                            <Modal.Content>
-                              <Image
-                                src={
-                                  "http://aprizal.com/public/posting/foto/" +
-                                  data.fotocontent
-                                }
-                              />
-                              <Grid>
-                                <Grid.Row columns={4} centered textAlign="center">  
-                                <Grid.Column width={6} />
-                                  <Grid.Column  width={6} /> 
-                                  <Grid.Column width={2}>
-                                    {/* update */}
-                                    <Modal
-                                      trigger={
-                                          <Icon name="edit" size="large"  onClick={() =>
-                                            this.handleOpenUpdate(data._id)
-                                          } 
-                                          style={{marginLeft: 15}}
-                                         />
-                                      }
-                                      open={this.state.modalupdate}
-                                      onClose={this.handleCloseUpdate}
-                                    >
-                                      <Header content="Edit Posting" />
-                                      <Modal.Content>
-                                        <Image
-                                          src={
-                                            "http://aprizal.com/public/posting/foto/" +
-                                            data.fotocontent
-                                          }
-                                        />
-                                        <Form>
-                                          <textarea
-                                            maxLength={250}
-                                            name="content"
-                                            onChange={this.handlePost}
-                                            style={{ border: "none" }}
-                                          >
-                                            {this.state.content}
-                                          </textarea>
-                                        </Form>
-                                      </Modal.Content>
-                                      <Modal.Actions>
-                                        <Button
-                                          onClick={this.handleCloseUpdate}
-                                        >
-                                        cancel
-                                        </Button>
-                                        <Button
-                                          primary
-                                          onClick={() => this.update()}
-                                        >
-                                        edit
-                                        </Button>
-                                      </Modal.Actions>
-                                    </Modal>
-                                  </Grid.Column>
-                                  <Grid.Column width={2}>
-                                    {/* delete */}
-                                    <Modal
-                                    style={{marginTop: 250}}
-                                      trigger={
-                                          <Icon
-                                            name="trash alternate outline"
-                                            size="large"
-                                            onClick={this.handleOpen}
-                                          />
-                                      }
-                                      open={this.state.modal}
-                                      onClose={this.handleClose}
-                                      basic
-                                    >
-                                      <Modal.Content>
-                                        <p style={{textAlign: "center"}}>are you sure want to delete this post?</p>
-                                      </Modal.Content>
-                                      <Modal.Actions>
-                                        <center>
-                                        <Button
-                                          inverted
-                                          onClick={() => this.delete(data._id)}
-                                        >
-                                        yes
-                                        </Button>
-                                        <Button
-                                          onClick={this.handleClose}
-                                          inverted
-                                        >
-                                        no
-                                        </Button>
-                                        </center>
-                                       
-                                      </Modal.Actions>
-                                    </Modal>
-                                  </Grid.Column>
-                                </Grid.Row>
-                                <Grid.Row
-                                  style={{
-                                    marginTop: "-1.5em",
-                                    marginBottom: "-1.5em"
-                                  }}
-                                >
-                                </Grid.Row>
-                                <Grid.Row columns={1}>
-                                  <GridColumn>
-                                    <p
-                                      style={{
-                                        whiteSpace: "-moz-pre-wrap",
-                                        whiteSpace: "-moz-pre-wrap !important",
-                                        whiteSpace: "pre-wrap",
-                                        whiteSpace: "-webkit-pre-wrap",
-                                        wordBreak: "break-all",
-                                        whiteSpace: "normal"
-                                      }}
-                                    >
-                                      <b>{data.username}</b> {data.content}
-                                    </p>
-                                    <p
-                                      style={{
-                                        fontSize: "13px",
-                                        float: "left"
-                                      }}
-                                      onClick={() =>
-                                        this.discuss(data.id_posts)
-                                      }
-                                    >
-                                       <b>{data.thanks}</b> thanks <b>{data.comment}</b> comments, <i style={{color: "#5b90f6"}}>see more...</i>
-                                    </p>
-                                    <br />
-                                    <small style={{ float: "right", marginTop: "-18px" }}>
-                                      <i>
-                                        {data.date.slice(11) == this.state.year
-                                          ? data.date.slice(4, -5) ==
-                                            this.state.datemonth
-                                            ? data.jam == this.state.jam
-                                              ? data.menit == this.state.menit
-                                                ? "Now"
-                                                : this.state.menit -
-                                                  data.menit +
-                                                  " m ago"
-                                              : this.state.jam -
-                                                data.jam +
-                                                " h ago"
-                                            : data.date.slice(4, -5)
-                                          : data.date.slice(4)}
-                                      </i>
-                                    </small>
-                                    <br />
-                                    <br />
-                                  </GridColumn>
-                                </Grid.Row>
-                              </Grid>
-                            </Modal.Content>
-                          </Modal>
-                        ) : (
-                          <Modal
-                          onClick={() => this.setState({ kode: 0 })}
-                            onClose={this.close}
-                            closeIcon
-                            trigger={
-                              data.tags === "null" ? (
-                                <Image
-                                  src="http://aprizal.com/public/icon/icon/kategori.png"
-                                  width="80%"
-                                />
-                              ) : data.tags === "computer-gadget" ? (
-                                <Image
-                                  src="http://aprizal.com/public/icon/icon/komp.png"
-                                  style={{
-                                    height: "100%",
-                                    width: "100%",
-                                    background: "black"
-                                  }}
-                                />
-                              ) : data.tags === "family-love" ? (
-                                <Image
-                                  src="http://aprizal.com/public/icon/icon/family.png"
-                                  style={{
-                                    height: "100%",
-                                    width: "100%",
-                                    background: "black"
-                                  }}
-                                />
-                              ) : data.tags === "fact-rumour" ? (
-                                <Image
-                                  src="http://aprizal.com/public/icon/icon/f&r.png"
-                                  style={{
-                                    height: "100%",
-                                    width: "100%",
-                                    background: "black"
-                                  }}
-                                />
-                              ) : data.tags === "business-work" ? (
-                                <Image
-                                  src="http://aprizal.com/public/icon/icon/bisnis.png"
-                                  style={{
-                                    height: "100%",
-                                    width: "100%",
-                                    background: "black"
-                                  }}
-                                />
-                              ) : data.tags === "fashion-lifestyle" ? (
-                                <Image
-                                  src="http://aprizal.com/public/icon/icon/fashion.png"
-                                  width="80%"
-                                />
-                              ) : data.tags === "quotes" ? (
-                                <Image
-                                  src="http://aprizal.com/public/icon/icon/quotes.png"
-                                  style={{
-                                    height: "100%",
-                                    width: "100%",
-                                    background: "black"
-                                  }}
-                                />
-                              ) : data.tags === "other" ? (
-                                <Image
-                                  src="http://aprizal.com/public/icon/icon/other.png"
-                                  style={{
-                                    height: "100%",
-                                    width: "100%",
-                                    background: "black"
-                                  }}
-                                />
-                              ) : data.tags === "riddles" ? (
-                                <Image
-                                  src="http://aprizal.com/public/icon/icon/riddle.png"
-                                  style={{
-                                    height: "100%",
-                                    width: "100%",
-                                    background: "black"
-                                  }}
-                                />
-                              ) : null
-                            }
-                          >
-                            <Header>
-                              <small>
-                                {data.tags === "null" ? (
+                                <Modal.Content>
                                   <Image
-                                    src="http://aprizal.com/public/icon/icon/kategori.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
+                                    src={
+                                      "http://aprizal.com/public/posting/foto/" +
+                                      data.fotocontent
+                                    }
                                   />
-                                ) : data.tags === "computer-gadget" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/komp.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "family-love" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/family.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "fact-rumour" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/fr.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "business-work" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/bisnis.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "fashion-lifestyle" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/fashion.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "quotes" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/quotes.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "other" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/other.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "riddles" ? (
-                                  <Image
-                                    src="http://aprizal.com/public/icon/icon/riddle.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : null}
-                              </small>
-
-                              <small>
-                                <i style={textMargin}>{data.tags}</i>
-                              </small>
-                            </Header>
-                            <Modal.Content>
-                            <center><small><i>this post has no images...</i></small></center>
-                              <Grid>
-                                <Grid.Row columns={4}>
-
-                                <Grid.Column width={6} />
-                                  <Grid.Column  width={6} /> 
-                                  <Grid.Column width={2}>
-                                    {/* update */}
-                                    <Modal
-                                      trigger={
-                                          <Icon name="edit" size="large"  onClick={() =>
-                                            this.handleOpenUpdate(data._id)
-                                          } 
-                                          style={{marginLeft: 15}}
-                                         />
-                                      }
-                                      open={this.state.modalupdate}
-                                      onClose={this.handleCloseUpdate}
-                                    >
-                                      <Header sub textAlign="center" size="tiny" content={<div><Icon name="pencil square"/>update your post</div>}/>
-                                      <Modal.Content>
-                                        <Form>
-                                          <textarea
-                                            maxLength={250}
-                                            name="content"
-                                            onChange={this.handlePost}
-                                            defaultValue={this.state.content}
+                                  <Grid>
+                                    <Grid.Row columns={4} centered textAlign="center">
+                                      <Grid.Column width={6} />
+                                      <Grid.Column width={6} />
+                                      <Grid.Column width={2}>
+                                        {/* update */}
+                                        <Modal
+                                          trigger={
+                                            <Icon name="edit" size="large" onClick={() =>
+                                              this.handleOpenUpdate(data._id)
+                                            }
+                                              style={{ marginLeft: 15 }}
                                             />
-                                        </Form>
-                                      </Modal.Content>
-                                      <Modal.Actions>
-                                        <Button
-                                         primary
-                                         onClick={() => this.update()}
+                                          }
+                                          open={this.state.modalupdate}
+                                          onClose={this.handleCloseUpdate}
                                         >
-                                        update
+                                          <Header content="Edit Posting" />
+                                          <Modal.Content>
+                                            <Image
+                                              src={
+                                                "http://aprizal.com/public/posting/foto/" +
+                                                data.fotocontent
+                                              }
+                                            />
+                                            <Form>
+                                              <textarea
+                                                maxLength={250}
+                                                name="content"
+                                                onChange={this.handlePost}
+                                                style={{ border: "none" }}
+                                              >
+                                                {this.state.content}
+                                              </textarea>
+                                            </Form>
+                                          </Modal.Content>
+                                          <Modal.Actions>
+                                            <Button
+                                              onClick={this.handleCloseUpdate}
+                                            >
+                                              cancel
                                         </Button>
-                                        <Button
-                                          onClick={this.handleCloseUpdate}
+                                            <Button
+                                              primary
+                                              onClick={() => this.update()}
+                                            >
+                                              edit
+                                        </Button>
+                                          </Modal.Actions>
+                                        </Modal>
+                                      </Grid.Column>
+                                      <Grid.Column width={2}>
+                                        {/* delete */}
+                                        <Modal
+                                          style={{ marginTop: 250 }}
+                                          trigger={
+                                            <Icon
+                                              name="trash alternate outline"
+                                              size="large"
+                                              onClick={this.handleOpen}
+                                            />
+                                          }
+                                          open={this.state.modal}
+                                          onClose={this.handleClose}
+                                          basic
                                         >
-                                        cancel
-                                        </Button>
-                                      </Modal.Actions>
-                                    </Modal>
-                                  </Grid.Column>
-                                  <Grid.Column width={2}>
-                                    {/* delete */}
-                                    <Modal
-                                      trigger={
-                                          <Icon
-                                            name="trash alternate outline"
-                                            size="large"
-                                            onClick={this.handleOpen}
-                                          />
-                                      }
-                                      open={this.state.modal}
-                                      onClose={this.handleClose}
-                                      basic
+                                          <Modal.Content>
+                                            <p style={{ textAlign: "center" }}>are you sure want to delete this post?</p>
+                                          </Modal.Content>
+                                          <Modal.Actions>
+                                            <center>
+                                              <Button
+                                                inverted
+                                                onClick={() => this.delete(data._id)}
+                                              >
+                                                yes
+                                                    </Button>
+                                              <Button
+                                                onClick={this.handleClose}
+                                                inverted
+                                              >
+                                                no
+                                                </Button>
+                                            </center>
+                                          </Modal.Actions>
+                                        </Modal>
+                                      </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row
+                                      style={{
+                                        marginTop: "-1.5em",
+                                        marginBottom: "-1.5em"
+                                      }}
                                     >
-                                      <Modal.Content>
-                                        <p style={{textAlign: "center"}}>are you sure want to delete this post?</p>
-                                      </Modal.Content>
-                                      <Modal.Actions>
-                                        <center>
-                                        <Button
-                                          inverted
-                                          onClick={() => this.delete(data._id)}
+                                    </Grid.Row>
+                                    <Grid.Row columns={1}>
+                                      <GridColumn>
+                                        <p
+                                          style={{
+                                            whiteSpace: "-moz-pre-wrap",
+                                            whiteSpace: "-moz-pre-wrap !important",
+                                            whiteSpace: "pre-wrap",
+                                            whiteSpace: "-webkit-pre-wrap",
+                                            wordBreak: "break-all",
+                                            whiteSpace: "normal"
+                                          }}
                                         >
-                                        yes
-                                        </Button>
-                                        <Button
-                                          onClick={this.handleClose}
-                                          inverted
+                                          <b>{data.username}</b> {data.content}
+                                        </p>
+                                        <p
+                                          style={{
+                                            fontSize: "13px",
+                                            float: "left"
+                                          }}
+                                          onClick={() =>
+                                            this.discuss(data.id_posts)
+                                          }
                                         >
-                                        no
-                                        </Button>
-                                        </center>
-                                       
-                                      </Modal.Actions>
-                                    </Modal>
-                                  </Grid.Column>
-                                </Grid.Row>
-                                <Grid.Row
-                                  style={{
-                                    marginTop: "-1.5em",
-                                    marginBottom: "-1.5em"
-                                  }}
+                                          <b>{data.thanks}</b> thanks <b>{data.comment}</b> comments, <i style={{ color: "#5b90f6" }}>see more...</i>
+                                        </p>
+                                        <br />
+                                        <small style={{ float: "right", marginTop: "-18px" }}>
+                                          <i>
+                                            {data.date.slice(11) == this.state.year
+                                              ? data.date.slice(4, -5) ==
+                                                this.state.datemonth
+                                                ? data.jam == this.state.jam
+                                                  ? data.menit == this.state.menit
+                                                    ? "Now"
+                                                    : this.state.menit -
+                                                    data.menit +
+                                                    " m ago"
+                                                  : this.state.jam -
+                                                  data.jam +
+                                                  " h ago"
+                                                : data.date.slice(4, -5)
+                                              : data.date.slice(4)}
+                                          </i>
+                                        </small>
+                                        <br />
+                                        <br />
+                                      </GridColumn>
+                                    </Grid.Row>
+                                  </Grid>
+                                </Modal.Content>
+                              </Modal>
+                            ) : (
+                                <Modal
+                                  onClick={() => this.setState({ kode: 0 })}
+                                  onClose={this.close}
+                                  closeIcon
+                                  trigger={
+                                    data.tags === "null" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/kategori.png"
+                                        width="80%"
+                                      />
+                                    ) : data.tags === "computer-gadget" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/komp.png"
+                                        style={{
+                                          height: "100%",
+                                          width: "100%",
+                                          background: "black"
+                                        }}
+                                      />
+                                    ) : data.tags === "family-love" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/family.png"
+                                        style={{
+                                          height: "100%",
+                                          width: "100%",
+                                          background: "black"
+                                        }}
+                                      />
+                                    ) : data.tags === "fact-rumour" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/f&r.png"
+                                        style={{
+                                          height: "100%",
+                                          width: "100%",
+                                          background: "black"
+                                        }}
+                                      />
+                                    ) : data.tags === "business-work" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/bisnis.png"
+                                        style={{
+                                          height: "100%",
+                                          width: "100%",
+                                          background: "black"
+                                        }}
+                                      />
+                                    ) : data.tags === "fashion-lifestyle" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/fashion.png"
+                                        width="80%"
+                                      />
+                                    ) : data.tags === "quotes" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/quotes.png"
+                                        style={{
+                                          height: "100%",
+                                          width: "100%",
+                                          background: "black"
+                                        }}
+                                      />
+                                    ) : data.tags === "other" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/other.png"
+                                        style={{
+                                          height: "100%",
+                                          width: "100%",
+                                          background: "black"
+                                        }}
+                                      />
+                                    ) : data.tags === "riddles" ? (
+                                      <Image
+                                        src="http://aprizal.com/public/icon/icon/riddle.png"
+                                        style={{
+                                          height: "100%",
+                                          width: "100%",
+                                          background: "black"
+                                        }}
+                                      />
+                                    ) : null
+                                  }
                                 >
-                                </Grid.Row>
-                                <Grid.Row columns={1}>
-                                  <GridColumn>
-                                    <p
-                                      style={{
-                                        whiteSpace: "-moz-pre-wrap",
-                                        whiteSpace: "-moz-pre-wrap !important",
-                                        whiteSpace: "pre-wrap",
-                                        whiteSpace: "-webkit-pre-wrap",
-                                        wordBreak: "break-all",
-                                        whiteSpace: "normal"
-                                      }}
-                                    >
-                                      <b>{data.username}</b> {data.content}
-                                    </p>
-                                    <p
-                                      style={{
-                                        fontSize: "13px",
-                                        float: "left"
-                                      }}
-                                      onClick={() =>
-                                        this.discuss(data.id_posts)
-                                      }
-                                    >
-                                       <b>{data.thanks}</b> thanks <b>{data.comment}</b> comments, <i style={{color: "#5b90f6"}}>see more...</i>
-                                    </p>
-                                    <br />
-                                    <small style={{ float: "right", marginTop: "-18px" }}>
-                                      <i>
-                                        {data.date.slice(11) == this.state.year
-                                          ? data.date.slice(4, -5) ==
-                                            this.state.datemonth
-                                            ? data.jam == this.state.jam
-                                              ? data.menit == this.state.menit
-                                                ? "Now"
-                                                : this.state.menit -
-                                                  data.menit +
-                                                  " m ago"
-                                              : this.state.jam -
-                                                data.jam +
-                                                " h ago"
-                                            : data.date.slice(4, -5)
-                                          : data.date.slice(4)}
-                                      </i>
+                                  <Header>
+                                    <small>
+                                      {data.tags === "null" ? (
+                                        <Image
+                                          src="http://aprizal.com/public/icon/icon/kategori.png"
+                                          width="7%"
+                                          style={{ float: "left" }}
+                                        />
+                                      ) : data.tags === "computer-gadget" ? (
+                                        <Image
+                                          src="http://aprizal.com/public/icon/icon/komp.png"
+                                          width="7%"
+                                          style={{ float: "left" }}
+                                        />
+                                      ) : data.tags === "family-love" ? (
+                                        <Image
+                                          src="http://aprizal.com/public/icon/icon/family.png"
+                                          width="7%"
+                                          style={{ float: "left" }}
+                                        />
+                                      ) : data.tags === "fact-rumour" ? (
+                                        <Image
+                                          src="http://aprizal.com/public/icon/icon/f&r.png"
+                                          width="7%"
+                                          style={{ float: "left" }}
+                                        />
+                                      ) : data.tags === "business-work" ? (
+                                        <Image
+                                          src="http://aprizal.com/public/icon/icon/bisnis.png"
+                                          width="7%"
+                                          style={{ float: "left" }}
+                                        />
+                                      ) : data.tags === "fashion-lifestyle" ? (
+                                        <Image
+                                          src="http://aprizal.com/public/icon/icon/fashion.png"
+                                          width="7%"
+                                          style={{ float: "left" }}
+                                        />
+                                      ) : data.tags === "quotes" ? (
+                                        <Image
+                                          src="http://aprizal.com/public/icon/icon/quotes.png"
+                                          width="7%"
+                                          style={{ float: "left" }}
+                                        />
+                                      ) : data.tags === "other" ? (
+                                        <Image
+                                          src="http://aprizal.com/public/icon/icon/other.png"
+                                          width="7%"
+                                          style={{ float: "left" }}
+                                        />
+                                      ) : data.tags === "riddles" ? (
+                                        <Image
+                                          src="http://aprizal.com/public/icon/icon/riddle.png"
+                                          width="7%"
+                                          style={{ float: "left" }}
+                                        />
+                                      ) : null}
                                     </small>
-                                    <br />
-                                    <br />
-                                  </GridColumn>
-                                </Grid.Row>
-                              </Grid>
-                            </Modal.Content>
-                          </Modal>
-                        )}
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-              <Divider hidden />
-              <Divider hidden />
-              <Divider hidden />
-              <Divider hidden />
-              <Divider hidden />
-            </Segment>
-          </Container>
-        )}
+
+                                    <small>
+                                      <i style={textMargin}>{data.tags}</i>
+                                    </small>
+                                  </Header>
+                                  <Modal.Content>
+                                    <center><small><i>this post has no images...</i></small></center>
+                                    <Grid>
+                                      <Grid.Row columns={4}>
+
+                                        <Grid.Column width={6} />
+                                        <Grid.Column width={6} />
+                                        <Grid.Column width={2}>
+                                          {/* update */}
+                                          <Modal
+                                            trigger={
+                                              <Icon name="edit" size="large" onClick={() =>
+                                                this.handleOpenUpdate(data._id)
+                                              }
+                                                style={{ marginLeft: 15 }}
+                                              />
+                                            }
+                                            open={this.state.modalupdate}
+                                            onClose={this.handleCloseUpdate}
+                                          >
+                                            <Header sub textAlign="center" size="tiny" content={<div><Icon name="pencil square" />update your post</div>} />
+                                            <Modal.Content>
+                                              <Form>
+                                                <textarea
+                                                  maxLength={250}
+                                                  name="content"
+                                                  onChange={this.handlePost}
+                                                  defaultValue={this.state.content}
+                                                />
+                                              </Form>
+                                            </Modal.Content>
+                                            <Modal.Actions>
+                                              <Button
+                                                primary
+                                                onClick={() => this.update()}
+                                              >
+                                                update
+                                        </Button>
+                                              <Button
+                                                onClick={this.handleCloseUpdate}
+                                              >
+                                                cancel
+                                        </Button>
+                                            </Modal.Actions>
+                                          </Modal>
+                                        </Grid.Column>
+                                        <Grid.Column width={2}>
+                                          {/* delete */}
+                                          <Modal
+                                            trigger={
+                                              <Icon
+                                                name="trash alternate outline"
+                                                size="large"
+                                                onClick={this.handleOpen}
+                                              />
+                                            }
+                                            open={this.state.modal}
+                                            onClose={this.handleClose}
+                                            basic
+                                          >
+                                            <Modal.Content>
+                                              <p style={{ textAlign: "center" }}>are you sure want to delete this post?</p>
+                                            </Modal.Content>
+                                            <Modal.Actions>
+                                              <center>
+                                                <Button
+                                                  inverted
+                                                  onClick={() => this.delete(data._id)}
+                                                >
+                                                  yes
+                                                    </Button>
+                                                <Button
+                                                  onClick={this.handleClose}
+                                                  inverted
+                                                >
+                                                  no
+                                                </Button>
+                                              </center>
+                                            </Modal.Actions>
+                                          </Modal>
+                                        </Grid.Column>
+                                      </Grid.Row>
+                                      <Grid.Row
+                                        style={{
+                                          marginTop: "-1.5em",
+                                          marginBottom: "-1.5em"
+                                        }}
+                                      >
+                                      </Grid.Row>
+                                      <Grid.Row columns={1}>
+                                        <GridColumn>
+                                          <p
+                                            style={{
+                                              whiteSpace: "-moz-pre-wrap",
+                                              whiteSpace: "-moz-pre-wrap !important",
+                                              whiteSpace: "pre-wrap",
+                                              whiteSpace: "-webkit-pre-wrap",
+                                              wordBreak: "break-all",
+                                              whiteSpace: "normal"
+                                            }}
+                                          >
+                                            <b>{data.username}</b> {data.content}
+                                          </p>
+                                          <p
+                                            style={{
+                                              fontSize: "13px",
+                                              float: "left"
+                                            }}
+                                            onClick={() =>
+                                              this.discuss(data.id_posts)
+                                            }
+                                          >
+                                            <b>{data.thanks}</b> thanks <b>{data.comment}</b> comments, <i style={{ color: "#5b90f6" }}>see more...</i>
+                                          </p>
+                                          <br />
+                                          <small style={{ float: "right", marginTop: "-18px" }}>
+                                            <i>
+                                              {data.date.slice(11) == this.state.year
+                                                ? data.date.slice(4, -5) ==
+                                                  this.state.datemonth
+                                                  ? data.jam == this.state.jam
+                                                    ? data.menit == this.state.menit
+                                                      ? "Now"
+                                                      : this.state.menit -
+                                                      data.menit +
+                                                      " m ago"
+                                                    : this.state.jam -
+                                                    data.jam +
+                                                    " h ago"
+                                                  : data.date.slice(4, -5)
+                                                : data.date.slice(4)}
+                                            </i>
+                                          </small>
+                                          <br />
+                                          <br />
+                                        </GridColumn>
+                                      </Grid.Row>
+                                    </Grid>
+                                  </Modal.Content>
+                                </Modal>
+                              )}
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                  <Divider hidden />
+                </Segment>
+              </Container>
+            )}
       </div>
     );
   }
