@@ -32,7 +32,8 @@ export default class Index extends Component {
       data_message: "",
       isLoading: true,
       tombol: 0,
-      kode: 0
+      kode: 0,
+      today: new Date().getDate()
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.generateZeroData = this.generateZeroData.bind(this);
@@ -237,7 +238,9 @@ export default class Index extends Component {
                 this.state.data_name.last_name}
               <br />
               <Label size="small" style={{ backgroundColor: "transparent" }}>
-                <i>{"@" + this.state.data_name.username}</i>
+                <i style={{ marginLeft: "-10px" }}>
+                  {"@" + this.state.data_name.username}
+                </i>
               </Label>
             </Header>
             <Divider />
@@ -247,33 +250,52 @@ export default class Index extends Component {
                   <Grid.Column>
                     <List verticalAlign="middle">
                       {data.username_user1 === this.state.username_user1 ? (
-                        <List.Item style={{ float: "left" }}>
+                        <List.Item
+                          style={{ float: "left", marginBottom: "-10px" }}
+                        >
                           <List.Content>
                             <Label
                               size="large"
                               style={{
                                 backgroundColor: "#DD4B39",
                                 color: "#f7f7f7",
-                                fontWeight: "100"
+                                fontWeight: "100",
+                                borderRadius: "10px"
                               }}
-                              circular
                             >
-                              {data.message}
+                              <p
+                                style={{
+                                  whiteSpace: "-moz-pre-wrap",
+                                  whiteSpace: "-moz-pre-wrap !important",
+                                  whiteSpace: "pre-wrap",
+                                  whiteSpace: "-webkit-pre-wrap",
+                                  wordBreak: "break-all",
+                                  whiteSpace: "normal",
+                                  textAlign: "left"
+                                }}
+                              >
+                                {data.message}
+                              </p>
                             </Label>
                             <br />
                             <Label
                               size="small"
                               style={{
                                 backgroundColor: "transparent",
-                                float: "left"
+                                float: "left",
+                                marginLeft: "-4px"
                               }}
                             >
-                              {data.date.slice(0, 10)}
+                              {data.date.slice(14, 16) == this.state.today
+                                ? data.date.slice(0, 5)
+                                : data.date.slice(0)}
                             </Label>
                           </List.Content>
                         </List.Item>
                       ) : (
-                        <List.Item style={{ float: "right" }}>
+                        <List.Item
+                          style={{ float: "right", marginBottom: "-10px" }}
+                        >
                           <List.Content style={{ float: "right" }}>
                             <Label
                               size="small"
@@ -284,12 +306,24 @@ export default class Index extends Component {
                                 float: "right",
                                 backgroundColor: "#00ACEE",
                                 color: "#f7f7f7",
-                                fontWeight: "100"
+                                fontWeight: "100",
+                                borderRadius: "10px"
                               }}
                               size="large"
-                              circular
                             >
-                              {data.message}
+                              <p
+                                style={{
+                                  whiteSpace: "-moz-pre-wrap",
+                                  whiteSpace: "-moz-pre-wrap !important",
+                                  whiteSpace: "pre-wrap",
+                                  whiteSpace: "-webkit-pre-wrap",
+                                  wordBreak: "break-all",
+                                  whiteSpace: "normal",
+                                  textAlign: "left"
+                                }}
+                              >
+                                {data.message}
+                              </p>
                             </Label>
                             <br />
                             {data.status === "Send" ? (
@@ -300,7 +334,9 @@ export default class Index extends Component {
                                   float: "right"
                                 }}
                               >
-                                {data.date.slice(0, 10)}
+                                {data.date.slice(14, 16) == this.state.today
+                                  ? data.date.slice(0, 5)
+                                  : data.date.slice(0)}
                                 <Icon />
                                 <Icon name="envelope open outline" />
                                 <i>{data.status}</i>
@@ -313,7 +349,9 @@ export default class Index extends Component {
                                   float: "right"
                                 }}
                               >
-                                {data.date.slice(1, 10)}
+                                {data.date.slice(14, 16) == this.state.today
+                                ? data.date.slice(0, 5)
+                                : data.date.slice(0)}
                                 <Icon />
                                 <Icon
                                   name="envelope open outline"
@@ -387,7 +425,7 @@ export default class Index extends Component {
           }}
           name="pesan"
           onChange={this.handlePost}
-          placeholder=' Write a message..'
+          placeholder=" Write a message.."
           required
         />
         <Button

@@ -14,7 +14,8 @@ import {
   Segment,
   Icon,
   Input,
-  Flag
+  Flag,
+  Menu
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import HeaderMessage from "./HeaderMessage";
@@ -33,7 +34,7 @@ export default class Index extends Component {
       data_message: "",
       isLoading: true,
       loading: true,
-      maxlength: 30,
+      maxlength: 33,
       today: new Date().getDate()
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
@@ -62,11 +63,12 @@ export default class Index extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => 
-      this.setState({ 
-        datas: result.data, 
-        isLoading:false 
-      }));
+    }).then(result =>
+      this.setState({
+        datas: result.data,
+        isLoading: false
+      })
+    );
 
     axios({
       method: "post",
@@ -79,11 +81,12 @@ export default class Index extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => 
-      this.setState({ 
-        username_user1: result.data.username, 
-        isLoading:false 
-      }));
+    }).then(result =>
+      this.setState({
+        username_user1: result.data.username,
+        isLoading: false
+      })
+    );
     this.setState({
       isLogin: localStorage.getItem("auth")
     });
@@ -95,7 +98,6 @@ export default class Index extends Component {
     // }
     const { isLogin } = this.state;
     isLogin === "false" ? (window.location = "#/login") : "";
-    
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -129,53 +131,65 @@ export default class Index extends Component {
               <List>
                 <List.Item>
                   <Image>
-                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                    <Skeleton width="30px" height="30px" borderRadius="50px" />
                   </Image>
                   <List.Content>
                     <List.Header>
-                      <p><Skeleton width="220px" he/></p>
+                      <p>
+                        <Skeleton width="220px" he />
+                      </p>
                     </List.Header>
-                    <p><Skeleton width="200px" he/></p>
+                    <p>
+                      <Skeleton width="200px" he />
+                    </p>
                   </List.Content>
                 </List.Item>
               </List>
-            </Grid.Column>     
+            </Grid.Column>
           </Grid>
 
-          <Grid columns={2}style={marginLayer}>
+          <Grid columns={2} style={marginLayer}>
             <Grid.Column>
               <List>
                 <List.Item>
                   <Image>
-                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                    <Skeleton width="30px" height="30px" borderRadius="50px" />
                   </Image>
                   <List.Content>
                     <List.Header>
-                      <p><Skeleton width="220px" he/></p>
+                      <p>
+                        <Skeleton width="220px" he />
+                      </p>
                     </List.Header>
-                    <p><Skeleton width="200px" he/></p>
+                    <p>
+                      <Skeleton width="200px" he />
+                    </p>
                   </List.Content>
                 </List.Item>
               </List>
-            </Grid.Column>     
+            </Grid.Column>
           </Grid>
 
-          <Grid columns={2}style={marginLayer}>
+          <Grid columns={2} style={marginLayer}>
             <Grid.Column>
               <List>
                 <List.Item>
                   <Image>
-                  <Skeleton width="30px" height="30px" borderRadius="50px" />
+                    <Skeleton width="30px" height="30px" borderRadius="50px" />
                   </Image>
                   <List.Content>
                     <List.Header>
-                      <p><Skeleton width="220px" he/></p>
+                      <p>
+                        <Skeleton width="220px" he />
+                      </p>
                     </List.Header>
-                    <p><Skeleton width="200px" he/></p>
+                    <p>
+                      <Skeleton width="200px" he />
+                    </p>
                   </List.Content>
                 </List.Item>
               </List>
-            </Grid.Column>     
+            </Grid.Column>
           </Grid>
         </Container>
       </div>
@@ -216,16 +230,34 @@ export default class Index extends Component {
   render() {
     const { datas, isLoading } = this.state;
     const marginSearch = {
-      marginTop : "1.5em",
+      marginTop: "1.5em",
       marginBottom: "-0.8em",
-      marginLeft : "1em",
-      marginRight : "1em"
-    }
+      marginLeft: "1em",
+      marginRight: "1em"
+    };
+    const border = {
+      width: "32px",
+      height: "32px",
+      paddingTop: "4px",
+      borderRadius: "25px",
+      border: "2px solid"
+    };
     const nodatas = datas.length;
-    console.log(nodatas)
     return (
       <div>
-        <Input 
+        <Menu borderless size="huge" fixed="top">
+          <Menu.Menu position="right">
+            <Menu.Item name="help">
+              <Header as="h5">
+                <label>Message</label>
+              </Header>
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+        <Divider/>
+        <Divider/>
+        <Divider/>
+        <Input
           style={marginSearch}
           fluid
           icon="search"
@@ -243,8 +275,19 @@ export default class Index extends Component {
           <Container>
             {datas.map(data => {
               return (
-                <Grid columns={1} key={data._id} style={{marginBottom: "-1.5em"}}>  
-                  <Grid.Column>
+                <Grid
+                  columns={2}
+                  key={data._id}
+                  style={{ marginBottom: "-1.5em" }}
+                >
+                  <Grid.Column width={1}>
+                    <div style={border}>
+                      <b style={{ marginLeft: "9px" }}>
+                        {data.username_user1.charAt(0).toUpperCase()}
+                      </b>
+                    </div>
+                  </Grid.Column>
+                  <Grid.Column width={14} style={{ marginLeft: "12px" }}>
                     {data.username_user1 === this.state.username_user1 ? (
                       <List
                         verticalAlign="middle"
@@ -257,14 +300,9 @@ export default class Index extends Component {
                             <small>
                               {data.date.slice(14, 16) == this.state.today
                                 ? data.date.slice(0, 5)
-                                : data.date.slice(10)}
+                                : data.date.slice(9)}
                             </small>
                           </List.Content>
-                          <Image
-                            avatar
-                            src="https://react.semantic-ui.com/images/avatar/small/tom.jpg"
-                            style={{ width: "12%", height: "12%" }}
-                          />
                           <List.Content>
                             {data.username_user1 ===
                             this.state.username_user1 ? (
@@ -299,14 +337,9 @@ export default class Index extends Component {
                             <small>
                               {data.date.slice(14, 16) == this.state.today
                                 ? data.date.slice(0, 5)
-                                : data.date.slice(10)}
+                                : data.date.slice(9)}
                             </small>
                           </List.Content>
-                          <Image
-                            avatar
-                            src="https://react.semantic-ui.com/images/avatar/small/tom.jpg"
-                            style={{ width: "12%", height: "12%" }}
-                          />
                           <List.Content>
                             {data.username_user1 ===
                             this.state.username_user1 ? (
@@ -318,7 +351,13 @@ export default class Index extends Component {
                                 {data.username_user1}
                               </List.Header>
                             )}
-                            <p style={{ fontSize: "12px", color: "#8C8C8C", marginTop: "5px" }}>
+                            <p
+                              style={{
+                                fontSize: "12px",
+                                color: "#8C8C8C",
+                                marginTop: "5px"
+                              }}
+                            >
                               {data.message.length > this.state.maxlength
                                 ? data.message.substring(
                                     0,
