@@ -10,6 +10,7 @@ import {
   GridColumn,
   Image,
   Select,
+  Message,
   Dropdown,
   Button,
   Modal,
@@ -57,7 +58,8 @@ export default class ProfileSetting extends Component {
       tag6: 0,
       tag7: 0,
       tag8: 0,
-      preview: ""
+      preview: "",
+      warning: ""
       // message: '3'
     };
     this.handleTags = this.handleTags.bind(this);
@@ -148,7 +150,11 @@ export default class ProfileSetting extends Component {
           email: this.state.email // This is the body part
         }
       }).then(result => this.setState({ avatar: result.data, reload: "0" }));
-    }
+    }else if(this.state.warning == "1"){
+      this.setState({
+        warning: "2"
+      })
+    } 
   }
 
   update() {
@@ -220,11 +226,19 @@ export default class ProfileSetting extends Component {
     if (!URL.createObjectURL(event.target.files[0])) {
       return false;
     } else {
-      this.setState({
-        file: event.target.files[0],
-        preview: URL.createObjectURL(event.target.files[0]),
-        reload: "1"
-      });
+      let tipe = event.target.files[0].tipe
+      let ukuran = event.target.files[0].size
+      if( tipe == "image/jpg" && ukuran < 2000000 || tipe == "image/jpeg" && ukuran < 2000000 || tipe == "image/png" && ukuran < 2000000 ){
+        this.setState({
+          file: event.target.files[0],
+          preview: URL.createObjectURL(event.target.files[0]),
+          reload: "1"
+        });
+      }else{
+        this.setState({
+          warning: "1"
+        })
+      }
     }
   };
 
@@ -336,6 +350,11 @@ export default class ProfileSetting extends Component {
           Account Information
         </Header>
         <Container>
+          { this.state.warning === "2" ? (
+            <Message negative>
+              <center>jpg/jpeg/png & max size 2mb</center>
+            </Message>
+          ) : null}
           <Grid verticalAlign="middle" columns={2} centered>
             <GridColumn>
               {this.state.preview === "" ? (

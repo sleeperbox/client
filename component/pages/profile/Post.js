@@ -29,7 +29,8 @@ export default class Posting extends Component {
       kode_post: 1,
       open: false,
       isLoading: false,
-      directing: false
+      directing: false,
+      warning: ""
     };
     this.handlePost = this.handlePost.bind(this);
   }
@@ -87,10 +88,18 @@ export default class Posting extends Component {
   }
 
   fileHandler = event => {
-    this.setState({
-      file: event.target.files[0],
-      preview: URL.createObjectURL(event.target.files[0])
-    });
+    let tipe = event.target.files[0].tipe
+      let ukuran = event.target.files[0].size
+      if( tipe == "image/jpg" && ukuran < 2000000 || tipe == "image/jpeg" && ukuran < 2000000 || tipe == "image/png" && ukuran < 2000000 ){
+        this.setState({
+          file: event.target.files[0],
+          preview: URL.createObjectURL(event.target.files[0])
+        });
+      }else{
+        this.setState({
+          warning: "1"
+        })
+      }
   };
 
   handlePost(event) {
@@ -205,6 +214,15 @@ export default class Posting extends Component {
                   icon="warning circle"
                   error
                   header="Konten Tidak Boleh Kosong"
+                  size="mini"
+                />
+              </i>
+            ) : this.state.warning === "1" ? (
+              <i>
+                <Message
+                  icon="warning circle"
+                  error
+                  header="jpg/jpeg/png & max size 2mb"
                   size="mini"
                 />
               </i>
