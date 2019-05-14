@@ -240,7 +240,8 @@ export default class MoreCategory extends Component {
 
   smallFontCenter = {
     fontSize: 13,
-    textAlign: "center"
+    textAlign: "center",
+    marginLeft: "-2.5px"
   };
 
   render() {
