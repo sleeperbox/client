@@ -226,7 +226,7 @@ export default class ProfileSetting extends Component {
     if (!URL.createObjectURL(event.target.files[0])) {
       return false;
     } else {
-      let tipe = event.target.files[0].tipe
+      let tipe = event.target.files[0].type
       let ukuran = event.target.files[0].size
       if( tipe == "image/jpg" && ukuran < 2000000 || tipe == "image/jpeg" && ukuran < 2000000 || tipe == "image/png" && ukuran < 2000000 ){
         this.setState({
