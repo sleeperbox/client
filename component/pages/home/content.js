@@ -11,14 +11,14 @@ import {
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
-import PostOther from "./PostingOther";
-import PostQuotes from "./PostingQuotes";
-import PostRiddles from "./PostingRiddles";
-import PostComputerGadget from "./PostingComputerGadget";
-import PostFamilyLove from "./PostingFamilyLove";
-import PostFactRumour from "./PostingFactRumour";
-import PostBussinessWork from "./PostingBussinessWork";
-import PostFashionLifestyle from "./PostingFashionLifestyle";
+import PostOther from "./PostingOtherlimit";
+import PostQuotes from "./PostingQuoteslimit";
+import PostRiddles from "./PostingRiddleslimit";
+import PostComputerGadget from "./PostingComputerGadgetlimit";
+import PostFamilyLove from "./PostingFamilyLovelimit";
+import PostFactRumour from "./PostingFactRumourlimit";
+import PostBussinessWork from "./PostingBussinessWorklimit";
+import PostFashionLifestyle from "./PostingFashionLifestylelimit";
 
 export default class Content extends Component {
   constructor(props) {
