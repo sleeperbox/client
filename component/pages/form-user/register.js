@@ -153,13 +153,7 @@ export default class Register extends Component {
             verticalAlign="middle"
           >
             <Grid.Column>
-              <Divider hidden />
-              <div style={{ textAlign: "center", fontSize: 22, color: "#222" }}>
-                <Image src="http://aprizal.com/public/icon/icon/fashion.png" size="tiny" centered />
-                <p style={{ marginTop: -15 }}>enjoy your way</p>
-              </div>
-              <Divider hidden />
-              <Form size="small" onSubmit={this.handleSubmit}>
+              <Form size="tiny" onSubmit={this.handleSubmit}>
                 <Form.Input
                   fluid
                   icon="mail"
