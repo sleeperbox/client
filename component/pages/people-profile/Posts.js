@@ -181,7 +181,7 @@ export default class MyPost extends Component {
         ) : nopost == 0 ? (
           <Container>
             <Divider hidden />
-            <Header as="h2" icon textAlign="center">
+            <Header as="h2" icon textAlign="center" style={{marginTop: 25, marginBottom: 100}}>
               <Icon name="meh" />
               No Post
               <Header.Subheader>

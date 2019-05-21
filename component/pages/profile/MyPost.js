@@ -301,19 +301,13 @@ export default class MyPost extends Component {
           this.generateSkeleton()
         ) : nopost == 0 ? (
           <Container>
-            <Header as="h2" icon textAlign="center">
+            <Header as="h2" icon textAlign="center" style={{marginTop: 25, marginBottom: 100}}>
               <Icon name="wordpress forms" />
               No Post
               <Header.Subheader>
                 <i>You Have No Post Yet, Make It Now!</i>
               </Header.Subheader>
             </Header>
-            <Divider hidden />
-            <Divider hidden />
-            <Divider hidden />
-            <Divider hidden />
-            <Divider hidden />
-            <Divider hidden />
           </Container>
         ) : (
               <Container>

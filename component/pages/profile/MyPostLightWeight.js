@@ -255,7 +255,7 @@ export default class MyPostLightWeight extends Component {
         ) : nopost == 0 ? (
           
           <Container>
-            <Header as="h2" icon textAlign="center">
+            <Header as="h2" icon textAlign="center" style={{marginTop: 25, marginBottom: 100}}>
               <Icon name="wordpress forms" />
               No Post
               <Header.Subheader>

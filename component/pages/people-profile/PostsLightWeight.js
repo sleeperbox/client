@@ -179,11 +179,11 @@ export default class MyPostLightWeight extends Component {
           this.generateSkeleton()
         ) : nopost == 0 ? (
           <Container>
-            <Header as="h2" icon textAlign="center">
-              <Icon name="wordpress forms" />
+           <Header as="h2" icon textAlign="center" style={{marginTop: 25, marginBottom: 100}}>
+              <Icon name="meh" />
               No Post
               <Header.Subheader>
-                <i>You Have No Post Yet, Make It Now!</i>
+                <i>This user has no post yet, comeback later</i>
               </Header.Subheader>
             </Header>
             <Divider hidden />
