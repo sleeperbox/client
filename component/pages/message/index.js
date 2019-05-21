@@ -282,7 +282,7 @@ export default class Index extends Component {
                 >
                   <Grid.Column width={1}>
                     <div style={border}>
-                      <b style={{ marginLeft: "9px" }}>
+                      <b style={{ marginLeft: "7px" }}>
                         {data.username_user1.charAt(0).toUpperCase()}
                       </b>
                     </div>
