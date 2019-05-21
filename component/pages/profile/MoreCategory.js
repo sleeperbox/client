@@ -16,6 +16,12 @@ import setting from "./../../../../../assets/images/icon/setting.png";
 import people from "./../../../../../assets/images/icon/group.png";
 import photo from "./../../../../../assets/images/icon/reputation.png";
 import news from "./../../../../../assets/images/icon/news.png";
+import baby from "./../../../../../assets/images/icon/baby.png";
+import settle from "./../../../../../assets/images/icon/settle.png";
+import familiar from "./../../../../../assets/images/icon/familiar.png";
+import huge from "./../../../../../assets/images/icon/huge.png";
+import glory from "./../../../../../assets/images/icon/glory.png";
+import geek from "./../../../../../assets/images/icon/geek.png";
 import axios from "axios";
 
 export default class MoreCategory extends Component {
@@ -168,8 +174,10 @@ export default class MoreCategory extends Component {
 
           <Grid.Row centered columns={1} style={{marginBottom: "150px"}}>
             <Grid.Column>
-              <Header  size="huge" textAlign="center" inverted icon style={{fontSize:"50px"}}>
-                <Icon size="massive" name="universal access" />
+              <Header size="huge" textAlign="center" style={{fontSize:"50px"}}>
+                {this.getReputationName() == "Baby Born " ? <Image src={baby}/> : this.getReputationName() == "Settle Down " ? <Image src={settle}/> : 
+                this.getReputationName() == "Familliar " ? <Image src={familiar}/> : this.getReputationName() == "Almost Huge " ? <Image src={huge}/> : 
+                this.getReputationName() == "Way Of Glory " ? <Image src={glory}/> : this.getReputationName() == "Geek Explorer " ? <Image src={geek}/> : null} 
               </Header>
             </Grid.Column>
           </Grid.Row>

@@ -165,7 +165,7 @@ export default class Infuenced extends Component {
                 <Grid columns={4} key={data._id}>
                   <Grid.Column width={1}>
                     <div style={border}>
-                      <b style={{marginLeft: "9px"}}>{data.username.charAt(0).toUpperCase()}</b>
+                      <b style={{marginLeft: "9.5px"}}>{data.username.charAt(0).toUpperCase()}</b>
                     </div>
                   </Grid.Column>
                   <Grid.Column width={8}>
